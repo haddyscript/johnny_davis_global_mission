@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Johnny Davis Ministries — Transforming Lives, Empowering Communities, Expanding the Kingdom of God. Explore the ministry, Daily Push videos, podcast, and upcoming events." />
+  <title>Johnny Davis Ministries — Transforming Lives</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       CSS CUSTOM PROPERTIES
+    ============================================================ */
+    :root {
+      --blue-dark:    #0d2a4e;
+      --blue-mid:     #1a4480;
+      --blue-light:   #2563a8;
+      --orange:       #f07c1e;
+      --orange-dark:  #d96712;
+      --orange-light: #ffb347;
+      --white:        #ffffff;
+      --gray-50:      #f8f9fb;
+      --gray-100:     #eef1f6;
+      --gray-200:     #dde3ed;
+      --gray-400:     #94a3b8;
+      --gray-600:     #475569;
+      --gray-800:     #1e293b;
+      --text:         #1e293b;
+      --radius-sm:    8px;
+      --radius-md:    16px;
+      --radius-lg:    24px;
+      --shadow-sm:    0 2px 8px rgba(0,0,0,.08);
+      --shadow-md:    0 8px 32px rgba(0,0,0,.12);
+      --shadow-lg:    0 20px 60px rgba(0,0,0,.18);
+      --transition:   .3s cubic-bezier(.4,0,.2,1);
+      --max-w:        1200px;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    img { max-width: 100%; display: block; }
+    a   { text-decoration: none; color: inherit; }
+    ul  { list-style: none; }
+
+    /* ============================================================
+       UTILITY
+    ============================================================ */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+    .section-label {
+      display: inline-block;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--blue-dark);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .section-title.white { color: var(--white); }
+    .body-text { font-size: 1.05rem; color: var(--gray-600); line-height: 1.8; }
+    .body-text.white { color: rgba(255,255,255,.85); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: .95rem;
+      letter-spacing: .02em;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--orange);
+      color: var(--white);
+      box-shadow: 0 4px 20px rgba(240,124,30,.35);
+    }
+    .btn-primary:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(240,124,30,.5);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,.7);
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,.12);
+      border-color: var(--white);
+      transform: translateY(-2px);
+    }
+    .btn-blue {
+      background: var(--blue-dark);
+      color: var(--white);
+      box-shadow: 0 4px 20px rgba(13,42,78,.25);
+    }
+    .btn-blue:hover { background: var(--blue-mid); transform: translateY(-2px); }
+    .btn-lg { padding: 18px 44px; font-size: 1.05rem; }
+
+    /* ============================================================
+       SCROLL REVEAL
+    ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(13,42,78,.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      transition: box-shadow var(--transition);
+    }
+    #navbar.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,.3); }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      gap: 24px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-logo img { height: 48px; width: auto; object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a {
+      color: rgba(255,255,255,.82);
+      font-size: .9rem;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--white); background: rgba(255,255,255,.08); }
+    .nav-links .btn-nav-donate {
+      background: var(--orange);
+      color: var(--white);
+      font-weight: 700;
+      padding: 9px 20px;
+      border-radius: 50px;
+      margin-left: 8px;
+      box-shadow: 0 2px 12px rgba(240,124,30,.4);
+    }
+    .nav-links .btn-nav-donate:hover {
+      background: var(--orange-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 18px rgba(240,124,30,.55);
+    }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      border: none;
+      background: none;
+      z-index: 1100;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 26px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      background: var(--blue-dark);
+      padding: 12px 24px 24px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      color: rgba(255,255,255,.85);
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      transition: color var(--transition);
+    }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: var(--orange); }
+    .nav-mobile .btn-nav-donate {
+      margin-top: 16px;
+      background: var(--orange);
+      color: var(--white);
+      border-radius: 50px;
+      padding: 14px 24px;
+      font-weight: 700;
+      text-align: center;
+      border-bottom: none;
+    }
+
+    /* Sticky donate */
+    #stickyDonate {
+      position: fixed;
+      right: 20px; bottom: 20px;
+      z-index: 1200;
+      padding: 14px 18px;
+      border-radius: 999px;
+      font-size: .95rem;
+      letter-spacing: .05em;
+      animation: pulseBtn 2.4s ease-in-out infinite;
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    #stickyDonate:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0,0,0,.35); }
+    @keyframes pulseBtn {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+
+    /* ============================================================
+       HERO SLIDER
+    ============================================================ */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+    .slider-track {
+      position: absolute;
+      inset: 0;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .slide.active { opacity: 1; }
+    .slide-bg {
+      width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.08);
+      transition: transform 8s ease-out;
+    }
+    .slide.active .slide-bg { transform: scale(1); }
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        110deg,
+        rgba(13,42,78,.90) 0%,
+        rgba(13,42,78,.70) 55%,
+        rgba(13,42,78,.35) 100%
+      );
+    }
+
+    /* Slider controls */
+    .slider-dots {
+      position: absolute;
+      bottom: 88px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      display: flex;
+      gap: 10px;
+    }
+    .slider-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.4);
+      cursor: pointer;
+      transition: background .3s ease, transform .3s ease;
+      border: none;
+      padding: 0;
+    }
+    .slider-dot.active {
+      background: var(--orange);
+      transform: scale(1.3);
+    }
+    .slider-prev,
+    .slider-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 4;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.25);
+      color: var(--white);
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .3s ease;
+      backdrop-filter: blur(6px);
+    }
+    .slider-prev { left: 24px; }
+    .slider-next { right: 24px; }
+    .slider-prev:hover,
+    .slider-next:hover { background: rgba(240,124,30,.5); border-color: var(--orange); }
+
+    /* Hero content */
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 72px;
+      padding-bottom: 72px;
+      max-width: 760px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(240,124,30,.2);
+      border: 1px solid rgba(240,124,30,.4);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--orange-light);
+      margin-bottom: 24px;
+      animation: fadeDown .8s ease both;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .6; transform: scale(1.4); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.08;
+      margin-bottom: 16px;
+      animation: fadeUp .9s .2s ease both;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,.85);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 580px;
+      font-style: italic;
+      animation: fadeUp .9s .4s ease both;
+    }
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      animation: fadeUp .9s .6s ease both;
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,.5);
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.5), transparent);
+      animation: scrollBob 2s ease-in-out infinite;
+    }
+    @keyframes scrollBob {
+      0%, 100% { transform: scaleY(1); opacity: 1; }
+      50%       { transform: scaleY(.6); opacity: .4; }
+    }
+
+    /* ============================================================
+       ABOUT SECTION
+    ============================================================ */
+    #about {
+      padding: 110px 0;
+      background: var(--white);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: start;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-wrap img {
+      width: 100%;
+      height: 580px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      transition: transform .5s ease;
+    }
+    .about-img-wrap:hover img { transform: scale(1.02); }
+    .about-accent {
+      position: absolute;
+      bottom: -20px;
+      left: -20px;
+      background: var(--orange);
+      color: var(--white);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      box-shadow: var(--shadow-md);
+    }
+    .about-accent strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .about-accent span {
+      font-size: .72rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      opacity: .9;
+    }
+    .about-text .section-label { color: var(--orange); }
+    .about-para {
+      font-size: 1.02rem;
+      color: var(--gray-600);
+      line-height: 1.85;
+      margin-bottom: 18px;
+    }
+    .about-para .kw {
+      color: var(--blue-dark);
+      font-weight: 700;
+    }
+    .about-para .em {
+      color: var(--orange-dark);
+      font-weight: 600;
+      font-style: italic;
+    }
+    .mission-points {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .mp-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: 13px 18px;
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--blue-dark);
+      transition: var(--transition);
+    }
+    .mp-item:hover {
+      background: var(--blue-dark);
+      color: var(--white);
+      border-color: var(--blue-dark);
+      transform: translateX(6px);
+    }
+    .mp-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      transition: transform .3s ease;
+    }
+    .mp-item:hover .mp-icon { transform: scale(1.2) rotate(-8deg); }
+
+    /* ============================================================
+       DAILY PUSH VIDEOS
+    ============================================================ */
+    #daily-push {
+      padding: 100px 0;
+      background: var(--blue-dark);
+      position: relative;
+      overflow: hidden;
+    }
+    #daily-push::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(240,124,30,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #daily-push::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(37,99,168,.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .dp-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 56px;
+    }
+    .dp-header .section-label { color: var(--orange-light); }
+    .dp-header .section-title { color: var(--white); }
+    .dp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-bottom: 44px;
+    }
+    .dp-card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+      position: relative;
+    }
+    .dp-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 24px 60px rgba(0,0,0,.35);
+      border-color: var(--orange);
+    }
+    .dp-thumb {
+      position: relative;
+      height: 200px;
+      background: var(--blue-mid);
+      overflow: hidden;
+    }
+    .dp-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .5s ease;
+      filter: brightness(.7);
+    }
+    .dp-card:hover .dp-thumb img {
+      transform: scale(1.07);
+      filter: brightness(.5);
+    }
+    .dp-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dp-play-btn {
+      width: 64px; height: 64px;
+      background: rgba(240,124,30,.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+      box-shadow: 0 0 0 0 rgba(240,124,30,.4);
+    }
+    .dp-card:hover .dp-play-btn {
+      transform: scale(1.15);
+      background: var(--orange);
+      box-shadow: 0 0 0 12px rgba(240,124,30,.2);
+    }
+    .dp-play-btn svg { margin-left: 4px; }
+    .dp-body { padding: 22px; }
+    .dp-tag {
+      display: inline-block;
+      background: rgba(240,124,30,.2);
+      color: var(--orange-light);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-radius: 50px;
+      padding: 3px 12px;
+      margin-bottom: 10px;
+    }
+    .dp-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .dp-desc {
+      font-size: .88rem;
+      color: rgba(255,255,255,.6);
+      line-height: 1.7;
+    }
+    .dp-footer {
+      text-align: center;
+    }
+    .btn-primary.glow-cta {
+      animation: glowPulse 2.5s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(240,124,30,.35); }
+      50%       { box-shadow: 0 6px 40px rgba(240,124,30,.7), 0 0 0 8px rgba(240,124,30,.12); }
+    }
+
+    /* ============================================================
+       PODCAST SECTION
+    ============================================================ */
+    #podcast {
+      padding: 100px 0;
+      background: var(--gray-50);
+    }
+    .podcast-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 60px;
+    }
+    .podcast-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .podcast-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+    .podcast-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(0,0,0,.15);
+    }
+    .podcast-video-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+    }
+    .podcast-video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .podcast-body {
+      padding: 28px;
+    }
+    .podcast-eyebrow {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+    .podcast-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .podcast-desc {
+      font-size: .9rem;
+      color: var(--gray-600);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .podcast-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .podcast-tag {
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--blue-mid);
+      background: var(--gray-100);
+      border-radius: 50px;
+      padding: 3px 10px;
+    }
+
+    /* ============================================================
+       EVENTS SECTION
+    ============================================================ */
+    #events {
+      padding: 100px 0;
+      background: var(--white);
+    }
+    .events-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 60px;
+    }
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+    .event-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      cursor: default;
+      transition: transform .35s ease, box-shadow .35s ease;
+      box-shadow: var(--shadow-md);
+    }
+    .event-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 28px 70px rgba(0,0,0,.22);
+    }
+    .event-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform .5s ease;
+    }
+    .event-card:hover .event-bg { transform: scale(1.05); }
+    .event-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,42,78,.92) 0%, rgba(13,42,78,.45) 50%, transparent 100%);
+    }
+    .event-body {
+      position: relative;
+      z-index: 2;
+      padding: 28px;
+    }
+    .event-type {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--white);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      border-radius: 50px;
+      padding: 4px 14px;
+      margin-bottom: 12px;
+    }
+    .event-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .event-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .event-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .85rem;
+      color: rgba(255,255,255,.8);
+    }
+    .event-meta-icon {
+      color: var(--orange-light);
+      flex-shrink: 0;
+      font-size: 1rem;
+    }
+    .event-detail {
+      font-size: .82rem;
+      color: rgba(255,255,255,.65);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .event-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .event-hashtag {
+      font-size: .72rem;
+      color: var(--orange-light);
+      font-weight: 600;
+    }
+    .event-free-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.3);
+      color: var(--white);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-radius: 50px;
+      padding: 3px 12px;
+      margin-top: 10px;
+    }
+
+    /* ============================================================
+       HUNGER CAN'T WAIT
+    ============================================================ */
+    #hunger {
+      position: relative;
+      padding: 120px 0;
+      overflow: hidden;
+    }
+    .hunger-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/johnny-davis-ministry/hunger-cant-wait.webp');
+      background-size: cover;
+      background-position: center;
+    }
+    .hunger-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(13,42,78,.96) 0%, rgba(13,42,78,.82) 60%, rgba(240,124,30,.25) 100%);
+    }
+    .hunger-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .hunger-eyebrow {
+      display: inline-block;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--orange-light);
+      margin-bottom: 16px;
+      background: rgba(240,124,30,.15);
+      border: 1px solid rgba(240,124,30,.35);
+      border-radius: 50px;
+      padding: 5px 18px;
+    }
+    .hunger-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 4vw, 3.2rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.12;
+      margin-bottom: 20px;
+    }
+    .hunger-headline .orange { color: var(--orange-light); }
+    .hunger-sub {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,.85);
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+    .hunger-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--orange-light);
+      margin-bottom: 12px;
+    }
+    .hunger-result {
+      font-size: 1rem;
+      color: rgba(255,255,255,.75);
+      font-style: italic;
+      margin-bottom: 44px;
+      border-left: 3px solid var(--orange);
+      padding-left: 18px;
+      text-align: left;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hunger-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .hunger-note {
+      font-size: .82rem;
+      color: rgba(255,255,255,.45);
+      margin-top: 16px;
+    }
+
+    /* ============================================================
+       VISION & MISSION
+    ============================================================ */
+    #vision {
+      padding: 100px 0;
+      background: var(--gray-50);
+    }
+    .vision-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .vision-img-wrap img {
+      width: 100%;
+      height: 460px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      transition: transform .5s ease;
+    }
+    .vision-img-wrap:hover img { transform: scale(1.02); }
+    .vision-text .section-label { color: var(--orange); }
+    .vision-list {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .vision-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--blue-dark);
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+    .vision-item:hover {
+      border-color: var(--orange);
+      background: linear-gradient(90deg, rgba(240,124,30,.05), transparent);
+      transform: translateX(6px);
+    }
+    .vision-icon {
+      width: 36px; height: 36px;
+      background: rgba(240,124,30,.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .vision-zoom-tag {
+      display: inline-block;
+      background: var(--blue-dark);
+      color: var(--white);
+      border-radius: var(--radius-sm);
+      padding: 6px 14px;
+      font-size: .8rem;
+      font-weight: 600;
+      margin-top: 24px;
+    }
+
+    /* ============================================================
+       FINAL INSPIRATION
+    ============================================================ */
+    #inspire {
+      position: relative;
+      padding: 120px 0;
+      overflow: hidden;
+    }
+    .inspire-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/johnny-davis-ministry/hero-image2.webp');
+      background-size: cover;
+      background-position: center;
+    }
+    .inspire-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(13,42,78,.93) 0%, rgba(26,68,128,.88) 100%);
+    }
+    .inspire-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* ============================================================
+       UPCOMING EVENTS PREVIEW
+    ============================================================ */
+    #upcoming {
+      padding: 80px 0;
+      background: var(--white);
+    }
+    .upcoming-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .upcoming-card {
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue-mid));
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      transition: transform .35s ease;
+    }
+    .upcoming-card:hover { transform: translateY(-6px); }
+    .upcoming-card::after {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(240,124,30,.2), transparent);
+      pointer-events: none;
+    }
+    .upcoming-date-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--orange);
+      border-radius: var(--radius-md);
+      padding: 10px 16px;
+      margin-bottom: 20px;
+    }
+    .upcoming-date-badge .month {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.85);
+    }
+    .upcoming-date-badge .day {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .upcoming-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .upcoming-meta { font-size: .9rem; color: rgba(255,255,255,.7); line-height: 1.7; }
+    .upcoming-soon {
+      font-size: .8rem;
+      color: var(--orange-light);
+      font-weight: 600;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .upcoming-cta { }
+    .upcoming-cta h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .upcoming-cta p {
+      font-size: 1rem;
+      color: var(--gray-600);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    .social-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: .85rem;
+      font-weight: 700;
+      transition: var(--transition);
+      border: 1.5px solid var(--gray-200);
+      color: var(--blue-dark);
+      background: var(--gray-50);
+    }
+    .social-btn:hover {
+      background: var(--blue-dark);
+      color: var(--white);
+      border-color: var(--blue-dark);
+      transform: translateY(-2px);
+    }
+
+    /* ============================================================
+       VIDEO MODAL
+    ============================================================ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.9);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      background: #000;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,.6);
+    }
+    .modal-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      z-index: 10;
+      background: rgba(255,255,255,.15);
+      color: var(--white);
+      border: none;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s ease;
+    }
+    .modal-close:hover { background: var(--orange); }
+    .modal-video-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+    }
+    .modal-video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .modal-placeholder {
+      padding: 60px 40px;
+      text-align: center;
+      color: var(--white);
+    }
+    .modal-placeholder h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+    .modal-placeholder p { font-size: 1rem; color: rgba(255,255,255,.7); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #footer {
+      background: #060f1e;
+      color: rgba(255,255,255,.75);
+      padding: 80px 0 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1.3fr;
+      gap: 48px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .footer-brand img { height: 52px; width: auto; margin-bottom: 20px; object-fit: contain; }
+    .footer-brand p { font-size: .9rem; line-height: 1.8; color: rgba(255,255,255,.55); margin-bottom: 24px; }
+    .footer-socials { display: flex; gap: 10px; }
+    .social-icon {
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .85rem;
+      transition: var(--transition);
+      cursor: pointer;
+      color: rgba(255,255,255,.6);
+    }
+    .social-icon:hover {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+    .footer-heading {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--white);
+      font-size: 1rem;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 12px;
+    }
+    .footer-heading::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 28px; height: 2px;
+      background: var(--orange);
+      border-radius: 2px;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-size: .9rem;
+      color: rgba(255,255,255,.55);
+      transition: color var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a::before { content: '›'; color: var(--orange); font-size: 1rem; }
+    .footer-links a:hover { color: var(--orange); }
+    .footer-contact { display: flex; flex-direction: column; gap: 14px; }
+    .contact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: .9rem;
+      color: rgba(255,255,255,.55);
+      line-height: 1.6;
+    }
+    .contact-icon {
+      width: 32px; height: 32px;
+      background: rgba(240,124,30,.15);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--orange);
+      flex-shrink: 0;
+    }
+    .contact-row a { color: rgba(255,255,255,.55); transition: color var(--transition); }
+    .contact-row a:hover { color: var(--orange); }
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 24px 0;
+    }
+    .footer-copy { font-size: .82rem; color: rgba(255,255,255,.35); }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { font-size: .82rem; color: rgba(255,255,255,.35); transition: color var(--transition); }
+    .footer-legal a:hover { color: var(--orange); }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .about-grid   { grid-template-columns: 1fr; gap: 48px; }
+      .about-img-wrap img { height: 400px; }
+      .podcast-grid { grid-template-columns: 1fr; }
+      .vision-grid  { grid-template-columns: 1fr; gap: 48px; }
+      .vision-img-wrap img { height: 360px; }
+      .footer-grid  { grid-template-columns: 1fr 1fr; gap: 36px; }
+      .upcoming-inner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links  { display: none; }
+      .nav-toggle { display: flex; }
+      .dp-grid      { grid-template-columns: 1fr; }
+      .events-grid  { grid-template-columns: 1fr; }
+      .footer-grid  { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; }
+      .hunger-btns { flex-direction: column; align-items: center; }
+      .slider-prev, .slider-next { width: 38px; height: 38px; }
+      #stickyDonate { right: 10px; bottom: 12px; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .btn-lg { padding: 15px 28px; font-size: 1rem; }
+      .events-grid  { grid-template-columns: 1fr; }
+      .slider-prev, .slider-next { display: none; }
+      #stickyDonate { right: 8px; bottom: 10px; padding: 12px 14px; font-size: .82rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+============================================================ -->
+<header id="navbar" role="banner">
+  <div class="container">
+    <nav class="nav-inner" aria-label="Main navigation">
+      <a href="index.html" class="nav-logo" aria-label="Johnny Davis Global Missions Home">
+        <img src="images/logo.webp" alt="Johnny Davis Global Missions Logo" />
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#mission">Mission</a></li>
+        <li><a href="index.html#help">How You Can Help</a></li>
+        <li><a href="news.html">Blog &amp; News</a></li>
+        <li><a href="who-we-are.html">Who We Are</a></li>
+        <li><a href="johnny-davis-ministry.html" class="active">Ministry</a></li>
+        <li><a href="donationpage.html" class="btn-nav-donate" aria-label="Donate">&#9829; Donate</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+
+  <nav class="nav-mobile" id="navMobile" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="index.html#mission">Mission</a>
+    <a href="index.html#help">How You Can Help</a>
+    <a href="news.html">Blog &amp; News</a>
+    <a href="who-we-are.html">Who We Are</a>
+    <a href="johnny-davis-ministry.html">Ministry</a>
+    <a href="contact.html">Contact</a>
+    <a href="donationpage.html" class="btn-nav-donate">&#9829; Donate Now</a>
+  </nav>
+</header>
+
+<a id="stickyDonate" class="btn btn-primary" href="donationpage.html" aria-label="Donate Now">Donate Now</a>
+
+
+<!-- ============================================================
+     HERO SLIDER
+============================================================ -->
+<section id="hero" aria-label="Johnny Davis Ministries Hero">
+
+  <div class="slider-track" id="sliderTrack">
+
+    <div class="slide active" id="slide-0">
+      <div class="slide-bg" style="background-image:url('images/johnny-davis-ministry/hero-image1.webp')"></div>
+      <div class="slide-overlay"></div>
+    </div>
+
+    <div class="slide" id="slide-1">
+      <div class="slide-bg" style="background-image:url('images/johnny-davis-ministry/hero-image2.webp')"></div>
+      <div class="slide-overlay"></div>
+    </div>
+
+    <div class="slide" id="slide-2">
+      <div class="slide-bg" style="background-image:url('images/johnny-davis-ministry/hero-image3.webp')"></div>
+      <div class="slide-overlay"></div>
+    </div>
+
+    <div class="slide" id="slide-3">
+      <div class="slide-bg" style="background-image:url('images/johnny-davis-ministry/hero-image4.webp')"></div>
+      <div class="slide-overlay"></div>
+    </div>
+
+  </div>
+
+  <!-- Prev / Next -->
+  <button class="slider-prev" id="sliderPrev" aria-label="Previous slide">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+  </button>
+  <button class="slider-next" id="sliderNext" aria-label="Next slide">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+  </button>
+
+  <!-- Dots -->
+  <div class="slider-dots" role="list" aria-label="Slide indicators">
+    <button class="slider-dot active" data-index="0" aria-label="Slide 1"></button>
+    <button class="slider-dot"        data-index="1" aria-label="Slide 2"></button>
+    <button class="slider-dot"        data-index="2" aria-label="Slide 3"></button>
+    <button class="slider-dot"        data-index="3" aria-label="Slide 4"></button>
+  </div>
+
+  <!-- Content -->
+  <div class="container" style="height:100%; position:relative; z-index:3;">
+    <div class="hero-content">
+      <div class="hero-badge">Ministry &bull; Outreach &bull; Missions</div>
+
+      <h1 class="hero-headline">Johnny Davis<br/>Ministries</h1>
+
+      <p class="hero-sub">
+        Transforming Lives. Empowering Communities.<br/>
+        Expanding the Kingdom of God.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#daily-push" class="btn btn-primary btn-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          Watch Daily Push
+        </a>
+        <a href="donationpage.html" class="btn btn-outline btn-lg">
+          &#9829; Support the Mission
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})" aria-label="Scroll down">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+
+</section>
+
+
+<!-- ============================================================
+     ABOUT SECTION
+============================================================ -->
+<section id="about" aria-labelledby="about-title">
+  <div class="container">
+    <div class="about-grid">
+
+      <!-- Image -->
+      <div class="about-img-wrap reveal-left">
+        <img
+          src="images/johnny-davis-ministry/hero-image1.webp"
+          alt="Evangelist Johnny Davis"
+          loading="lazy"
+        />
+        <div class="about-accent">
+          <strong>30+</strong>
+          <span>Years in Ministry</span>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="reveal-right">
+        <span class="section-label">His Story</span>
+        <h2 class="section-title" id="about-title">About Johnny Davis</h2>
+
+        <p class="about-para">
+          Evangelist Johnny Davis is not only a teacher, prayer leader, and speaker — he is a
+          <span class="kw">visionary committed to turning compassion into action</span>.
+        </p>
+        <p class="about-para">
+          After giving his life to Jesus Christ at age 24 and answering the call to ministry in
+          <span class="kw">1992</span>, Johnny has spent over three decades building ministries
+          that transform lives both spiritually and practically. From church leadership and prison
+          outreach to community empowerment and international missions, his work has always centered
+          on one mission: <span class="em">serving people with excellence and integrity</span>.
+        </p>
+        <p class="about-para">
+          In <span class="kw">2000</span>, he founded <span class="kw">Johnny Davis Ministries</span>
+          to equip believers and strengthen churches. In 2002, he launched
+          <span class="kw">Life Changing Christian Ministries</span> in Alabama and established the
+          <span class="em">"More Than Conquerors"</span> prison outreach, bringing hope and
+          restoration to incarcerated men.
+        </p>
+        <p class="about-para">
+          In <span class="kw">2021</span>, the vision expanded globally. Through
+          <span class="kw">Johnny Davis Global Missions</span> and the initiative
+          <span class="em">Feed Filipino Children: Hunger Can't Wait!</span>, Johnny and his team
+          partner with trusted pastors in the Philippines to provide meals, prayer, and spiritual
+          support to children and families facing extreme poverty.
+        </p>
+        <p class="about-para">
+          This isn't temporary relief. <span class="em">It's sustainable impact.</span>
+        </p>
+
+        <div class="mission-points" role="list" aria-label="Mission points">
+          <div class="mp-item" role="listitem">
+            <span class="mp-icon" aria-hidden="true">🍽️</span>
+            Provide nutritious meals to children
+          </div>
+          <div class="mp-item" role="listitem">
+            <span class="mp-icon" aria-hidden="true">⛪</span>
+            Support local pastors and churches
+          </div>
+          <div class="mp-item" role="listitem">
+            <span class="mp-icon" aria-hidden="true">✝️</span>
+            Extend the Gospel through practical love
+          </div>
+          <div class="mp-item" role="listitem">
+            <span class="mp-icon" aria-hidden="true">🤝</span>
+            Build long-term relationships in communities
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     DAILY PUSH VIDEOS
+============================================================ -->
+<section id="daily-push" aria-labelledby="dp-title">
+  <div class="container">
+
+    <header class="dp-header reveal">
+      <span class="section-label">Inspiration &amp; Faith</span>
+      <h2 class="section-title" id="dp-title">Your Daily Push</h2>
+      <p class="body-text white">
+        Short, powerful messages to encourage your faith and push you toward your purpose — every single day.
+      </p>
+    </header>
+
+    <div class="dp-grid">
+
+      <!-- Card 1 -->
+      <article class="dp-card reveal" style="transition-delay:.05s"
+               onclick="openVideoModal('fearOfChange')"
+               aria-label="Watch Fear of Change — Daily Push">
+        <div class="dp-thumb">
+          <img src="images/johnny-davis-ministry/hero-image3.webp" alt="Fear of Change video" loading="lazy" />
+          <div class="dp-play">
+            <div class="dp-play-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="dp-body">
+          <span class="dp-tag">Daily Push</span>
+          <h3 class="dp-title">Fear of Change</h3>
+          <p class="dp-desc">Discover how to embrace transformation and step boldly into the new seasons God has prepared for you.</p>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="dp-card reveal" style="transition-delay:.15s"
+               onclick="openVideoModal('fearOfFailure')"
+               aria-label="Watch Fear of Failure — Daily Push">
+        <div class="dp-thumb">
+          <img src="images/johnny-davis-ministry/hero-image4.webp" alt="Fear of Failure video" loading="lazy" />
+          <div class="dp-play">
+            <div class="dp-play-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="dp-body">
+          <span class="dp-tag">Daily Push</span>
+          <h3 class="dp-title">Fear of Failure</h3>
+          <p class="dp-desc">Learn how to break through the paralysis of fear and walk in the confidence and calling God has placed on your life.</p>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="dp-card reveal" style="transition-delay:.25s"
+               onclick="openVideoModal('fearOfFuture')"
+               aria-label="Watch Fear of the Future — Daily Push">
+        <div class="dp-thumb">
+          <img src="images/johnny-davis-ministry/hero-image2.webp" alt="Fear of the Future video" loading="lazy" />
+          <div class="dp-play">
+            <div class="dp-play-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="dp-body">
+          <span class="dp-tag">Daily Push</span>
+          <h3 class="dp-title">Fear of the Future</h3>
+          <p class="dp-desc">Trade anxiety for faith. Discover how trust in God's plan transforms uncertainty into unstoppable purpose.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="dp-footer reveal">
+      <a href="https://www.youtube.com/@johnnydavisministries" target="_blank" rel="noopener noreferrer"
+         class="btn btn-primary btn-lg glow-cta">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
+        Click Here for Your Daily Push
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     PODCAST
+============================================================ -->
+<section id="podcast" aria-labelledby="podcast-title">
+  <div class="container">
+
+    <header class="podcast-header reveal">
+      <span class="section-label">Leadership &amp; Growth</span>
+      <h2 class="section-title" id="podcast-title">Grace To Elevate<br/>Leadership Podcast</h2>
+      <p class="body-text">
+        Expand Your Mission. Elevate Your Influence. Coming January 2026.
+      </p>
+    </header>
+
+    <div class="podcast-grid">
+
+      <!-- Intro -->
+      <article class="podcast-card reveal reveal-left" style="transition-delay:.05s">
+        <div class="podcast-video-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/ODHNGHsRXfQ"
+            title="Grace To Elevate Leadership Podcast — Intro"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy">
+          </iframe>
+        </div>
+        <div class="podcast-body">
+          <p class="podcast-eyebrow">Podcast Intro</p>
+          <h3 class="podcast-title">Grace To Elevate Leadership Podcast</h3>
+          <p class="podcast-desc">
+            Hello Friends — Coming Soon, Jan 2026.<br/>
+            Watch &amp; Listen on YouTube<br/>
+            <strong>@JohnnyDavisMinistries</strong>
+          </p>
+          <div class="podcast-tags">
+            <span class="podcast-tag">#gracetoelevate</span>
+            <span class="podcast-tag">#2026theyearofelevation</span>
+            <span class="podcast-tag">#MinistryLeaderships</span>
+            <span class="podcast-tag">#marketplaceleaders</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Outro -->
+      <article class="podcast-card reveal reveal-right" style="transition-delay:.15s">
+        <div class="podcast-video-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/-r_W_aG8cuY"
+            title="Grace To Elevate Leadership Podcast — Outro"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy">
+          </iframe>
+        </div>
+        <div class="podcast-body">
+          <p class="podcast-eyebrow">Podcast Outro</p>
+          <h3 class="podcast-title">Grace To Elevate Leadership Podcast</h3>
+          <p class="podcast-desc">
+            Hello Friends — Coming Soon, Jan 2026.<br/>
+            Watch &amp; Listen on YouTube<br/>
+            <strong>@JohnnyDavisMinistries</strong>
+          </p>
+          <div class="podcast-tags">
+            <span class="podcast-tag">#gracetoelevate</span>
+            <span class="podcast-tag">#2026theyearofelevation</span>
+            <span class="podcast-tag">#MinistryLeaderships</span>
+            <span class="podcast-tag">#marketplaceleaders</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     EVENTS
+============================================================ -->
+<section id="events" aria-labelledby="events-title">
+  <div class="container">
+
+    <header class="events-header reveal">
+      <span class="section-label">Gatherings &amp; Outreach</span>
+      <h2 class="section-title" id="events-title">Ministry Events &amp; Gatherings</h2>
+      <p class="body-text">
+        Join us in prayer, worship, and community — online and in person.
+      </p>
+    </header>
+
+    <div class="events-grid">
+
+      <!-- Elevation Prayer -->
+      <article class="event-card reveal" style="transition-delay:.05s" aria-label="Elevation Prayer — Virtual Prayer Gathering">
+        <div class="event-bg" style="background-image:url('images/johnny-davis-ministry/elevation-prayer.webp')"></div>
+        <div class="event-overlay"></div>
+        <div class="event-body">
+          <span class="event-type">Virtual &bull; Zoom</span>
+          <h3 class="event-title">Elevation Prayer</h3>
+          <div class="event-meta">
+            <div class="event-meta-row">
+              <span class="event-meta-icon">📅</span>
+              Every Thursday
+            </div>
+            <div class="event-meta-row">
+              <span class="event-meta-icon">🕖</span>
+              7 PM EST &bull; 6 PM CST
+            </div>
+          </div>
+          <p class="event-detail">
+            Weekly Virtual Prayer Gathering on Zoom.<br/>
+            Zoom ID: <strong style="color:#fff;">788 154 3458</strong> &nbsp; Passcode: <strong style="color:#fff;">dzW3WL</strong><br/>
+            Worship begins at 6:30 PM.
+          </p>
+          <div class="event-tag-row">
+            <span class="event-hashtag">#elevationprayergathering</span>
+            <span class="event-hashtag">&nbsp; #hungercantwait</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Wake Up To Prayer -->
+      <article class="event-card reveal" style="transition-delay:.15s" aria-label="Wake Up To Prayer — Live on TikTok">
+        <div class="event-bg" style="background-image:url('images/johnny-davis-ministry/wake-up-to-prayer.webp')"></div>
+        <div class="event-overlay"></div>
+        <div class="event-body">
+          <span class="event-type">Live &bull; TikTok</span>
+          <h3 class="event-title">Wake Up To Prayer</h3>
+          <div class="event-meta">
+            <div class="event-meta-row">
+              <span class="event-meta-icon">📅</span>
+              Thursday 8 PM EST
+            </div>
+            <div class="event-meta-row">
+              <span class="event-meta-icon">🌏</span>
+              Friday 9 AM Philippines Time
+            </div>
+          </div>
+          <p class="event-detail">
+            Join Wake Up To Prayer with Prayer Coach Johnny — LIVE on TikTok.<br/>
+            Come for encouragement. Stay for prayer.
+          </p>
+        </div>
+      </article>
+
+      <!-- Elevation Prayer Breakfast -->
+      <article class="event-card reveal" style="transition-delay:.25s" aria-label="Elevation Prayer Breakfast">
+        <div class="event-bg" style="background-image:url('images/johnny-davis-ministry/elevation-prayer-breakfast.webp')"></div>
+        <div class="event-overlay"></div>
+        <div class="event-body">
+          <span class="event-type">In Person &bull; Free</span>
+          <h3 class="event-title">Elevation Prayer Breakfast</h3>
+          <div class="event-meta">
+            <div class="event-meta-row">
+              <span class="event-meta-icon">📅</span>
+              Saturday, April 11, 2026
+            </div>
+            <div class="event-meta-row">
+              <span class="event-meta-icon">🕙</span>
+              10:00 AM – 12:00 PM
+            </div>
+            <div class="event-meta-row">
+              <span class="event-meta-icon">📍</span>
+              House of Refuge Fellowship Ministries
+            </div>
+          </div>
+          <p class="event-detail">
+            404 S Oak Street, Valdosta GA<br/>
+            A gathering for pastors, leaders, and believers for prophetic prayer, encouragement, and fellowship.
+          </p>
+          <span class="event-free-badge">Free Event</span>
+        </div>
+      </article>
+
+      <!-- Vision & Mission Empowerment (in events grid) -->
+      <article class="event-card reveal" style="transition-delay:.35s" aria-label="12 Keys to Expanding Your Vision and Mission">
+        <div class="event-bg" style="background-image:url('images/johnny-davis-ministry/vision-and-mision.webp')"></div>
+        <div class="event-overlay"></div>
+        <div class="event-body">
+          <span class="event-type">Virtual &bull; Zoom Live</span>
+          <h3 class="event-title">12 Keys to Expanding<br/>Your Vision &amp; Mission</h3>
+          <div class="event-meta">
+            <div class="event-meta-row">
+              <span class="event-meta-icon">📅</span>
+              Every Wednesday Night
+            </div>
+            <div class="event-meta-row">
+              <span class="event-meta-icon">🕘</span>
+              9 PM — Zoom Live
+            </div>
+          </div>
+          <p class="event-detail">
+            Weekly empowerment sessions for ministry leaders.<br/>
+            Includes Worship Music · Prayer · Leadership Empowerment.
+          </p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     HUNGER CAN'T WAIT
+============================================================ -->
+<section id="hunger" aria-labelledby="hunger-title">
+  <div class="hunger-bg" aria-hidden="true"></div>
+  <div class="hunger-overlay" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="hunger-content reveal">
+      <span class="hunger-eyebrow">Urgent Need — Philippines</span>
+      <h2 class="hunger-headline" id="hunger-title">
+        <span class="orange">HUNGER CAN'T WAIT</span><br/>This Is the Moment
+      </h2>
+
+      <p class="hunger-sub">
+        There is a child praying for a meal right now.<br/>
+        <strong>You can be the answer.</strong>
+      </p>
+
+      <p class="hunger-price">For just $7.99 a month — you can help feed Filipino children in need.</p>
+
+      <p class="hunger-result">Because of YOU… they eat.</p>
+
+      <div class="hunger-btns">
+        <a href="donationpage.html" class="btn btn-primary btn-lg glow-cta">
+          &#9829; Donate Now
+        </a>
+        <a href="https://filipinochildren.org" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg">
+          Visit FilipinoChildren.org
+        </a>
+      </div>
+
+      <p class="hunger-note">
+        100% of your donation goes directly to children in need. Johnny Davis Global Missions is a 501(c)(3) nonprofit.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FINAL INSPIRATION
+============================================================ -->
+<section id="inspire" aria-labelledby="inspire-title">
+  <div class="inspire-bg" aria-hidden="true"></div>
+  <div class="inspire-overlay" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="inspire-content reveal">
+      <span class="section-label" style="color:var(--orange-light);">Our Commitment</span>
+      <h2 class="section-title white" id="inspire-title">
+        Transforming Lives and<br/>Empowering Communities
+      </h2>
+      <p class="body-text white" style="margin-bottom:44px;">
+        Equipping individuals and communities with the resources, knowledge, and confidence
+        to build a sustainable future — anchored in faith, fueled by love.
+      </p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;">
+        <a href="https://www.youtube.com/@johnnydavisministries" target="_blank" rel="noopener noreferrer"
+           class="btn btn-primary btn-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          Click Here for Your Daily Push
+        </a>
+        <a href="https://www.facebook.com/GlobalMissions55" target="_blank" rel="noopener noreferrer"
+           class="btn btn-outline btn-lg">
+          Follow on Social Media
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     UPCOMING EVENTS
+============================================================ -->
+<section id="upcoming" aria-labelledby="upcoming-title">
+  <div class="container">
+    <div class="upcoming-inner">
+
+      <div class="upcoming-card reveal-left">
+        <div class="upcoming-date-badge">
+          <span class="month">September</span>
+          <span class="day">20</span>
+        </div>
+        <h3 class="upcoming-title">Johnny Davis Live</h3>
+        <div class="upcoming-meta">
+          <div>🕙 10:00 AM</div>
+          <div>📍 Atlanta, Georgia</div>
+        </div>
+        <p class="upcoming-soon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+          New Live Events Coming Soon
+        </p>
+      </div>
+
+      <div class="upcoming-cta reveal-right">
+        <h3 id="upcoming-title">Stay Connected &amp; Never Miss an Event</h3>
+        <p>
+          New events are added regularly. Follow Johnny Davis Ministries on social media
+          to stay up to date on upcoming live gatherings, prayer events, and ministry outreach.
+        </p>
+        <div class="social-row">
+          <a href="https://www.facebook.com/GlobalMissions55" target="_blank" rel="noopener noreferrer" class="social-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            Facebook
+          </a>
+          <a href="https://www.instagram.com/globalmissions50/" target="_blank" rel="noopener noreferrer" class="social-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            Instagram
+          </a>
+          <a href="https://www.youtube.com/@johnnydavisministries" target="_blank" rel="noopener noreferrer" class="social-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
+            YouTube
+          </a>
+          <a href="https://www.tiktok.com/@johnnydavisministries" target="_blank" rel="noopener noreferrer" class="social-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+            TikTok
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     VIDEO MODAL (Daily Push)
+============================================================ -->
+<div class="modal-overlay" id="videoModal" role="dialog" aria-modal="true" aria-label="Daily Push Video">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Close video">&times;</button>
+    <div class="modal-placeholder" id="modalPlaceholder">
+      <h3>Your Daily Push</h3>
+      <p>This video will be available soon on the YouTube channel @JohnnyDavisMinistries.</p>
+      <a href="https://www.youtube.com/@johnnydavisministries" target="_blank" rel="noopener noreferrer"
+         class="btn btn-primary" style="margin-top:20px;">
+        Watch on YouTube
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer id="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <img src="images/logo.webp" alt="Johnny Davis Global Missions Logo" />
+        <p>
+          Johnny Davis Global Missions is a non-profit organization founded on the belief that
+          a little help can go a long way. We serve the poorest communities in the Philippines
+          with food, medical care, education, and disaster relief.
+        </p>
+        <div class="footer-socials" aria-label="Social media links">
+          <a href="https://www.facebook.com/GlobalMissions55" class="social-icon" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/globalmissions50/" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@johnnydavisministries" class="social-icon" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@johnnydavisministries" class="social-icon" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <nav aria-label="Footer navigation">
+        <h3 class="footer-heading">Quick Links</h3>
+        <ul class="footer-links" role="list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="who-we-are.html">Who We Are</a></li>
+          <li><a href="johnny-davis-ministry.html">Johnny Davis Ministry</a></li>
+          <li><a href="donationpage.html">Make a Difference</a></li>
+          <li><a href="https://johnnydavisministries.org" target="_blank" rel="noopener noreferrer">Johnny Davis Ministries</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Programs navigation">
+        <h3 class="footer-heading">Ministry</h3>
+        <ul class="footer-links" role="list">
+          <li><a href="#daily-push">Daily Push Videos</a></li>
+          <li><a href="#podcast">Grace To Elevate Podcast</a></li>
+          <li><a href="#events">Elevation Prayer</a></li>
+          <li><a href="#events">Wake Up To Prayer</a></li>
+          <li><a href="#vision">Vision &amp; Mission</a></li>
+          <li><a href="#hunger">Hunger Can't Wait</a></li>
+        </ul>
+      </nav>
+
+      <address>
+        <h3 class="footer-heading">Contact Us</h3>
+        <div class="footer-contact">
+          <div class="contact-row">
+            <div class="contact-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+            </div>
+            <span>P.O. Box 1904<br/>Suwanee, GA 30024</span>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </div>
+            <a href="tel:+14044262856">(404) 426-2856</a>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <a href="mailto:info@johnnydavisglobalmissions.org">info@johnnydavisglobalmissions.org</a>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+            </div>
+            <span>Mon–Fri: 9:00am – 5:00pm</span>
+          </div>
+        </div>
+      </address>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy;2026 Johnny Davis Global Missions. All Rights Reserved.</p>
+      <nav class="footer-legal" aria-label="Legal navigation">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Nonprofit Disclosure</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+  // ─── Navbar scroll shadow ────────────────────────────────────
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // ─── Mobile nav toggle ───────────────────────────────────────
+  const navToggle = document.getElementById('navToggle');
+  const navMobile = document.getElementById('navMobile');
+  navToggle.addEventListener('click', () => {
+    const open = navMobile.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+  });
+  navMobile.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navMobile.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ─── Hero Slider ─────────────────────────────────────────────
+  const slides = document.querySelectorAll('.slide');
+  const dots   = document.querySelectorAll('.slider-dot');
+  let current  = 0;
+  let autoSlide;
+
+  function goToSlide(index) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (index + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function startAuto() {
+    autoSlide = setInterval(() => goToSlide(current + 1), 5500);
+  }
+  function stopAuto() { clearInterval(autoSlide); }
+
+  document.getElementById('sliderNext').addEventListener('click', () => {
+    stopAuto(); goToSlide(current + 1); startAuto();
+  });
+  document.getElementById('sliderPrev').addEventListener('click', () => {
+    stopAuto(); goToSlide(current - 1); startAuto();
+  });
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      stopAuto(); goToSlide(Number(dot.dataset.index)); startAuto();
+    });
+  });
+
+  startAuto();
+
+  // Pause on hover
+  const sliderTrack = document.getElementById('sliderTrack');
+  sliderTrack.addEventListener('mouseenter', stopAuto);
+  sliderTrack.addEventListener('mouseleave', startAuto);
+
+  // ─── Scroll reveal ───────────────────────────────────────────
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealObs.observe(el));
+
+  // ─── Video modal (Daily Push) ────────────────────────────────
+  const videoModal = document.getElementById('videoModal');
+  document.getElementById('modalClose').addEventListener('click', () => {
+    videoModal.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+  videoModal.addEventListener('click', e => {
+    if (e.target === videoModal) {
+      videoModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      videoModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+
+  function openVideoModal(topic) {
+    videoModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // ─── Hunger parallax ─────────────────────────────────────────
+  const hungerBg = document.querySelector('.hunger-bg');
+  const inspireBg = document.querySelector('.inspire-bg');
+  window.addEventListener('scroll', () => {
+    if (hungerBg) {
+      const rect = hungerBg.parentElement.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        const ratio = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        hungerBg.style.transform = `translateY(${(ratio - 0.5) * 40}px)`;
+      }
+    }
+    if (inspireBg) {
+      const rect = inspireBg.parentElement.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        const ratio = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        inspireBg.style.transform = `translateY(${(ratio - 0.5) * 40}px)`;
+      }
+    }
+  }, { passive: true });
+</script>
+
+</body>
+</html>
