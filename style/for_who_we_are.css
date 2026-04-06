@@ -936,7 +936,7 @@
       align-items: center;
       gap: 6px;
     }
-    .footer-links a::before { content: 'â€º'; color: var(--orange); font-size: 1rem; }
+    .footer-links a::before { content: '\203A'; color: var(--orange); font-size: 1rem; }
     .footer-links a:hover { color: var(--orange); }
     .footer-contact { display: flex; flex-direction: column; gap: 14px; }
     .contact-row {

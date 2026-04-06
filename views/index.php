@@ -4,7 +4,7 @@
 // ============================================================
 $page_title       = 'Johnny Davis Global Missions — Feed Filipino Children';
 $page_description = 'Johnny Davis Global Missions — Feed Filipino Children. Donate to fight hunger, support disaster relief, and bring hope to communities in the Philippines.';
-$base             = '../'; // path from php/ back to project root
+$base ??= '../'; // '../' when accessed directly; '' when included from project root
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,12 +37,12 @@ $base             = '../'; // path from php/ back to project root
         <li><a href="#hero">Home</a></li>
         <li><a href="#mission">Mission</a></li>
         <!-- <li><a href="#help">How You Can Help</a></li> -->
-        <li><a href="<?= $base ?>news.html">Blog &amp; News</a></li>
-        <li><a href="<?= $base ?>who-we-are.html">Who We Are</a></li>
-        <li><a href="<?= $base ?>johnny-davis-ministry.html">Ministry</a></li>
+        <li><a href="<?= $base ?>news.php">Blog &amp; News</a></li>
+        <li><a href="<?= $base ?>who-we-are.php">Who We Are</a></li>
+        <li><a href="<?= $base ?>johnny-davis-ministry.php">Ministry</a></li>
         <li><a href="#testimonials">Testimonials</a></li>
-        <li><a href="<?= $base ?>donationpage.html" class="btn-nav-donate" aria-label="Donate to Johnny Davis Global Missions">&#9829; Donate</a></li>
-        <li><a href="<?= $base ?>contact.html">Contact</a></li>
+        <li><a href="<?= $base ?>donationpage.php" class="btn-nav-donate" aria-label="Donate to Johnny Davis Global Missions">&#9829; Donate</a></li>
+        <li><a href="<?= $base ?>contact.php">Contact</a></li>
       </ul>
 
       <button class="nav-toggle" id="navToggle" aria-label="Toggle mobile menu" aria-expanded="false">
@@ -55,16 +55,16 @@ $base             = '../'; // path from php/ back to project root
     <a href="#hero">Home</a>
     <a href="#mission">Mission</a>
     <a href="#help">How You Can Help</a>
-    <a href="<?= $base ?>news.html">Blog &amp; News</a>
-    <a href="<?= $base ?>who-we-are.html">Who We Are</a>
-    <a href="<?= $base ?>johnny-davis-ministry.html">Ministry</a>
+    <a href="<?= $base ?>news.php">Blog &amp; News</a>
+    <a href="<?= $base ?>who-we-are.php">Who We Are</a>
+    <a href="<?= $base ?>johnny-davis-ministry.php">Ministry</a>
     <a href="#testimonials">Testimonials</a>
-    <a href="<?= $base ?>contact.html">Contact</a>
-    <a href="<?= $base ?>donationpage.html" class="btn-nav-donate">&#9829; Donate Now</a>
+    <a href="<?= $base ?>contact.php">Contact</a>
+    <a href="<?= $base ?>donationpage.php" class="btn-nav-donate">&#9829; Donate Now</a>
   </nav>
 </header>
 
-<a id="stickyDonate" class="btn btn-primary" href="<?= $base ?>donationpage.html" aria-label="Donate Now">Donate Now</a>
+<a id="stickyDonate" class="btn btn-primary" href="<?= $base ?>donationpage.php" aria-label="Donate Now">Donate Now</a>
 
 
 <!-- ============================================================
@@ -110,7 +110,7 @@ $base             = '../'; // path from php/ back to project root
       </p>
 
       <div class="hero-ctas">
-        <a href="<?= $base ?>donationpage.html" class="btn btn-primary btn-lg">
+        <a href="<?= $base ?>donationpage.php" class="btn btn-primary btn-lg">
           &#9829; Donate Now
         </a>
         <button class="btn btn-outline btn-lg" id="watchMissionBtn" aria-label="Watch our mission video">
@@ -214,7 +214,7 @@ $base             = '../'; // path from php/ back to project root
     <p class="highlight-text">Every contribution moves us closer to ending hunger for Filipino children.</p>
     <div class="highlight-amount">$7.99 / month = 1 child fed</div>
     <p>Choose a monthly donation and we'll provide a full meal plan, clean water, and hope to a child in need.</p>
-    <a href="<?= $base ?>donationpage.html" class="btn btn-blue btn-lg" style="display:inline-flex; align-items:center; justify-content:center; margin-top:16px;">Donate &amp; Change a Life</a>
+    <a href="<?= $base ?>donationpage.php" class="btn btn-blue btn-lg" style="display:inline-flex; align-items:center; justify-content:center; margin-top:16px;">Donate &amp; Change a Life</a>
   </div>
 </section>
 
@@ -351,7 +351,7 @@ $base             = '../'; // path from php/ back to project root
           severe structural damage, leaving families without safe shelter. Your support can make an immediate difference.
         </div>
 
-        <a href="<?= $base ?>donationpage.html" class="btn btn-primary btn-lg">
+        <a href="<?= $base ?>donationpage.php" class="btn btn-primary btn-lg">
           &#9829; Support Disaster Relief
         </a>
       </div>
@@ -387,7 +387,7 @@ $base             = '../'; // path from php/ back to project root
           </div>
           <h3>Make a Donation</h3>
           <p>Your donation allows those in need to receive food, clean water, medical care and educational support. Every dollar counts.</p>
-          <a href="<?= $base ?>donationpage.html" class="help-card-link">
+          <a href="<?= $base ?>donationpage.php" class="help-card-link">
             Donate Today
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
           </a>
@@ -595,7 +595,7 @@ $base             = '../'; // path from php/ back to project root
           <li><a href="#hero">Home</a></li>
           <li><a href="#mission">Who We Are</a></li>
           <li><a href="#help">What We Do</a></li>
-          <li><a href="<?= $base ?>donationpage.html">Make a Difference</a></li>
+          <li><a href="<?= $base ?>donationpage.php">Make a Difference</a></li>
           <li><a href="https://johnnydavisministries.org" target="_blank" rel="noopener noreferrer">Johnny Davis Ministries</a></li>
           <li><a href="#footer">Contact Us</a></li>
         </ul>

@@ -1,23 +1,141 @@
+<?php
+// ============================================================
+// Page Configuration
+// ============================================================
+$page_title       = 'Blog & News — Johnny Davis Global Missions';
+$page_description = 'Blog & News — Johnny Davis Global Missions. Monthly field updates, impact stories, and mission reports from the Philippines and Uganda.';
+$base ??= '../'; // '../' when accessed directly; '' when included from project root
+
+// ============================================================
+// Posts Data
+// ============================================================
+$posts = [
+    [
+        'featured'   => true,
+        'categories' => 'field-reports',
+        'country'    => 'Philippines',
+        'flag'       => '🇵🇭',
+        'image'      => 'images/landingpage/feed_the_hungry.webp',
+        'img_alt'    => 'Volunteers serving meals to Filipino children in Cebu',
+        'category'   => 'Field Report',
+        'cat_class'  => 'cat-field',
+        'date'       => 'March 15, 2025',
+        'read_time'  => '5 min read',
+        'title'      => '2,400 Meals Served in February — Our Biggest Month Yet',
+        'excerpt'    => "Pastor Esther's team reached 18 barangays in Cebu last month, feeding more children than any single month since the program launched in 2022. The momentum is real — and so is the hunger. Here's a full breakdown of where every meal went and who made it possible.",
+        'cta_label'  => 'Read Full Report →',
+        'cta_href'   => '#',
+        'delay'      => '',
+    ],
+    [
+        'featured'   => false,
+        'categories' => 'field-reports impact-stories',
+        'country'    => 'Uganda',
+        'flag'       => '🇺🇬',
+        'image'      => 'images/landingpage/clean_drink_water.webp',
+        'img_alt'    => 'Clean water flowing from a newly completed well in Uganda',
+        'category'   => 'Field Report',
+        'cat_class'  => 'cat-field',
+        'date'       => 'February 28, 2025',
+        'read_time'  => '4 min read',
+        'title'      => 'Well #7 is Complete — 200 Families Now Have Clean Water',
+        'excerpt'    => "After four months of drilling and community preparation, Well #7 in Mbale, Uganda was activated. We were there to witness the first water flowing — and the celebration that followed was unlike anything we've seen.",
+        'cta_label'  => 'Read the Story',
+        'cta_href'   => '#',
+        'delay'      => 'delay-1',
+    ],
+    [
+        'featured'   => false,
+        'categories' => 'impact-stories',
+        'country'    => 'Philippines',
+        'flag'       => '🇵🇭',
+        'image'      => 'images/landingpage/community_outreach.webp',
+        'img_alt'    => 'Community outreach program helping children in the Philippines',
+        'category'   => 'Impact Story',
+        'cat_class'  => 'cat-impact',
+        'date'       => 'February 10, 2025',
+        'read_time'  => '6 min read',
+        'title'      => "Marco's Story: From Malnourished to Thriving in 6 Months",
+        'excerpt'    => "When Marco first came to our feeding program, he hadn't eaten a full meal in two days. Six months later, he attends school every day and his health has completely transformed. This is why we do what we do.",
+        'cta_label'  => "Read Marco's Story",
+        'cta_href'   => '#',
+        'delay'      => 'delay-2',
+    ],
+    [
+        'featured'   => false,
+        'categories' => 'field-reports',
+        'country'    => 'Philippines',
+        'flag'       => '🇵🇭',
+        'image'      => 'images/landingpage/medical_care.webp',
+        'img_alt'    => 'Medical volunteers providing care to patients in Leyte, Philippines',
+        'category'   => 'Medical',
+        'cat_class'  => 'cat-medical',
+        'date'       => 'January 22, 2025',
+        'read_time'  => '5 min read',
+        'title'      => 'Medical Mission to Leyte: 340 Patients in 3 Days',
+        'excerpt'    => 'Our volunteer medical team traveled to Leyte for a three-day free clinic. Over 340 patients received checkups, prescriptions, and surgery referrals — many seeing a doctor for the first time in years.',
+        'cta_label'  => 'Read the Report',
+        'cta_href'   => '#',
+        'delay'      => 'delay-1',
+    ],
+    [
+        'featured'   => false,
+        'categories' => 'disaster-response field-reports',
+        'country'    => 'Philippines',
+        'flag'       => '🇵🇭',
+        'image'      => 'images/landingpage/sex_trafficking.webp',
+        'img_alt'    => 'Anti-trafficking outreach and partnership expansion in the Philippines',
+        'category'   => 'Anti-Trafficking',
+        'cat_class'  => 'cat-trafficking',
+        'date'       => 'January 5, 2025',
+        'read_time'  => '4 min read',
+        'title'      => 'Partnership Expands: 3 New Rescue Organizations Join JDGM Network',
+        'excerpt'    => 'Our anti-trafficking work now reaches three more provinces following partnerships with two established Philippine NGOs focused on survivor rehabilitation. This is what collaboration for justice looks like.',
+        'cta_label'  => 'Read the Announcement',
+        'cta_href'   => '#',
+        'delay'      => 'delay-2',
+    ],
+    [
+        'featured'   => false,
+        'categories' => 'impact-stories',
+        'country'    => 'Philippines',
+        'flag'       => '🇵🇭',
+        'image'      => 'images/landingpage/education.webp',
+        'img_alt'    => 'Children enrolled in the JDGM education sponsorship program',
+        'category'   => 'Education',
+        'cat_class'  => 'cat-education',
+        'date'       => 'December 18, 2024',
+        'read_time'  => '3 min read',
+        'title'      => '18 Children Enrolled in Education Sponsorship for 2025',
+        'excerpt'    => 'Thanks to generous donors, 18 children who would have otherwise dropped out of school will have their tuition, uniforms, and school supplies covered for the entire year. Your giving made every enrollment possible.',
+        'cta_label'  => 'Sponsor a Child',
+        'cta_href'   => 'donationpage.php',
+        'delay'      => 'delay-3',
+    ],
+];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Blog & News — Johnny Davis Global Missions. Monthly field updates, impact stories, and mission reports from the Philippines and Uganda."/>
-  <title>Blog & News — Johnny Davis Global Missions</title>
+  <meta name="description" content="<?= htmlspecialchars($page_description) ?>"/>
+  <title><?= htmlspecialchars($page_title) ?></title>
 
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
-  <link rel="stylesheet" href="style/for_news.css"/>
+  <link rel="stylesheet" href="<?= $base ?>style/for_news.css"/>
 </head>
 <body>
+
 
 <!-- ============================================================
      STICKY DONATE
 ============================================================ -->
-<a href="donationpage.html" id="stickyDonate" aria-label="Donate Now">&#9829; Donate</a>
+<a href="<?= $base ?>donationpage.php" id="stickyDonate" aria-label="Donate Now">&#9829; Donate</a>
 
 
 <!-- ============================================================
@@ -26,31 +144,32 @@
 <header id="navbar" role="banner">
   <div class="container">
     <nav class="nav-inner" aria-label="Main navigation">
-      <a href="index.html" class="nav-logo" aria-label="Johnny Davis Global Missions Home">
-        <img src="images/logo.webp" alt="Johnny Davis Global Missions" />
+      <a href="<?= $base ?>index.php" class="nav-logo" aria-label="Johnny Davis Global Missions Home">
+        <img src="<?= $base ?>images/logo.webp" alt="Johnny Davis Global Missions" />
       </a>
       <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="index.html#mission">Mission</a>
-        <a href="index.html#help">How You Can Help</a>
-        <a href="news.html" class="active">Blog &amp; News</a>
-        <!-- <a href="index.html#testimonials">Testimonials</a> -->
-        <a href="donationpage.html" class="nav-donate">&#9829; Donate</a>
-        <a href="index.html#footer">Contact</a>
+        <a href="<?= $base ?>index.php">Home</a>
+        <a href="<?= $base ?>index.php#mission">Mission</a>
+        <a href="<?= $base ?>index.php#help">How You Can Help</a>
+        <a href="<?= $base ?>news.php" class="active">Blog &amp; News</a>
+        <!-- <a href="<?= $base ?>index.php#testimonials">Testimonials</a> -->
+        <a href="<?= $base ?>donationpage.php" class="nav-donate">&#9829; Donate</a>
+        <a href="<?= $base ?>contact.php">Contact</a>
       </div>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </nav>
   </div>
+
   <nav class="nav-mobile" id="navMobile" aria-label="Mobile navigation">
-    <a href="index.html">Home</a>
-    <a href="index.html#mission">Mission</a>
-    <a href="index.html#help">How You Can Help</a>
-    <a href="news.html" class="active">Blog &amp; News</a>
-    <a href="index.html#testimonials">Testimonials</a>
-    <a href="index.html#footer">Contact</a>
-    <a href="donationpage.html" class="nav-donate">&#9829; Donate Now</a>
+    <a href="<?= $base ?>index.php">Home</a>
+    <a href="<?= $base ?>index.php#mission">Mission</a>
+    <a href="<?= $base ?>index.php#help">How You Can Help</a>
+    <a href="<?= $base ?>news.php" class="active">Blog &amp; News</a>
+    <a href="<?= $base ?>index.php#testimonials">Testimonials</a>
+    <a href="<?= $base ?>contact.php">Contact</a>
+    <a href="<?= $base ?>donationpage.php" class="nav-donate">&#9829; Donate Now</a>
   </nav>
 </header>
 
@@ -123,7 +242,9 @@
   <div class="container">
     <div class="featured-story-card reveal">
       <div class="featured-story-image">
-        <img src="images/landingpage/community_outreach.webp" alt="Marco's transformation from malnourished to thriving child" loading="lazy"/>
+        <img src="<?= $base ?>images/landingpage/community_outreach.webp"
+             alt="Marco's transformation from malnourished to thriving child"
+             loading="lazy"/>
         <div class="featured-story-overlay"></div>
         <div class="featured-story-badge">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
@@ -156,7 +277,7 @@
 <div id="breadcrumb-bar">
   <div class="container">
     <nav class="breadcrumb-inner" aria-label="Breadcrumb">
-      <a href="index.html">Home</a>
+      <a href="<?= $base ?>index.php">Home</a>
       <span class="sep">›</span>
       <span class="current">Blog &amp; News</span>
     </nav>
@@ -195,7 +316,7 @@
         <span>Philippines <span class="filter-count">5</span></span>
       </button>
     </div>
-    <p class="results-count reveal" id="resultsCount">Showing <strong>6</strong> posts</p>
+    <p class="results-count reveal" id="resultsCount">Showing <strong><?= count($posts) ?></strong> posts</p>
   </div>
 </section>
 
@@ -209,17 +330,22 @@
 
     <div class="posts-grid" id="postsGrid">
 
-      <!-- Post 1 — FEATURED -->
+      <?php foreach ($posts as $post): ?>
+
+      <?php if ($post['featured']): ?>
+      <!-- Featured post -->
       <article class="post-card featured reveal"
-               data-categories="field-reports"
-               data-country="Philippines"
-               aria-label="Featured post: 2,400 Meals Served in February">
+               data-categories="<?= htmlspecialchars($post['categories']) ?>"
+               data-country="<?= htmlspecialchars($post['country']) ?>"
+               aria-label="Featured post: <?= htmlspecialchars($post['title']) ?>">
         <div class="post-img-wrap">
-          <img class="post-img" src="images/landingpage/feed_the_hungry.webp"
-               alt="Volunteers serving meals to Filipino children in Cebu" loading="lazy"/>
+          <img class="post-img"
+               src="<?= $base . htmlspecialchars($post['image']) ?>"
+               alt="<?= htmlspecialchars($post['img_alt']) ?>"
+               loading="lazy"/>
           <div class="post-img-overlay" aria-hidden="true"></div>
-          <span class="country-tag"><span class="flag">🇵🇭</span> Philippines</span>
-          <span class="read-time">5 min read</span>
+          <span class="country-tag"><span class="flag"><?= $post['flag'] ?></span> <?= htmlspecialchars($post['country']) ?></span>
+          <span class="read-time"><?= htmlspecialchars($post['read_time']) ?></span>
         </div>
         <div class="post-body">
           <div class="featured-badge">
@@ -227,48 +353,49 @@
             Featured Story
           </div>
           <div class="post-meta-row">
-            <span class="post-category cat-field">Field Report</span>
+            <span class="post-category <?= $post['cat_class'] ?>"><?= htmlspecialchars($post['category']) ?></span>
             <span class="post-date">
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-              March 15, 2025
+              <?= htmlspecialchars($post['date']) ?>
             </span>
           </div>
-          <h3 class="post-title">2,400 Meals Served in February — Our Biggest Month Yet</h3>
-          <p class="post-excerpt">
-            Pastor Esther's team reached 18 barangays in Cebu last month, feeding more children than any single month since the program launched in 2022. The momentum is real — and so is the hunger. Here's a full breakdown of where every meal went and who made it possible.
-          </p>
-          <a href="#" class="btn btn-primary" style="margin-top:8px; align-self:flex-start;">
-            Read Full Report →
+          <h3 class="post-title"><?= htmlspecialchars($post['title']) ?></h3>
+          <p class="post-excerpt"><?= htmlspecialchars($post['excerpt']) ?></p>
+          <a href="<?= htmlspecialchars($post['cta_href']) ?>" class="btn btn-primary" style="margin-top:8px; align-self:flex-start;">
+            <?= htmlspecialchars($post['cta_label']) ?>
           </a>
         </div>
       </article>
 
-      <!-- Post 2 -->
-      <article class="post-card reveal delay-1"
-               data-categories="field-reports impact-stories"
-               data-country="Uganda"
-               aria-label="Uganda: Well #7 is Complete">
+      <?php else: ?>
+      <!-- Standard post -->
+      <article class="post-card reveal <?= $post['delay'] ?>"
+               data-categories="<?= htmlspecialchars($post['categories']) ?>"
+               data-country="<?= htmlspecialchars($post['country']) ?>"
+               aria-label="<?= htmlspecialchars($post['title']) ?>">
         <div class="post-img-wrap">
-          <img class="post-img" src="images/landingpage/clean_drink_water.webp"
-               alt="Clean water flowing from a newly completed well in Uganda" loading="lazy"/>
+          <img class="post-img"
+               src="<?= $base . htmlspecialchars($post['image']) ?>"
+               alt="<?= htmlspecialchars($post['img_alt']) ?>"
+               loading="lazy"/>
           <div class="post-img-overlay" aria-hidden="true"></div>
-          <span class="country-tag"><span class="flag">🇺🇬</span> Uganda</span>
-          <span class="read-time">4 min read</span>
+          <span class="country-tag"><span class="flag"><?= $post['flag'] ?></span> <?= htmlspecialchars($post['country']) ?></span>
+          <span class="read-time"><?= htmlspecialchars($post['read_time']) ?></span>
         </div>
         <div class="post-body">
           <div class="post-meta-row">
-            <span class="post-category cat-field">Field Report</span>
+            <span class="post-category <?= $post['cat_class'] ?>"><?= htmlspecialchars($post['category']) ?></span>
             <span class="post-date">
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-              February 28, 2025
+              <?= htmlspecialchars($post['date']) ?>
             </span>
           </div>
-          <h3 class="post-title">Well #7 is Complete — 200 Families Now Have Clean Water</h3>
-          <p class="post-excerpt">After four months of drilling and community preparation, Well #7 in Mbale, Uganda was activated. We were there to witness the first water flowing — and the celebration that followed was unlike anything we've seen.</p>
+          <h3 class="post-title"><?= htmlspecialchars($post['title']) ?></h3>
+          <p class="post-excerpt"><?= htmlspecialchars($post['excerpt']) ?></p>
         </div>
         <div class="post-footer">
-          <a href="#" class="post-cta">
-            Read the Story
+          <a href="<?= $base . htmlspecialchars($post['cta_href'] !== '#' ? $post['cta_href'] : '#') ?>" class="post-cta">
+            <?= htmlspecialchars($post['cta_label']) ?>
             <span class="post-cta-arrow">→</span>
           </a>
           <div class="post-share" aria-label="Share options">
@@ -277,146 +404,9 @@
           </div>
         </div>
       </article>
+      <?php endif; ?>
 
-      <!-- Post 3 -->
-      <article class="post-card reveal delay-2"
-               data-categories="impact-stories"
-               data-country="Philippines"
-               aria-label="Marco's Story: From Malnourished to Thriving">
-        <div class="post-img-wrap">
-          <img class="post-img" src="images/landingpage/community_outreach.webp"
-               alt="Community outreach program helping children in the Philippines" loading="lazy"/>
-          <div class="post-img-overlay" aria-hidden="true"></div>
-          <span class="country-tag"><span class="flag">🇵🇭</span> Philippines</span>
-          <span class="read-time">6 min read</span>
-        </div>
-        <div class="post-body">
-          <div class="post-meta-row">
-            <span class="post-category cat-impact">Impact Story</span>
-            <span class="post-date">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-              February 10, 2025
-            </span>
-          </div>
-          <h3 class="post-title">Marco's Story: From Malnourished to Thriving in 6 Months</h3>
-          <p class="post-excerpt">When Marco first came to our feeding program, he hadn't eaten a full meal in two days. Six months later, he attends school every day and his health has completely transformed. This is why we do what we do.</p>
-        </div>
-        <div class="post-footer">
-          <a href="#" class="post-cta">
-            Read Marco's Story
-            <span class="post-cta-arrow">→</span>
-          </a>
-          <div class="post-share" aria-label="Share options">
-            <button class="share-dot" aria-label="Share on Facebook" title="Share on Facebook">f</button>
-            <button class="share-dot" aria-label="Share on Twitter" title="Share on Twitter">𝕏</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Post 4 -->
-      <article class="post-card reveal delay-1"
-               data-categories="field-reports"
-               data-country="Philippines"
-               aria-label="Medical Mission to Leyte: 340 Patients in 3 Days">
-        <div class="post-img-wrap">
-          <img class="post-img" src="images/landingpage/medical_care.webp"
-               alt="Medical volunteers providing care to patients in Leyte, Philippines" loading="lazy"/>
-          <div class="post-img-overlay" aria-hidden="true"></div>
-          <span class="country-tag"><span class="flag">🇵🇭</span> Philippines</span>
-          <span class="read-time">5 min read</span>
-        </div>
-        <div class="post-body">
-          <div class="post-meta-row">
-            <span class="post-category cat-medical">Medical</span>
-            <span class="post-date">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-              January 22, 2025
-            </span>
-          </div>
-          <h3 class="post-title">Medical Mission to Leyte: 340 Patients in 3 Days</h3>
-          <p class="post-excerpt">Our volunteer medical team traveled to Leyte for a three-day free clinic. Over 340 patients received checkups, prescriptions, and surgery referrals — many seeing a doctor for the first time in years.</p>
-        </div>
-        <div class="post-footer">
-          <a href="#" class="post-cta">
-            Read the Report
-            <span class="post-cta-arrow">→</span>
-          </a>
-          <div class="post-share" aria-label="Share options">
-            <button class="share-dot" aria-label="Share on Facebook" title="Share on Facebook">f</button>
-            <button class="share-dot" aria-label="Share on Twitter" title="Share on Twitter">𝕏</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Post 5 -->
-      <article class="post-card reveal delay-2"
-               data-categories="disaster-response field-reports"
-               data-country="Philippines"
-               aria-label="Partnership Expands: Anti-Trafficking Network">
-        <div class="post-img-wrap">
-          <img class="post-img" src="images/landingpage/sex_trafficking.webp"
-               alt="Anti-trafficking outreach and partnership expansion in the Philippines" loading="lazy"/>
-          <div class="post-img-overlay" aria-hidden="true"></div>
-          <span class="country-tag"><span class="flag">🇵🇭</span> Philippines</span>
-          <span class="read-time">4 min read</span>
-        </div>
-        <div class="post-body">
-          <div class="post-meta-row">
-            <span class="post-category cat-trafficking">Anti-Trafficking</span>
-            <span class="post-date">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-              January 5, 2025
-            </span>
-          </div>
-          <h3 class="post-title">Partnership Expands: 3 New Rescue Organizations Join JDGM Network</h3>
-          <p class="post-excerpt">Our anti-trafficking work now reaches three more provinces following partnerships with two established Philippine NGOs focused on survivor rehabilitation. This is what collaboration for justice looks like.</p>
-        </div>
-        <div class="post-footer">
-          <a href="#" class="post-cta">
-            Read the Announcement
-            <span class="post-cta-arrow">→</span>
-          </a>
-          <div class="post-share" aria-label="Share options">
-            <button class="share-dot" aria-label="Share on Facebook" title="Share on Facebook">f</button>
-            <button class="share-dot" aria-label="Share on Twitter" title="Share on Twitter">𝕏</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- Post 6 -->
-      <article class="post-card reveal delay-3"
-               data-categories="impact-stories"
-               data-country="Philippines"
-               aria-label="18 Children Enrolled in Education Sponsorship for 2025">
-        <div class="post-img-wrap">
-          <img class="post-img" src="images/landingpage/education.webp"
-               alt="Children enrolled in the JDGM education sponsorship program" loading="lazy"/>
-          <div class="post-img-overlay" aria-hidden="true"></div>
-          <span class="country-tag"><span class="flag">🇵🇭</span> Philippines</span>
-          <span class="read-time">3 min read</span>
-        </div>
-        <div class="post-body">
-          <div class="post-meta-row">
-            <span class="post-category cat-education">Education</span>
-            <span class="post-date">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-              December 18, 2024
-            </span>
-          </div>
-          <h3 class="post-title">18 Children Enrolled in Education Sponsorship for 2025</h3>
-          <p class="post-excerpt">Thanks to generous donors, 18 children who would have otherwise dropped out of school will have their tuition, uniforms, and school supplies covered for the entire year. Your giving made every enrollment possible.</p>
-        </div>
-        <div class="post-footer">
-          <a href="donationpage.html" class="post-cta">
-            Sponsor a Child
-            <span class="post-cta-arrow">→</span>
-          </a>
-          <div class="post-share" aria-label="Share options">
-            <button class="share-dot" aria-label="Share on Facebook" title="Share on Facebook">f</button>
-            <button class="share-dot" aria-label="Share on Twitter" title="Share on Twitter">𝕏</button>
-          </div>
-        </div>
-      </article>
+      <?php endforeach; ?>
 
       <!-- No results message -->
       <div class="no-results" id="noResults" aria-live="polite">
@@ -503,7 +493,8 @@
     <div class="locations-grid">
       <div class="location-card philippines reveal delay-1">
         <div class="location-image">
-          <img src="images/landingpage/community_outreach.webp" alt="Philippines mission work in Cebu and Leyte" loading="lazy"/>
+          <img src="<?= $base ?>images/landingpage/community_outreach.webp"
+               alt="Philippines mission work in Cebu and Leyte" loading="lazy"/>
           <div class="location-overlay"></div>
           <div class="location-flag">🇵🇭</div>
         </div>
@@ -523,7 +514,8 @@
       </div>
       <div class="location-card uganda reveal delay-2">
         <div class="location-image">
-          <img src="images/landingpage/clean_drink_water.webp" alt="Uganda mission work in Mbale" loading="lazy"/>
+          <img src="<?= $base ?>images/landingpage/clean_drink_water.webp"
+               alt="Uganda mission work in Mbale" loading="lazy"/>
           <div class="location-overlay"></div>
           <div class="location-flag">🇺🇬</div>
         </div>
@@ -631,7 +623,6 @@
       </div>
 
       <div class="newsletter-form-card reveal-right">
-        <!-- Form state -->
         <div id="nlForm">
           <h3>Join 1,200+ Supporters</h3>
           <p>Monthly updates. Real impact. Straight to your inbox.</p>
@@ -658,7 +649,6 @@
             </p>
           </form>
         </div>
-        <!-- Success state -->
         <div class="nl-success" id="nlSuccess" aria-live="polite">
           <div class="nl-success-icon" aria-hidden="true">🎉</div>
           <h4>You're in!</h4>
@@ -738,7 +728,7 @@
 ============================================================ -->
 <section id="donation-reminder" aria-labelledby="donation-title">
   <div class="donation-bg">
-    <img src="images/landingpage/community_outreach.webp" alt="Mission work in action" loading="lazy"/>
+    <img src="<?= $base ?>images/landingpage/community_outreach.webp" alt="Mission work in action" loading="lazy"/>
     <div class="donation-overlay"></div>
   </div>
   <div class="container">
@@ -748,10 +738,10 @@
         Every update you read is made possible by people who care. Your support helps us reach more children, families, and communities in need.
       </p>
       <div class="donation-actions">
-        <a href="donationpage.html" class="btn btn-primary donation-btn">
+        <a href="<?= $base ?>donationpage.php" class="btn btn-primary donation-btn">
           Donate Now
         </a>
-        <a href="donationpage.html" class="btn btn-ghost donation-btn-secondary">
+        <a href="<?= $base ?>donationpage.php" class="btn btn-ghost donation-btn-secondary">
           Sponsor a Child
         </a>
       </div>
@@ -768,16 +758,16 @@
     <div class="footer-grid">
 
       <div class="footer-brand">
-        <img src="images/logo.webp" alt="Johnny Davis Global Missions" />
+        <img src="<?= $base ?>images/logo.webp" alt="Johnny Davis Global Missions" />
         <p>A nonprofit founded on the belief that a little help can go a long way. Serving communities in the Philippines and Uganda through food, water, medical care, and education.</p>
         <div class="footer-socials" aria-label="Social media">
-          <a href="#" class="social-icon" aria-label="Facebook">
+          <a href="https://www.facebook.com/GlobalMissions55" class="social-icon" aria-label="Facebook">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </a>
-          <a href="#" class="social-icon" aria-label="Instagram">
+          <a href="https://www.instagram.com/globalmissions50/" class="social-icon" aria-label="Instagram">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
-          <a href="#" class="social-icon" aria-label="YouTube">
+          <a href="https://www.youtube.com/@johnnydavisministries" class="social-icon" aria-label="YouTube">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
           </a>
         </div>
@@ -786,24 +776,24 @@
       <nav aria-label="Quick links">
         <h3 class="footer-heading">Quick Links</h3>
         <div class="footer-links">
-          <a href="index.html">Home</a>
-          <a href="index.html#mission">Who We Are</a>
-          <a href="index.html#help">What We Do</a>
-          <a href="donationpage.html">Make a Difference</a>
-          <a href="#">Johnny Davis Ministries</a>
-          <a href="index.html#footer">Contact Us</a>
+          <a href="<?= $base ?>index.php">Home</a>
+          <a href="<?= $base ?>index.php#mission">Who We Are</a>
+          <a href="<?= $base ?>index.php#help">What We Do</a>
+          <a href="<?= $base ?>donationpage.php">Make a Difference</a>
+          <a href="https://johnnydavisministries.org" target="_blank" rel="noopener noreferrer">Johnny Davis Ministries</a>
+          <a href="<?= $base ?>contact.php">Contact Us</a>
         </div>
       </nav>
 
       <nav aria-label="Programs">
         <h3 class="footer-heading">Our Programs</h3>
         <div class="footer-links">
-          <a href="index.html#urgency">Feed the Hungry</a>
-          <a href="index.html#disaster">Disaster Relief</a>
-          <a href="#">Medical Missions</a>
-          <a href="#">Education Support</a>
-          <a href="#">Clean Water</a>
-          <a href="#">Anti-Trafficking</a>
+          <a href="<?= $base ?>index.php#urgency">Feed the Hungry</a>
+          <a href="<?= $base ?>index.php#disaster">Disaster Relief</a>
+          <a href="<?= $base ?>index.php#help">Medical Missions</a>
+          <a href="<?= $base ?>index.php#help">Education Support</a>
+          <a href="<?= $base ?>index.php#help">Clean Water</a>
+          <a href="<?= $base ?>index.php#help">Anti-Trafficking</a>
         </div>
       </nav>
 
@@ -832,7 +822,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-copy">&copy;2026 Johnny Davis Global Missions. All Rights Reserved.</p>
+      <p class="footer-copy">&copy;<?= date('Y') ?> Johnny Davis Global Missions. All Rights Reserved.</p>
       <nav class="footer-legal" aria-label="Legal">
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Use</a>
@@ -843,7 +833,7 @@
 </footer>
 
 
-<script src="js/for_news.js"></script>
+<script src="<?= $base ?>js/for_news.js"></script>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -21,19 +21,19 @@
 <header id="navbar" role="banner">
   <div class="container">
     <nav class="nav-inner" aria-label="Main navigation">
-      <a href="index.html" class="nav-logo" aria-label="Johnny Davis Global Missions Home">
+      <a href="index.php" class="nav-logo" aria-label="Johnny Davis Global Missions Home">
         <img src="images/logo.webp" alt="Johnny Davis Global Missions Logo" />
       </a>
 
       <ul class="nav-links" role="list">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#mission">Mission</a></li>
-        <li><a href="index.html#help">How You Can Help</a></li>
-        <li><a href="news.html">Blog &amp; News</a></li>
-        <li><a href="who-we-are.html" class="active">Who We Are</a></li>
-        <li><a href="johnny-davis-ministry.html">Ministry</a></li>
-        <li><a href="donationpage.html" class="btn-nav-donate" aria-label="Donate to Johnny Davis Global Missions">&#9829; Donate</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="index.php#mission">Mission</a></li>
+        <li><a href="index.php#help">How You Can Help</a></li>
+        <li><a href="news.php">Blog &amp; News</a></li>
+        <li><a href="who-we-are.php" class="active">Who We Are</a></li>
+        <li><a href="johnny-davis-ministry.php">Ministry</a></li>
+        <li><a href="donationpage.php" class="btn-nav-donate" aria-label="Donate to Johnny Davis Global Missions">&#9829; Donate</a></li>
+        <li><a href="contact.php">Contact</a></li>
       </ul>
 
       <button class="nav-toggle" id="navToggle" aria-label="Toggle mobile menu" aria-expanded="false">
@@ -43,18 +43,18 @@
   </div>
 
   <nav class="nav-mobile" id="navMobile" aria-label="Mobile navigation">
-    <a href="index.html">Home</a>
-    <a href="index.html#mission">Mission</a>
-    <a href="index.html#help">How You Can Help</a>
-    <a href="news.html">Blog &amp; News</a>
-    <a href="who-we-are.html">Who We Are</a>
-    <a href="johnny-davis-ministry.html">Ministry</a>
-    <a href="contact.html">Contact</a>
-    <a href="donationpage.html" class="btn-nav-donate">&#9829; Donate Now</a>
+    <a href="index.php">Home</a>
+    <a href="index.php#mission">Mission</a>
+    <a href="index.php#help">How You Can Help</a>
+    <a href="news.php">Blog &amp; News</a>
+    <a href="who-we-are.php">Who We Are</a>
+    <a href="johnny-davis-ministry.php">Ministry</a>
+    <a href="contact.php">Contact</a>
+    <a href="donationpage.php" class="btn-nav-donate">&#9829; Donate Now</a>
   </nav>
 </header>
 
-<a id="stickyDonate" class="btn btn-primary" href="donationpage.html" aria-label="Donate Now">Donate Now</a>
+<a id="stickyDonate" class="btn btn-primary" href="donationpage.php" aria-label="Donate Now">Donate Now</a>
 
 
 <!-- ============================================================
@@ -86,7 +86,7 @@
       </p>
 
       <div class="hero-ctas">
-        <a href="donationpage.html" class="btn btn-primary btn-lg">
+        <a href="donationpage.php" class="btn btn-primary btn-lg">
           &#9829; Donate Here
         </a>
         <a href="#about" class="btn btn-outline btn-lg">
@@ -429,10 +429,10 @@
       </p>
 
       <div class="donate-cta-btns">
-        <a href="donationpage.html" class="btn btn-primary btn-lg pulse-cta">
+        <a href="donationpage.php" class="btn btn-primary btn-lg pulse-cta">
           &#9829; Donate Now
         </a>
-        <a href="donationpage.html" class="btn btn-outline btn-lg">
+        <a href="donationpage.php" class="btn btn-outline btn-lg">
           Support the Mission
         </a>
       </div>
@@ -481,12 +481,12 @@
       <nav aria-label="Footer navigation">
         <h3 class="footer-heading">Quick Links</h3>
         <ul class="footer-links" role="list">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="who-we-are.html">Who We Are</a></li>
-          <li><a href="index.html#help">What We Do</a></li>
-          <li><a href="donationpage.html">Make a Difference</a></li>
+          <li><a href="index.php">Home</a></li>
+          <li><a href="who-we-are.php">Who We Are</a></li>
+          <li><a href="index.php#help">What We Do</a></li>
+          <li><a href="donationpage.php">Make a Difference</a></li>
           <li><a href="https://johnnydavisministries.org" target="_blank" rel="noopener noreferrer">Johnny Davis Ministries</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="contact.php">Contact Us</a></li>
         </ul>
       </nav>
 
@@ -494,12 +494,12 @@
       <nav aria-label="Programs navigation">
         <h3 class="footer-heading">Our Programs</h3>
         <ul class="footer-links" role="list">
-          <li><a href="index.html#urgency">Feed the Hungry</a></li>
-          <li><a href="index.html#disaster">Disaster Relief</a></li>
-          <li><a href="index.html#help">Medical Missions</a></li>
-          <li><a href="index.html#help">Education Support</a></li>
-          <li><a href="index.html#help">Clean Water</a></li>
-          <li><a href="index.html#help">Community Outreach</a></li>
+          <li><a href="index.php#urgency">Feed the Hungry</a></li>
+          <li><a href="index.php#disaster">Disaster Relief</a></li>
+          <li><a href="index.php#help">Medical Missions</a></li>
+          <li><a href="index.php#help">Education Support</a></li>
+          <li><a href="index.php#help">Clean Water</a></li>
+          <li><a href="index.php#help">Community Outreach</a></li>
         </ul>
       </nav>
 
