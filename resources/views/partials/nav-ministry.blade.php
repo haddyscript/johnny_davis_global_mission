@@ -3,13 +3,13 @@
   <div class="container">
     <nav class="nav-inner" aria-label="Main navigation">
       <a href="{{ route('home') }}" class="nav-logo" aria-label="Johnny Davis Global Missions Home">
-        <img src="{{ asset('images/ministry-logo.jpeg') }}" alt="Johnny Davis Global Missions Logo" />
+        <img src="{{ asset('images/ministry-logo.png') }}" alt="Johnny Davis Global Missions Logo" />
       </a>
 
       <ul class="nav-links" role="list">
         <li><a href="{{ route('home') }}"{{ $activePage === 'home' ? ' class="active"' : '' }}>Home</a></li>
         <li><a href="{{ route('home') }}#mission"{{ $activePage === 'mission' ? ' class="active"' : '' }}>Mission</a></li>
-        <li><a href="{{ route('home') }}#help"{{ $activePage === 'help' ? ' class="active"' : '' }}>How You Can Help</a></li>
+        <!-- <li><a href="{{ route('home') }}#help"{{ $activePage === 'help' ? ' class="active"' : '' }}>How You Can Help</a></li> -->
         <li><a href="{{ route('news') }}"{{ $activePage === 'news' ? ' class="active"' : '' }}>Blog &amp; News</a></li>
         <li><a href="{{ route('who-we-are') }}"{{ $activePage === 'who-we-are' ? ' class="active"' : '' }}>Who We Are</a></li>
         <li><a href="{{ route('ministry') }}"{{ $activePage === 'ministry' ? ' class="active"' : '' }}>Ministry</a></li>

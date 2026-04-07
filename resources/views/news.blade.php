@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="<?= htmlspecialchars($page_description) ?>"/>
-  <title><?= htmlspecialchars($page_title) ?></title>
+  <meta name="description" content="{{ $description }}"/>
+  <title>{{ $title }}</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
-  <link rel="stylesheet" href="<?= $base ?>style/for_news.css"/>
+  <link rel="stylesheet" href="{{ asset('css/for_news.css') }}"/>
 </head>
 <body>
 
@@ -19,7 +19,7 @@
 <!-- ============================================================
      STICKY DONATE
 ============================================================ -->
-<a href="<?= $base ?>donationpage.php" id="stickyDonate" aria-label="Donate Now">&#9829; Donate</a>
+<a href="{{ route('donate') }}" id="stickyDonate" aria-label="Donate Now">&#9829; Donate</a>
 
 
 <!-- ============================================================
@@ -28,17 +28,17 @@
 <header id="navbar" role="banner">
   <div class="container">
     <nav class="nav-inner" aria-label="Main navigation">
-      <a href="<?= $base ?>index.php" class="nav-logo" aria-label="Johnny Davis Global Missions Home">
+      <a href="{{ route('home') }}" class="nav-logo" aria-label="Johnny Davis Global Missions Home">
         <img src="{{ asset('images/logo.webp') }}" alt="Johnny Davis Global Missions" />
       </a>
       <div class="nav-links">
-        <a href="<?= $base ?>index.php">Home</a>
-        <a href="<?= $base ?>index.php#mission">Mission</a>
-        <a href="<?= $base ?>index.php#help">How You Can Help</a>
-        <a href="<?= $base ?>news.php" class="active">Blog &amp; News</a>
-        <!-- <a href="<?= $base ?>index.php#testimonials">Testimonials</a> -->
-        <a href="<?= $base ?>donationpage.php" class="nav-donate">&#9829; Donate</a>
-        <a href="<?= $base ?>contact.php">Contact</a>
+        <a href="{{ route('home') }}">Home</a>
+        <a href="{{ route('home') }}#mission">Mission</a>
+        <a href="{{ route('home') }}#help">How You Can Help</a>
+        <a href="{{ route('news') }}" class="active">Blog &amp; News</a>
+        <!-- <a href="{{ route('home') }}#testimonials">Testimonials</a> -->
+        <a href="{{ route('donate') }}" class="nav-donate">&#9829; Donate</a>
+        <a href="{{ route('contact') }}">Contact</a>
       </div>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -47,13 +47,13 @@
   </div>
 
   <nav class="nav-mobile" id="navMobile" aria-label="Mobile navigation">
-    <a href="<?= $base ?>index.php">Home</a>
-    <a href="<?= $base ?>index.php#mission">Mission</a>
-    <a href="<?= $base ?>index.php#help">How You Can Help</a>
-    <a href="<?= $base ?>news.php" class="active">Blog &amp; News</a>
-    <a href="<?= $base ?>index.php#testimonials">Testimonials</a>
-    <a href="<?= $base ?>contact.php">Contact</a>
-    <a href="<?= $base ?>donationpage.php" class="nav-donate">&#9829; Donate Now</a>
+    <a href="{{ route('home') }}">Home</a>
+    <a href="{{ route('home') }}#mission">Mission</a>
+    <a href="{{ route('home') }}#help">How You Can Help</a>
+    <a href="{{ route('news') }}" class="active">Blog &amp; News</a>
+    <a href="{{ route('home') }}#testimonials">Testimonials</a>
+    <a href="{{ route('contact') }}">Contact</a>
+    <a href="{{ route('donate') }}" class="nav-donate">&#9829; Donate Now</a>
   </nav>
 </header>
 
@@ -161,7 +161,7 @@
 <div id="breadcrumb-bar">
   <div class="container">
     <nav class="breadcrumb-inner" aria-label="Breadcrumb">
-      <a href="<?= $base ?>index.php">Home</a>
+      <a href=\"{{ route('home') }}\">Home</a>
       <span class="sep">›</span>
       <span class="current">Blog &amp; News</span>
     </nav>
@@ -278,7 +278,7 @@
           <p class="post-excerpt">{{ $post['excerpt'] }}</p>
         </div>
         <div class="post-footer">
-          <a href="<?= $base . htmlspecialchars($post['cta_href'] !== '#' ? $post['cta_href'] : '#') ?>" class="post-cta">
+          <a href="{{ route('donate') }}" class="post-cta">
             {{ $post['cta_label'] }}
             <span class="post-cta-arrow">→</span>
           </a>
@@ -622,10 +622,10 @@
         Every update you read is made possible by people who care. Your support helps us reach more children, families, and communities in need.
       </p>
       <div class="donation-actions">
-        <a href="<?= $base ?>donationpage.php" class="btn btn-primary donation-btn">
+        <a href="{{ route('donate') }}" class="btn btn-primary donation-btn">
           Donate Now
         </a>
-        <a href="<?= $base ?>donationpage.php" class="btn btn-ghost donation-btn-secondary">
+        <a href="{{ route('donate') }}" class="btn btn-ghost donation-btn-secondary">
           Sponsor a Child
         </a>
       </div>
@@ -660,24 +660,24 @@
       <nav aria-label="Quick links">
         <h3 class="footer-heading">Quick Links</h3>
         <div class="footer-links">
-          <a href="<?= $base ?>index.php">Home</a>
-          <a href="<?= $base ?>index.php#mission">Who We Are</a>
-          <a href="<?= $base ?>index.php#help">What We Do</a>
-          <a href="<?= $base ?>donationpage.php">Make a Difference</a>
+          <a href="{{ route('home') }}">Home</a>
+          <a href="{{ route('who-we-are') }}">Who We Are</a>
+          <a href="{{ route('ministry') }}">What We Do</a>
+          <a href="{{ route('donate') }}">Make a Difference</a>
           <a href="https://johnnydavisministries.org" target="_blank" rel="noopener noreferrer">Johnny Davis Ministries</a>
-          <a href="<?= $base ?>contact.php">Contact Us</a>
+          <a href="{{ route('contact') }}">Contact Us</a>
         </div>
       </nav>
 
       <nav aria-label="Programs">
         <h3 class="footer-heading">Our Programs</h3>
         <div class="footer-links">
-          <a href="<?= $base ?>index.php#urgency">Feed the Hungry</a>
-          <a href="<?= $base ?>index.php#disaster">Disaster Relief</a>
-          <a href="<?= $base ?>index.php#help">Medical Missions</a>
-          <a href="<?= $base ?>index.php#help">Education Support</a>
-          <a href="<?= $base ?>index.php#help">Clean Water</a>
-          <a href="<?= $base ?>index.php#help">Anti-Trafficking</a>
+          <a href="{{ route('home') }}#urgency">Feed the Hungry</a>
+          <a href="{{ route('home') }}#disaster">Disaster Relief</a>
+          <a href="{{ route('home') }}#help">Medical Missions</a>
+          <a href="{{ route('home') }}#help">Education Support</a>
+          <a href="{{ route('home') }}#help">Clean Water</a>
+          <a href="{{ route('home') }}#help">Anti-Trafficking</a>
         </div>
       </nav>
 
@@ -717,7 +717,7 @@
 </footer>
 
 
-<script src="<?= $base ?>js/for_news.js"></script>
+<script src="{{ asset('js/for_news.js') }}"></script>
 
 </body>
 </html>
