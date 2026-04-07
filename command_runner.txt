@@ -1,0 +1,7 @@
+### Migration to terminal execution ###
+- docker compose exec app php artisan migrate --force
+
+
+### Down docker and Build ###
+- docker-compose down -v                             
+- docker-compose up -d --build

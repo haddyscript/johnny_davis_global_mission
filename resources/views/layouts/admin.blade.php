@@ -12,6 +12,7 @@
     $authUser    = auth()->user();
     $userName    = $authUser?->name ?? 'Admin';
     $userEmail   = $authUser?->email ?? '';
+    $userAvatar  = $authUser?->avatar ? asset('storage/' . $authUser->avatar) : null;
     $initials    = collect(explode(' ', $userName))->map(fn($w) => strtoupper($w[0] ?? ''))->take(2)->implode('');
 
     // Route-aware search target
@@ -71,7 +72,11 @@
         {{-- Sidebar user footer --}}
         <div class="admin-footer-nav">
             <div class="sidebar-user">
-                <div class="sidebar-user-avatar">{{ $initials }}</div>
+                @if($userAvatar)
+                    <img src="{{ $userAvatar }}" alt="{{ $userName }}" class="sidebar-user-avatar-img">
+                @else
+                    <div class="sidebar-user-avatar">{{ $initials }}</div>
+                @endif
                 <div class="sidebar-user-info">
                     <div class="sidebar-user-name">{{ $userName }}</div>
                     <div class="sidebar-user-role">Super Admin</div>
@@ -169,7 +174,11 @@
                 {{-- Profile / User menu --}}
                 <div class="topbar-dropdown-wrap" id="profile-wrap">
                     <button class="admin-user-chip topbar-user-btn" id="profile-btn" aria-expanded="false">
-                        <div class="admin-user-avatar">{{ $initials }}</div>
+                        @if($userAvatar)
+                            <img src="{{ $userAvatar }}" alt="{{ $userName }}" class="topbar-user-avatar-img">
+                        @else
+                            <div class="admin-user-avatar">{{ $initials }}</div>
+                        @endif
                         <div class="topbar-user-info">
                             <div class="admin-user-name">{{ $userName }}</div>
                             <div class="topbar-user-role">Content Admin</div>
@@ -180,7 +189,11 @@
                     <div class="topbar-dropdown profile-dropdown" id="profile-dropdown" role="menu">
                         {{-- User header --}}
                         <div class="profile-dropdown-header">
-                            <div class="profile-dropdown-avatar">{{ $initials }}</div>
+                            @if($userAvatar)
+                                <img src="{{ $userAvatar }}" alt="{{ $userName }}" class="profile-dropdown-avatar" style="object-fit:cover;width:38px;height:38px;border-radius:12px;">
+                            @else
+                                <div class="profile-dropdown-avatar">{{ $initials }}</div>
+                            @endif
                             <div>
                                 <div class="profile-dropdown-name">{{ $userName }}</div>
                                 <div class="profile-dropdown-email">{{ $userEmail }}</div>
