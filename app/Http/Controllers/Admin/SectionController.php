@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SectionController extends Controller
 {
@@ -52,7 +53,7 @@ class SectionController extends Controller
     {
         $request->validate([
             'page_id'    => 'required|exists:pages,id',
-            'slug'       => 'required',
+            'slug'       => ['required', Rule::unique('sections')->where(fn ($query) => $query->where('page_id', $request->page_id))],
             'name'       => 'required',
             'type'       => 'nullable',
             'sort_order' => 'integer',
@@ -79,7 +80,7 @@ class SectionController extends Controller
     {
         $request->validate([
             'page_id'    => 'required|exists:pages,id',
-            'slug'       => 'required',
+            'slug'       => ['required', Rule::unique('sections')->where(fn ($query) => $query->where('page_id', $request->page_id))->ignore($section->id)],
             'name'       => 'required',
             'type'       => 'nullable',
             'sort_order' => 'integer',

@@ -51,6 +51,7 @@ class CmsKeyMap
 
             'home.donation_highlight' => [
                 ['key' => 'headline',    'type' => 'text', 'label' => 'Headline',     'hint' => 'Donation highlight heading'],
+                ['key' => 'highlight_amount',    'type' => 'text', 'label' => 'Highlight Amount',     'hint' => 'Donation highlight amount text, e.g. "$7.99 / month = 1 child fed"'],
                 ['key' => 'body',        'type' => 'text', 'label' => 'Body',         'hint' => 'Supporting paragraph text'],
                 ['key' => 'button_text', 'type' => 'text', 'label' => 'Button Text',  'hint' => 'CTA button label (url field = destination)'],
             ],
@@ -69,6 +70,7 @@ class CmsKeyMap
 
             'home.help' => [
                 ['key' => 'headline', 'type' => 'text', 'label' => 'Headline', 'hint' => '"How You Can Help" section heading'],
+                ['key' => 'body',     'type' => 'text', 'label' => 'Body',     'hint' => '"How You Can Help" section paragraph'],
                 ['key' => 'cards',    'type' => 'list', 'label' => 'Cards',    'hint' => 'List of {title, description, cta_text, cta_url} help cards'],
             ],
 
@@ -79,6 +81,7 @@ class CmsKeyMap
 
             'home.donate_cta' => [
                 ['key' => 'headline',     'type' => 'text', 'label' => 'Headline',       'hint' => 'Donate CTA section heading'],
+                ['key' => 'section_label',     'type' => 'text', 'label' => 'Section Label',       'hint' => 'Small label above the headline eg. "Make a Difference Today"'],
                 ['key' => 'body',         'type' => 'text', 'label' => 'Body',           'hint' => 'Supporting paragraph'],
                 ['key' => 'primary_cta',  'type' => 'text', 'label' => 'Primary CTA',   'hint' => 'Main donate button label (url field = destination)'],
                 ['key' => 'secondary_cta','type' => 'text', 'label' => 'Secondary CTA', 'hint' => 'Monthly giving button label'],

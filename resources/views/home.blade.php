@@ -216,10 +216,34 @@
 ============================================================ -->
 <section id="donation-highlight" class="reveal">
   <div class="container">
-    <p class="highlight-text">Every contribution moves us closer to ending hunger for Filipino children.</p>
-    <div class="highlight-amount">$7.99 / month = 1 child fed</div>
-    <p>Choose a monthly donation and we'll provide a full meal plan, clean water, and hope to a child in need.</p>
-    <a href="{{ route('donate') }}" class="btn btn-blue btn-lg" style="display:inline-flex; align-items:center; justify-content:center; margin-top:16px;">Donate &amp; Change a Life</a>
+    <p class="highlight-text">
+      @if($cms->has('donation-highlight', 'body'))
+        {{ $cms->text('donation-highlight', 'body', '') }}
+      @else
+        Every contribution moves us closer to ending hunger for Filipino children.
+      @endif
+    </p>
+    <div class="highlight-amount">
+      @if($cms->has('donation_highlight', 'highlight_amount'))
+        {{ $cms->text('donation_highlight', 'highlight_amount', '') }}
+      @else
+        $7.99 / month = 1 child fed
+      @endif
+    </div>
+    <p>
+      @if($cms->has('donation_highlight', 'body'))
+        {{ $cms->text('donation_highlight', 'body', '') }}
+      @else
+        Choose a monthly donation and we'll provide a full meal plan, clean water, and hope to a child in need.
+      @endif
+      </p>
+    <a href="{{ route('donate') }}" class="btn btn-blue btn-lg" style="display:inline-flex; align-items:center; justify-content:center; margin-top:16px;">
+      @if($cms->has('donation-highlight', 'button_text'))
+        {{ $cms->text('donation-highlight', 'button_text', '') }}
+      @else
+        Donate &amp; Change a Life
+    @endif
+    </a>
   </div>
 </section>
 
@@ -269,14 +293,27 @@
       <div class="urgency-text reveal-left">
         <p class="overline">Urgent Campaign</p>
         <h2 class="urgency-heading" id="urgency-title">
-          Hunger Can't Wait —<br/>This Is The Moment
+          @if($cms->has('urgency', 'headline'))
+            {{ $cms->text('urgency', 'headline', '') }}
+          @else
+            Hunger Can't Wait —<br/>This Is The Moment
+          @endif
         </h2>
-        <p class="urgency-body">
-          There is a child praying for a meal right now.<br/>
-          <strong style="color:#fff;">You can be the answer.</strong>
-        </p>
+        @if($cms->has('urgency', 'body'))
+          <p class="urgency-body">{!! nl2br(e($cms->text('urgency', 'body', ''))) !!}</p>
+        @else
+          <p class="urgency-body">
+            There is a child praying for a meal right now.<br/>
+            <strong style="color:#fff;">You can be the answer.</strong>
+          </p>
+        @endif
         <p class="urgency-price">
-          For just $7.99 a month, you can help feed Filipino children in need
+          For just @if ($cms->has('urgency', 'price'))
+            {{ $cms->text('urgency', 'price', '') }}
+          @else
+            $7.99 a month
+          @endif 
+          , you can help feed Filipino children in need
           and bring hope to a hungry family.
         </p>
         <blockquote class="urgency-closing">
@@ -287,7 +324,11 @@
           <strong style="color: var(--orange-light);">Because of YOU… they eat.</strong>
         </blockquote>
         <a href="https://filipinochildren.org" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
-          &#9829; Donate $7.99 Monthly
+          &#9829; Donate @if ($cms->has('urgency', 'price')) 
+            {{ $cms->text('urgency', 'price', '') }}
+           @else
+             $7.99 Monthly
+           @endif 
         </a>
       </div>
 
@@ -324,12 +365,20 @@
       <div class="disaster-text reveal-right">
         <span class="section-label">Disaster Relief</span>
         <h2 class="section-title" id="disaster-title">
-          Pray For Earthquake Victims<br/>
-          <span style="font-size:80%; color: var(--gray-600);">(Cebu, Philippines)</span>
+          @if($cms->has('disaster', 'headline'))
+            {{ $cms->text('disaster', 'headline', '') }}
+          @else
+            Pray For Earthquake Victims<br/>
+            <span style="font-size:80%; color: var(--gray-600);">(Cebu, Philippines)</span>
+          @endif
         </h2>
         <p class="body-text">
-          Hello Friends. Let us pray for the victims of the recent earthquake in Cebu Province,
-          Central Visayas, Philippines that happened on <strong>September 30th, 2025</strong>.
+          @if($cms->has('disaster', 'body'))
+            {{ $cms->text('disaster', 'body', '') }}
+          @else
+              Hello Friends. Let us pray for the victims of the recent earthquake in Cebu Province,
+              Central Visayas, Philippines that happened on <strong>September 30th, 2025</strong>.
+          @endif
         </p>
 
         <ul class="needs-list" aria-label="Immediate needs">
@@ -374,9 +423,19 @@
 
     <header class="help-header reveal">
       <span class="section-label">Take Action</span>
-      <h2 class="section-title" id="help-title">How You Can Help</h2>
+      <h2 class="section-title" id="help-title">
+        @if ($cms->has('help', 'headline'))
+          {{ $cms->text('help', 'headline', '') }}
+        @else
+          How You Can Help
+        @endif
+      </h2>
       <p class="body-text">
-        Every action — big or small — creates ripples of change in the lives of children and families in the Philippines.
+        @if ($cms->has('help', 'body'))
+          {{ $cms->text('help', 'body', '') }}
+        @else
+          Every action — big or small — creates ripples of change in the lives of children and families in the Philippines.
+        @endif
       </p>
     </header>
 
@@ -528,11 +587,27 @@
 
   <div class="container">
     <div class="donate-cta-content reveal">
-      <span class="section-label">Make a Difference Today</span>
-      <h2 class="section-title" id="donate-cta-title">Giving Back Feels Good</h2>
+      <span class="section-label">
+        @if($cms->has('donate_cta', 'section_label'))
+          {{ $cms->text('donate_cta', 'section_label', '') }}
+        @else
+          Make a Difference Today
+        @endif
+      </span>
+      <h2 class="section-title" id="donate-cta-title">
+        @if($cms->has('donate_cta', 'headline'))
+          {{ $cms->text('donate_cta', 'headline', '') }}
+        @else
+          Giving Back Feels Good
+        @endif
+      </h2>
       <p class="body-text">
-        Show your support by making a donation today. Every gift — no matter the size —
-        directly feeds a child, supports a family, and brings hope to a community in need.
+        @if ($cms->has('donate_cta', 'body'))
+          {{ $cms->text('donate_cta', 'body', '') }}
+         @else
+          Show your support by making a donation today. Every gift — no matter the size —
+          directly feeds a child, supports a family, and brings hope to a community in need.
+        @endif
       </p>
 
       <div class="donate-options" role="group" aria-label="Select donation amount">
@@ -554,8 +629,11 @@
       </div>
 
       <p class="impact-note">
-        100% of your donation goes directly to those in need. Johnny Davis Global Missions is a 501(c)(3) nonprofit.
-        Your gift may be tax-deductible.
+        @if ($cms->has('donate_cta', 'impact_note'))
+          {{ $cms->text('donate_cta', 'impact_note', '') }}
+         @else
+            100% of your donation goes directly to those in need. Johnny Davis Global Missions is a 501(c)(3) nonprofit. Your gift may be tax-deductible.
+        @endif
       </p>
     </div>
   </div>
