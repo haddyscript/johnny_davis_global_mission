@@ -1,45 +1,54 @@
 @extends('layouts.admin')
 
-@section('title', 'Create Content Block')
+@section('page-title', 'Create Content Block')
 
 @section('content')
-    <h1>Create Content Block</h1>
+<div class="admin-card form-card">
     <form method="POST" action="{{ route('admin.content-blocks.store') }}">
         @csrf
-        <div class="mb-3">
+        <div class="form-group">
             <label for="section_id" class="form-label">Section</label>
-            <select class="form-control" id="section_id" name="section_id" required>
+            <select id="section_id" name="section_id" class="form-select" required>
                 @foreach($sections as $section)
-                    <option value="{{ $section->id }}">{{ $section->page->name }} - {{ $section->name }}</option>
+                    <option value="{{ $section->id }}" {{ old('section_id') == $section->id ? 'selected' : '' }}>{{ $section->page->name }} — {{ $section->name }}</option>
                 @endforeach
             </select>
+            @error('section_id')<div class="form-text" style="color:#b91c1c;">{{ $message }}</div>@enderror
         </div>
-        <div class="mb-3">
+        <div class="form-group">
             <label for="key" class="form-label">Key</label>
-            <input type="text" class="form-control" id="key" name="key" required>
+            <input id="key" name="key" type="text" class="form-control" value="{{ old('key') }}" required>
+            @error('key')<div class="form-text" style="color:#b91c1c;">{{ $message }}</div>@enderror
         </div>
-        <div class="mb-3">
+        <div class="form-group">
             <label for="type" class="form-label">Type</label>
-            <select class="form-control" id="type" name="type" required>
-                <option value="text">Text</option>
-                <option value="image">Image</option>
-                <option value="link">Link</option>
-                <option value="list">List</option>
+            <select id="type" name="type" class="form-select" required>
+                <option value="text" {{ old('type') == 'text' ? 'selected' : '' }}>Text</option>
+                <option value="image" {{ old('type') == 'image' ? 'selected' : '' }}>Image</option>
+                <option value="link" {{ old('type') == 'link' ? 'selected' : '' }}>Link</option>
+                <option value="list" {{ old('type') == 'list' ? 'selected' : '' }}>List</option>
             </select>
+            @error('type')<div class="form-text" style="color:#b91c1c;">{{ $message }}</div>@enderror
         </div>
-        <div class="mb-3">
+        <div class="form-group">
             <label for="content" class="form-label">Content</label>
-            <textarea class="form-control" id="content" name="content" rows="4"></textarea>
+            <textarea id="content" name="content" class="form-control" rows="4">{{ old('content') }}</textarea>
+            @error('content')<div class="form-text" style="color:#b91c1c;">{{ $message }}</div>@enderror
         </div>
-        <div class="mb-3">
+        <div class="form-group">
             <label for="url" class="form-label">URL</label>
-            <input type="url" class="form-control" id="url" name="url">
+            <input id="url" name="url" type="url" class="form-control" value="{{ old('url') }}">
+            @error('url')<div class="form-text" style="color:#b91c1c;">{{ $message }}</div>@enderror
         </div>
-        <div class="mb-3">
+        <div class="form-group">
             <label for="sort_order" class="form-label">Sort Order</label>
-            <input type="number" class="form-control" id="sort_order" name="sort_order" value="0">
+            <input id="sort_order" name="sort_order" type="number" class="form-control" value="{{ old('sort_order', 0) }}">
+            @error('sort_order')<div class="form-text" style="color:#b91c1c;">{{ $message }}</div>@enderror
         </div>
-        <button type="submit" class="btn btn-primary">Create</button>
-        <a href="{{ route('admin.content-blocks.index') }}" class="btn btn-secondary">Cancel</a>
+        <div class="admin-actions">
+            <button type="submit" class="admin-btn">Create Block</button>
+            <a href="{{ route('admin.content-blocks.index') }}" class="admin-btn-secondary">Cancel</a>
+        </div>
     </form>
+</div>
 @endsection

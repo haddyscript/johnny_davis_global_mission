@@ -1,33 +1,42 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Page')
+@section('page-title', 'Edit Page')
 
 @section('content')
-    <h1>Edit Page</h1>
+<div class="admin-card form-card">
     <form method="POST" action="{{ route('admin.pages.update', $page) }}">
         @csrf
         @method('PUT')
-        <div class="mb-3">
+        <div class="form-group">
             <label for="slug" class="form-label">Slug</label>
-            <input type="text" class="form-control" id="slug" name="slug" value="{{ $page->slug }}" required>
+            <input id="slug" name="slug" type="text" class="form-control" value="{{ old('slug', $page->slug) }}" required>
+            @error('slug')<div class="form-text" style="color:#b91c1c;">{{ $message }}</div>@enderror
         </div>
-        <div class="mb-3">
+        <div class="form-group">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ $page->name }}" required>
+            <input id="name" name="name" type="text" class="form-control" value="{{ old('name', $page->name) }}" required>
+            @error('name')<div class="form-text" style="color:#b91c1c;">{{ $message }}</div>@enderror
         </div>
-        <div class="mb-3">
+        <div class="form-group">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description">{{ $page->description }}</textarea>
+            <textarea id="description" name="description" class="form-control" rows="4">{{ old('description', $page->description) }}</textarea>
+            @error('description')<div class="form-text" style="color:#b91c1c;">{{ $message }}</div>@enderror
         </div>
-        <div class="mb-3">
-            <label for="is_active" class="form-check-label">Active</label>
-            <input type="checkbox" class="form-check-input" id="is_active" name="is_active" value="1" {{ $page->is_active ? 'checked' : '' }}>
+        <div class="form-group">
+            <label class="form-label">Status</label>
+            <div>
+                <label style="margin-right:16px;"><input type="checkbox" name="is_active" value="1" {{ $page->is_active ? 'checked' : '' }}> Active</label>
+            </div>
         </div>
-        <div class="mb-3">
+        <div class="form-group">
             <label for="sort_order" class="form-label">Sort Order</label>
-            <input type="number" class="form-control" id="sort_order" name="sort_order" value="{{ $page->sort_order }}">
+            <input id="sort_order" name="sort_order" type="number" class="form-control" value="{{ old('sort_order', $page->sort_order) }}">
+            @error('sort_order')<div class="form-text" style="color:#b91c1c;">{{ $message }}</div>@enderror
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{{ route('admin.pages.index') }}" class="btn btn-secondary">Cancel</a>
+        <div class="admin-actions">
+            <button type="submit" class="admin-btn">Update Page</button>
+            <a href="{{ route('admin.pages.index') }}" class="admin-btn-secondary">Cancel</a>
+        </div>
     </form>
+</div>
 @endsection

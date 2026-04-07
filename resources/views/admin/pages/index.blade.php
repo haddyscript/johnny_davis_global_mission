@@ -1,19 +1,26 @@
 @extends('layouts.admin')
 
-@section('title', 'Pages')
+@section('page-title', 'Pages')
 
 @section('content')
-    <h1>Pages</h1>
-    <a href="{{ route('admin.pages.create') }}" class="btn btn-primary mb-3">Create Page</a>
+<div class="admin-card">
+    <div class="admin-toolbar">
+        <div>
+            <h2>Pages</h2>
+            <p class="text-muted">Manage the core content pages that appear throughout your site.</p>
+        </div>
+        <div class="admin-actions">
+            <a href="{{ route('admin.pages.create') }}" class="admin-btn">+ New Page</a>
+        </div>
+    </div>
 
-    <table class="table table-striped">
+    <table class="admin-table">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Slug</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Active</th>
+                <th>Status</th>
                 <th>Sort Order</th>
                 <th>Actions</th>
             </tr>
@@ -21,23 +28,22 @@
         <tbody>
             @foreach($pages as $page)
                 <tr>
-                    <td>{{ $page->id }}</td>
                     <td>{{ $page->slug }}</td>
                     <td>{{ $page->name }}</td>
-                    <td>{{ $page->description }}</td>
-                    <td>{{ $page->is_active ? 'Yes' : 'No' }}</td>
+                    <td>{{ \Illuminate\Support\Str::limit($page->description, 70) }}</td>
+                    <td><span class="admin-badge">{{ $page->is_active ? 'Active' : 'Inactive' }}</span></td>
                     <td>{{ $page->sort_order }}</td>
-                    <td>
-                        <a href="{{ route('admin.pages.show', $page) }}" class="btn btn-sm btn-info">View</a>
-                        <a href="{{ route('admin.pages.edit', $page) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <td class="admin-table-actions">
+                        <a href="{{ route('admin.pages.edit', $page) }}" class="admin-btn-secondary">Edit</a>
                         <form method="POST" action="{{ route('admin.pages.destroy', $page) }}" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                            <button type="submit" class="admin-btn-secondary" style="background:#fee2e2;color:#b91c1c;">Delete</button>
                         </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+</div>
 @endsection

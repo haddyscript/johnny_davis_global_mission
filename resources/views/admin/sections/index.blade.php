@@ -1,15 +1,22 @@
 @extends('layouts.admin')
 
-@section('title', 'Sections')
+@section('page-title', 'Sections')
 
 @section('content')
-    <h1>Sections</h1>
-    <a href="{{ route('admin.sections.create') }}" class="btn btn-primary mb-3">Create Section</a>
+<div class="admin-card">
+    <div class="admin-toolbar">
+        <div>
+            <h2>Sections</h2>
+            <p class="text-muted">Add and update page sections that define site content structure.</p>
+        </div>
+        <div class="admin-actions">
+            <a href="{{ route('admin.sections.create') }}" class="admin-btn">+ New Section</a>
+        </div>
+    </div>
 
-    <table class="table table-striped">
+    <table class="admin-table">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Page</th>
                 <th>Slug</th>
                 <th>Name</th>
@@ -21,23 +28,22 @@
         <tbody>
             @foreach($sections as $section)
                 <tr>
-                    <td>{{ $section->id }}</td>
                     <td>{{ $section->page->name }}</td>
                     <td>{{ $section->slug }}</td>
                     <td>{{ $section->name }}</td>
                     <td>{{ $section->type }}</td>
                     <td>{{ $section->sort_order }}</td>
-                    <td>
-                        <a href="{{ route('admin.sections.show', $section) }}" class="btn btn-sm btn-info">View</a>
-                        <a href="{{ route('admin.sections.edit', $section) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <td class="admin-table-actions">
+                        <a href="{{ route('admin.sections.edit', $section) }}" class="admin-btn-secondary">Edit</a>
                         <form method="POST" action="{{ route('admin.sections.destroy', $section) }}" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                            <button type="submit" class="admin-btn-secondary" style="background:#fee2e2;color:#b91c1c;">Delete</button>
                         </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+</div>
 @endsection

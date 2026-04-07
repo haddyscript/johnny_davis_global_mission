@@ -4,49 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin Panel') - {{ config('app.name') }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('admin.pages.index') }}">Admin Panel</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.pages.index') }}">Pages</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.sections.index') }}">Sections</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.content-blocks.index') }}">Content Blocks</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="btn btn-link nav-link">Logout</button>
-                        </form>
-                    </li>
-                </ul>
+    <div class="admin-shell">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <div class="admin-logo-mark">✦</div>
+                <div>
+                    <div class="admin-logo-text">JDGM Admin</div>
+                    <div class="admin-logo-sub">Content CMS</div>
+                </div>
             </div>
-        </div>
-    </nav>
 
-    <div class="container mt-4">
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @yield('content')
+            <nav class="admin-nav">
+                <div class="admin-nav-section">Content</div>
+                <a href="{{ route('admin.pages.index') }}" class="admin-nav-item {{ request()->routeIs('admin.pages.*') ? 'active' : '' }}">
+                    <div class="admin-nav-icon">📄</div>
+                    <div class="admin-nav-label">Pages</div>
+                </a>
+                <a href="{{ route('admin.sections.index') }}" class="admin-nav-item {{ request()->routeIs('admin.sections.*') ? 'active' : '' }}">
+                    <div class="admin-nav-icon">✍️</div>
+                    <div class="admin-nav-label">Sections</div>
+                </a>
+                <a href="{{ route('admin.content-blocks.index') }}" class="admin-nav-item {{ request()->routeIs('admin.content-blocks.*') ? 'active' : '' }}">
+                    <div class="admin-nav-icon">🧩</div>
+                    <div class="admin-nav-label">Content Blocks</div>
+                </a>
+            </nav>
+
+            <div class="admin-footer-nav">
+                <div class="admin-nav-item">
+                    <div style="width:36px;height:36px;border-radius:14px;background:rgba(20,184,166,0.18);display:grid;place-items:center;font-weight:700;color:#0f766e;">JD</div>
+                    <div style="flex:1;">
+                        <div class="admin-nav-label" style="color:rgba(255,255,255,0.85);font-size:13px;">Johnny Davis</div>
+                        <div style="font-size:11px;color:rgba(255,255,255,0.45);">Super Admin</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <div class="admin-topbar">
+                <div>
+                    <div class="admin-page-title">@yield('page-title')</div>
+                    <div style="font-size:13px;color:var(--text-muted);margin-top:4px;">Manage your website content in one place.</div>
+                </div>
+                <div class="admin-topbar-right">
+                    <input class="admin-search" placeholder="Search pages, sections, blocks..." />
+                    <div class="admin-icon-btn" title="Notifications">🔔<div class="notif-dot"></div></div>
+                    <div class="admin-icon-btn" title="Help">❓</div>
+                    <div class="admin-user-chip">
+                        <div class="admin-user-avatar">JD</div>
+                        <div>
+                            <div class="admin-user-name">Johnny Davis</div>
+                            <div style="font-size:11px;color:var(--text-muted);">Content Admin</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if(session('success'))
+                <div class="alert-card">
+                    <div>✅</div>
+                    <div>{{ session('success') }}</div>
+                </div>
+            @endif
+
+            @yield('content')
+        </main>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
