@@ -4,6 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="{{ $description }}"/>
+  <meta name="csrf-token" content="{{ csrf_token() }}"/>
   <title>{{ $title }}</title>
 
   <!-- Google Fonts -->
@@ -510,15 +511,16 @@
         <div id="nlForm">
           <h3>Join 1,200+ Supporters</h3>
           <p>Monthly updates. Real impact. Straight to your inbox.</p>
-          <form id="subscribeForm" novalidate>
+          <form id="subscribeForm" novalidate data-action="{{ route('newsletter.subscribe') }}">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="nl-field-group">
               <div class="nl-field">
                 <label class="nl-label" for="nlFirstName">First Name</label>
-                <input class="nl-input" id="nlFirstName" type="text" placeholder="Maria" autocomplete="given-name" required/>
+                <input class="nl-input" id="nlFirstName" name="first_name" type="text" placeholder="Maria" autocomplete="given-name" required/>
               </div>
               <div class="nl-field">
                 <label class="nl-label" for="nlEmail">Email Address</label>
-                <input class="nl-input" id="nlEmail" type="email" placeholder="maria@example.com" autocomplete="email" required/>
+                <input class="nl-input" id="nlEmail" name="email" type="email" placeholder="maria@example.com" autocomplete="email" required/>
               </div>
             </div>
             <button type="submit" class="nl-submit" id="nlSubmitBtn">

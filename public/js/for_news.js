@@ -85,35 +85,87 @@
   const nlSubmitBtn   = document.getElementById('nlSubmitBtn');
 
   if (subscribeForm) {
-    subscribeForm.addEventListener('submit', e => {
+    subscribeForm.addEventListener('submit', async e => {
       e.preventDefault();
 
-      const email = document.getElementById('nlEmail').value.trim();
-      const name  = document.getElementById('nlFirstName').value.trim();
+      const emailInp = document.getElementById('nlEmail');
+      const nameInp  = document.getElementById('nlFirstName');
+      const email    = emailInp.value.trim();
+      const name     = nameInp.value.trim();
 
-      if (!email || !name) {
-        /* shake invalid fields */
-        [document.getElementById('nlEmail'), document.getElementById('nlFirstName')].forEach(inp => {
-          if (!inp.value.trim()) {
-            inp.style.borderColor = '#f87171';
-            inp.style.animation   = 'shakeInput .4s ease';
-            setTimeout(() => {
-              inp.style.animation   = '';
-              inp.style.borderColor = '';
-            }, 400);
-          }
-        });
-        return;
+      /* Client-side validation */
+      let valid = true;
+      [emailInp, nameInp].forEach(inp => {
+        if (!inp.value.trim()) {
+          inp.style.borderColor = '#f87171';
+          inp.style.animation   = 'shakeInput .4s ease';
+          setTimeout(() => { inp.style.animation = ''; inp.style.borderColor = ''; }, 400);
+          valid = false;
+        }
+      });
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        emailInp.style.borderColor = '#f87171';
+        valid = false;
       }
+      if (!valid) return;
 
-      /* Simulate submit */
+      /* Loading state */
       nlSubmitBtn.textContent = 'Subscribing\u2026';
       nlSubmitBtn.disabled    = true;
 
-      setTimeout(() => {
-        nlFormDiv.style.display = 'none';
-        nlSuccess.classList.add('show');
-      }, 1200);
+      try {
+        const formData = new FormData(subscribeForm);
+        const url      = subscribeForm.dataset.action;
+
+        const response = await fetch(url, {
+          method:  'POST',
+          headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+          body:    formData,
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          if (data.already_subscribed) {
+            /* Already subscribed — show friendly message */
+            nlFormDiv.style.display = 'none';
+            nlSuccess.classList.add('show');
+            const h4 = nlSuccess.querySelector('h4');
+            const p  = nlSuccess.querySelector('p');
+            if (h4) h4.textContent = 'Already Subscribed!';
+            if (p)  p.textContent  = data.message;
+          } else {
+            nlFormDiv.style.display = 'none';
+            nlSuccess.classList.add('show');
+          }
+          subscribeForm.reset();
+          return;
+        }
+
+        /* Validation errors (422) */
+        if (response.status === 422 && data.errors) {
+          if (data.errors.email)      emailInp.style.borderColor = '#f87171';
+          if (data.errors.first_name) nameInp.style.borderColor  = '#f87171';
+          nlSubmitBtn.textContent = 'Please fix the fields above';
+          setTimeout(() => {
+            nlSubmitBtn.textContent = '\u2665 Subscribe \u2014 It\'s Free';
+            nlSubmitBtn.disabled    = false;
+            emailInp.style.borderColor = '';
+            nameInp.style.borderColor  = '';
+          }, 3000);
+          return;
+        }
+
+        throw new Error('Server error');
+
+      } catch (err) {
+        console.error('Subscribe error:', err);
+        nlSubmitBtn.textContent = 'Something went wrong \u2014 try again';
+        setTimeout(() => {
+          nlSubmitBtn.textContent = '\u2665 Subscribe \u2014 It\'s Free';
+          nlSubmitBtn.disabled    = false;
+        }, 3000);
+      }
     });
   }
 

@@ -61,6 +61,11 @@
                     <div class="admin-nav-badge">{{ $unread }}</div>
                 @endif
             </a>
+            <a href="{{ route('admin.subscribers.index') }}"
+               class="admin-nav-item {{ request()->routeIs('admin.subscribers.*') ? 'active' : '' }}">
+                <div class="admin-nav-icon">📧</div>
+                <div class="admin-nav-label">Subscribers</div>
+            </a>
         </nav>
 
         {{-- Sidebar user footer --}}
