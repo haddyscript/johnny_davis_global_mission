@@ -64,15 +64,38 @@
                 </div>
             </div>
 
-            @if(session('success'))
-                <div class="alert-card">
-                    <div>✅</div>
-                    <div>{{ session('success') }}</div>
-                </div>
-            @endif
-
-            @yield('content')
+                    @yield('content')
         </main>
     </div>
+
+    {{-- Global toast container & flash handler --}}
+    <div id="global-toast-container" style="position:fixed;bottom:24px;right:24px;z-index:1100;display:flex;flex-direction:column;gap:10px;pointer-events:none;"></div>
+
+    <script>
+    (function(){
+        function showToast(msg, type){
+            var c = document.getElementById('global-toast-container');
+            if(!c) return;
+            var t = document.createElement('div');
+            t.className = 'toast toast-'+(type||'success');
+            t.style.pointerEvents = 'all';
+            t.innerHTML = '<span class="toast-icon">'+(type==='error'?'❌':'✅')+'</span><span>'+msg+'</span><button class="toast-close" style="margin-left:auto;background:none;border:none;cursor:pointer;opacity:.6;font-size:12px;padding:2px 4px;">✕</button>';
+            c.appendChild(t);
+            requestAnimationFrame(function(){ t.classList.add('toast-in'); });
+            function dismiss(){
+                t.classList.remove('toast-in');
+                t.classList.add('toast-out');
+                t.addEventListener('transitionend', function(){ t.remove(); }, {once:true});
+            }
+            t.querySelector('.toast-close').addEventListener('click', dismiss);
+            setTimeout(dismiss, 4500);
+        }
+        @if(session('success')) showToast(@json(session('success')), 'success'); @endif
+        @if(session('error'))   showToast(@json(session('error')),   'error');   @endif
+        window.showAdminToast = showToast;
+    })();
+    </script>
+
+    @stack('scripts')
 </body>
 </html>

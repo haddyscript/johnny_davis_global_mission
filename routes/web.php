@@ -37,6 +37,7 @@ require __DIR__.'/auth.php';
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::redirect('/', 'pages');
     Route::resource('pages', PageController::class);
+    Route::patch('pages/{page}/toggle', [PageController::class, 'toggle'])->name('pages.toggle');
     Route::resource('sections', SectionController::class);
     Route::resource('content-blocks', ContentBlockController::class);
 });

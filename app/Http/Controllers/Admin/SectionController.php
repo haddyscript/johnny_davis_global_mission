@@ -9,16 +9,41 @@ use Illuminate\Http\Request;
 
 class SectionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $sections = Section::with('page')->orderBy('sort_order')->get();
+        $query = Section::with('page')->orderBy('sort_order');
 
-        return view('admin.sections.index', compact('sections'));
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%'.$request->search.'%')
+                  ->orWhere('slug', 'like', '%'.$request->search.'%');
+            });
+        }
+
+        if ($request->filled('page_id')) {
+            $query->where('page_id', $request->page_id);
+        }
+
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        $sections = $query->paginate(15)->withQueryString();
+        $pages    = Page::orderBy('sort_order')->get();
+        $types    = Section::distinct()->whereNotNull('type')->orderBy('type')->pluck('type');
+
+        $stats = [
+            'total'       => Section::count(),
+            'pages_count' => Section::distinct('page_id')->count('page_id'),
+            'types_count' => Section::distinct('type')->whereNotNull('type')->count('type'),
+        ];
+
+        return view('admin.sections.index', compact('sections', 'pages', 'types', 'stats'));
     }
 
     public function create()
     {
-        $pages = Page::all();
+        $pages = Page::orderBy('sort_order')->get();
 
         return view('admin.sections.create', compact('pages'));
     }
@@ -26,10 +51,10 @@ class SectionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'page_id' => 'required|exists:pages,id',
-            'slug' => 'required',
-            'name' => 'required',
-            'type' => 'nullable',
+            'page_id'    => 'required|exists:pages,id',
+            'slug'       => 'required',
+            'name'       => 'required',
+            'type'       => 'nullable',
             'sort_order' => 'integer',
         ]);
 
@@ -45,7 +70,7 @@ class SectionController extends Controller
 
     public function edit(Section $section)
     {
-        $pages = Page::all();
+        $pages = Page::orderBy('sort_order')->get();
 
         return view('admin.sections.edit', compact('section', 'pages'));
     }
@@ -53,10 +78,10 @@ class SectionController extends Controller
     public function update(Request $request, Section $section)
     {
         $request->validate([
-            'page_id' => 'required|exists:pages,id',
-            'slug' => 'required',
-            'name' => 'required',
-            'type' => 'nullable',
+            'page_id'    => 'required|exists:pages,id',
+            'slug'       => 'required',
+            'name'       => 'required',
+            'type'       => 'nullable',
             'sort_order' => 'integer',
         ]);
 

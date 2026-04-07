@@ -9,16 +9,46 @@ use Illuminate\Http\Request;
 
 class ContentBlockController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $contentBlocks = ContentBlock::with('section.page')->orderBy('sort_order')->get();
+        $query = ContentBlock::with('section.page')->orderBy('sort_order');
 
-        return view('admin.content-blocks.index', compact('contentBlocks'));
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('key', 'like', '%'.$request->search.'%')
+                  ->orWhere('content', 'like', '%'.$request->search.'%');
+            });
+        }
+
+        if ($request->filled('section_id')) {
+            $query->where('section_id', $request->section_id);
+        }
+
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        $contentBlocks = $query->paginate(15)->withQueryString();
+        $sections      = Section::with('page')->orderBy('sort_order')->get();
+
+        $typeCounts = ContentBlock::selectRaw('type, count(*) as count')
+            ->groupBy('type')
+            ->pluck('count', 'type');
+
+        $stats = [
+            'total' => ContentBlock::count(),
+            'text'  => $typeCounts->get('text', 0),
+            'image' => $typeCounts->get('image', 0),
+            'link'  => $typeCounts->get('link', 0),
+            'list'  => $typeCounts->get('list', 0),
+        ];
+
+        return view('admin.content-blocks.index', compact('contentBlocks', 'sections', 'stats'));
     }
 
     public function create()
     {
-        $sections = Section::with('page')->get();
+        $sections = Section::with('page')->orderBy('sort_order')->get();
 
         return view('admin.content-blocks.create', compact('sections'));
     }
@@ -27,10 +57,10 @@ class ContentBlockController extends Controller
     {
         $request->validate([
             'section_id' => 'required|exists:sections,id',
-            'key' => 'required',
-            'type' => 'required',
-            'content' => 'nullable',
-            'url' => 'nullable|url',
+            'key'        => 'required',
+            'type'       => 'required',
+            'content'    => 'nullable',
+            'url'        => 'nullable|url',
             'sort_order' => 'integer',
         ]);
 
@@ -46,7 +76,7 @@ class ContentBlockController extends Controller
 
     public function edit(ContentBlock $contentBlock)
     {
-        $sections = Section::with('page')->get();
+        $sections = Section::with('page')->orderBy('sort_order')->get();
 
         return view('admin.content-blocks.edit', compact('contentBlock', 'sections'));
     }
@@ -55,10 +85,10 @@ class ContentBlockController extends Controller
     {
         $request->validate([
             'section_id' => 'required|exists:sections,id',
-            'key' => 'required',
-            'type' => 'required',
-            'content' => 'nullable',
-            'url' => 'nullable|url',
+            'key'        => 'required',
+            'type'       => 'required',
+            'content'    => 'nullable',
+            'url'        => 'nullable|url',
             'sort_order' => 'integer',
         ]);
 

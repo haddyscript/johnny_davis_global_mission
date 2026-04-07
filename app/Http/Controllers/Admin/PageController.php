@@ -64,4 +64,11 @@ class PageController extends Controller
 
         return redirect()->route('admin.pages.index')->with('success', 'Page deleted successfully.');
     }
+
+    public function toggle(Page $page)
+    {
+        $page->update(['is_active' => !$page->is_active]);
+
+        return response()->json(['is_active' => $page->is_active]);
+    }
 }
