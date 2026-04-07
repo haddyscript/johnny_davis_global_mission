@@ -50,6 +50,17 @@
                 <div class="admin-nav-icon">🧩</div>
                 <div class="admin-nav-label">Content Blocks</div>
             </a>
+
+            <div class="admin-nav-section" style="margin-top:8px;">Inbox</div>
+            <a href="{{ route('admin.contact-messages.index') }}"
+               class="admin-nav-item {{ request()->routeIs('admin.contact-messages.*') ? 'active' : '' }}">
+                <div class="admin-nav-icon">✉️</div>
+                <div class="admin-nav-label">Messages</div>
+                @php $unread = \App\Models\ContactMessage::where('is_read', false)->count(); @endphp
+                @if($unread > 0)
+                    <div class="admin-nav-badge">{{ $unread }}</div>
+                @endif
+            </a>
         </nav>
 
         {{-- Sidebar user footer --}}

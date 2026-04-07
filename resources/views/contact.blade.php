@@ -102,39 +102,62 @@
         <h2 class="form-title" id="form-title">Send Us a Message</h2>
         <p class="form-subtitle">Fill out the form below and we'll get back to you within 48 hours.</p>
 
-        <form id="contactForm" novalidate>
+        <form id="contactForm" method="POST" action="{{ route('contact.store') }}" novalidate>
+          @csrf
+
+          {{-- Validation errors --}}
+          @if ($errors->any())
+          <div class="form-errors" role="alert">
+            <strong>Please fix the following:</strong>
+            <ul>
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+          @endif
+
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="firstName">First Name</label>
-              <input class="form-input" id="firstName" name="firstName" type="text" placeholder="John" required/>
+              <input class="form-input {{ $errors->has('firstName') ? 'input-error' : '' }}"
+                id="firstName" name="firstName" type="text" placeholder="John"
+                value="{{ old('firstName') }}" required/>
             </div>
             <div class="form-group">
               <label class="form-label" for="lastName">Last Name</label>
-              <input class="form-input" id="lastName" name="lastName" type="text" placeholder="Doe" required/>
+              <input class="form-input {{ $errors->has('lastName') ? 'input-error' : '' }}"
+                id="lastName" name="lastName" type="text" placeholder="Doe"
+                value="{{ old('lastName') }}" required/>
             </div>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="email">Email Address</label>
-            <input class="form-input" id="email" name="email" type="email" placeholder="john@example.com" required/>
+            <input class="form-input {{ $errors->has('email') ? 'input-error' : '' }}"
+              id="email" name="email" type="email" placeholder="john@example.com"
+              value="{{ old('email') }}" required/>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="subject">Subject</label>
-            <select class="form-select" id="subject" name="subject" required>
+            <select class="form-select {{ $errors->has('subject') ? 'input-error' : '' }}"
+              id="subject" name="subject">
               <option value="">Select a subject...</option>
-              <option value="general">General Inquiry</option>
-              <option value="donation">Donation Question</option>
-              <option value="volunteer">Volunteer Opportunities</option>
-              <option value="partnership">Church Partnership</option>
-              <option value="disaster">Disaster Relief Coordination</option>
-              <option value="other">Other</option>
+              <option value="general"     {{ old('subject') === 'general'     ? 'selected' : '' }}>General Inquiry</option>
+              <option value="donation"    {{ old('subject') === 'donation'    ? 'selected' : '' }}>Donation Question</option>
+              <option value="volunteer"   {{ old('subject') === 'volunteer'   ? 'selected' : '' }}>Volunteer Opportunities</option>
+              <option value="partnership" {{ old('subject') === 'partnership' ? 'selected' : '' }}>Church Partnership</option>
+              <option value="disaster"    {{ old('subject') === 'disaster'    ? 'selected' : '' }}>Disaster Relief Coordination</option>
+              <option value="other"       {{ old('subject') === 'other'       ? 'selected' : '' }}>Other</option>
             </select>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="message">Message</label>
-            <textarea class="form-textarea" id="message" name="message" placeholder="Tell us how we can help..." maxlength="1000" required></textarea>
+            <textarea class="form-textarea {{ $errors->has('message') ? 'input-error' : '' }}"
+              id="message" name="message" placeholder="Tell us how we can help..."
+              maxlength="1000" required>{{ old('message') }}</textarea>
             <div class="char-counter" id="charCounter">0 / 1000</div>
           </div>
 
@@ -302,6 +325,29 @@
 </footer>
 
 <script src="{{ asset('js/for_contact.js') }}"></script>
+
+@if(session('contact_success'))
+<script>
+(function () {
+    var form    = document.getElementById('contactForm');
+    var success = document.getElementById('formSuccess');
+    if (form && success) {
+        form.style.display    = 'none';
+        success.style.display = 'flex';
+        success.style.opacity = '0';
+        success.style.transform = 'translateY(16px)';
+        requestAnimationFrame(function () {
+            success.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            success.style.opacity    = '1';
+            success.style.transform  = 'translateY(0)';
+        });
+        // Scroll card into view
+        var card = document.querySelector('.contact-form-card');
+        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+})();
+</script>
+@endif
 
 </body>
 </html>

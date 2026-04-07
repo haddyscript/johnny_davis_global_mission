@@ -353,6 +353,41 @@ button { font-family:inherit; cursor:pointer; }
   font-size:.75rem; color:var(--gray-400);
   text-align:right; margin-top:4px;
 }
+
+/* Laravel validation */
+.input-error {
+  border-color: #ef4444 !important;
+  background: #fffafa !important;
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 3px rgba(239,68,68,.12) !important;
+}
+
+.form-errors {
+  background: #fef2f2;
+  border: 1.5px solid #fecaca;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  font-size: .875rem;
+  color: #991b1b;
+}
+
+.form-errors strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: .875rem;
+}
+
+.form-errors ul {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.form-errors li {
+  margin-bottom: 3px;
+}
 .form-submit {
   width:100%; padding:16px;
   background:linear-gradient(135deg, var(--orange), var(--orange-dark));
