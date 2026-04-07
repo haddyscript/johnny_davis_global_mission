@@ -73,15 +73,19 @@
 
   <div class="container">
     <div class="hero-content">
-      <div class="hero-badge" aria-label="Non-profit organization">Transforming Lives Since 2017</div>
+      <div class="hero-badge" aria-label="Non-profit organization">{{ $cms->text('hero', 'eyebrow', 'Transforming Lives Since 2017') }}</div>
 
-      <h1 class="hero-headline">
-        Who We Are
-        <span class="accent">Together We Can Make a Difference</span>
-      </h1>
+      @if($cms->has('hero', 'headline'))
+        <h1 class="hero-headline">{{ $cms->text('hero', 'headline', '') }}</h1>
+      @else
+        <h1 class="hero-headline">
+          Who We Are
+          <span class="accent">Together We Can Make a Difference</span>
+        </h1>
+      @endif
 
       <p class="hero-sub">
-        Bringing hope, food, care, and opportunity to communities in need across the Philippines — powered by faith and fueled by your generosity.
+        {{ $cms->text('hero', 'subtitle', 'Bringing hope, food, care, and opportunity to communities in need across the Philippines — powered by faith and fueled by your generosity.') }}
       </p>
 
       <div class="hero-ctas">

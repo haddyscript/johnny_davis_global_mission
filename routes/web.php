@@ -12,6 +12,7 @@ use App\Http\Controllers\DonationController;
 
 use App\Http\Controllers\Admin\ContentBlockController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\PreviewController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::patch('pages/{page}/toggle', [PageController::class, 'toggle'])->name('pages.toggle');
     Route::resource('sections', SectionController::class);
     Route::resource('content-blocks', ContentBlockController::class);
+
+    Route::get('preview/page/{slug}', [PreviewController::class, 'page'])->name('preview.page');
 
     Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
 

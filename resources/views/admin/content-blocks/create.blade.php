@@ -35,13 +35,28 @@
                     @error('section_id')<div class="pf-error">⚠ {{ $message }}</div>@enderror
                 </div>
 
-                <div class="pf-group {{ $errors->has('key') ? 'has-error' : '' }}">
-                    <label class="pf-label" for="key">
+                <div class="pf-group {{ $errors->has('key') ? 'has-error' : '' }}" id="key-group">
+                    <label class="pf-label" for="key-select">
                         Key <span class="pf-required">*</span>
-                        <span class="pf-hint">Unique identifier within the section.</span>
                     </label>
-                    <input id="key" name="key" type="text" class="pf-input"
-                        value="{{ old('key') }}" placeholder="e.g. headline" autocomplete="off" required>
+
+                    {{-- Dropdown: populated by JS when a section is chosen --}}
+                    <select id="key-select" class="pf-input" style="margin-bottom:6px;">
+                        <option value="">— Select a section first —</option>
+                    </select>
+
+                    {{-- Shown only when "Custom key…" is picked --}}
+                    <div id="key-custom-wrap" style="display:none;">
+                        <input id="key-custom-input" type="text" class="pf-input"
+                            placeholder="Type your custom key…" autocomplete="off">
+                    </div>
+
+                    {{-- Hint shown below the dropdown --}}
+                    <div id="key-hint" style="font-size:12px;color:var(--text-muted);margin-top:4px;min-height:18px;"></div>
+
+                    {{-- Actual submitted field (always present, kept in sync) --}}
+                    <input id="key" name="key" type="hidden" value="{{ old('key') }}" required>
+
                     @error('key')<div class="pf-error">⚠ {{ $message }}</div>@enderror
                 </div>
 
@@ -116,18 +131,134 @@
 @push('scripts')
 <script>
 (function () {
-/* Show/hide URL field based on type */
+'use strict';
+
+/* ── Key map (section_id → key definitions) passed from controller ── */
+var KEY_MAP = @json($keyMap);
+var CUSTOM_VALUE = '__custom__';
+var oldKey = @json(old('key', ''));
+
+/* ── Elements ── */
+var sectionSelect   = document.getElementById('section_id');
+var keySelect       = document.getElementById('key-select');
+var keyHidden       = document.getElementById('key');
+var keyCustomWrap   = document.getElementById('key-custom-wrap');
+var keyCustomInput  = document.getElementById('key-custom-input');
+var keyHint         = document.getElementById('key-hint');
+
+/* ── Populate key dropdown when section changes ── */
+function populateKeyDropdown(sectionId, preselectKey) {
+    keySelect.innerHTML = '';
+
+    var defs = KEY_MAP[sectionId] || [];
+
+    if (defs.length === 0) {
+        keySelect.add(new Option('— No predefined keys for this section —', ''));
+        showCustom(preselectKey || '');
+        return;
+    }
+
+    // Placeholder
+    keySelect.add(new Option('— Select a key —', ''));
+
+    // Known keys
+    defs.forEach(function (def) {
+        var label = def.label + '  ·  ' + def.type;
+        var opt   = new Option(label, def.key);
+        opt.dataset.type = def.type;
+        opt.dataset.hint = def.hint;
+        keySelect.add(opt);
+    });
+
+    // Separator + custom option
+    var sep = new Option('──────────────', '', false, false);
+    sep.disabled = true;
+    keySelect.add(sep);
+    keySelect.add(new Option('✏️  Custom key…', CUSTOM_VALUE));
+
+    // Restore previous value if available
+    if (preselectKey) {
+        var knownOpt = Array.from(keySelect.options).find(function (o) {
+            return o.value === preselectKey;
+        });
+
+        if (knownOpt) {
+            keySelect.value = preselectKey;
+            applyKeySelection(preselectKey, false);
+        } else {
+            keySelect.value = CUSTOM_VALUE;
+            keyCustomInput.value = preselectKey;
+            showCustom(preselectKey);
+        }
+    }
+}
+
+/* ── Apply a key selection: update hidden field, hint, type radio ── */
+function applyKeySelection(keyValue, autoSelectType) {
+    if (keyValue === CUSTOM_VALUE || keyValue === '') return;
+
+    keyHidden.value = keyValue;
+    keyCustomWrap.style.display = 'none';
+    keyCustomInput.value = '';
+
+    // Show hint
+    var selected = keySelect.options[keySelect.selectedIndex];
+    keyHint.textContent = selected.dataset.hint || '';
+
+    // Auto-select block type
+    if (autoSelectType !== false) {
+        var blockType = selected.dataset.type || '';
+        if (blockType) {
+            var radio = document.querySelector('input[name="type"][value="' + blockType + '"]');
+            if (radio) {
+                radio.checked = true;
+                radio.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        }
+    }
+}
+
+function showCustom(currentValue) {
+    keyCustomWrap.style.display = 'block';
+    keyCustomInput.value = currentValue || '';
+    keyHidden.value = currentValue || '';
+    keyHint.textContent = 'Enter any key that your Blade template uses.';
+}
+
+/* ── Events ── */
+sectionSelect.addEventListener('change', function () {
+    populateKeyDropdown(this.value, '');
+    keyHidden.value = '';
+    keyHint.textContent = '';
+});
+
+keySelect.addEventListener('change', function () {
+    var val = this.value;
+    if (val === CUSTOM_VALUE) {
+        showCustom('');
+        keyCustomInput.focus();
+    } else if (val) {
+        applyKeySelection(val, true);
+    } else {
+        keyHidden.value = '';
+        keyHint.textContent = '';
+        keyCustomWrap.style.display = 'none';
+    }
+});
+
+keyCustomInput.addEventListener('input', function () {
+    keyHidden.value = this.value.trim();
+});
+
+/* ── Type picker ── */
 function updateUrlVisibility() {
     var checked = document.querySelector('input[name="type"]:checked');
     var urlGroup = document.getElementById('url-group');
     if (!checked || !urlGroup) return;
-    urlGroup.style.display = (checked.value === 'image' || checked.value === 'link') ? 'block' : 'none';
-    if (urlGroup.style.display === 'block') {
-        urlGroup.style.animation = 'fadeSlideUp 0.2s ease both';
-    }
+    var show = checked.value === 'image' || checked.value === 'link';
+    urlGroup.style.display = show ? 'block' : 'none';
 }
 
-/* Type picker highlight */
 document.querySelectorAll('.type-pick-option input').forEach(function (radio) {
     radio.addEventListener('change', function () {
         document.querySelectorAll('.type-pick-option').forEach(function (opt) {
@@ -140,11 +271,27 @@ document.querySelectorAll('.type-pick-option input').forEach(function (radio) {
 
 updateUrlVisibility();
 
-/* Loading state */
-document.getElementById('cb-form').addEventListener('submit', function () {
+/* ── Init: restore state after validation failure ── */
+var initSectionId = sectionSelect.value;
+if (initSectionId) {
+    populateKeyDropdown(initSectionId, oldKey);
+}
+
+/* ── Form submit ── */
+document.getElementById('cb-form').addEventListener('submit', function (e) {
+    // Ensure we have a key value
+    if (!keyHidden.value.trim()) {
+        e.preventDefault();
+        keyHint.textContent = '⚠ Please select or enter a key.';
+        keyHint.style.color = '#ef4444';
+        keySelect.focus();
+        return;
+    }
     var btn = document.getElementById('submit-btn');
-    btn.classList.add('submitting'); btn.disabled = true;
+    btn.classList.add('submitting');
+    btn.disabled = true;
 });
+
 })();
 </script>
 @endpush

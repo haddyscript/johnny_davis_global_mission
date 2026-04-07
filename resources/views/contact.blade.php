@@ -68,14 +68,14 @@
     <div class="hero-content">
       <div class="hero-eyebrow">
         <span class="hero-eyebrow-dot"></span>
-        Get Connected
+        {{ $cms->text('hero', 'eyebrow', 'Get Connected') }}
       </div>
       <h1 class="hero-title" id="hero-title">
-        Get in Touch
+        {{ $cms->text('hero', 'headline', 'Get in Touch') }}
       </h1>
-      <p class="hero-subtitle">Questions about donating, volunteering, or church partnerships?</p>
+      <p class="hero-subtitle">{{ $cms->text('hero', 'subtitle', 'Questions about donating, volunteering, or church partnerships?') }}</p>
       <p class="hero-desc">
-        We respond to every message within 48 hours.
+        {{ $cms->text('hero', 'description', 'We respond to every message within 48 hours.') }}
       </p>
       <div class="hero-actions">
         <a href="#contact-form-section" class="btn btn-primary">

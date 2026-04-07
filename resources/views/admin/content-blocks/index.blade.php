@@ -110,7 +110,7 @@
                     <th>Type</th>
                     <th>Content</th>
                     <th style="width:80px;">Order</th>
-                    <th style="width:110px;">Actions</th>
+                    <th style="width:140px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -142,6 +142,12 @@
                     </td>
                     <td>
                         <div class="row-actions">
+                            <button
+                                class="row-btn row-btn-preview preview-trigger"
+                                title="Preview page"
+                                data-slug="{{ $block->section->page->slug }}"
+                                data-name="{{ $block->section->page->name }}"
+                            >👁️</button>
                             <a href="{{ route('admin.content-blocks.edit', $block) }}" class="row-btn row-btn-edit" title="Edit">✏️</a>
                             <button
                                 class="row-btn row-btn-delete"
@@ -166,6 +172,9 @@
     @endif
 
 </div>
+
+{{-- ── Page Preview Modal ── --}}
+@include('admin.preview._modal')
 
 {{-- Delete modal --}}
 <div class="modal-overlay" id="delete-modal">

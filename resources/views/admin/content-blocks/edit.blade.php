@@ -36,10 +36,25 @@
                     @error('section_id')<div class="pf-error">⚠ {{ $message }}</div>@enderror
                 </div>
 
-                <div class="pf-group {{ $errors->has('key') ? 'has-error' : '' }}">
-                    <label class="pf-label" for="key">Key <span class="pf-required">*</span></label>
-                    <input id="key" name="key" type="text" class="pf-input"
-                        value="{{ old('key', $contentBlock->key) }}" placeholder="e.g. headline" autocomplete="off" required>
+                <div class="pf-group {{ $errors->has('key') ? 'has-error' : '' }}" id="key-group">
+                    <label class="pf-label" for="key-select">
+                        Key <span class="pf-required">*</span>
+                    </label>
+
+                    <select id="key-select" class="pf-input" style="margin-bottom:6px;">
+                        <option value="">— Loading keys… —</option>
+                    </select>
+
+                    <div id="key-custom-wrap" style="display:none;">
+                        <input id="key-custom-input" type="text" class="pf-input"
+                            placeholder="Type your custom key…" autocomplete="off">
+                    </div>
+
+                    <div id="key-hint" style="font-size:12px;color:var(--text-muted);margin-top:4px;min-height:18px;"></div>
+
+                    <input id="key" name="key" type="hidden"
+                        value="{{ old('key', $contentBlock->key) }}" required>
+
                     @error('key')<div class="pf-error">⚠ {{ $message }}</div>@enderror
                 </div>
 
@@ -147,12 +162,117 @@
 @push('scripts')
 <script>
 (function () {
+'use strict';
+
+/* ── Key map ── */
+var KEY_MAP       = @json($keyMap);
+var CUSTOM_VALUE  = '__custom__';
+var currentKey    = @json(old('key', $contentBlock->key));
+
+/* ── Elements ── */
+var sectionSelect  = document.getElementById('section_id');
+var keySelect      = document.getElementById('key-select');
+var keyHidden      = document.getElementById('key');
+var keyCustomWrap  = document.getElementById('key-custom-wrap');
+var keyCustomInput = document.getElementById('key-custom-input');
+var keyHint        = document.getElementById('key-hint');
+
+function populateKeyDropdown(sectionId, preselectKey) {
+    keySelect.innerHTML = '';
+    var defs = KEY_MAP[sectionId] || [];
+
+    if (defs.length === 0) {
+        keySelect.add(new Option('— No predefined keys for this section —', ''));
+        showCustom(preselectKey || '');
+        return;
+    }
+
+    keySelect.add(new Option('— Select a key —', ''));
+
+    defs.forEach(function (def) {
+        var opt = new Option(def.label + '  ·  ' + def.type, def.key);
+        opt.dataset.type = def.type;
+        opt.dataset.hint = def.hint;
+        keySelect.add(opt);
+    });
+
+    var sep = new Option('──────────────', '', false, false);
+    sep.disabled = true;
+    keySelect.add(sep);
+    keySelect.add(new Option('✏️  Custom key…', CUSTOM_VALUE));
+
+    if (preselectKey) {
+        var knownOpt = Array.from(keySelect.options).find(function (o) {
+            return o.value === preselectKey;
+        });
+        if (knownOpt) {
+            keySelect.value = preselectKey;
+            applyKeySelection(preselectKey, false); // don't override type on edit load
+        } else {
+            keySelect.value = CUSTOM_VALUE;
+            showCustom(preselectKey);
+        }
+    }
+}
+
+function applyKeySelection(keyValue, autoSelectType) {
+    if (keyValue === CUSTOM_VALUE || keyValue === '') return;
+    keyHidden.value = keyValue;
+    keyCustomWrap.style.display = 'none';
+    keyCustomInput.value = '';
+
+    var selected = keySelect.options[keySelect.selectedIndex];
+    keyHint.textContent = selected.dataset.hint || '';
+
+    if (autoSelectType) {
+        var blockType = selected.dataset.type || '';
+        if (blockType) {
+            var radio = document.querySelector('input[name="type"][value="' + blockType + '"]');
+            if (radio) {
+                radio.checked = true;
+                radio.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        }
+    }
+}
+
+function showCustom(currentValue) {
+    keyCustomWrap.style.display = 'block';
+    keyCustomInput.value = currentValue || '';
+    keyHidden.value = currentValue || '';
+    keyHint.textContent = 'Enter any key that your Blade template uses.';
+}
+
+sectionSelect.addEventListener('change', function () {
+    populateKeyDropdown(this.value, '');
+    keyHidden.value = '';
+    keyHint.textContent = '';
+});
+
+keySelect.addEventListener('change', function () {
+    var val = this.value;
+    if (val === CUSTOM_VALUE) {
+        showCustom('');
+        keyCustomInput.focus();
+    } else if (val) {
+        applyKeySelection(val, true);
+    } else {
+        keyHidden.value = '';
+        keyHint.textContent = '';
+        keyCustomWrap.style.display = 'none';
+    }
+});
+
+keyCustomInput.addEventListener('input', function () {
+    keyHidden.value = this.value.trim();
+});
+
+/* ── Type picker ── */
 function updateUrlVisibility() {
     var checked = document.querySelector('input[name="type"]:checked');
     var urlGroup = document.getElementById('url-group');
     if (!checked || !urlGroup) return;
-    var show = checked.value === 'image' || checked.value === 'link';
-    urlGroup.style.display = show ? 'block' : 'none';
+    urlGroup.style.display = (checked.value === 'image' || checked.value === 'link') ? 'block' : 'none';
 }
 
 document.querySelectorAll('.type-pick-option input').forEach(function (radio) {
@@ -165,16 +285,30 @@ document.querySelectorAll('.type-pick-option input').forEach(function (radio) {
 
 updateUrlVisibility();
 
-document.getElementById('cb-form').addEventListener('submit', function () {
+/* ── Init: pre-populate dropdown with current block's section + key ── */
+populateKeyDropdown(sectionSelect.value, currentKey);
+
+/* ── Form submit guard ── */
+document.getElementById('cb-form').addEventListener('submit', function (e) {
+    if (!keyHidden.value.trim()) {
+        e.preventDefault();
+        keyHint.textContent = '⚠ Please select or enter a key.';
+        keyHint.style.color = '#ef4444';
+        keySelect.focus();
+        return;
+    }
     var btn = document.getElementById('submit-btn');
-    btn.classList.add('submitting'); btn.disabled = true;
+    btn.classList.add('submitting');
+    btn.disabled = true;
 });
 
+/* ── Delete modal ── */
 var modal = document.getElementById('delete-modal');
 document.getElementById('danger-btn').addEventListener('click', function () { modal.classList.add('modal-open'); });
 document.getElementById('modal-cancel').addEventListener('click', function () { modal.classList.remove('modal-open'); });
 modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('modal-open'); });
 document.addEventListener('keydown', function (e) { if (e.key === 'Escape') modal.classList.remove('modal-open'); });
+
 })();
 </script>
 @endpush

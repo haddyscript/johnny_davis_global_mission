@@ -85,7 +85,7 @@
                     <th class="sortable" data-col="order" style="width:110px;">
                         Order <span class="sort-icon">↕</span>
                     </th>
-                    <th style="width:130px;">Actions</th>
+                    <th style="width:160px;">Actions</th>
                 </tr>
             </thead>
             <tbody id="pages-tbody">
@@ -124,6 +124,12 @@
                     </td>
                     <td>
                         <div class="row-actions">
+                            <button
+                                class="row-btn row-btn-preview preview-trigger"
+                                title="Preview"
+                                data-slug="{{ $page->slug }}"
+                                data-name="{{ $page->name }}"
+                            >👁️</button>
                             <a
                                 href="{{ route('admin.pages.edit', $page) }}"
                                 class="row-btn row-btn-edit"
@@ -156,6 +162,9 @@
     </div>
     @endif
 </div>
+
+{{-- ── Page Preview Modal ── --}}
+@include('admin.preview._modal')
 
 {{-- ── Delete confirmation modal ── --}}
 <div class="modal-overlay" id="delete-modal">

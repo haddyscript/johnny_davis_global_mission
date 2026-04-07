@@ -89,41 +89,54 @@
 
   <div class="container">
     <div class="hero-content">
-      <div class="hero-badge" aria-label="Active campaign">Active Campaign 2026</div>
+      <div class="hero-badge" aria-label="Active campaign">{{ $cms->text('hero', 'eyebrow', 'Active Campaign 2026') }}</div>
 
-      <h1 class="hero-headline">
-        Feed Filipino Children
-        <span class="accent">"Hunger Can't Wait"</span>
-      </h1>
+      @if($cms->has('hero', 'headline'))
+        <h1 class="hero-headline">{{ $cms->text('hero', 'headline', '') }}</h1>
+      @else
+        <h1 class="hero-headline">
+          Feed Filipino Children
+          <span class="accent">"Hunger Can't Wait"</span>
+        </h1>
+      @endif
 
       <p class="hero-sub">
-        Help us fight hunger and crisis in the Philippines.<br/>
-        Together we can make a difference.
+        {!! nl2br(e($cms->text('hero', 'subtitle', "Help us fight hunger and crisis in the Philippines.\nTogether we can make a difference."))) !!}
       </p>
 
       <div class="hero-ctas">
-        <a href="{{ route('donate') }}" class="btn btn-primary btn-lg">
-          &#9829; Donate Now
+        <a href="{{ $cms->url('hero', 'primary_cta_label', route('donate')) }}" class="btn btn-primary btn-lg">
+          &#9829; {{ $cms->text('hero', 'primary_cta_label', 'Donate Now') }}
         </a>
         <button class="btn btn-outline btn-lg" id="watchMissionBtn" aria-label="Watch our mission video">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          Watch Our Mission
+          {{ $cms->text('hero', 'secondary_cta_label', 'Watch Our Mission') }}
         </button>
       </div>
 
       <div class="hero-stats" role="list" aria-label="Impact statistics">
-        <div class="hero-stat" role="listitem">
-          <strong>5,000+</strong>
-          <span>Children Fed</span>
-        </div>
-        <div class="hero-stat" role="listitem">
-          <strong>12+</strong>
-          <span>Communities Served</span>
-        </div>
-        <div class="hero-stat" role="listitem">
-          <strong>$7.99</strong>
-          <span>Feeds a Child Monthly</span>
-        </div>
+        @php $heroStats = $cms->listItems('hero', 'stats'); @endphp
+        @if(!empty($heroStats))
+          @foreach($heroStats as $stat)
+            <div class="hero-stat" role="listitem">
+              <strong>{{ $stat['value'] ?? '' }}</strong>
+              <span>{{ $stat['label'] ?? '' }}</span>
+            </div>
+          @endforeach
+        @else
+          <div class="hero-stat" role="listitem">
+            <strong>5,000+</strong>
+            <span>Children Fed</span>
+          </div>
+          <div class="hero-stat" role="listitem">
+            <strong>12+</strong>
+            <span>Communities Served</span>
+          </div>
+          <div class="hero-stat" role="listitem">
+            <strong>$7.99</strong>
+            <span>Feeds a Child Monthly</span>
+          </div>
+        @endif
       </div>
     </div>
   </div>
@@ -147,23 +160,23 @@
              alt="Johnny Davis Global Missions volunteers feeding children in the Philippines"
              loading="lazy" />
         <div class="mission-badge" aria-label="Since 2015">
-          <strong>10+</strong>
-          <span>Years of Impact</span>
+          <strong>{{ $cms->text('mission', 'badge_number', '10+') }}</strong>
+          <span>{{ $cms->text('mission', 'badge_label', 'Years of Impact') }}</span>
         </div>
       </div>
 
       <div class="mission-text reveal-right">
         <span class="section-label">Our Mission</span>
-        <h2 class="section-title" id="mission-title">Bringing Hope to the Philippines</h2>
+        <h2 class="section-title" id="mission-title">{{ $cms->text('mission', 'headline', 'Bringing Hope to the Philippines') }}</h2>
         <p class="body-text">
-          At Johnny Davis Global Missions, our mission is to help those in need in the Philippines.
-          From providing food and medical care, to education and disaster relief, our organization
-          provides the necessary resources and support that every child, adult, and community deserves.
+          {{ $cms->text('mission', 'body', 'At Johnny Davis Global Missions, our mission is to help those in need in the Philippines. From providing food and medical care, to education and disaster relief, our organization provides the necessary resources and support that every child, adult, and community deserves.') }}
         </p>
+        @if(!$cms->has('mission', 'body'))
         <p class="body-text" style="margin-top:16px;">
           We believe that every life has value, and that small acts of generosity — multiplied —
           can transform entire communities. Your gift goes directly to those who need it most.
         </p>
+        @endif
 
         <div class="mission-pillars" role="list" aria-label="Our focus areas">
           <div class="pillar-tag" role="listitem">

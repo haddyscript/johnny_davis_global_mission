@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\CmsKeyMap;
 use App\Http\Controllers\Controller;
 use App\Models\ContentBlock;
 use App\Models\Section;
@@ -49,8 +50,9 @@ class ContentBlockController extends Controller
     public function create()
     {
         $sections = Section::with('page')->orderBy('sort_order')->get();
+        $keyMap   = CmsKeyMap::forSections($sections);
 
-        return view('admin.content-blocks.create', compact('sections'));
+        return view('admin.content-blocks.create', compact('sections', 'keyMap'));
     }
 
     public function store(Request $request)
@@ -77,8 +79,9 @@ class ContentBlockController extends Controller
     public function edit(ContentBlock $contentBlock)
     {
         $sections = Section::with('page')->orderBy('sort_order')->get();
+        $keyMap   = CmsKeyMap::forSections($sections);
 
-        return view('admin.content-blocks.edit', compact('contentBlock', 'sections'));
+        return view('admin.content-blocks.edit', compact('contentBlock', 'sections', 'keyMap'));
     }
 
     public function update(Request $request, ContentBlock $contentBlock)

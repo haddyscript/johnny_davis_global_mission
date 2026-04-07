@@ -2,16 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CmsPageData;
+use App\Models\Page;
+
 class NewsController extends Controller
 {
     public function index()
     {
-        $posts = $this->getPosts();
+        $page = Page::with(['sections' => fn($q) => $q->orderBy('sort_order')
+            ->with(['contentBlocks' => fn($q) => $q->orderBy('sort_order')])])
+            ->where('slug', 'news')
+            ->where('is_active', true)
+            ->first();
+
+        $cms = new CmsPageData($page);
 
         return view('news', [
-            'title'       => 'Blog & News — Johnny Davis Global Missions',
-            'description' => 'Blog & News — Johnny Davis Global Missions. Monthly field updates, impact stories, and mission reports from the Philippines and Uganda.',
-            'posts'       => $posts,
+            'title'       => $cms->text('meta', 'title', 'Blog & News — Johnny Davis Global Missions'),
+            'description' => $cms->text('meta', 'description', 'Blog & News — Johnny Davis Global Missions. Monthly field updates, impact stories, and mission reports from the Philippines and Uganda.'),
+            'cms'         => $cms,
+            'posts'       => $this->getPosts(),
         ]);
     }
 

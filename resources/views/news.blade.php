@@ -79,12 +79,16 @@
         <span class="hero-eyebrow-dot"></span>
         Stories from the Field
       </div>
-      <h1 class="hero-title" id="hero-title">
-        Stories of <span class="accent">Impact</span>
-      </h1>
-      <p class="hero-subtitle">Updates From the Front Lines of Our Mission</p>
+      @if($cms->has('hero', 'headline'))
+        <h1 class="hero-title" id="hero-title">{{ $cms->text('hero', 'headline', '') }}</h1>
+      @else
+        <h1 class="hero-title" id="hero-title">
+          Stories of <span class="accent">Impact</span>
+        </h1>
+      @endif
+      <p class="hero-subtitle">{{ $cms->text('hero', 'subtitle', 'Updates From the Front Lines of Our Mission') }}</p>
       <p class="hero-desc">
-        "Every meal served, every child helped, and every life changed has a story. Follow the journey of communities in the Philippines and Uganda as hope becomes reality."
+        {{ $cms->text('hero', 'description', '"Every meal served, every child helped, and every life changed has a story. Follow the journey of communities in the Philippines and Uganda as hope becomes reality."') }}
       </p>
       <div class="hero-actions">
         <a href="#posts-section" class="btn btn-primary">
@@ -97,18 +101,28 @@
         </a>
       </div>
       <div class="hero-stats-row" role="list">
-        <div class="hero-stat" role="listitem">
-          <strong>6</strong>
-          <span>Reports this year</span>
-        </div>
-        <div class="hero-stat" role="listitem">
-          <strong>2</strong>
-          <span>Countries covered</span>
-        </div>
-        <div class="hero-stat" role="listitem">
-          <strong>2,400+</strong>
-          <span>Meals tracked monthly</span>
-        </div>
+        @php $heroStats = $cms->listItems('hero', 'stats'); @endphp
+        @if(!empty($heroStats))
+          @foreach($heroStats as $stat)
+            <div class="hero-stat" role="listitem">
+              <strong>{{ $stat['value'] ?? '' }}</strong>
+              <span>{{ $stat['label'] ?? '' }}</span>
+            </div>
+          @endforeach
+        @else
+          <div class="hero-stat" role="listitem">
+            <strong>6</strong>
+            <span>Reports this year</span>
+          </div>
+          <div class="hero-stat" role="listitem">
+            <strong>2</strong>
+            <span>Countries covered</span>
+          </div>
+          <div class="hero-stat" role="listitem">
+            <strong>2,400+</strong>
+            <span>Meals tracked monthly</span>
+          </div>
+        @endif
       </div>
     </div>
   </div>
