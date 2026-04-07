@@ -5,3 +5,10 @@
 ### Down docker and Build ###
 - docker-compose down -v                             
 - docker-compose up -d --build
+
+### update composer ###
+- docker compose exec app composer install --no-interaction
+
+### run all seeder ###
+run this inside the docker for compatibility
+- php artisan db:seed
