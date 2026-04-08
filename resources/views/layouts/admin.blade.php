@@ -253,7 +253,9 @@
             </div>{{-- /topbar-right --}}
         </div>{{-- /topbar --}}
 
-        @yield('content')
+        <div class="admin-content">
+            @yield('content')
+        </div>
 
     </main>
 </div>{{-- /admin-shell --}}

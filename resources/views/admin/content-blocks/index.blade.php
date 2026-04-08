@@ -6,7 +6,7 @@
 @section('content')
 
 {{-- Stats --}}
-<div class="pages-stats cb-stats">
+<div class="pages-stats cols-4 cb-stats">
     <div class="stat-card" style="--accent:#14b8a6;">
         <div class="stat-icon" style="background:rgba(20,184,166,0.12);color:#0f766e;">🧩</div>
         <div>

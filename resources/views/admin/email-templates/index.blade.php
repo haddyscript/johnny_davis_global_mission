@@ -6,7 +6,7 @@
 @section('content')
 
 {{-- Stats --}}
-<div class="pages-stats">
+<div class="pages-stats cols-3">
     <div class="stat-card" style="--accent:#14b8a6;">
         <div class="stat-icon" style="background:rgba(20,184,166,0.12);color:#0f766e;">📨</div>
         <div>
@@ -168,7 +168,7 @@
     <div class="modal-card" role="dialog" aria-modal="true" style="max-width:760px;width:95%;padding:0;overflow:hidden;">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--border);background:#fff;border-radius:28px 28px 0 0;">
             <div style="display:flex;align-items:center;gap:12px;">
-                <div style="width:36px;height:36px;border-radius:10px;background:rgba(20,184,166,0.1);color:#0f766e;display:grid;place-items:center;font-size:16px;">📧</div>
+                <div style="width:36px;height:36px;border-radius:8px;background:rgba(34,197,94,0.1);color:#16a34a;display:grid;place-items:center;font-size:16px;">📧</div>
                 <div>
                     <div style="font-weight:700;font-size:15px;" id="preview-name">Template Preview</div>
                     <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Subject: <span id="preview-subject" style="color:var(--text-dark);font-weight:500;"></span></div>
@@ -214,8 +214,8 @@
 @push('scripts')
 <style>
 .et-icon-badge {
-    width: 36px; height: 36px; border-radius: 12px;
-    background: rgba(20,184,166,0.1); color: #0f766e;
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(34,197,94,0.1); color: #16a34a;
     display: grid; place-items: center; font-size: 16px; flex-shrink: 0;
 }
 .et-var-chip {

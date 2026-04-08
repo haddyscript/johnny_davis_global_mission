@@ -6,7 +6,7 @@
 @section('content')
 
 {{-- Stats --}}
-<div class="pages-stats">
+<div class="pages-stats cols-5">
     <div class="stat-card" style="--accent:#14b8a6;">
         <div class="stat-icon" style="background:rgba(20,184,166,0.12);color:#0f766e;">💰</div>
         <div>
@@ -136,7 +136,7 @@
                         </span>
                     </td>
                     <td>
-                        <span style="font-weight:700;font-size:15px;color:#0f766e;">${{ number_format($donation->amount, 2) }}</span>
+                        <span style="font-weight:700;font-size:15px;color:#16a34a;">${{ number_format($donation->amount, 2) }}</span>
                     </td>
                     <td>
                         <span class="don-method-badge don-method-{{ $donation->payment_method }}">
@@ -207,7 +207,7 @@
         {{-- Modal header --}}
         <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border);">
             <div style="display:flex;align-items:center;gap:12px;">
-                <div id="modal-avatar" style="width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#14b8a6,#0f766e);color:#fff;display:grid;place-items:center;font-weight:700;font-size:18px;flex-shrink:0;"></div>
+                <div id="modal-avatar" style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;display:grid;place-items:center;font-weight:700;font-size:18px;flex-shrink:0;"></div>
                 <div>
                     <div style="font-weight:700;font-size:16px;" id="modal-donor-name">—</div>
                     <div style="font-size:12px;color:var(--text-muted);" id="modal-donor-email">—</div>
@@ -275,8 +275,8 @@
 <style>
 /* ── Donation-specific styles ── */
 .don-avatar {
-    width: 36px; height: 36px; border-radius: 12px; flex-shrink: 0;
-    background: linear-gradient(135deg, #14b8a6, #0f766e);
+    width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
     color: #fff; display: grid; place-items: center;
     font-weight: 700; font-size: 14px;
 }
@@ -293,7 +293,7 @@
     padding: 3px 10px; border-radius: 8px; font-size: 12px; font-weight: 600;
 }
 .don-freq-monthly { background: rgba(99,102,241,.1); color: #4f46e5; }
-.don-freq-once    { background: rgba(20,184,166,.1);  color: #0f766e; }
+.don-freq-once    { background: rgba(34,197,94,.1);  color: #16a34a; }
 
 .don-method-badge {
     display: inline-flex; align-items: center; gap: 5px;
