@@ -20,6 +20,7 @@
     if (request()->routeIs('admin.sections.*'))       $searchAction = route('admin.sections.index');
     if (request()->routeIs('admin.content-blocks.*'))  $searchAction = route('admin.content-blocks.index');
     if (request()->routeIs('admin.email-templates.*')) $searchAction = route('admin.email-templates.index');
+    if (request()->routeIs('admin.donations.*'))      $searchAction = route('admin.donations.index');
     $searchValue  = request('search', '');
 @endphp
 
@@ -58,6 +59,17 @@
                class="admin-nav-item {{ request()->routeIs('admin.email-templates.*') ? 'active' : '' }}">
                 <div class="admin-nav-icon">📨</div>
                 <div class="admin-nav-label">Email Templates</div>
+            </a>
+
+            <div class="admin-nav-section" style="margin-top:8px;">Fundraising</div>
+            <a href="{{ route('admin.donations.index') }}"
+               class="admin-nav-item {{ request()->routeIs('admin.donations.*') ? 'active' : '' }}">
+                <div class="admin-nav-icon">💰</div>
+                <div class="admin-nav-label">Donations</div>
+                @php $pendingDonations = \App\Models\Donation::where('status', 'pending')->count(); @endphp
+                @if($pendingDonations > 0)
+                    <div class="admin-nav-badge">{{ $pendingDonations }}</div>
+                @endif
             </a>
 
             <div class="admin-nav-section" style="margin-top:8px;">Inbox</div>
