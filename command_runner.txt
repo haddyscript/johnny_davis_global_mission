@@ -1,6 +1,9 @@
 ### Migration to terminal execution ###
 - docker compose exec app php artisan migrate --force
 
+### Run seeder with specific ###
+- docker compose exec app php artisan db:seed --class=EmailTemplateSeeder
+
 
 ### Down docker and Build ###
 - docker-compose down -v                             

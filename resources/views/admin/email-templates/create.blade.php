@@ -251,7 +251,7 @@
 /* ── Quill editor ── */
 var quill = new Quill('#quill-editor', {
     theme: 'snow',
-    placeholder: 'Write your email body here… Use @{{name}}, @{{email}}, etc. for dynamic content.',
+    placeholder: 'Write your email body here\u2026 Use \u007b\u007bname\u007d\u007d, \u007b\u007bemail\u007d\u007d, etc. for dynamic content.',
     modules: {
         toolbar: [
             [{ header: [1, 2, 3, false] }],
