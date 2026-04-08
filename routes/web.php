@@ -11,6 +11,7 @@ use App\Http\Controllers\MinistryController;
 use App\Http\Controllers\DonationController;
 
 use App\Http\Controllers\Admin\ContentBlockController;
+use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PreviewController;
 use App\Http\Controllers\Admin\SectionController;
@@ -57,4 +58,12 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         ->name('subscribers.toggle');
     Route::patch('contact-messages/{contactMessage}/toggle-read', [ContactMessageController::class, 'toggleRead'])
         ->name('contact-messages.toggle-read');
+
+    Route::resource('email-templates', EmailTemplateController::class);
+    Route::patch('email-templates/{emailTemplate}/toggle', [EmailTemplateController::class, 'toggle'])
+        ->name('email-templates.toggle');
+    Route::get('email-templates/{emailTemplate}/preview', [EmailTemplateController::class, 'preview'])
+        ->name('email-templates.preview');
+    Route::post('email-templates/preview-render', [EmailTemplateController::class, 'previewRender'])
+        ->name('email-templates.preview-render');
 });

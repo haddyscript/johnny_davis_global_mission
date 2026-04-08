@@ -18,7 +18,8 @@
     // Route-aware search target
     $searchAction = route('admin.pages.index');
     if (request()->routeIs('admin.sections.*'))       $searchAction = route('admin.sections.index');
-    if (request()->routeIs('admin.content-blocks.*')) $searchAction = route('admin.content-blocks.index');
+    if (request()->routeIs('admin.content-blocks.*'))  $searchAction = route('admin.content-blocks.index');
+    if (request()->routeIs('admin.email-templates.*')) $searchAction = route('admin.email-templates.index');
     $searchValue  = request('search', '');
 @endphp
 
@@ -50,6 +51,13 @@
                class="admin-nav-item {{ request()->routeIs('admin.content-blocks.*') ? 'active' : '' }}">
                 <div class="admin-nav-icon">🧩</div>
                 <div class="admin-nav-label">Content Blocks</div>
+            </a>
+
+            <div class="admin-nav-section" style="margin-top:8px;">Email</div>
+            <a href="{{ route('admin.email-templates.index') }}"
+               class="admin-nav-item {{ request()->routeIs('admin.email-templates.*') ? 'active' : '' }}">
+                <div class="admin-nav-icon">📨</div>
+                <div class="admin-nav-label">Email Templates</div>
             </a>
 
             <div class="admin-nav-section" style="margin-top:8px;">Inbox</div>
