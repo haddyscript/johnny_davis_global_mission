@@ -13,6 +13,7 @@ use App\Http\Controllers\DonationController;
 use App\Http\Controllers\Admin\ContentBlockController;
 use App\Http\Controllers\Admin\DonationController as AdminDonationController;
 use App\Http\Controllers\Admin\EmailTemplateController;
+use App\Http\Controllers\Admin\NavItemController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PreviewController;
@@ -69,6 +70,16 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         ->name('email-templates.preview');
     Route::post('email-templates/preview-render', [EmailTemplateController::class, 'previewRender'])
         ->name('email-templates.preview-render');
+
+    // Navigation items
+    Route::prefix('nav-items')->name('nav-items.')->group(function () {
+        Route::get('/',                          [NavItemController::class, 'index'])->name('index');
+        Route::post('/',                         [NavItemController::class, 'store'])->name('store');
+        Route::put('/{navItem}',                 [NavItemController::class, 'update'])->name('update');
+        Route::delete('/{navItem}',              [NavItemController::class, 'destroy'])->name('destroy');
+        Route::patch('/{navItem}/toggle',        [NavItemController::class, 'toggle'])->name('toggle');
+        Route::post('/reorder',                  [NavItemController::class, 'reorder'])->name('reorder');
+    });
 
     // Notifications
     Route::prefix('notifications')->name('notifications.')->group(function () {

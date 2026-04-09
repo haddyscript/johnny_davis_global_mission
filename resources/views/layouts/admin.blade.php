@@ -88,6 +88,13 @@
                 <div class="admin-nav-label">Subscribers</div>
             </a>
 
+            <div class="admin-nav-section" style="margin-top:8px;">Site</div>
+            <a href="{{ route('admin.nav-items.index') }}"
+               class="admin-nav-item {{ request()->routeIs('admin.nav-items.*') ? 'active' : '' }}">
+                <div class="admin-nav-icon">🔗</div>
+                <div class="admin-nav-label">Navigation</div>
+            </a>
+
             <div class="admin-nav-section" style="margin-top:8px;">System</div>
             <a href="{{ route('admin.notifications.index') }}"
                class="admin-nav-item {{ request()->routeIs('admin.notifications.*') ? 'active' : '' }}">

@@ -57,29 +57,34 @@ input, button, select, textarea { font-family: inherit; }
 button { cursor:pointer; }
 
 /* =============================================
-   NAV
+   NAV  (unified partial: #navbar > .container > .nav-inner)
    =============================================*/
-.navbar {
+#navbar {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 64px;
-  height: 72px;
   background: var(--blue-dark);
   box-shadow: 0 1px 0 rgba(255,255,255,.06);
   transition: box-shadow var(--transition);
 }
-.navbar.scrolled { box-shadow: 0 4px 28px rgba(0,0,0,.28); }
+#navbar.scrolled { box-shadow: 0 4px 28px rgba(0,0,0,.28); }
 body { padding-top: 72px; }
-.nav-logo { display:flex; align-items:center; gap:10px; }
+
+/* container — match max-width for all pages using this CSS */
+#navbar .container { max-width: var(--max-w); margin: 0 auto; padding: 0 64px; }
+
+/* flex row inside container */
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  gap: 16px;
+}
+.nav-logo { display:flex; align-items:center; gap:10px; flex-shrink:0; }
 .nav-logo img { height:48px; width:auto; object-fit:contain; }
-.nav-links { display:flex; align-items:center; gap:6px; }
-.nav-link {
+.nav-links { display:flex; align-items:center; gap:6px; list-style:none; }
+.nav-links a {
   color: rgba(255,255,255,.78);
   font-size: .88rem;
   font-weight: 500;
@@ -88,9 +93,12 @@ body { padding-top: 72px; }
   transition: var(--transition);
   text-decoration: none;
 }
-.nav-link:hover { color:#fff; background:rgba(255,255,255,.08); }
-.nav-link.active { color:#fff; font-weight:600; }
-.nav-cta {
+.nav-links a:hover { color:#fff; background:rgba(255,255,255,.08); }
+.nav-links a.active { color:#fff; font-weight:600; }
+
+/* Donate CTA button */
+.nav-links a.btn-nav-donate,
+.nav-links .nav-cta {
   background: var(--orange);
   color: #fff;
   padding: 9px 20px;
@@ -100,9 +108,9 @@ body { padding-top: 72px; }
   margin-left: 8px;
   box-shadow: 0 2px 12px rgba(240,124,30,.38);
   transition: var(--transition);
-  text-decoration: none;
 }
-.nav-cta:hover {
+.nav-links a.btn-nav-donate:hover,
+.nav-links .nav-cta:hover {
   background: var(--orange-dark);
   transform: translateY(-1px);
   box-shadow: 0 4px 18px rgba(240,124,30,.5);
@@ -111,7 +119,7 @@ body { padding-top: 72px; }
 /* Mobile hamburger */
 .nav-toggle {
   display:none; flex-direction:column; gap:5px;
-  background:none; border:none; padding:6px; z-index:200;
+  background:none; border:none; padding:6px; z-index:200; cursor:pointer;
 }
 .nav-toggle span {
   display:block; width:24px; height:2px;
@@ -127,9 +135,15 @@ body { padding-top: 72px; }
   border-top: 1px solid rgba(255,255,255,.07);
 }
 .nav-mobile.open { display:flex; }
-.nav-mobile .nav-link { padding:13px 0; border-bottom:1px solid rgba(255,255,255,.07); border-radius:0; }
-.nav-mobile .nav-link:last-child { border:none; }
-.nav-mobile .nav-cta { margin:14px 0 0; text-align:center; padding:14px; border-radius:var(--r-pill); }
+.nav-mobile a { padding:13px 0; border-bottom:1px solid rgba(255,255,255,.07); border-radius:0;
+  color:rgba(255,255,255,.85); font-size:.95rem; font-weight:500; text-decoration:none; transition:color var(--transition); }
+.nav-mobile a:last-child { border:none; }
+.nav-mobile a:hover { color:var(--orange); }
+.nav-mobile a.btn-nav-donate {
+  margin:14px 0 0; text-align:center; padding:14px;
+  border-radius:var(--r-pill); border-bottom:none;
+  background:var(--orange); color:#fff; font-weight:700;
+}
 
 /* =============================================
    CAMPAIGN OVERVIEW SCREEN
@@ -1052,7 +1066,7 @@ body { padding-top: 72px; }
    RESPONSIVE
    =============================================*/
 @media (max-width:1100px) {
-  .navbar { padding:0 32px; }
+  #navbar .container { padding:0 32px; }
   .donate-page-layout { padding:40px 32px; gap:32px; grid-template-columns:1fr 360px; }
   .donate-hero { padding:44px 32px; }
   #campaign-overview-screen { padding:44px 32px 40px; }
@@ -1067,7 +1081,7 @@ body { padding-top: 72px; }
   .amounts-4 { grid-template-columns:repeat(2,1fr); }
   .nav-links { display:none; }
   .nav-toggle { display:flex; }
-  .navbar { padding:0 20px; }
+  #navbar .container { padding:0 20px; }
 }
 
 @media (max-width:600px) {

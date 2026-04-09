@@ -241,7 +241,7 @@
   });
 
   /* ── Sticky nav shadow ──────────────────────────────────── */
-  const nav = document.getElementById('mainNav');
+  const nav = document.getElementById('navbar');
   window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 10); }, { passive:true });
 
   /* ── Mobile nav toggle ──────────────────────────────────── */
