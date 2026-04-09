@@ -37,7 +37,39 @@
         </div>
 
         <nav class="admin-nav">
-            <div class="admin-nav-section">Content</div>
+
+            {{-- MAIN --}}
+            <div class="admin-nav-section">Main</div>
+            <a href="{{ route('admin.dashboard') }}"
+               class="admin-nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                <div class="admin-nav-icon">🏠</div>
+                <div class="admin-nav-label">Dashboard</div>
+            </a>
+
+            {{-- FUNDRAISING --}}
+            <div class="admin-nav-section" style="margin-top:8px;">Fundraising</div>
+            <a href="{{ route('admin.donations.index') }}"
+               class="admin-nav-item {{ request()->routeIs('admin.donations.*') ? 'active' : '' }}">
+                <div class="admin-nav-icon">💰</div>
+                <div class="admin-nav-label">Donations</div>
+                @php $pendingDonations = \App\Models\Donation::where('status', 'pending')->count(); @endphp
+                @if($pendingDonations > 0)
+                    <div class="admin-nav-badge">{{ $pendingDonations }}</div>
+                @endif
+            </a>
+            <span class="admin-nav-item admin-nav-item-soon">
+                <div class="admin-nav-icon">🎯</div>
+                <div class="admin-nav-label">Campaigns</div>
+                <span class="admin-nav-soon-tag">Soon</span>
+            </span>
+            <span class="admin-nav-item admin-nav-item-soon">
+                <div class="admin-nav-icon">👥</div>
+                <div class="admin-nav-label">Donors</div>
+                <span class="admin-nav-soon-tag">Soon</span>
+            </span>
+
+            {{-- CONTENT --}}
+            <div class="admin-nav-section" style="margin-top:8px;">Content</div>
             <a href="{{ route('admin.pages.index') }}"
                class="admin-nav-item {{ request()->routeIs('admin.pages.*') ? 'active' : '' }}">
                 <div class="admin-nav-icon">📄</div>
@@ -53,26 +85,14 @@
                 <div class="admin-nav-icon">🧩</div>
                 <div class="admin-nav-label">Content Blocks</div>
             </a>
-
-            <div class="admin-nav-section" style="margin-top:8px;">Email</div>
             <a href="{{ route('admin.email-templates.index') }}"
                class="admin-nav-item {{ request()->routeIs('admin.email-templates.*') ? 'active' : '' }}">
                 <div class="admin-nav-icon">📨</div>
                 <div class="admin-nav-label">Email Templates</div>
             </a>
 
-            <div class="admin-nav-section" style="margin-top:8px;">Fundraising</div>
-            <a href="{{ route('admin.donations.index') }}"
-               class="admin-nav-item {{ request()->routeIs('admin.donations.*') ? 'active' : '' }}">
-                <div class="admin-nav-icon">💰</div>
-                <div class="admin-nav-label">Donations</div>
-                @php $pendingDonations = \App\Models\Donation::where('status', 'pending')->count(); @endphp
-                @if($pendingDonations > 0)
-                    <div class="admin-nav-badge">{{ $pendingDonations }}</div>
-                @endif
-            </a>
-
-            <div class="admin-nav-section" style="margin-top:8px;">Inbox</div>
+            {{-- COMMUNITY --}}
+            <div class="admin-nav-section" style="margin-top:8px;">Community</div>
             <a href="{{ route('admin.contact-messages.index') }}"
                class="admin-nav-item {{ request()->routeIs('admin.contact-messages.*') ? 'active' : '' }}">
                 <div class="admin-nav-icon">✉️</div>
@@ -87,7 +107,18 @@
                 <div class="admin-nav-icon">📧</div>
                 <div class="admin-nav-label">Subscribers</div>
             </a>
+            <span class="admin-nav-item admin-nav-item-soon">
+                <div class="admin-nav-icon">🙌</div>
+                <div class="admin-nav-label">Volunteers</div>
+                <span class="admin-nav-soon-tag">Soon</span>
+            </span>
+            <span class="admin-nav-item admin-nav-item-soon">
+                <div class="admin-nav-icon">📅</div>
+                <div class="admin-nav-label">Events</div>
+                <span class="admin-nav-soon-tag">Soon</span>
+            </span>
 
+            {{-- SITE --}}
             <div class="admin-nav-section" style="margin-top:8px;">Site</div>
             <a href="{{ route('admin.nav-items.index') }}"
                class="admin-nav-item {{ request()->routeIs('admin.nav-items.*') ? 'active' : '' }}">
@@ -95,6 +126,7 @@
                 <div class="admin-nav-label">Navigation</div>
             </a>
 
+            {{-- SYSTEM --}}
             <div class="admin-nav-section" style="margin-top:8px;">System</div>
             <a href="{{ route('admin.notifications.index') }}"
                class="admin-nav-item {{ request()->routeIs('admin.notifications.*') ? 'active' : '' }}">
@@ -105,6 +137,12 @@
                     <div class="admin-nav-badge">{{ $unreadNotifs > 99 ? '99+' : $unreadNotifs }}</div>
                 @endif
             </a>
+            <a href="{{ route('profile.edit') }}"
+               class="admin-nav-item {{ request()->routeIs('profile.*') ? 'active' : '' }}">
+                <div class="admin-nav-icon">👤</div>
+                <div class="admin-nav-label">Profile</div>
+            </a>
+
         </nav>
 
         {{-- Sidebar user footer --}}
@@ -135,7 +173,7 @@
             <div class="topbar-left">
                 <div class="admin-page-title">@yield('page-title')</div>
                 <div class="topbar-breadcrumb">
-                    <a href="{{ route('admin.pages.index') }}" class="topbar-breadcrumb-link">Admin</a>
+                    <a href="{{ route('admin.dashboard') }}" class="topbar-breadcrumb-link">Admin</a>
                     <span class="topbar-breadcrumb-sep">›</span>
                     <span>@yield('page-title', 'Dashboard')</span>
                 </div>

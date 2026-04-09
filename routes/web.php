@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\NavItemController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PreviewController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -35,7 +36,7 @@ Route::post('/donate/confirm', [DonationController::class, 'confirm'])->name('do
 Route::post('/stripe/webhook', [DonationController::class, 'webhook'])->name('stripe.webhook');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->route('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -49,7 +50,8 @@ require __DIR__.'/auth.php';
 
 // Admin routes
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
-    Route::redirect('/', 'pages');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::redirect('/home', 'dashboard');
     Route::resource('pages', PageController::class);
     Route::patch('pages/{page}/toggle', [PageController::class, 'toggle'])->name('pages.toggle');
     Route::resource('sections', SectionController::class);
