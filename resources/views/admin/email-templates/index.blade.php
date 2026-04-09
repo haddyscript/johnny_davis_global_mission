@@ -165,26 +165,26 @@
 
 {{-- Preview modal --}}
 <div class="modal-overlay" id="preview-modal">
-    <div class="modal-card" role="dialog" aria-modal="true" style="max-width:760px;width:95%;padding:0;overflow:hidden;">
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--border);background:#fff;border-radius:28px 28px 0 0;">
-            <div style="display:flex;align-items:center;gap:12px;">
-                <div style="width:36px;height:36px;border-radius:8px;background:rgba(34,197,94,0.1);color:#16a34a;display:grid;place-items:center;font-size:16px;">📧</div>
-                <div>
-                    <div style="font-weight:700;font-size:15px;" id="preview-name">Template Preview</div>
+    <div class="modal-card preview-modal-card" role="dialog" aria-modal="true" style="max-width:760px;width:95%;padding:0;overflow:hidden;max-height:90vh;display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--border);background:#fff;border-radius:16px 16px 0 0;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+                <div style="width:36px;height:36px;border-radius:8px;background:rgba(34,197,94,0.1);color:#16a34a;display:grid;place-items:center;font-size:16px;flex-shrink:0;">📧</div>
+                <div style="min-width:0;">
+                    <div style="font-weight:700;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="preview-name">Template Preview</div>
                     <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Subject: <span id="preview-subject" style="color:var(--text-dark);font-weight:500;"></span></div>
                 </div>
             </div>
-            <button class="modal-btn-cancel" id="preview-close" style="margin:0;padding:8px 16px;font-size:13px;">✕ Close</button>
+            <button class="modal-btn-cancel" id="preview-close" style="margin:0;padding:8px 16px;font-size:13px;flex-shrink:0;margin-left:16px;">✕ Close</button>
         </div>
-        <div id="preview-loading" style="padding:56px;text-align:center;color:var(--text-muted);">
+        <div id="preview-loading" style="padding:56px;text-align:center;color:var(--text-muted);flex-shrink:0;">
             <div class="et-spinner" style="margin:0 auto 14px;"></div>
             Rendering branded email…
         </div>
-        <div id="preview-frame-wrap" style="display:none;background:#e8ecf0;">
+        <div id="preview-frame-wrap" style="display:none;background:#e8ecf0;flex:1;overflow-y:auto;min-height:0;">
             <iframe
                 id="preview-iframe"
                 title="Email Preview"
-                style="width:100%;min-height:560px;border:none;display:block;"
+                style="width:100%;height:560px;border:none;display:block;"
                 sandbox="allow-same-origin"
             ></iframe>
         </div>
@@ -229,6 +229,20 @@
     animation: et-spin 0.7s linear infinite;
 }
 @keyframes et-spin { to { transform: rotate(360deg); } }
+
+/* Preview modal responsive overrides */
+.preview-modal-card {
+    max-height: 90vh;
+}
+#preview-frame-wrap {
+    -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 600px) {
+    .preview-modal-card {
+        max-height: 95vh;
+        border-radius: 12px !important;
+    }
+}
 </style>
 <script>
 (function () {
@@ -318,12 +332,14 @@ document.querySelectorAll('.row-btn-preview').forEach(function (btn) {
                 previewIframe.srcdoc = data.branded_html;
                 previewLoading.style.display = 'none';
                 previewFrameWrap.style.display = 'block';
-                /* Auto-size iframe to content */
+                /* Size iframe to content, frame-wrap handles scrolling */
                 previewIframe.onload = function () {
                     try {
                         var h = previewIframe.contentDocument.body.scrollHeight;
-                        previewIframe.style.height = Math.max(h + 32, 400) + 'px';
-                    } catch (e) {}
+                        previewIframe.style.height = Math.max(h + 32, 500) + 'px';
+                    } catch (e) {
+                        previewIframe.style.height = '560px';
+                    }
                 };
             })
             .catch(function () {

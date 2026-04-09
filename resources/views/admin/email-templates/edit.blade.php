@@ -202,21 +202,22 @@
 
 {{-- Full branded preview modal --}}
 <div class="modal-overlay" id="preview-modal">
-    <div class="modal-card" role="dialog" aria-modal="true" style="max-width:760px;width:95%;padding:0;overflow:hidden;">
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--border);background:#fff;border-radius:28px 28px 0 0;">
-            <div style="display:flex;align-items:center;gap:12px;">
-                <div style="width:36px;height:36px;border-radius:8px;background:rgba(34,197,94,0.1);color:#16a34a;display:grid;place-items:center;font-size:16px;">📧</div>
-                <div>
-                <div style="font-weight:700;font-size:15px;">Branded Email Preview</div>
-                <div style="font-size:13px;color:var(--text-muted);margin-top:3px;">
-                    Subject: <span id="modal-preview-subject" style="font-weight:600;"></span>
+    <div class="modal-card preview-modal-card" role="dialog" aria-modal="true" style="max-width:760px;width:95%;padding:0;overflow:hidden;max-height:90vh;display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--border);background:#fff;border-radius:16px 16px 0 0;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+                <div style="width:36px;height:36px;border-radius:8px;background:rgba(34,197,94,0.1);color:#16a34a;display:grid;place-items:center;font-size:16px;flex-shrink:0;">📧</div>
+                <div style="min-width:0;">
+                    <div style="font-weight:700;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Branded Email Preview</div>
+                    <div style="font-size:13px;color:var(--text-muted);margin-top:3px;">
+                        Subject: <span id="modal-preview-subject" style="font-weight:600;"></span>
+                    </div>
                 </div>
             </div>
-            <button class="modal-btn-cancel" id="preview-close" style="margin:0;padding:8px 16px;font-size:13px;">✕ Close</button>
+            <button class="modal-btn-cancel" id="preview-close" style="margin:0;padding:8px 16px;font-size:13px;flex-shrink:0;margin-left:16px;">✕ Close</button>
         </div>
-        <div style="background:#e8ecf0;">
+        <div id="preview-frame-wrap" style="background:#e8ecf0;flex:1;overflow-y:auto;min-height:0;">
             <iframe id="preview-iframe" title="Branded Email Preview"
-                style="width:100%;min-height:500px;border:none;display:block;"
+                style="width:100%;height:500px;border:none;display:block;"
                 sandbox="allow-same-origin"></iframe>
         </div>
     </div>
@@ -250,6 +251,13 @@
 .ql-toolbar.ql-snow { border-radius: 12px 12px 0 0; border-color: var(--border); background: #f8fafc; }
 .ql-container.ql-snow { border-color: var(--border); border-radius: 0 0 12px 12px; }
 .ql-editor { min-height: 300px; font-family: Inter, system-ui, sans-serif; font-size: 14px; }
+
+/* Preview modal responsive overrides */
+.preview-modal-card { max-height: 90vh; }
+#preview-frame-wrap { -webkit-overflow-scrolling: touch; }
+@media (max-width: 600px) {
+    .preview-modal-card { max-height: 95vh; border-radius: 12px !important; }
+}
 </style>
 <script>
 (function () {
@@ -385,8 +393,10 @@ previewBtn.addEventListener('click', function () {
         previewIframe.onload = function () {
             try {
                 var h = previewIframe.contentDocument.body.scrollHeight;
-                previewIframe.style.height = Math.max(h + 32, 400) + 'px';
-            } catch (e) {}
+                previewIframe.style.height = Math.max(h + 32, 500) + 'px';
+            } catch (e) {
+                previewIframe.style.height = '560px';
+            }
         };
     })
     .catch(function () {
