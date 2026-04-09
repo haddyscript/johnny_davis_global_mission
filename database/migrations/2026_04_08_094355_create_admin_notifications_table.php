@@ -8,6 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasTable('admin_notifications')) {
+            return;
+        }
+
         Schema::create('admin_notifications', function (Blueprint $table) {
             $table->id();
             $table->string('type');               // new_donation, failed_donation, new_subscriber, new_contact

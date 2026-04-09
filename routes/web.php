@@ -13,6 +13,7 @@ use App\Http\Controllers\DonationController;
 use App\Http\Controllers\Admin\ContentBlockController;
 use App\Http\Controllers\Admin\DonationController as AdminDonationController;
 use App\Http\Controllers\Admin\EmailTemplateController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PreviewController;
 use App\Http\Controllers\Admin\SectionController;
@@ -68,4 +69,13 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         ->name('email-templates.preview');
     Route::post('email-templates/preview-render', [EmailTemplateController::class, 'previewRender'])
         ->name('email-templates.preview-render');
+
+    // Notifications
+    Route::prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('/',                       [NotificationController::class, 'index'])->name('index');
+        Route::get('/recent',                 [NotificationController::class, 'recent'])->name('recent');
+        Route::get('/unread-count',           [NotificationController::class, 'unreadCount'])->name('unread-count');
+        Route::patch('/{notification}/read',  [NotificationController::class, 'markRead'])->name('mark-read');
+        Route::post('/mark-all-read',         [NotificationController::class, 'markAllRead'])->name('mark-all-read');
+    });
 });

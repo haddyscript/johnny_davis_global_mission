@@ -87,6 +87,17 @@
                 <div class="admin-nav-icon">📧</div>
                 <div class="admin-nav-label">Subscribers</div>
             </a>
+
+            <div class="admin-nav-section" style="margin-top:8px;">System</div>
+            <a href="{{ route('admin.notifications.index') }}"
+               class="admin-nav-item {{ request()->routeIs('admin.notifications.*') ? 'active' : '' }}">
+                <div class="admin-nav-icon">🔔</div>
+                <div class="admin-nav-label">Notifications</div>
+                @php $unreadNotifs = \App\Models\AdminNotification::where('is_read', false)->count(); @endphp
+                @if($unreadNotifs > 0)
+                    <div class="admin-nav-badge">{{ $unreadNotifs > 99 ? '99+' : $unreadNotifs }}</div>
+                @endif
+            </a>
         </nav>
 
         {{-- Sidebar user footer --}}
@@ -146,47 +157,21 @@
                 <div class="topbar-dropdown-wrap" id="notif-wrap">
                     <button class="admin-icon-btn topbar-icon-btn" id="notif-btn" aria-label="Notifications" aria-expanded="false">
                         <span>🔔</span>
-                        <span class="notif-dot"></span>
+                        <span class="notif-badge" id="notif-badge" style="display:none;">0</span>
                     </button>
                     <div class="topbar-dropdown notif-dropdown" id="notif-dropdown" role="menu">
                         <div class="dropdown-header">
                             <span class="dropdown-header-title">Notifications</span>
-                            <span class="dropdown-header-badge">3</span>
+                            <span class="dropdown-header-badge" id="notif-header-badge" style="display:none;">0</span>
                         </div>
-                        <div class="notif-list">
-                            <div class="notif-item notif-unread">
-                                <div class="notif-icon" style="background:rgba(20,184,166,0.12);color:#0f766e;">📄</div>
-                                <div class="notif-body">
-                                    <div class="notif-text">New page created successfully</div>
-                                    <div class="notif-time">Just now</div>
-                                </div>
-                                <span class="notif-indicator"></span>
-                            </div>
-                            <div class="notif-item notif-unread">
-                                <div class="notif-icon" style="background:rgba(99,102,241,0.12);color:#4f46e5;">✍️</div>
-                                <div class="notif-body">
-                                    <div class="notif-text">3 sections updated</div>
-                                    <div class="notif-time">2 min ago</div>
-                                </div>
-                                <span class="notif-indicator"></span>
-                            </div>
-                            <div class="notif-item">
-                                <div class="notif-icon" style="background:rgba(245,158,11,0.12);color:#d97706;">🧩</div>
-                                <div class="notif-body">
-                                    <div class="notif-text">Content block sync complete</div>
-                                    <div class="notif-time">1 hr ago</div>
-                                </div>
-                            </div>
-                            <div class="notif-item">
-                                <div class="notif-icon" style="background:rgba(16,185,129,0.12);color:#059669;">✅</div>
-                                <div class="notif-body">
-                                    <div class="notif-text">Website content published</div>
-                                    <div class="notif-time">Yesterday</div>
-                                </div>
+                        <div class="notif-list" id="notif-list">
+                            <div id="notif-loading" style="padding:28px 0;text-align:center;color:var(--text-muted);">
+                                <div class="notif-spinner"></div>
                             </div>
                         </div>
-                        <div class="dropdown-footer">
-                            <button class="dropdown-footer-btn" id="mark-read-btn">Mark all as read</button>
+                        <div class="dropdown-footer" style="display:flex;flex-direction:column;gap:8px;">
+                            <button class="dropdown-footer-btn" id="mark-all-read-btn">Mark all as read</button>
+                            <a href="{{ route('admin.notifications.index') }}" class="dropdown-footer-btn" style="text-align:center;text-decoration:none;display:block;">View all notifications →</a>
                         </div>
                     </div>
                 </div>
@@ -363,23 +348,155 @@
         if (e.key === 'Escape') closeAllDropdowns();
     });
 
-    /* Mark all notifications as read */
-    var markReadBtn = document.getElementById('mark-read-btn');
-    if (markReadBtn) {
-        markReadBtn.addEventListener('click', function(){
-            document.querySelectorAll('.notif-unread').forEach(function(n){
-                n.classList.remove('notif-unread');
-                var ind = n.querySelector('.notif-indicator');
-                if (ind) ind.remove();
+    /* ── Notification system ── */
+    var NOTIF_RECENT_URL    = '{{ route("admin.notifications.recent") }}';
+    var NOTIF_MARK_READ_URL = '{{ url("admin/notifications") }}';
+    var NOTIF_MARK_ALL_URL  = '{{ route("admin.notifications.mark-all-read") }}';
+    var NOTIF_COUNT_URL     = '{{ route("admin.notifications.unread-count") }}';
+    var CSRF_TOKEN          = '{{ csrf_token() }}';
+
+    var notifList        = document.getElementById('notif-list');
+    var notifLoading     = document.getElementById('notif-loading');
+    var notifBadge       = document.getElementById('notif-badge');
+    var notifHeaderBadge = document.getElementById('notif-header-badge');
+    var markAllBtn       = document.getElementById('mark-all-read-btn');
+    var notifBtn         = document.getElementById('notif-btn');
+    var notifDropdown    = document.getElementById('notif-dropdown');
+    var notifLoaded      = false;
+
+    function updateBadge(count) {
+        if (count > 0) {
+            notifBadge.textContent = count > 99 ? '99+' : count;
+            notifBadge.style.display = '';
+            notifHeaderBadge.textContent = count > 99 ? '99+' : count;
+            notifHeaderBadge.style.display = '';
+        } else {
+            notifBadge.style.display = 'none';
+            notifHeaderBadge.style.display = 'none';
+        }
+        if (markAllBtn) markAllBtn.disabled = (count === 0);
+    }
+
+    function renderNotif(n) {
+        var item = document.createElement('div');
+        item.className = 'notif-item' + (n.is_read ? '' : ' notif-unread');
+        item.dataset.id = n.id;
+        if (n.action_url) item.style.cursor = 'pointer';
+
+        var titleLine = '<div class="notif-text">' + escHtml(n.title) + '</div>';
+        var msgLine   = '<div class="notif-msg">'  + escHtml(n.message) + '</div>';
+        var timeLine  = '<div class="notif-time">'  + escHtml(n.time_ago) + '</div>';
+        var indicator = n.is_read ? '' : '<span class="notif-indicator"></span>';
+
+        item.innerHTML =
+            '<div class="notif-icon" style="background:' + escHtml(n.icon_bg) + ';color:' + escHtml(n.icon_color) + ';">' + n.icon + '</div>'
+            + '<div class="notif-body">' + titleLine + msgLine + timeLine + '</div>'
+            + indicator;
+
+        item.addEventListener('click', function() {
+            if (!n.is_read) {
+                fetch(NOTIF_MARK_READ_URL + '/' + n.id + '/read', {
+                    method: 'PATCH',
+                    headers: { 'X-CSRF-TOKEN': CSRF_TOKEN, 'Accept': 'application/json' },
+                }).then(function() {
+                    item.classList.remove('notif-unread');
+                    var ind = item.querySelector('.notif-indicator');
+                    if (ind) ind.remove();
+                    n.is_read = true;
+                    var current = parseInt(notifBadge.textContent) || 0;
+                    updateBadge(Math.max(0, current - 1));
+                });
+            }
+            if (n.action_url) {
+                closeAllDropdowns();
+                window.location.href = n.action_url;
+            }
+        });
+
+        return item;
+    }
+
+    function escHtml(str) {
+        var d = document.createElement('div');
+        d.appendChild(document.createTextNode(str || ''));
+        return d.innerHTML;
+    }
+
+    function loadNotifications() {
+        notifLoading.style.display = 'block';
+        fetch(NOTIF_RECENT_URL, { headers: { 'Accept': 'application/json' } })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                notifLoading.style.display = 'none';
+                updateBadge(data.unread_count);
+
+                /* Remove old rendered items (keep the loading div) */
+                notifList.querySelectorAll('.notif-item, .notif-empty').forEach(function(el) { el.remove(); });
+
+                if (data.notifications.length === 0) {
+                    var empty = document.createElement('div');
+                    empty.className = 'notif-empty';
+                    empty.innerHTML = '<span style="font-size:22px;">🔕</span><div>No notifications yet</div>';
+                    notifList.appendChild(empty);
+                } else {
+                    data.notifications.forEach(function(n) {
+                        notifList.appendChild(renderNotif(n));
+                    });
+                }
+                notifLoaded = true;
+            })
+            .catch(function() { notifLoading.style.display = 'none'; });
+    }
+
+    /* Load on first open; reload on subsequent opens to stay fresh */
+    notifBtn.addEventListener('click', function() {
+        if (notifDropdown.classList.contains('dropdown-open') || !notifLoaded) {
+            loadNotifications();
+        }
+    });
+
+    /* Mark all as read */
+    if (markAllBtn) {
+        markAllBtn.addEventListener('click', function() {
+            fetch(NOTIF_MARK_ALL_URL, {
+                method: 'POST',
+                headers: { 'X-CSRF-TOKEN': CSRF_TOKEN, 'Accept': 'application/json' },
+            }).then(function() {
+                notifList.querySelectorAll('.notif-item').forEach(function(item) {
+                    item.classList.remove('notif-unread');
+                    var ind = item.querySelector('.notif-indicator');
+                    if (ind) ind.remove();
+                });
+                updateBadge(0);
+                if (window.showAdminToast) window.showAdminToast('All notifications marked as read.', 'success');
             });
-            var badge = document.querySelector('.dropdown-header-badge');
-            if (badge) { badge.textContent = '0'; badge.style.opacity = '0.4'; }
-            var dot = document.querySelector('.notif-dot');
-            if (dot) dot.style.display = 'none';
-            markReadBtn.textContent = 'All caught up ✓';
-            markReadBtn.disabled = true;
         });
     }
+
+    /* Poll for unread count every 30 seconds */
+    function pollUnreadCount() {
+        fetch(NOTIF_COUNT_URL, { headers: { 'Accept': 'application/json' } })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                updateBadge(data.unread_count);
+                /* If dropdown is open and count increased, reload list */
+                if (notifDropdown.classList.contains('dropdown-open')) {
+                    loadNotifications();
+                } else {
+                    notifLoaded = false; /* force reload on next open */
+                }
+            })
+            .catch(function() {});
+    }
+
+    /* Initial badge count on page load */
+    fetch(NOTIF_COUNT_URL, { headers: { 'Accept': 'application/json' } })
+        .then(function(r) { return r.json(); })
+        .then(function(data) { updateBadge(data.unread_count); })
+        .catch(function() {});
+
+    setInterval(pollUnreadCount, 30000);
+
 })();
 </script>
 
