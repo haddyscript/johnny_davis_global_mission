@@ -22,3 +22,27 @@ run this inside the docker for compatibility
 
 ### Clear config cache after adding Stripe keys to .env ###
 - docker compose exec app php artisan config:clear
+
+
+
+
+### TEST CARD - SUCCESS PAYMENT stripe
+Card number: 4242 4242 4242 4242
+Expiry: Any future date (e.g., 12/34)
+CVC: Any 3 digits (e.g., 123)
+ZIP: Any value (e.g., 10000) 
+
+
+### Failed Payment Test
+Card number: 4000 0000 0000 0002
+Expiry: Any future date
+CVC: Any 3 digits
+ZIP: Any
+
+### Authentication Required (3D Secure)
+Card number: 4000 0027 6000 3184
+Expiry: Any future date
+CVC: Any
+
+### Insufficient Funds
+Card number: 4000 0000 0000 9995
