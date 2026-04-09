@@ -50,6 +50,13 @@
     <form method="GET" action="{{ route('admin.donations.index') }}" id="filter-form">
         <div class="pages-toolbar">
             <div class="pages-toolbar-left" style="flex-wrap:wrap;gap:10px;">
+                <a id="export-btn"
+                   href="{{ route('admin.donations.export', request()->only(['search','status','payment_method','frequency'])) }}"
+                   class="btn-action btn-action-secondary"
+                   style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;background:var(--surface-strong);color:var(--text-dark);border:1px solid var(--border);"
+                   title="Export current filters to CSV">
+                    ⬇️ Export CSV
+                </a>
                 <div class="table-search-wrap">
                     <span class="table-search-icon">🔍</span>
                     <input type="text" name="search" id="page-search" class="table-search"

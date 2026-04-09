@@ -3,11 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\CmsPageData;
+use App\Models\Donation;
 use App\Models\Page;
 use App\Services\CampaignService;
+use Illuminate\Http\Request;
+use Stripe\Exception\ApiErrorException;
+use Stripe\Exception\SignatureVerificationException;
+use Stripe\PaymentIntent;
+use Stripe\PaymentMethod;
+use Stripe\Stripe;
+use Stripe\Webhook;
 
 class DonationController extends Controller
 {
+    // ── Page ────────────────────────────────────────────────────────────
+
     public function index()
     {
         $page = Page::with(['sections' => fn($q) => $q->orderBy('sort_order')
@@ -24,6 +34,149 @@ class DonationController extends Controller
             'cms'         => $cms,
             'campaigns'   => CampaignService::getCampaigns(),
             'pastorImg'   => 'https://d14tal8bchn59o.cloudfront.net/RhGkp7h3Fm5bBymv78FLEpsQSnC3q7PFpecGpojrkak/w:2000/plain/https://02f0a56ef46d93f03c90-22ac5f107621879d5667e0d7ed595bdb.ssl.cf2.rackcdn.com/sites/104216/photos/23052432/JDM_Logo_6_original.jpg',
+            'stripeKey'   => config('services.stripe.key'),
         ]);
+    }
+
+    // ── Create PaymentIntent ─────────────────────────────────────────────
+
+    public function charge(Request $request)
+    {
+        $validated = $request->validate([
+            'campaign_name'  => 'required|string|max:255',
+            'first_name'     => 'required|string|max:100',
+            'last_name'      => 'required|string|max:100',
+            'email'          => 'required|email|max:255',
+            'amount'         => 'required|numeric|min:1|max:50000',
+            'frequency'      => 'required|in:one-time,monthly',
+            'payment_method' => 'required|in:card',
+        ]);
+
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        try {
+            $amountCents = (int) round($validated['amount'] * 100);
+
+            $intent = PaymentIntent::create([
+                'amount'               => $amountCents,
+                'currency'             => 'usd',
+                'automatic_payment_methods' => ['enabled' => true],
+                'metadata'             => [
+                    'campaign_name' => $validated['campaign_name'],
+                    'donor_name'    => $validated['first_name'] . ' ' . $validated['last_name'],
+                    'donor_email'   => $validated['email'],
+                    'frequency'     => $validated['frequency'],
+                ],
+            ]);
+
+            $donation = Donation::create([
+                'campaign_name'  => $validated['campaign_name'],
+                'first_name'     => $validated['first_name'],
+                'last_name'      => $validated['last_name'],
+                'email'          => $validated['email'],
+                'amount'         => $validated['amount'],
+                'frequency'      => $validated['frequency'],
+                'payment_method' => 'card',
+                'transaction_id' => $intent->id,
+                'status'         => 'pending',
+            ]);
+
+            return response()->json([
+                'client_secret' => $intent->client_secret,
+                'donation_id'   => $donation->id,
+            ]);
+        } catch (ApiErrorException $e) {
+            return response()->json(['error' => $e->getMessage()], 422);
+        }
+    }
+
+    // ── Confirm payment after Stripe client-side confirmation ────────────
+
+    public function confirm(Request $request)
+    {
+        $request->validate([
+            'payment_intent_id' => 'required|string|starts_with:pi_',
+            'donation_id'       => 'required|integer|min:1',
+        ]);
+
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        try {
+            $intent   = PaymentIntent::retrieve($request->payment_intent_id);
+            $donation = Donation::findOrFail($request->donation_id);
+
+            // Security: make sure this intent belongs to this donation record
+            if ($donation->transaction_id !== $intent->id) {
+                return response()->json(['error' => 'Payment intent mismatch.'], 422);
+            }
+
+            if ($intent->status === 'succeeded') {
+                $pm = $intent->payment_method
+                    ? PaymentMethod::retrieve($intent->payment_method)
+                    : null;
+
+                $donation->update([
+                    'status'         => 'completed',
+                    'card_brand'     => $pm?->card?->brand,
+                    'card_last_four' => $pm?->card?->last4,
+                    'card_exp_month' => $pm?->card?->exp_month
+                        ? str_pad((string) $pm->card->exp_month, 2, '0', STR_PAD_LEFT)
+                        : null,
+                    'card_exp_year'  => $pm?->card?->exp_year
+                        ? (string) $pm->card->exp_year
+                        : null,
+                ]);
+
+                return response()->json(['success' => true]);
+            }
+
+            // Any other status (requires_action, processing, etc.)
+            $donation->update(['status' => 'failed']);
+
+            return response()->json([
+                'error' => 'Payment could not be completed. Status: ' . $intent->status,
+            ], 422);
+        } catch (ApiErrorException $e) {
+            return response()->json(['error' => $e->getMessage()], 422);
+        }
+    }
+
+    // ── Stripe Webhook (async confirmations / disputes / refunds) ────────
+
+    public function webhook(Request $request)
+    {
+        $payload   = $request->getContent();
+        $sigHeader = $request->header('Stripe-Signature');
+        $secret    = config('services.stripe.webhook_secret');
+
+        try {
+            $event = Webhook::constructEvent($payload, $sigHeader, $secret);
+        } catch (SignatureVerificationException $e) {
+            return response('Webhook signature verification failed.', 400);
+        }
+
+        match ($event->type) {
+            'payment_intent.succeeded' => $this->handleIntentSucceeded($event->data->object),
+            'payment_intent.payment_failed' => $this->handleIntentFailed($event->data->object),
+            default => null,
+        };
+
+        return response()->json(['received' => true]);
+    }
+
+    // ── Webhook helpers ──────────────────────────────────────────────────
+
+    private function handleIntentSucceeded(object $intent): void
+    {
+        Donation::where('transaction_id', $intent->id)
+            ->where('status', 'pending')
+            ->update(['status' => 'completed']);
+    }
+
+    private function handleIntentFailed(object $intent): void
+    {
+        Donation::where('transaction_id', $intent->id)
+            ->whereIn('status', ['pending'])
+            ->update(['status' => 'failed']);
     }
 }

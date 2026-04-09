@@ -312,6 +312,7 @@ ul { list-style: none; }
   transition: var(--transition);
 }
 .nav-links a:hover { color: var(--white); background: rgba(255,255,255,.08); }
+.nav-links a.active { color: var(--white); font-weight: 600; background: rgba(255,255,255,.13); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(240,124,30,.85); }
 .nav-links .btn-nav-donate {
   background: var(--orange);
   color: var(--white);
@@ -369,6 +370,7 @@ ul { list-style: none; }
 }
 .nav-mobile a:last-child { border-bottom: none; }
 .nav-mobile a:hover { color: var(--orange); }
+.nav-mobile a.active { color: var(--orange); font-weight: 600; }
 .nav-mobile .btn-nav-donate {
   margin-top: 16px;
   background: var(--orange);

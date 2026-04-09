@@ -33,11 +33,13 @@
   const panelCard         = document.getElementById('pay-panel-card');
   const panelGcash        = document.getElementById('pay-panel-gcash');
   const panelPaypal       = document.getElementById('pay-panel-paypal');
+  const paymentErrorEl    = document.getElementById('payment-error-msg');
 
   /* ── State ─────────────────────────────────────────────── */
-  let selectedAmt      = 29.99;
-  let isMonthly        = true;
-  let selectedCampaign = 'Feed Filipino Children';
+  let selectedAmt       = 29.99;
+  let isMonthly         = true;
+  let selectedCampaign  = 'Feed Filipino Children';
+  let currentPayMethod  = 'card';
 
   /* ── Campaign data ──────────────────────────────────────── */
   const campaigns = {
@@ -56,7 +58,7 @@
     "Where it's needed most": {
       story: 'JDGM monitors all active programs and allocates unrestricted gifts to wherever the need is most critical at that moment.',
       goalText: 'Flexible fund · currently supporting all three active campaigns',
-    }
+    },
   };
 
   /* ── Helpers ────────────────────────────────────────────── */
@@ -72,7 +74,6 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  /* ── Loading screen functions ───────────────────────────── */
   function showLoadingScreen() {
     loadingScreen.classList.add('show');
     loadingScreen.hidden = false;
@@ -80,9 +81,23 @@
 
   function hideLoadingScreen() {
     loadingScreen.classList.remove('show');
-    setTimeout(() => {
-      loadingScreen.hidden = true;
-    }, 300);
+    setTimeout(() => { loadingScreen.hidden = true; }, 300);
+  }
+
+  function showPaymentError(msg) {
+    paymentErrorEl.textContent = msg;
+    paymentErrorEl.style.display = 'block';
+    paymentErrorEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function clearPaymentError() {
+    paymentErrorEl.textContent = '';
+    paymentErrorEl.style.display = 'none';
+  }
+
+  function resetCtaBtn() {
+    ctaBtn.disabled = false;
+    sync();
   }
 
   /* ── Sync UI with state ─────────────────────────────────── */
@@ -105,8 +120,8 @@
     const data = campaigns[name];
 
     campaignOpts.forEach(opt => {
-      const title = opt.dataset.campaignOpt;
-      const radio = opt.querySelector('.camp-radio');
+      const title   = opt.dataset.campaignOpt;
+      const radio   = opt.querySelector('.camp-radio');
       const isActive = title === name;
       opt.classList.toggle('active', isActive);
       opt.setAttribute('aria-checked', isActive ? 'true' : 'false');
@@ -131,30 +146,33 @@
       const name = card.dataset.campaign;
       setCampaign(name);
 
-      // Scroll to where donation section will appear
-      const scrollTarget = donateScreen.offsetTop - 100; // Small offset from top
+      const scrollTarget = donateScreen.offsetTop - 100;
       window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
 
-      // Show loading screen after scroll starts
       setTimeout(() => {
         showLoadingScreen();
-
-        // After loading animation, show donation screen
         setTimeout(() => {
           hideLoadingScreen();
           showScreen(donateScreen);
-        }, 2500); // Match the progress bar animation duration
-      }, 600); // Wait for scroll to start
+        }, 2500);
+      }, 600);
     };
     card.addEventListener('click', activate);
-    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+    });
   });
 
   /* ── Campaign opts (in form) ────────────────────────────── */
   campaignOpts.forEach(opt => {
-    const activate = () => { const name = opt.dataset.campaignOpt; if (name) setCampaign(name); };
+    const activate = () => {
+      const name = opt.dataset.campaignOpt;
+      if (name) setCampaign(name);
+    };
     opt.addEventListener('click', activate);
-    opt.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
+    opt.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+    });
   });
 
   /* ── Back to campaigns ──────────────────────────────────── */
@@ -175,6 +193,7 @@
       btn.setAttribute('aria-pressed', 'true');
       if (customInput) customInput.value = '';
       selectedAmt = parseFloat(btn.querySelector('.amount-price').textContent.replace('$', ''));
+      clearPaymentError();
       sync();
     });
   });
@@ -185,6 +204,7 @@
     if (!isNaN(val) && val > 0) {
       amountBtns.forEach(b => { b.classList.remove('selected'); b.removeAttribute('aria-pressed'); });
       selectedAmt = val;
+      clearPaymentError();
       sync();
     }
   });
@@ -202,6 +222,7 @@
 
   /* ── Payment method switch ──────────────────────────────── */
   function switchPay(method) {
+    currentPayMethod = method;
     payTabCard.classList.toggle('active', method === 'card');
     payTabCard.setAttribute('aria-selected', method === 'card');
     payTabGcash.classList.toggle('active', method === 'gcash');
@@ -211,24 +232,184 @@
     panelCard.style.display   = method === 'card'   ? '' : 'none';
     panelGcash.style.display  = method === 'gcash'  ? '' : 'none';
     panelPaypal.style.display = method === 'paypal' ? '' : 'none';
+    clearPaymentError();
   }
   payTabCard.addEventListener('click',   () => switchPay('card'));
   payTabGcash.addEventListener('click',  () => switchPay('gcash'));
   payTabPaypal.addEventListener('click', () => switchPay('paypal'));
 
-  /* ── Complete donation → Thank You ──────────────────────── */
-  ctaBtn.addEventListener('click', () => {
-    thankCampaign.textContent = selectedCampaign;
-    thankAmt.textContent      = fmt(selectedAmt) + (isMonthly ? ' / month' : ' one-time');
+  /* ─────────────────────────────────────────────────────────
+     STRIPE INTEGRATION
+  ───────────────────────────────────────────────────────── */
 
-    const message = `I just donated to ${selectedCampaign} via JDGM — join me!`;
-    const url     = encodeURIComponent(window.location.href);
-    const text    = encodeURIComponent(message);
-    document.getElementById('share-twitter').href  = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
-    document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-    document.getElementById('share-whatsapp').href = `https://wa.me/?text=${text}%20${url}`;
+  const stripeKey  = document.querySelector('meta[name="stripe-key"]')?.content ?? '';
+  const csrfToken  = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
+  const cardErrors = document.getElementById('stripe-card-errors');
 
-    showScreen(thankScreen);
+  let stripe      = null;
+  let cardElement = null;
+
+  if (stripeKey) {
+    stripe = Stripe(stripeKey);
+
+    const elements = stripe.elements({
+      fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap' }],
+    });
+
+    cardElement = elements.create('card', {
+      style: {
+        base: {
+          color:           '#1e293b',
+          fontFamily:      'Inter, system-ui, sans-serif',
+          fontSize:        '15px',
+          fontWeight:      '400',
+          lineHeight:      '1.5',
+          '::placeholder': { color: '#94a3b8' },
+          iconColor:       '#64748b',
+        },
+        invalid: {
+          color:     '#dc2626',
+          iconColor: '#dc2626',
+        },
+      },
+      hidePostalCode: true,
+    });
+
+    cardElement.mount('#stripe-card-element');
+
+    cardElement.addEventListener('change', event => {
+      if (event.error) {
+        cardErrors.textContent    = event.error.message;
+        cardErrors.style.display  = 'block';
+      } else {
+        cardErrors.textContent    = '';
+        cardErrors.style.display  = 'none';
+      }
+    });
+  }
+
+  /* ── Complete donation ──────────────────────────────────── */
+  ctaBtn.addEventListener('click', async () => {
+    clearPaymentError();
+
+    // GCash / PayPal not yet integrated
+    if (currentPayMethod !== 'card') {
+      showPaymentError('GCash and PayPal integration are coming soon. Please use Credit/Debit Card.');
+      return;
+    }
+
+    if (!stripe || !cardElement) {
+      showPaymentError('Payment system is not configured. Please contact support.');
+      return;
+    }
+
+    // Validate donor info
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName  = document.getElementById('lastName').value.trim();
+    const email     = document.getElementById('emailAddr').value.trim();
+
+    if (!firstName || !lastName) {
+      showPaymentError('Please enter your first and last name.');
+      return;
+    }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showPaymentError('Please enter a valid email address.');
+      return;
+    }
+    if (!selectedAmt || selectedAmt < 1) {
+      showPaymentError('Please select or enter a donation amount of at least $1.');
+      return;
+    }
+
+    // Disable button and show processing state
+    ctaBtn.disabled    = true;
+    ctaBtn.textContent = '⏳ Processing…';
+
+    try {
+      /* Step 1 — Create PaymentIntent on our server */
+      const chargeRes = await fetch('/donate/charge', {
+        method: 'POST',
+        headers: {
+          'Content-Type':  'application/json',
+          'X-CSRF-TOKEN':  csrfToken,
+          'Accept':        'application/json',
+        },
+        body: JSON.stringify({
+          campaign_name:  selectedCampaign,
+          first_name:     firstName,
+          last_name:      lastName,
+          email:          email,
+          amount:         selectedAmt,
+          frequency:      isMonthly ? 'monthly' : 'one-time',
+          payment_method: 'card',
+        }),
+      });
+
+      const chargeData = await chargeRes.json();
+
+      if (!chargeRes.ok) {
+        throw new Error(chargeData.message || chargeData.error || 'Failed to initiate payment.');
+      }
+
+      const { client_secret, donation_id } = chargeData;
+
+      /* Step 2 — Confirm payment client-side via Stripe */
+      ctaBtn.textContent = '🔒 Verifying with Stripe…';
+
+      const result = await stripe.confirmCardPayment(client_secret, {
+        payment_method: {
+          card: cardElement,
+          billing_details: {
+            name:  `${firstName} ${lastName}`,
+            email: email,
+          },
+        },
+      });
+
+      if (result.error) {
+        throw new Error(result.error.message);
+      }
+
+      /* Step 3 — Confirm server-side and update donation record */
+      ctaBtn.textContent = '✅ Confirming…';
+
+      const confirmRes = await fetch('/donate/confirm', {
+        method: 'POST',
+        headers: {
+          'Content-Type':  'application/json',
+          'X-CSRF-TOKEN':  csrfToken,
+          'Accept':        'application/json',
+        },
+        body: JSON.stringify({
+          payment_intent_id: result.paymentIntent.id,
+          donation_id:       donation_id,
+        }),
+      });
+
+      const confirmData = await confirmRes.json();
+
+      if (!confirmRes.ok) {
+        // Payment succeeded but record update failed — non-critical, show success anyway
+        console.warn('Record update issue:', confirmData.error);
+      }
+
+      /* ── Success — show thank-you screen ── */
+      thankCampaign.textContent = selectedCampaign;
+      thankAmt.textContent      = fmt(selectedAmt) + (isMonthly ? ' / month' : ' one-time');
+
+      const message = `I just donated to ${selectedCampaign} via JDGM — join me!`;
+      const pageUrl = encodeURIComponent(window.location.href);
+      const text    = encodeURIComponent(message);
+      document.getElementById('share-twitter').href   = `https://twitter.com/intent/tweet?text=${text}&url=${pageUrl}`;
+      document.getElementById('share-facebook').href  = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+      document.getElementById('share-whatsapp').href  = `https://wa.me/?text=${text}%20${pageUrl}`;
+
+      showScreen(thankScreen);
+
+    } catch (err) {
+      showPaymentError(err.message || 'An unexpected error occurred. Please try again.');
+      resetCtaBtn();
+    }
   });
 
   /* ── Tell a friend ──────────────────────────────────────── */
@@ -242,10 +423,12 @@
 
   /* ── Sticky nav shadow ──────────────────────────────────── */
   const nav = document.getElementById('navbar');
-  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 10); }, { passive:true });
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
 
   /* ── Mobile nav toggle ──────────────────────────────────── */
-  const toggle   = document.getElementById('navToggle');
+  const toggle    = document.getElementById('navToggle');
   const mobileNav = document.getElementById('navMobile');
   toggle.addEventListener('click', () => {
     const open = mobileNav.classList.toggle('open');
@@ -270,16 +453,16 @@
   }
 
   /* ── Campaign Tour ──────────────────────────────────────── */
-  const tourOverlay = document.getElementById('campaign-tour-overlay');
-  const tourSteps = document.querySelectorAll('.tour-step');
-  const tourNextBtns = document.querySelectorAll('.tour-next');
-  const tourPrevBtns = document.querySelectorAll('.tour-prev');
-  const tourCtaBtn = document.querySelector('.tour-cta');
-  const tourCloseBtn = document.querySelector('.tour-close');
-  const tourSkipBtn = document.querySelector('.tour-skip');
-  const tourDots = document.querySelectorAll('.tour-dot');
+  const tourOverlay   = document.getElementById('campaign-tour-overlay');
+  const tourSteps     = document.querySelectorAll('.tour-step');
+  const tourNextBtns  = document.querySelectorAll('.tour-next');
+  const tourPrevBtns  = document.querySelectorAll('.tour-prev');
+  const tourCtaBtn    = document.querySelector('.tour-cta');
+  const tourCloseBtn  = document.querySelector('.tour-close');
+  const tourSkipBtn   = document.querySelector('.tour-skip');
+  const tourDots      = document.querySelectorAll('.tour-dot');
   let currentTourStep = 0;
-  let tourShown = false;
+  let tourShown       = false;
   let autoAdvanceTimer = null;
 
   const overviewScreenEl = document.getElementById('campaign-overview-screen');
@@ -289,21 +472,16 @@
         tourShown = true;
         setTimeout(() => {
           showTourStep(0);
-          // Scroll to first campaign card when tour starts
           const firstCard = document.querySelector('.campaign-page-card');
           if (firstCard) {
             setTimeout(() => {
-              firstCard.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-                inline: 'center'
-              });
-            }, 600); // Delay to allow tour overlay to appear first
+              firstCard.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+            }, 600);
           }
-        }, 500); // Small delay for smooth entry
+        }, 500);
         tourOverlay.hidden = false;
         document.body.style.overflow = 'hidden';
-        tourOverlay.focus(); // Focus for accessibility
+        tourOverlay.focus();
       }
     });
   }, { threshold: 0.5 });
@@ -311,111 +489,68 @@
   overviewObserver.observe(overviewScreenEl);
 
   function showTourStep(step) {
-    // Clear any existing auto-advance timer
-    if (autoAdvanceTimer) {
-      clearTimeout(autoAdvanceTimer);
-      autoAdvanceTimer = null;
-    }
+    if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
 
-    // Update step visibility
     tourSteps.forEach((s, i) => s.classList.toggle('active', i === step));
     currentTourStep = step;
-
-    // Update progress dots
     tourDots.forEach((dot, i) => dot.classList.toggle('active', i === step));
 
-    // Highlight corresponding card with animation
     const cards = document.querySelectorAll('.campaign-page-card');
     cards.forEach((card, i) => {
       card.classList.toggle('tour-highlight', i === step);
       if (i === step) {
-        // Scroll to the highlighted card
         setTimeout(() => {
-          card.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'center'
-          });
-        }, 300); // Small delay to allow highlight animation to start
+          card.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+        }, 300);
       }
     });
 
-    // Update ARIA labels
     tourOverlay.setAttribute('aria-labelledby', `tour-title-${step}`);
 
-    // Set auto-advance timer for non-final steps
     if (step < tourSteps.length - 1) {
-      autoAdvanceTimer = setTimeout(() => {
-        showTourStep(step + 1);
-      }, 8000); // Auto-advance after 8 seconds
+      autoAdvanceTimer = setTimeout(() => { showTourStep(step + 1); }, 8000);
     }
   }
 
-  // Reset auto-advance on user interaction
   function resetAutoAdvance() {
     if (autoAdvanceTimer) {
       clearTimeout(autoAdvanceTimer);
       if (currentTourStep < tourSteps.length - 1) {
-        autoAdvanceTimer = setTimeout(() => {
-          showTourStep(currentTourStep + 1);
-        }, 8000);
+        autoAdvanceTimer = setTimeout(() => { showTourStep(currentTourStep + 1); }, 8000);
       }
     }
   }
 
-  // Navigation buttons
   tourNextBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       resetAutoAdvance();
-      if (currentTourStep < tourSteps.length - 1) {
-        showTourStep(currentTourStep + 1);
-      }
+      if (currentTourStep < tourSteps.length - 1) showTourStep(currentTourStep + 1);
     });
   });
 
   tourPrevBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       resetAutoAdvance();
-      if (currentTourStep > 0) {
-        showTourStep(currentTourStep - 1);
-      }
+      if (currentTourStep > 0) showTourStep(currentTourStep - 1);
     });
   });
 
-  // CTA button - close tour and scroll to campaigns
   tourCtaBtn.addEventListener('click', () => {
     if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
     closeTour();
-    setTimeout(() => {
-      overviewScreenEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 300);
+    setTimeout(() => { overviewScreenEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 300);
   });
 
-  // Skip and close buttons
-  tourSkipBtn.addEventListener('click', () => {
-    if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
-    closeTour();
-  });
-  tourCloseBtn.addEventListener('click', () => {
-    if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
-    closeTour();
-  });
+  tourSkipBtn.addEventListener('click',  () => { if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer); closeTour(); });
+  tourCloseBtn.addEventListener('click', () => { if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer); closeTour(); });
 
-  // Keyboard navigation
   tourOverlay.addEventListener('keydown', (e) => {
     resetAutoAdvance();
-    if (e.key === 'Escape') {
-      closeTour();
-    } else if (e.key === 'ArrowRight' && currentTourStep < tourSteps.length - 1) {
-      showTourStep(currentTourStep + 1);
-    } else if (e.key === 'ArrowLeft' && currentTourStep > 0) {
-      showTourStep(currentTourStep - 1);
-    } else if (e.key === 'Enter' && e.target === tourCtaBtn) {
-      tourCtaBtn.click();
-    }
+    if (e.key === 'Escape') { closeTour(); }
+    else if (e.key === 'ArrowRight' && currentTourStep < tourSteps.length - 1) showTourStep(currentTourStep + 1);
+    else if (e.key === 'ArrowLeft'  && currentTourStep > 0)                    showTourStep(currentTourStep - 1);
   });
 
-  // Click outside to close
   tourOverlay.addEventListener('click', (e) => {
     if (e.target === tourOverlay || e.target === tourOverlay.querySelector('.tour-backdrop')) {
       if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
@@ -426,8 +561,7 @@
   function closeTour() {
     tourOverlay.hidden = true;
     document.body.style.overflow = '';
-    const cards = document.querySelectorAll('.campaign-page-card');
-    cards.forEach(card => card.classList.remove('tour-highlight'));
+    document.querySelectorAll('.campaign-page-card').forEach(card => card.classList.remove('tour-highlight'));
   }
 
   /* ── Initial state ──────────────────────────────────────── */

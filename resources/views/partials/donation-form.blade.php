@@ -155,21 +155,12 @@
         </button>
       </div>
 
-      <!-- Card panel -->
+      <!-- Card panel — Stripe Elements -->
       <div id="pay-panel-card" class="payment-box" role="tabpanel" aria-labelledby="pay-tab-card">
-        <label class="form-label" for="cardNumber">Card number</label>
-        <input class="card-field" id="cardNumber" placeholder="•••• •••• •••• ••••" inputmode="numeric" autocomplete="cc-number"/>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-          <div>
-            <label class="form-label" for="cardExpiry">Expiry</label>
-            <input class="card-field" id="cardExpiry" placeholder="MM / YY" style="margin-bottom:0;" autocomplete="cc-exp"/>
-          </div>
-          <div>
-            <label class="form-label" for="cardCvc">CVC</label>
-            <input class="card-field" id="cardCvc" placeholder="CVC" style="margin-bottom:0;" autocomplete="cc-csc"/>
-          </div>
-        </div>
-        <p class="stripe-note">🔒 Payments processed by Stripe · PCI compliant · We never store card data</p>
+        <label class="form-label">Card Details</label>
+        <div id="stripe-card-element" class="stripe-card-container"></div>
+        <div id="stripe-card-errors" class="stripe-error-msg" role="alert" style="display:none;"></div>
+        <p class="stripe-note">🔒 Payments secured by Stripe · PCI-DSS compliant · We never store card data</p>
       </div>
 
       <!-- GCash panel -->
@@ -208,8 +199,11 @@
         <p class="paypal-note">💳 You can pay with your PayPal balance, bank account, or credit card. Your tax-deductible receipt will be sent to your PayPal-registered email.</p>
       </div>
 
+      <!-- Payment error -->
+      <div id="payment-error-msg" class="stripe-error-msg" role="alert" style="display:none;margin-top:14px;"></div>
+
       <!-- Donate CTA -->
-      <button class="btn-donate" id="completeDonationBtn" style="margin-top:28px;" aria-label="Complete donation">
+      <button class="btn-donate" id="completeDonationBtn" style="margin-top:16px;" aria-label="Complete donation">
         &#9829; Complete Gift — $29.99 / Month
       </button>
       <p class="cancel-note">You can cancel or change your giving amount anytime from your email.</p>

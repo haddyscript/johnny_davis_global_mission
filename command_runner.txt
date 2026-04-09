@@ -16,3 +16,9 @@
 ### run all seeder ###
 run this inside the docker for compatibility
 - php artisan db:seed
+
+### Install Stripe PHP SDK (run once) ###
+- docker compose exec app composer require stripe/stripe-php
+
+### Clear config cache after adding Stripe keys to .env ###
+- docker compose exec app php artisan config:clear

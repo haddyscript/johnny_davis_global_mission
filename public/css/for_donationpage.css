@@ -94,7 +94,7 @@ body { padding-top: 72px; }
   text-decoration: none;
 }
 .nav-links a:hover { color:#fff; background:rgba(255,255,255,.08); }
-.nav-links a.active { color:#fff; font-weight:600; }
+.nav-links a.active { color:#fff; font-weight:600; background:rgba(255,255,255,.13); text-decoration:underline; text-underline-offset:3px; text-decoration-color:rgba(240,124,30,.85); }
 
 /* Donate CTA button */
 .nav-links a.btn-nav-donate,
@@ -139,6 +139,7 @@ body { padding-top: 72px; }
   color:rgba(255,255,255,.85); font-size:.95rem; font-weight:500; text-decoration:none; transition:color var(--transition); }
 .nav-mobile a:last-child { border:none; }
 .nav-mobile a:hover { color:var(--orange); }
+.nav-mobile a.active { color:var(--orange); font-weight:600; }
 .nav-mobile a.btn-nav-donate {
   margin:14px 0 0; text-align:center; padding:14px;
   border-radius:var(--r-pill); border-bottom:none;
@@ -797,14 +798,28 @@ body { padding-top: 72px; }
   background:var(--bg-page); border-radius:var(--r-lg);
   border:1.5px solid #e2e8f0; padding:22px; margin-top:4px;
 }
-.card-field {
-  width:100%; padding:12px 14px;
+/* Stripe Elements container */
+.stripe-card-container {
+  padding:12px 14px;
   border:1.5px solid #e2e8f0; border-radius:var(--r-lg);
-  font-size:.9rem; color:var(--text-dark);
-  background:#fff; margin-bottom:12px; outline:none;
+  background:#fff; margin-bottom:10px;
   transition:border-color var(--transition);
 }
-.card-field:focus { border-color:var(--orange); }
+.stripe-card-container.StripeElement--focus { border-color:var(--orange); }
+.stripe-card-container.StripeElement--invalid { border-color:#dc2626; }
+
+/* Inline error messages */
+.stripe-error-msg {
+  color:#dc2626; font-size:.82rem; line-height:1.5;
+  padding:9px 13px; border-radius:8px;
+  background:rgba(220,38,38,.06); border:1px solid rgba(220,38,38,.2);
+}
+
+/* Donate button loading state */
+.btn-donate:disabled {
+  opacity:.7; cursor:not-allowed; transform:none !important;
+}
+
 .stripe-note {
   font-size:.72rem; color:var(--text-hint); margin-top:8px;
   display:flex; align-items:center; gap:6px;

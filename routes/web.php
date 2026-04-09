@@ -29,7 +29,10 @@ Route::post('/newsletter/subscribe', [SubscriberController::class, 'store'])->na
 Route::get('/news', [NewsController::class, 'index'])->name('news');
 Route::get('/who-we-are', [WhoWeAreController::class, 'index'])->name('who-we-are');
 Route::get('/ministry', [MinistryController::class, 'index'])->name('ministry');
-Route::get('/donate', [DonationController::class, 'index'])->name('donate');
+Route::get('/donate',          [DonationController::class, 'index'])->name('donate');
+Route::post('/donate/charge',  [DonationController::class, 'charge'])->name('donate.charge');
+Route::post('/donate/confirm', [DonationController::class, 'confirm'])->name('donate.confirm');
+Route::post('/stripe/webhook', [DonationController::class, 'webhook'])->name('stripe.webhook');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -62,6 +65,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::patch('contact-messages/{contactMessage}/toggle-read', [ContactMessageController::class, 'toggleRead'])
         ->name('contact-messages.toggle-read');
 
+    Route::get('donations/export', [AdminDonationController::class, 'export'])->name('donations.export');
     Route::resource('donations', AdminDonationController::class)->only(['index', 'show']);
     Route::resource('email-templates', EmailTemplateController::class);
     Route::patch('email-templates/{emailTemplate}/toggle', [EmailTemplateController::class, 'toggle'])

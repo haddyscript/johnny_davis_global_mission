@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="{{ $description }}" />
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
+  <meta name="stripe-key" content="{{ $stripeKey ?? '' }}" />
   <title>{{ $title }}</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,6 +22,8 @@
 
 @include('partials.footer-donation')
 
+{{-- Stripe.js must load before our page script --}}
+<script src="https://js.stripe.com/v3/"></script>
 <script src="{{ asset('js/for_donationpage.js') }}"></script>
 </body>
 </html>
