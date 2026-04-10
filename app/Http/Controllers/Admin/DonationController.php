@@ -149,13 +149,22 @@ class DonationController extends Controller
             ], 422);
         }
 
+        // 24-hour cooldown guard
+        if ($donation->isInFollowUpCooldown()) {
+            $nextAllowed = $donation->follow_up_sent_at->addHours(24)->format('M j, Y \a\t g:i A');
+            return response()->json([
+                'error'       => "A follow-up was sent recently. Next allowed after {$nextAllowed}.",
+                'in_cooldown' => true,
+            ], 429);
+        }
+
         $template = EmailTemplate::where('type', 'payment_followup')
             ->where('is_active', true)
             ->first();
 
         if (! $template) {
             return response()->json([
-                'error' => 'Payment Follow-up email template not found. Please seed it first: sail artisan db:seed --class=EmailTemplateSeeder',
+                'error' => 'Payment Follow-up email template not found. Run: sail artisan db:seed --class=EmailTemplateSeeder',
             ], 404);
         }
 
@@ -172,9 +181,18 @@ class DonationController extends Controller
             ], 500);
         }
 
+        // Record the follow-up
+        $newCount = $donation->follow_up_count + 1;
+        $donation->update([
+            'follow_up_sent_at' => now(),
+            'follow_up_count'   => $newCount,
+        ]);
+
         return response()->json([
-            'success' => true,
-            'message' => 'Follow-up email sent to ' . $donation->email,
+            'success'          => true,
+            'message'          => 'Follow-up email sent to ' . $donation->email,
+            'follow_up_count'  => $newCount,
+            'follow_up_sent_at'=> now()->format('M j, Y g:i A'),
         ]);
     }
 

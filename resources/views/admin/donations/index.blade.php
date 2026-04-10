@@ -130,7 +130,8 @@
                     <th>Status</th>
                     <th>Transaction Ref</th>
                     <th>Date</th>
-                    <th style="width:110px;">Actions</th>
+                    <th style="min-width:140px;">Follow-up</th>
+                    <th style="width:80px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -209,14 +210,39 @@
                             {{ $donation->created_at->format('M j, Y') }}
                         </span>
                     </td>
+
+                    {{-- Follow-up status cell --}}
+                    <td class="fu-cell" data-id="{{ $donation->id }}">
+                        @if($donation->status === 'completed')
+                            <span style="color:var(--text-muted);font-size:12px;">—</span>
+                        @elseif($donation->follow_up_count === 0)
+                            <span class="fu-badge fu-needs">Needs Follow-up</span>
+                        @elseif($donation->isInFollowUpCooldown())
+                            <div>
+                                <span class="fu-badge fu-sent">✓ Sent {{ $donation->follow_up_count }}×</span>
+                                <div class="fu-meta">{{ $donation->follow_up_sent_at->format('M j, g:i A') }}</div>
+                                <div class="fu-meta fu-cooldown-label">⏱ Cooldown active</div>
+                            </div>
+                        @else
+                            <div>
+                                <span class="fu-badge fu-resend">Sent {{ $donation->follow_up_count }}× · Resend?</span>
+                                <div class="fu-meta">Last: {{ $donation->follow_up_sent_at->format('M j, g:i A') }}</div>
+                            </div>
+                        @endif
+                    </td>
+
                     <td>
                         <div class="row-actions">
                             <button class="row-btn row-btn-view" title="View details"
                                 data-url="{{ route('admin.donations.show', $donation) }}">👁️</button>
                             @if(in_array($donation->status, ['pending', 'failed']))
-                            <button class="row-btn row-btn-followup" title="Send follow-up email"
+                            <button class="row-btn row-btn-followup
+                                    {{ $donation->isInFollowUpCooldown() ? 'fu-disabled' : '' }}"
+                                title="{{ $donation->isInFollowUpCooldown() ? 'Cooldown active — next send allowed after '.$donation->follow_up_sent_at->addHours(24)->format('M j, g:i A') : 'Send follow-up email' }}"
+                                {{ $donation->isInFollowUpCooldown() ? 'disabled' : '' }}
                                 data-url="{{ route('admin.donations.followup', $donation) }}"
                                 data-csrf="{{ csrf_token() }}"
+                                data-id="{{ $donation->id }}"
                                 data-name="{{ $donation->full_name }}"
                                 data-email="{{ $donation->email }}">📧</button>
                             @endif
@@ -334,15 +360,26 @@
     background: rgba(245,158,11,.1); color: #d97706;
     border: 1px solid rgba(245,158,11,.25);
 }
-.row-btn-followup:hover:not(:disabled) {
-    background: rgba(245,158,11,.2); color: #b45309;
-}
+.row-btn-followup:hover:not(:disabled) { background: rgba(245,158,11,.2); color: #b45309; }
 .row-btn-followup.sent {
     background: rgba(16,185,129,.1); color: #059669;
-    border-color: rgba(16,185,129,.25); cursor: default;
-    pointer-events: none;
+    border-color: rgba(16,185,129,.25); pointer-events: none;
 }
-.row-btn-followup:disabled { opacity: .6; cursor: not-allowed; }
+.row-btn-followup:disabled, .row-btn-followup.fu-disabled {
+    opacity: .45; cursor: not-allowed; pointer-events: none;
+}
+
+/* ── Follow-up status badges ── */
+.fu-badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 8px; border-radius: 7px; font-size: 11px; font-weight: 700;
+    white-space: nowrap;
+}
+.fu-needs  { background: rgba(245,158,11,.12); color: #d97706; border: 1px solid rgba(245,158,11,.25); }
+.fu-sent   { background: rgba(16,185,129,.1);  color: #059669; border: 1px solid rgba(16,185,129,.2); }
+.fu-resend { background: rgba(99,102,241,.1);  color: #4f46e5; border: 1px solid rgba(99,102,241,.2); }
+.fu-meta   { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+.fu-cooldown-label { color: #d97706; font-style: italic; }
 .don-status-badge {
     display: inline-flex; align-items: center; gap: 5px;
     padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; white-space: nowrap;
@@ -500,11 +537,11 @@ document.addEventListener('keydown', function (e) {
 /* ── Follow-up email ── */
 document.querySelectorAll('.row-btn-followup').forEach(function (btn) {
     btn.addEventListener('click', function () {
-        if (btn.disabled) return;
+        if (btn.disabled || btn.classList.contains('fu-disabled')) return;
 
         var name  = btn.dataset.name;
         var email = btn.dataset.email;
-        if (!confirm('Send a follow-up email to ' + name + ' (' + email + ')?')) return;
+        if (!confirm('Send a payment follow-up email to ' + name + ' (' + email + ')?')) return;
 
         btn.disabled = true;
         var original = btn.textContent;
@@ -519,14 +556,33 @@ document.querySelectorAll('.row-btn-followup').forEach(function (btn) {
             },
         })
         .then(function (r) {
-            return r.json().then(function (d) { return { ok: r.ok, data: d }; });
+            return r.json().then(function (d) { return { ok: r.ok, status: r.status, data: d }; });
         })
         .then(function (res) {
             if (res.ok && res.data.success) {
+                var count   = res.data.follow_up_count;
+                var sentAt  = res.data.follow_up_sent_at;
+
+                /* Mark button as sent (disable for cooldown) */
                 btn.textContent = '✅';
-                btn.classList.add('sent');
-                btn.title = 'Follow-up sent to ' + email;
-                if (window.showAdminToast) window.showAdminToast(res.data.message || 'Follow-up email sent!', 'success');
+                btn.classList.add('fu-disabled');
+                btn.title = 'Cooldown active — sent at ' + sentAt;
+
+                /* Update the Follow-up status cell live */
+                var id   = btn.dataset.id;
+                var cell = document.querySelector('.fu-cell[data-id="' + id + '"]');
+                if (cell) {
+                    cell.innerHTML =
+                        '<div>' +
+                        '<span class="fu-badge fu-sent">✓ Sent ' + count + '×</span>' +
+                        '<div class="fu-meta">' + sentAt + '</div>' +
+                        '<div class="fu-meta fu-cooldown-label">⏱ Cooldown active</div>' +
+                        '</div>';
+                }
+
+                if (window.showAdminToast) {
+                    window.showAdminToast(res.data.message || 'Follow-up email sent!', 'success');
+                }
             } else {
                 btn.textContent = original;
                 btn.disabled = false;

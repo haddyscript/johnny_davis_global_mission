@@ -28,26 +28,57 @@ class Donation extends Model
         'card_exp_year',
         'transaction_id',
         'status',
+        'follow_up_sent_at',
+        'follow_up_count',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
-        'amount' => 'decimal:2',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'amount'            => 'decimal:2',
+        'follow_up_sent_at' => 'datetime',
+        'follow_up_count'   => 'integer',
+        'created_at'        => 'datetime',
+        'updated_at'        => 'datetime',
     ];
 
     /**
      * Get the donor's full name.
-     *
-     * @return string
      */
-    public function getFullNameAttribute()
+    public function getFullNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * Whether this donation needs a follow-up (pending/failed and not recently sent).
+     */
+    public function needsFollowUp(): bool
+    {
+        return in_array($this->status, ['pending', 'failed'])
+            && ! $this->isInFollowUpCooldown();
+    }
+
+    /**
+     * Whether a follow-up was sent within the cooldown window.
+     */
+    public function isInFollowUpCooldown(int $hours = 24): bool
+    {
+        return $this->follow_up_sent_at !== null
+            && $this->follow_up_sent_at->diffInHours(now()) < $hours;
+    }
+
+    /**
+     * Human-readable label for the follow-up status column.
+     */
+    public function followUpStatusLabel(): string
+    {
+        if ($this->status === 'completed') {
+            return 'completed';
+        }
+
+        if ($this->follow_up_count === 0) {
+            return 'needs';
+        }
+
+        return $this->isInFollowUpCooldown() ? 'cooldown' : 'resend';
     }
 }
