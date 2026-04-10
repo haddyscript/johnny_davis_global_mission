@@ -80,13 +80,39 @@ class CampaignController extends Controller
 
     public function edit(Campaign $campaign)
     {
-        return view('admin.campaigns.edit', compact('campaign'));
+        $totalRaised = (float) Donation::where('status', 'completed')
+            ->where('campaign_name', $campaign->title)
+            ->sum('amount');
+
+        $donationCount = Donation::where('status', 'completed')
+            ->where('campaign_name', $campaign->title)
+            ->count();
+
+        $goalNumeric = (float) preg_replace('/[^0-9.]/', '', $campaign->goal_amount ?? '0');
+
+        $computedPct = ($goalNumeric > 0)
+            ? min(100, (int) round(($totalRaised / $goalNumeric) * 100))
+            : 0;
+
+        return view('admin.campaigns.edit', compact('campaign', 'totalRaised', 'donationCount', 'computedPct'));
     }
 
     public function update(Request $request, Campaign $campaign)
     {
         $validated = $this->validateCampaign($request);
         $validated['is_active'] = $request->boolean('is_active', true);
+
+        // Recompute raised_amount and goal_pct from live donation data (ignore submitted values)
+        $totalRaised = (float) Donation::where('status', 'completed')
+            ->where('campaign_name', $campaign->title)
+            ->sum('amount');
+
+        $goalNumeric = (float) preg_replace('/[^0-9.]/', '', $validated['goal_amount'] ?? $campaign->goal_amount ?? '0');
+
+        $validated['raised_amount'] = '$' . number_format($totalRaised, 2);
+        $validated['goal_pct'] = ($goalNumeric > 0)
+            ? min(100, (int) round(($totalRaised / $goalNumeric) * 100))
+            : 0;
 
         try {
             $campaign->update($validated);

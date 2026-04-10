@@ -62,6 +62,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('preview/page/{slug}', [PreviewController::class, 'page'])->name('preview.page');
 
     Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
+    Route::post('contact-messages/{contactMessage}/reply', [ContactMessageController::class, 'reply'])
+        ->name('contact-messages.reply');
 
     Route::get('subscribers/fetch', [AdminSubscriberController::class, 'fetch'])->name('subscribers.fetch');
     Route::post('subscribers/bulk-email', [AdminSubscriberController::class, 'bulkEmail'])->name('subscribers.bulk-email');

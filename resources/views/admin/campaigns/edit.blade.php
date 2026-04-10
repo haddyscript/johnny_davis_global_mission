@@ -124,17 +124,25 @@
                                 value="{{ old('goal_amount', $campaign->goal_amount) }}" placeholder="$45,000" autocomplete="off">
                             @error('goal_amount') <div class="pf-error">⚠ {{ $message }}</div> @enderror
                         </div>
-                        <div class="pf-group {{ $errors->has('raised_amount') ? 'has-error' : '' }}">
-                            <label class="pf-label" for="raised_amount">Raised So Far</label>
-                            <input id="raised_amount" name="raised_amount" type="text" class="pf-input"
-                                value="{{ old('raised_amount', $campaign->raised_amount) }}" placeholder="$32,480" autocomplete="off">
-                            @error('raised_amount') <div class="pf-error">⚠ {{ $message }}</div> @enderror
+                        <div class="pf-group">
+                            <label class="pf-label">
+                                Raised So Far
+                                <span class="pf-hint" style="color:#0f766e;font-weight:600;">live from donations</span>
+                            </label>
+                            <div style="padding:10px 12px;background:rgba(15,118,110,.07);border:1px solid rgba(15,118,110,.25);border-radius:10px;font-size:14px;font-weight:700;color:#0f766e;">
+                                ${{ number_format($totalRaised, 2) }}
+                            </div>
+                            <input type="hidden" name="raised_amount" value="${{ number_format($totalRaised, 2) }}">
                         </div>
-                        <div class="pf-group {{ $errors->has('goal_pct') ? 'has-error' : '' }}">
-                            <label class="pf-label" for="goal_pct">Progress % <span class="pf-required">*</span></label>
-                            <input id="goal_pct" name="goal_pct" type="number" class="pf-input"
-                                value="{{ old('goal_pct', $campaign->goal_pct) }}" min="0" max="100" placeholder="72">
-                            @error('goal_pct') <div class="pf-error">⚠ {{ $message }}</div> @enderror
+                        <div class="pf-group">
+                            <label class="pf-label">
+                                Progress %
+                                <span class="pf-hint" style="color:#0f766e;font-weight:600;">auto-calculated</span>
+                            </label>
+                            <div id="computed-pct-display" style="padding:10px 12px;background:rgba(15,118,110,.07);border:1px solid rgba(15,118,110,.25);border-radius:10px;font-size:14px;font-weight:700;color:#0f766e;text-align:center;">
+                                {{ $computedPct }}%
+                            </div>
+                            <input type="hidden" id="goal_pct" name="goal_pct" value="{{ $computedPct }}">
                         </div>
                     </div>
 
@@ -237,13 +245,14 @@
                     </div>
                     <div>
                         <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;">
-                            <span id="prev-raised" style="color:var(--text-muted);">{{ $campaign->raised_amount ?? '—' }}</span>
-                            <span id="prev-pct" style="font-weight:700;color:#0f766e;">{{ $campaign->goal_pct }}%</span>
+                            <span id="prev-raised" style="color:var(--text-muted);font-weight:600;">${{ number_format($totalRaised, 2) }}</span>
+                            <span id="prev-pct" style="font-weight:700;color:#0f766e;">{{ $computedPct }}%</span>
                         </div>
                         <div style="height:8px;background:var(--surface-strong);border-radius:99px;overflow:hidden;">
-                            <div id="prev-bar" style="height:100%;width:{{ $campaign->goal_pct }}%;border-radius:99px;{{ $campaign->bar_style ?: 'background:linear-gradient(90deg,#0f766e,#14b8a6);' }}transition:width .3s;"></div>
+                            <div id="prev-bar" style="height:100%;width:{{ $computedPct }}%;border-radius:99px;{{ $campaign->bar_style ?: 'background:linear-gradient(90deg,#0f766e,#14b8a6);' }}transition:width .3s;"></div>
                         </div>
                         <div id="prev-goal" style="font-size:11px;color:var(--text-muted);margin-top:4px;">Goal: {{ $campaign->goal_amount ?? '—' }}</div>
+                        <div style="font-size:11px;color:#0f766e;margin-top:4px;opacity:.8;">Raised from {{ $donationCount }} donation(s)</div>
                     </div>
                 </div>
 
@@ -275,23 +284,30 @@ function syncStatus() {
 checkbox.addEventListener('change', syncStatus);
 syncStatus();
 
-var pctInput    = document.getElementById('goal_pct');
-var raisedInput = document.getElementById('raised_amount');
-var goalInput   = document.getElementById('goal_amount');
-var barEl       = document.getElementById('prev-bar');
-var pctEl       = document.getElementById('prev-pct');
-var raisedEl    = document.getElementById('prev-raised');
-var goalEl      = document.getElementById('prev-goal');
+// Live-computed values from the server (donation totals)
+var totalRaised  = {{ $totalRaised }};
+var basePct      = {{ $computedPct }};
+
+var goalInput    = document.getElementById('goal_amount');
+var pctHidden    = document.getElementById('goal_pct');
+var pctDisplay   = document.getElementById('computed-pct-display');
+var barEl        = document.getElementById('prev-bar');
+var pctEl        = document.getElementById('prev-pct');
+var goalEl       = document.getElementById('prev-goal');
 
 function updatePreview() {
-    var pct = Math.min(Math.max(parseInt(pctInput.value, 10) || 0, 0), 100);
-    barEl.style.width    = pct + '%';
-    pctEl.textContent    = pct + '%';
-    raisedEl.textContent = raisedInput.value || '—';
-    goalEl.textContent   = 'Goal: ' + (goalInput.value || '—');
+    var goalNumeric = parseFloat((goalInput.value || '').replace(/[^0-9.]/g, '')) || 0;
+    var pct = goalNumeric > 0
+        ? Math.min(100, Math.round((totalRaised / goalNumeric) * 100))
+        : basePct;
+    barEl.style.width      = pct + '%';
+    pctEl.textContent      = pct + '%';
+    pctDisplay.textContent = pct + '%';
+    pctHidden.value        = pct;
+    goalEl.textContent     = 'Goal: ' + (goalInput.value || '—');
 }
 
-[pctInput, raisedInput, goalInput].forEach(function (el) { el.addEventListener('input', updatePreview); });
+goalInput.addEventListener('input', updatePreview);
 
 document.getElementById('campaign-form').addEventListener('submit', function () {
     var btn = document.getElementById('submit-btn');

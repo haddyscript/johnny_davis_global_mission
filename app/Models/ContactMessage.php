@@ -17,12 +17,16 @@ class ContactMessage extends Model
         'message',
         'is_read',
         'ip_address',
+        'reply_message',
+        'replied_by',
+        'replied_at',
     ];
 
     protected function casts(): array
     {
         return [
-            'is_read' => 'boolean',
+            'is_read'    => 'boolean',
+            'replied_at' => 'datetime',
         ];
     }
 
