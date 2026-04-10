@@ -72,6 +72,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         ->name('contact-messages.toggle-read');
 
     Route::get('donations/export', [AdminDonationController::class, 'export'])->name('donations.export');
+    Route::post('donations/{donation}/followup', [AdminDonationController::class, 'followup'])->name('donations.followup');
     Route::resource('donations', AdminDonationController::class)->only(['index', 'show']);
     Route::resource('email-templates', EmailTemplateController::class);
     Route::patch('email-templates/{emailTemplate}/toggle', [EmailTemplateController::class, 'toggle'])

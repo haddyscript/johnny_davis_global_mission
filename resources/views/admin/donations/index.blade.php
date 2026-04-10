@@ -130,7 +130,7 @@
                     <th>Status</th>
                     <th>Transaction Ref</th>
                     <th>Date</th>
-                    <th style="width:80px;">Actions</th>
+                    <th style="width:110px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -213,6 +213,13 @@
                         <div class="row-actions">
                             <button class="row-btn row-btn-view" title="View details"
                                 data-url="{{ route('admin.donations.show', $donation) }}">👁️</button>
+                            @if(in_array($donation->status, ['pending', 'failed']))
+                            <button class="row-btn row-btn-followup" title="Send follow-up email"
+                                data-url="{{ route('admin.donations.followup', $donation) }}"
+                                data-csrf="{{ csrf_token() }}"
+                                data-name="{{ $donation->full_name }}"
+                                data-email="{{ $donation->email }}">📧</button>
+                            @endif
                         </div>
                     </td>
                 </tr>
@@ -323,6 +330,19 @@
     letter-spacing: .04em; text-transform: uppercase;
     border: 1px solid rgba(139,92,246,.2);
 }
+.row-btn-followup {
+    background: rgba(245,158,11,.1); color: #d97706;
+    border: 1px solid rgba(245,158,11,.25);
+}
+.row-btn-followup:hover:not(:disabled) {
+    background: rgba(245,158,11,.2); color: #b45309;
+}
+.row-btn-followup.sent {
+    background: rgba(16,185,129,.1); color: #059669;
+    border-color: rgba(16,185,129,.25); cursor: default;
+    pointer-events: none;
+}
+.row-btn-followup:disabled { opacity: .6; cursor: not-allowed; }
 .don-status-badge {
     display: inline-flex; align-items: center; gap: 5px;
     padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; white-space: nowrap;
@@ -475,6 +495,51 @@ modal.addEventListener('click', function (e) {
 });
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') modal.classList.remove('modal-open');
+});
+
+/* ── Follow-up email ── */
+document.querySelectorAll('.row-btn-followup').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+        if (btn.disabled) return;
+
+        var name  = btn.dataset.name;
+        var email = btn.dataset.email;
+        if (!confirm('Send a follow-up email to ' + name + ' (' + email + ')?')) return;
+
+        btn.disabled = true;
+        var original = btn.textContent;
+        btn.textContent = '⏳';
+
+        fetch(btn.dataset.url, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': btn.dataset.csrf,
+                'Accept':       'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(function (r) {
+            return r.json().then(function (d) { return { ok: r.ok, data: d }; });
+        })
+        .then(function (res) {
+            if (res.ok && res.data.success) {
+                btn.textContent = '✅';
+                btn.classList.add('sent');
+                btn.title = 'Follow-up sent to ' + email;
+                if (window.showAdminToast) window.showAdminToast(res.data.message || 'Follow-up email sent!', 'success');
+            } else {
+                btn.textContent = original;
+                btn.disabled = false;
+                var msg = (res.data && res.data.error) ? res.data.error : 'Failed to send follow-up email.';
+                if (window.showAdminToast) window.showAdminToast(msg, 'error');
+            }
+        })
+        .catch(function () {
+            btn.textContent = original;
+            btn.disabled = false;
+            if (window.showAdminToast) window.showAdminToast('Network error. Please try again.', 'error');
+        });
+    });
 });
 
 })();

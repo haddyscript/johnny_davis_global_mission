@@ -210,7 +210,51 @@ HTML,
             ],
 
             // ─────────────────────────────────────────────────
-            // 6. Day 45 Upgrade Ask
+            // 6. Payment Follow-up (Pending / Failed)
+            // ─────────────────────────────────────────────────
+            [
+                'name'        => 'Payment Follow-up',
+                'type'        => 'payment_followup',
+                'description' => 'Sent manually by an admin when a donation is pending or failed — encourages the donor to complete their payment.',
+                'subject'     => 'Action Required: Your Donation to {{campaign_name}} Did Not Complete',
+                'variables'   => [
+                    'donor_name'      => 'Donor\'s full name',
+                    'campaign_name'   => 'Name of the campaign the donation was for',
+                    'donation_amount' => 'Amount of the donation (e.g. $29.99)',
+                    'donate_link'     => 'Link to the donation page',
+                ],
+                'body' => <<<HTML
+<h2>Hi {{donor_name}},</h2>
+
+<p>We noticed that your recent donation of <strong>{{donation_amount}}</strong> toward <strong>{{campaign_name}}</strong> did not complete successfully.</p>
+
+<p>This can happen due to a declined card, expired payment details, or a temporary network issue. There is nothing to worry about — completing your donation only takes a moment.</p>
+
+<div style="background:#f0fdf9;border-left:4px solid #0f766e;padding:16px 20px;border-radius:0 8px 8px 0;margin:24px 0;">
+    <p style="margin:0;font-weight:700;color:#0f766e;font-size:15px;">Your Donation Summary</p>
+    <p style="margin:10px 0 0;color:#334155;"><strong>Campaign:</strong> {{campaign_name}}</p>
+    <p style="margin:6px 0 0;color:#334155;"><strong>Amount:</strong> {{donation_amount}}</p>
+</div>
+
+<p>We would love for you to complete your gift. Every contribution — big or small — makes a real and lasting difference in the lives of the families we serve together.</p>
+
+<p>
+    <a href="{{donate_link}}"
+       style="display:inline-block;background:#0f766e;color:#ffffff;padding:14px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:15px;margin:8px 0;">
+        Complete My Donation →
+    </a>
+</p>
+
+<p>If you experienced any issues or have questions about your payment, please don't hesitate to reach out. We are here to help and we are grateful for your generosity.</p>
+
+<p>With gratitude and blessings,<br>
+<strong>Pastor Johnny Davis</strong><br>
+Johnny Davis Global Missions</p>
+HTML,
+            ],
+
+            // ─────────────────────────────────────────────────
+            // 7. Day 45 Upgrade Ask
             // ─────────────────────────────────────────────────
             [
                 'name'        => 'Donation Upgrade Ask',

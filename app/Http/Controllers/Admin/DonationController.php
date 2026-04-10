@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Donation;
+use App\Models\EmailTemplate;
+use App\Services\EmailService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -136,6 +139,43 @@ class DonationController extends Controller
 
             fclose($handle);
         }, $filename, ['Content-Type' => 'text/csv']);
+    }
+
+    public function followup(Donation $donation, EmailService $emailService): JsonResponse
+    {
+        if ($donation->status === 'completed') {
+            return response()->json([
+                'error' => 'This donation is already completed — no follow-up needed.',
+            ], 422);
+        }
+
+        $template = EmailTemplate::where('type', 'payment_followup')
+            ->where('is_active', true)
+            ->first();
+
+        if (! $template) {
+            return response()->json([
+                'error' => 'Payment Follow-up email template not found. Please seed it first: sail artisan db:seed --class=EmailTemplateSeeder',
+            ], 404);
+        }
+
+        $log = $emailService->sendTemplate($template, $donation->email, $donation->full_name, [
+            'donor_name'      => $donation->full_name,
+            'campaign_name'   => $donation->campaign_name,
+            'donation_amount' => '$' . number_format((float) $donation->amount, 2),
+            'donate_link'     => url('/donate'),
+        ]);
+
+        if ($log->isFailed()) {
+            return response()->json([
+                'error' => 'Follow-up email could not be delivered. Check your mail configuration.',
+            ], 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Follow-up email sent to ' . $donation->email,
+        ]);
     }
 
     public function show(Donation $donation)
