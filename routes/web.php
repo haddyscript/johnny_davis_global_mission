@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ContentBlockController;
 use App\Http\Controllers\Admin\DonationController as AdminDonationController;
 use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Admin\NavItemController;
+use App\Http\Controllers\Admin\EmailLogController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PreviewController;
@@ -61,6 +62,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
 
+    Route::get('subscribers/fetch', [AdminSubscriberController::class, 'fetch'])->name('subscribers.fetch');
+    Route::post('subscribers/bulk-email', [AdminSubscriberController::class, 'bulkEmail'])->name('subscribers.bulk-email');
     Route::resource('subscribers', AdminSubscriberController::class)->only(['index', 'destroy']);
     Route::patch('subscribers/{subscriber}/toggle', [AdminSubscriberController::class, 'toggleActive'])
         ->name('subscribers.toggle');
@@ -76,6 +79,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         ->name('email-templates.preview');
     Route::post('email-templates/preview-render', [EmailTemplateController::class, 'previewRender'])
         ->name('email-templates.preview-render');
+
+    Route::resource('email-logs', EmailLogController::class)->only(['index', 'show', 'destroy']);
 
     // Navigation items
     Route::prefix('nav-items')->name('nav-items.')->group(function () {
