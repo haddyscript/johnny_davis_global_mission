@@ -90,6 +90,11 @@
                 <div class="admin-nav-icon">📨</div>
                 <div class="admin-nav-label">Email Templates</div>
             </a>
+            <a href="{{ route('admin.email-logs.index') }}"
+               class="admin-nav-item {{ request()->routeIs('admin.email-logs.*') ? 'active' : '' }}">
+                <div class="admin-nav-icon">📋</div>
+                <div class="admin-nav-label">Email Logs</div>
+            </a>
 
             {{-- COMMUNITY --}}
             <div class="admin-nav-section" style="margin-top:8px;">Community</div>

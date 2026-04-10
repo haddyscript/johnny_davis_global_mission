@@ -6,6 +6,7 @@ use App\Mail\TemplateMail;
 use App\Models\EmailLog;
 use App\Models\EmailTemplate;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\View;
 use Throwable;
 
 class EmailService
@@ -27,15 +28,19 @@ class EmailService
     ): EmailLog {
         $subject      = $this->render($template->subject, $data);
         $renderedBody = $this->render($template->body, $data);
+        $brandedHtml  = View::make('emails.layouts.brand-template', [
+            'subject' => $subject,
+            'body'    => $renderedBody,
+        ])->render();
 
         try {
             $mailable = new TemplateMail($subject, $renderedBody);
 
             Mail::to($toEmail, $toName)->send($mailable);
 
-            return $this->log($template, $toEmail, $toName, $subject, $renderedBody, 'sent');
+            return $this->log($template, $toEmail, $toName, $subject, $brandedHtml, 'sent');
         } catch (Throwable $e) {
-            return $this->log($template, $toEmail, $toName, $subject, $renderedBody, 'failed', $e->getMessage());
+            return $this->log($template, $toEmail, $toName, $subject, $brandedHtml, 'failed', $e->getMessage());
         }
     }
 
