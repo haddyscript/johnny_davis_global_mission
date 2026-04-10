@@ -196,7 +196,9 @@
           <div class="paypal-benefit"><span aria-hidden="true">🌍</span><span>Available in 200+ countries and regions</span></div>
           <div class="paypal-benefit"><span aria-hidden="true">⚡</span><span>Instant processing with email confirmation</span></div>
         </div>
-        <p class="paypal-note">💳 You can pay with your PayPal balance, bank account, or credit card. Your tax-deductible receipt will be sent to your PayPal-registered email.</p>
+        {{-- PayPal Buttons are rendered here by the JS SDK --}}
+        <div id="paypal-button-container" style="margin-top:16px;min-height:48px;"></div>
+        <p class="paypal-note" style="margin-top:12px;">💳 You can pay with your PayPal balance, bank account, or credit card. Your tax-deductible receipt will be emailed after payment.</p>
       </div>
 
       <!-- Payment error -->

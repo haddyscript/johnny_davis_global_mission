@@ -134,6 +134,11 @@
 
             {{-- SYSTEM --}}
             <div class="admin-nav-section" style="margin-top:8px;">System</div>
+            <a href="{{ route('admin.admins.index') }}"
+               class="admin-nav-item {{ request()->routeIs('admin.admins.*') ? 'active' : '' }}">
+                <div class="admin-nav-icon">🛡️</div>
+                <div class="admin-nav-label">Admin Users</div>
+            </a>
             <a href="{{ route('admin.notifications.index') }}"
                class="admin-nav-item {{ request()->routeIs('admin.notifications.*') ? 'active' : '' }}">
                 <div class="admin-nav-icon">🔔</div>

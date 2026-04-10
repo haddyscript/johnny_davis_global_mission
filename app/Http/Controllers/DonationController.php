@@ -9,6 +9,7 @@ use App\Models\EmailTemplate;
 use App\Models\Page;
 use App\Services\EmailService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\PaymentIntent;
@@ -143,6 +144,148 @@ class DonationController extends Controller
         } catch (ApiErrorException $e) {
             return response()->json(['error' => $e->getMessage()], 422);
         }
+    }
+
+    // ── PayPal: Create Order ─────────────────────────────────────────────
+
+    public function paypalOrder(Request $request)
+    {
+        $validated = $request->validate([
+            'campaign_name' => 'required|string|max:255',
+            'first_name'    => 'required|string|max:100',
+            'last_name'     => 'required|string|max:100',
+            'email'         => 'required|email|max:255',
+            'amount'        => 'required|numeric|min:1|max:50000',
+            'frequency'     => 'required|in:one-time,monthly',
+        ]);
+
+        try {
+            $token = $this->paypalAccessToken();
+
+            $response = Http::withToken($token)
+                ->withHeaders(['Prefer' => 'return=representation'])
+                ->post($this->paypalApi('/v2/checkout/orders'), [
+                    'intent' => 'CAPTURE',
+                    'purchase_units' => [[
+                        'reference_id' => uniqid('jdgm_', true),
+                        'description'  => 'Donation — ' . $validated['campaign_name'],
+                        'amount'       => [
+                            'currency_code' => 'USD',
+                            'value'         => number_format((float) $validated['amount'], 2, '.', ''),
+                        ],
+                    ]],
+                    'payment_source' => [
+                        'paypal' => [
+                            'experience_context' => [
+                                'shipping_preference' => 'NO_SHIPPING',
+                                'user_action'         => 'PAY_NOW',
+                            ],
+                        ],
+                    ],
+                ]);
+
+            if (! $response->successful()) {
+                return response()->json(['error' => 'PayPal order creation failed. Please try again.'], 422);
+            }
+
+            $orderID = $response->json('id');
+
+            $donation = Donation::create([
+                'campaign_name'  => $validated['campaign_name'],
+                'first_name'     => $validated['first_name'],
+                'last_name'      => $validated['last_name'],
+                'email'          => $validated['email'],
+                'amount'         => $validated['amount'],
+                'frequency'      => $validated['frequency'],
+                'payment_method' => 'paypal',
+                'transaction_id' => $orderID,
+                'status'         => 'pending',
+            ]);
+
+            return response()->json([
+                'orderID'     => $orderID,
+                'donation_id' => $donation->id,
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => 'Failed to create PayPal order. Please try again.'], 422);
+        }
+    }
+
+    // ── PayPal: Capture Order (after buyer approval) ─────────────────────
+
+    public function paypalCapture(Request $request)
+    {
+        $request->validate([
+            'order_id'    => 'required|string',
+            'donation_id' => 'required|integer|min:1',
+        ]);
+
+        try {
+            $token = $this->paypalAccessToken();
+
+            $response = Http::withToken($token)
+                ->post($this->paypalApi("/v2/checkout/orders/{$request->order_id}/capture"));
+
+            if (! $response->successful()) {
+                return response()->json(['error' => 'Payment capture failed. Please try again.'], 422);
+            }
+
+            $body   = $response->json();
+            $status = $body['status'] ?? '';
+
+            if ($status !== 'COMPLETED') {
+                return response()->json([
+                    'error' => 'Payment not completed (status: ' . $status . ').',
+                ], 422);
+            }
+
+            $donation = Donation::findOrFail($request->donation_id);
+
+            if ($donation->transaction_id !== $request->order_id) {
+                return response()->json(['error' => 'Order ID mismatch.'], 422);
+            }
+
+            // Use the capture ID as the final transaction reference
+            $captureId = $body['purchase_units'][0]['payments']['captures'][0]['id'] ?? $request->order_id;
+
+            $donation->update([
+                'status'         => 'completed',
+                'transaction_id' => $captureId,
+            ]);
+
+            $this->sendDonationConfirmation($donation->fresh());
+
+            return response()->json(['success' => true]);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => 'Capture failed. Please contact support.'], 422);
+        }
+    }
+
+    // ── PayPal helpers ───────────────────────────────────────────────────
+
+    private function paypalApi(string $path): string
+    {
+        $base = config('services.paypal.mode') === 'live'
+            ? 'https://api-m.paypal.com'
+            : 'https://api-m.sandbox.paypal.com';
+
+        return $base . $path;
+    }
+
+    private function paypalAccessToken(): string
+    {
+        $response = Http::withBasicAuth(
+            config('services.paypal.client_id'),
+            config('services.paypal.secret')
+        )
+        ->asForm()
+        ->post($this->paypalApi('/v1/oauth2/token'), ['grant_type' => 'client_credentials']);
+
+        if (! $response->successful()) {
+            throw new \RuntimeException('Could not authenticate with PayPal.');
+        }
+
+        return $response->json('access_token');
     }
 
     // ── Stripe Webhook (async confirmations / disputes / refunds) ────────

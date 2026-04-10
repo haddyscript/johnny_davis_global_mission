@@ -232,6 +232,9 @@
     panelCard.style.display   = method === 'card'   ? '' : 'none';
     panelGcash.style.display  = method === 'gcash'  ? '' : 'none';
     panelPaypal.style.display = method === 'paypal' ? '' : 'none';
+    // PayPal has its own Buttons — hide the generic CTA when it's active
+    ctaBtn.style.display = method === 'paypal' ? 'none' : '';
+    if (method === 'paypal') initPayPalButtons();
     clearPaymentError();
   }
   payTabCard.addEventListener('click',   () => switchPay('card'));
@@ -288,13 +291,136 @@
     });
   }
 
+  /* ─────────────────────────────────────────────────────────
+     PAYPAL INTEGRATION
+  ───────────────────────────────────────────────────────── */
+
+  const paypalClientId   = document.querySelector('meta[name="paypal-client-id"]')?.content ?? '';
+  let   paypalButtonsDone = false;
+
+  function initPayPalButtons() {
+    if (paypalButtonsDone) return;
+
+    const container = document.getElementById('paypal-button-container');
+    if (!container) return;
+
+    if (!window.paypal) {
+      container.innerHTML = '<p style="text-align:center;font-size:13px;color:#64748b;padding:12px 0;">PayPal is not configured. Please use Credit/Debit Card.</p>';
+      return;
+    }
+
+    paypal.Buttons({
+      style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'donate', height: 48 },
+
+      /* ── Step 1: create the order on our server ── */
+      createOrder: async () => {
+        clearPaymentError();
+
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName  = document.getElementById('lastName').value.trim();
+        const email     = document.getElementById('emailAddr').value.trim();
+
+        if (!firstName || !lastName) {
+          showPaymentError('Please enter your first and last name before continuing.');
+          return undefined;
+        }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showPaymentError('Please enter a valid email address before continuing.');
+          return undefined;
+        }
+        if (!selectedAmt || selectedAmt < 1) {
+          showPaymentError('Please select a donation amount of at least $1.');
+          return undefined;
+        }
+
+        try {
+          const res = await fetch('/donate/paypal/order', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+            body: JSON.stringify({
+              campaign_name: selectedCampaign,
+              first_name:    firstName,
+              last_name:     lastName,
+              email:         email,
+              amount:        selectedAmt,
+              frequency:     isMonthly ? 'monthly' : 'one-time',
+            }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            showPaymentError(data.message || data.error || 'Failed to initiate PayPal payment.');
+            return undefined;
+          }
+
+          // Stash donation_id so the capture step can reference it
+          window._ppDonationId = data.donation_id;
+          return data.orderID;
+
+        } catch (err) {
+          showPaymentError('Network error. Please check your connection and try again.');
+          return undefined;
+        }
+      },
+
+      /* ── Step 2: capture after buyer approves ── */
+      onApprove: async (data) => {
+        try {
+          const res = await fetch('/donate/paypal/capture', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+            body: JSON.stringify({ order_id: data.orderID, donation_id: window._ppDonationId }),
+          });
+
+          const result = await res.json();
+
+          if (!res.ok) {
+            showPaymentError(result.error || 'Payment capture failed. Please contact support.');
+            return;
+          }
+
+          // ── Success — show thank-you screen ──
+          thankCampaign.textContent = selectedCampaign;
+          thankAmt.textContent      = fmt(selectedAmt) + (isMonthly ? ' / month' : ' one-time');
+
+          const message = `I just donated to ${selectedCampaign} via JDGM — join me!`;
+          const pageUrl = encodeURIComponent(window.location.href);
+          const text    = encodeURIComponent(message);
+          document.getElementById('share-twitter').href  = `https://twitter.com/intent/tweet?text=${text}&url=${pageUrl}`;
+          document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+          document.getElementById('share-whatsapp').href = `https://wa.me/?text=${text}%20${pageUrl}`;
+
+          showScreen(thankScreen);
+
+        } catch (err) {
+          showPaymentError('An unexpected error occurred. Please contact support if payment was taken.');
+        }
+      },
+
+      onCancel: () => {
+        showPaymentError('PayPal payment cancelled. You can try again whenever you\'re ready.');
+      },
+
+      onError: (err) => {
+        console.error('PayPal SDK error:', err);
+        showPaymentError('PayPal encountered an error. Please try again or use Credit/Debit Card.');
+      },
+
+    }).render('#paypal-button-container');
+
+    paypalButtonsDone = true;
+  }
+
   /* ── Complete donation ──────────────────────────────────── */
   ctaBtn.addEventListener('click', async () => {
     clearPaymentError();
 
-    // GCash / PayPal not yet integrated
+    // PayPal uses its own Buttons; GCash is not yet live
     if (currentPayMethod !== 'card') {
-      showPaymentError('GCash and PayPal integration are coming soon. Please use Credit/Debit Card.');
+      if (currentPayMethod === 'gcash') {
+        showPaymentError('GCash integration is coming soon. Please use Credit/Debit Card or PayPal.');
+      }
       return;
     }
 

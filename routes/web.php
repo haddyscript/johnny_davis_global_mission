@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Admin\NavItemController;
 use App\Http\Controllers\Admin\CampaignController;
 use App\Http\Controllers\Admin\EmailLogController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PreviewController;
@@ -38,9 +39,11 @@ Route::middleware('nav.visibility')->group(function () {
 // Non-page routes — never blocked by nav visibility
 Route::post('/contact',             [ContactController::class, 'store'])->name('contact.store');
 Route::post('/newsletter/subscribe', [SubscriberController::class, 'store'])->name('newsletter.subscribe');
-Route::post('/donate/charge',  [DonationController::class, 'charge'])->name('donate.charge');
-Route::post('/donate/confirm', [DonationController::class, 'confirm'])->name('donate.confirm');
-Route::post('/stripe/webhook', [DonationController::class, 'webhook'])->name('stripe.webhook');
+Route::post('/donate/charge',          [DonationController::class, 'charge'])->name('donate.charge');
+Route::post('/donate/confirm',         [DonationController::class, 'confirm'])->name('donate.confirm');
+Route::post('/donate/paypal/order',    [DonationController::class, 'paypalOrder'])->name('donate.paypal.order');
+Route::post('/donate/paypal/capture',  [DonationController::class, 'paypalCapture'])->name('donate.paypal.capture');
+Route::post('/stripe/webhook',         [DonationController::class, 'webhook'])->name('stripe.webhook');
 
 Route::get('/dashboard', function () {
     return redirect()->route('admin.dashboard');
@@ -103,6 +106,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::patch('/{navItem}/toggle',        [NavItemController::class, 'toggle'])->name('toggle');
         Route::post('/reorder',                  [NavItemController::class, 'reorder'])->name('reorder');
     });
+
+    // Admin user management
+    Route::resource('admins', AdminUserController::class)->only(['index', 'store', 'update', 'destroy']);
 
     // Notifications
     Route::prefix('notifications')->name('notifications.')->group(function () {
