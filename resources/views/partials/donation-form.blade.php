@@ -33,20 +33,20 @@
 
         @foreach($campaigns as $i => $c)
         <div class="campaign-opt {{ $i === 0 ? 'active' : '' }}"
-             data-campaign-opt="{{ $c['key'] }}"
+             data-campaign-opt="{{ $c->title }}"
              role="radio"
              aria-checked="{{ $i === 0 ? 'true' : 'false' }}"
              tabindex="0">
-          <div class="camp-icon" aria-hidden="true">{{ $c['icon'] }}</div>
+          <div class="camp-icon" aria-hidden="true">{{ $c->icon }}</div>
           <div style="flex:1;">
-            <div class="camp-title">{{ $c['key'] }}</div>
-            <div class="camp-sub">{{ $c['sub'] }}</div>
+            <div class="camp-title">{{ $c->title }}</div>
+            <div class="camp-sub">{{ $c->subtitle }}</div>
             <div class="camp-progress-wrap">
               <div class="progress">
-                <div class="progress-fill" style="width:{{ $c['pct'] }}%;{{ $c['bar_style'] }}"></div>
+                <div class="progress-fill" style="width:{{ $c->goal_pct }}%;{{ $c->bar_style }}"></div>
               </div>
             </div>
-            <div class="camp-meta">{{ $c['meta'] }}</div>
+            <div class="camp-meta">{{ $c->meta }}</div>
           </div>
           <div class="camp-radio {{ $i === 0 ? 'on' : '' }}" aria-hidden="true"></div>
         </div>
@@ -67,10 +67,10 @@
       <div class="story-card">
         <div class="sidebar-heading">Campaign Story</div>
         <p id="campaign-story-text" style="font-size:.88rem;color:var(--text-body);line-height:1.75;margin-bottom:8px;">
-          {{ $campaigns[0]['story_full'] }}
+          {{ $campaigns->first()?->story_full }}
         </p>
         <div id="campaign-goal-text" style="font-size:.82rem;font-weight:700;color:var(--orange-dark);">
-          {{ $campaigns[0]['goal_full'] }}
+          {{ $campaigns->first()?->goal_full }}
         </div>
       </div>
 

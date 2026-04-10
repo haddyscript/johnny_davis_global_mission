@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ContentBlockController;
 use App\Http\Controllers\Admin\DonationController as AdminDonationController;
 use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Admin\NavItemController;
+use App\Http\Controllers\Admin\CampaignController;
 use App\Http\Controllers\Admin\EmailLogController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PageController;
@@ -81,6 +82,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         ->name('email-templates.preview-render');
 
     Route::resource('email-logs', EmailLogController::class)->only(['index', 'show', 'destroy']);
+
+    Route::resource('campaigns', CampaignController::class)->except(['show']);
+    Route::patch('campaigns/{campaign}/toggle', [CampaignController::class, 'toggle'])->name('campaigns.toggle');
 
     // Navigation items
     Route::prefix('nav-items')->name('nav-items.')->group(function () {

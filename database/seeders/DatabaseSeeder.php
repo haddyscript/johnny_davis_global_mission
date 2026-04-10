@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(ContentSeeder::class);
         $this->call(NavItemSeeder::class);
+        $this->call(CampaignSeeder::class);
 
         // User::factory(10)->create();
 

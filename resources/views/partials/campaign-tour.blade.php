@@ -17,24 +17,24 @@
     @foreach($campaigns as $i => $c)
     <div class="tour-step {{ $i === 0 ? 'active' : '' }}" data-step="{{ $i }}">
       <div class="tour-header">
-        <span class="tour-icon">{{ $c['tour_icon'] }}</span>
-        <h3 {{ $i === 0 ? 'id="tour-title"' : '' }}>{{ $c['tour_num'] }}: {{ $c['key'] }}</h3>
+        <span class="tour-icon">{{ $c->icon }}</span>
+        <h3 {{ $i === 0 ? 'id="tour-title"' : '' }}>Campaign {{ $i + 1 }}: {{ $c->title }}</h3>
       </div>
       <div class="tour-meta">
-        <span class="tour-status {{ $c['status'] }}">{{ $c['label'] }}</span>
-        <span class="tour-goal">Goal {{ $c['goal'] }} · {{ $c['pct'] }}% reached</span>
+        <span class="tour-status {{ $c->status_class }}">{{ $c->label }}</span>
+        <span class="tour-goal">Goal {{ $c->goal_amount }} · {{ $c->goal_pct }}% reached</span>
       </div>
-      <p class="tour-description">{{ $c['snippet'] }}</p>
-      <p class="tour-story">{{ $c['story'] }}</p>
+      <p class="tour-description">{{ $c->snippet }}</p>
+      <p class="tour-story">{{ $c->story }}</p>
       <div class="tour-actions">
         @if($i > 0)
         <button class="tour-btn tour-prev" aria-label="Go to previous campaign">
           <span class="btn-icon">←</span> Previous
         </button>
         @endif
-        @if($i < count($campaigns) - 1)
+        @if($i < $campaigns->count() - 1)
         <button class="tour-btn tour-next" aria-label="Go to next campaign">
-          Next Campaign → <span class="btn-icon">{{ $campaigns[$i + 1]['tour_icon'] }}</span>
+          Next Campaign → <span class="btn-icon">{{ $campaigns[$i + 1]->icon }}</span>
         </button>
         @else
         <button class="tour-btn tour-cta" aria-label="Choose a campaign to support">

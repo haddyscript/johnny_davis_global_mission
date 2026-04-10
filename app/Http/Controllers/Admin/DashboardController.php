@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdminNotification;
+use App\Models\Campaign;
 use App\Models\ContactMessage;
 use App\Models\Donation;
 use App\Models\NewsletterSubscriber;
@@ -72,37 +73,39 @@ class DashboardController extends Controller
         $pendingDonations = Donation::where('status', 'pending')->count();
         $unreadNotifs    = AdminNotification::where('is_read', false)->count();
 
-        // ── Campaign progress ────────────────────────────────────
-        $campaignGoals = [
-            'Feed Filipino Children'  => 45000,
-            'Cebu Earthquake Relief'  => 30000,
-            'Uganda Water Wells'      => 22000,
-            "Where it's needed most"  => null,
+        // ── Campaign progress (dynamic from DB) ─────────────────
+        $palette = [
+            ['bar' => '#22c55e', 'bg' => '#dcfce7'],
+            ['bar' => '#3b82f6', 'bg' => '#dbeafe'],
+            ['bar' => '#f59e0b', 'bg' => '#fef3c7'],
+            ['bar' => '#8b5cf6', 'bg' => '#ede9fe'],
+            ['bar' => '#ec4899', 'bg' => '#fce7f3'],
+            ['bar' => '#14b8a6', 'bg' => '#ccfbf1'],
         ];
 
-        $campaignColors = [
-            'Feed Filipino Children'  => ['bar' => '#22c55e', 'bg' => '#dcfce7'],
-            'Cebu Earthquake Relief'  => ['bar' => '#3b82f6', 'bg' => '#dbeafe'],
-            'Uganda Water Wells'      => ['bar' => '#f59e0b', 'bg' => '#fef3c7'],
-            "Where it's needed most"  => ['bar' => '#8b5cf6', 'bg' => '#ede9fe'],
-        ];
-
-        $campaignRaised = Donation::where('status', 'completed')
+        $donationTotals = Donation::where('status', 'completed')
             ->selectRaw('campaign_name, SUM(amount) as total')
             ->groupBy('campaign_name')
             ->pluck('total', 'campaign_name');
 
-        $campaigns = collect($campaignGoals)->map(function ($goal, $name) use ($campaignRaised, $campaignColors) {
-            $raised = (float) ($campaignRaised[$name] ?? 0);
-            $pct    = ($goal && $goal > 0) ? min(100, round(($raised / $goal) * 100)) : 0;
-            return [
-                'name'   => $name,
-                'raised' => $raised,
-                'goal'   => $goal,
-                'pct'    => $pct,
-                'color'  => $campaignColors[$name] ?? ['bar' => '#22c55e', 'bg' => '#dcfce7'],
-            ];
-        })->values();
+        $campaigns = Campaign::orderBy('sort_order')->get()
+            ->values()
+            ->map(function ($campaign, $index) use ($donationTotals, $palette) {
+                $raised   = (float) ($donationTotals[$campaign->title] ?? 0);
+                $goalNum  = (float) preg_replace('/[^0-9.]/', '', $campaign->goal_amount ?? '0');
+                $pct      = ($goalNum > 0) ? min(100, round(($raised / $goalNum) * 100)) : 0;
+                $remaining = ($goalNum > 0) ? max(0, $goalNum - $raised) : null;
+
+                return [
+                    'name'      => $campaign->title,
+                    'icon'      => $campaign->icon,
+                    'raised'    => $raised,
+                    'goal'      => $goalNum ?: null,
+                    'pct'       => $pct,
+                    'remaining' => $remaining,
+                    'color'     => $palette[$index % count($palette)],
+                ];
+            });
 
         // ── Chart: daily totals last 30 days ─────────────────────
         $rawChart = Donation::where('status', 'completed')

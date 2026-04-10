@@ -9,22 +9,18 @@
   <div class="campaign-pages-grid">
     @foreach($campaigns as $c)
     <div class="campaign-page-card reveal"
-         data-campaign="{{ $c['key'] }}"
+         data-campaign="{{ $c->title }}"
          role="button" tabindex="0"
-         aria-label="Support {{ $c['key'] }} campaign">
-      <div class="campaign-img-area"
-           style="background-image:url('{{ asset($c['image']) }}');"
-           role="img"
-           aria-label="{{ $c['snippet'] }}"></div>
+         aria-label="Support {{ $c->title }} campaign">
       <div class="card-body-inner">
-        <p class="card-meta">{{ $c['label'] }}</p>
-        <h3>{{ $c['key'] }}</h3>
-        <small>Goal {{ $c['goal'] }} · {{ $c['pct'] }}% reached</small>
+        <p class="card-meta">{{ $c->label }}</p>
+        <h3>{{ $c->icon }} {{ $c->title }}</h3>
+        <small>Goal {{ $c->goal_amount }} · {{ $c->goal_pct }}% reached</small>
         <div class="progress" style="margin:6px 0 10px;">
-          <div class="progress-fill" style="width:{{ $c['pct'] }}%;{{ $c['bar_style'] }}"></div>
+          <div class="progress-fill" style="width:{{ $c->goal_pct }}%;{{ $c->bar_style }}"></div>
         </div>
-        <p class="story-snippet">{{ $c['snippet'] }}</p>
-        <p class="card-goal">Story: {{ $c['story'] }}</p>
+        <p class="story-snippet">{{ $c->snippet }}</p>
+        <p class="card-goal">Story: {{ $c->story }}</p>
         <span class="card-cta-link" aria-hidden="true">Support this campaign ›</span>
       </div>
     </div>

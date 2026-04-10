@@ -170,29 +170,43 @@
             <div class="db-card-title">Campaign Progress</div>
         </div>
         <div class="db-campaigns">
-            @foreach($campaigns as $c)
+            @forelse($campaigns as $c)
             <div class="db-campaign-item">
                 <div class="db-camp-top">
-                    <span class="db-camp-name">{{ $c['name'] }}</span>
+                    <span class="db-camp-name">
+                        @if(!empty($c['icon'])) <span style="margin-right:4px;">{{ $c['icon'] }}</span> @endif
+                        {{ $c['name'] }}
+                    </span>
                     <span class="db-camp-pct" style="color:{{ $c['color']['bar'] }};">
                         {{ $c['goal'] ? $c['pct'] . '%' : '—' }}
                     </span>
                 </div>
                 @if($c['goal'])
                 <div class="db-camp-bar-bg">
-                    <div class="db-camp-bar-fill" style="width:{{ $c['pct'] }}%;background:{{ $c['color']['bar'] }};"></div>
+                    <div class="db-camp-bar-fill" style="width:{{ $c['pct'] }}%;background:{{ $c['color']['bar'] }};transition:width .3s;"></div>
                 </div>
-                <div class="db-camp-meta">
-                    ${{ number_format($c['raised'], 0) }} / ${{ number_format($c['goal'], 0) }}
-                    @if($c['pct'] == 0) <span style="color:#94a3b8;">· Not started</span> @endif
+                <div class="db-camp-meta" style="display:flex;justify-content:space-between;">
+                    <span>${{ number_format($c['raised'], 0) }} of ${{ number_format($c['goal'], 0) }}</span>
+                    @if(isset($c['remaining']))
+                        <span style="color:{{ $c['remaining'] > 0 ? '#94a3b8' : '#16a34a' }};">
+                            {{ $c['remaining'] > 0 ? '$'.number_format($c['remaining'], 0).' left' : '✓ Funded' }}
+                        </span>
+                    @endif
                 </div>
                 @else
-                <div class="db-camp-meta" style="color:#94a3b8;">Flexible fund — unallocated</div>
+                <div class="db-camp-meta" style="color:#94a3b8;">Flexible · ${{ number_format($c['raised'], 0) }} raised</div>
                 @endif
             </div>
-            @endforeach
+            @empty
+            <div style="padding:20px;text-align:center;color:var(--text-muted);font-size:13px;">
+                No campaigns yet. <a href="{{ route('admin.campaigns.create') }}" style="color:#0f766e;">Create one →</a>
+            </div>
+            @endforelse
         </div>
-        <a href="{{ route('admin.donations.index') }}" class="db-view-all-link">View All Donations →</a>
+        <div style="display:flex;gap:10px;padding:12px 0 0;border-top:1px solid var(--border);margin-top:4px;">
+            <a href="{{ route('admin.campaigns.index') }}" class="db-view-all-link">Manage Campaigns →</a>
+            <a href="{{ route('admin.donations.index') }}" class="db-view-all-link" style="margin-left:auto;">View Donations →</a>
+        </div>
     </div>
 
 </div>

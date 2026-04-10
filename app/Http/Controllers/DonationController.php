@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\CmsPageData;
+use App\Models\Campaign;
 use App\Models\Donation;
+use App\Models\EmailTemplate;
 use App\Models\Page;
-use App\Services\CampaignService;
+use App\Services\EmailService;
 use Illuminate\Http\Request;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Exception\SignatureVerificationException;
@@ -32,7 +34,7 @@ class DonationController extends Controller
             'title'       => $cms->text('meta', 'title', 'Donate — Johnny Davis Global Missions'),
             'description' => $cms->text('meta', 'description', 'Donate to Johnny Davis Global Missions — Feed Filipino Children, support disaster relief, and bring hope to communities in need.'),
             'cms'         => $cms,
-            'campaigns'   => CampaignService::getCampaigns(),
+            'campaigns'   => Campaign::active()->get(),
             'pastorImg'   => 'https://d14tal8bchn59o.cloudfront.net/RhGkp7h3Fm5bBymv78FLEpsQSnC3q7PFpecGpojrkak/w:2000/plain/https://02f0a56ef46d93f03c90-22ac5f107621879d5667e0d7ed595bdb.ssl.cf2.rackcdn.com/sites/104216/photos/23052432/JDM_Logo_6_original.jpg',
             'stripeKey'   => config('services.stripe.key'),
         ]);
@@ -127,6 +129,8 @@ class DonationController extends Controller
                         : null,
                 ]);
 
+                $this->sendDonationConfirmation($donation->fresh());
+
                 return response()->json(['success' => true]);
             }
 
@@ -168,9 +172,14 @@ class DonationController extends Controller
 
     private function handleIntentSucceeded(object $intent): void
     {
-        Donation::where('transaction_id', $intent->id)
+        $donation = Donation::where('transaction_id', $intent->id)
             ->where('status', 'pending')
-            ->update(['status' => 'completed']);
+            ->first();
+
+        if ($donation) {
+            $donation->update(['status' => 'completed']);
+            $this->sendDonationConfirmation($donation);
+        }
     }
 
     private function handleIntentFailed(object $intent): void
@@ -178,5 +187,28 @@ class DonationController extends Controller
         Donation::where('transaction_id', $intent->id)
             ->whereIn('status', ['pending'])
             ->update(['status' => 'failed']);
+    }
+
+    private function sendDonationConfirmation(Donation $donation): void
+    {
+        $template = EmailTemplate::where('name', 'Donation Confirmation')
+            ->where('is_active', true)
+            ->first();
+
+        if (! $template) {
+            return;
+        }
+
+        app(EmailService::class)->sendTemplate(
+            template: $template,
+            toEmail:  $donation->email,
+            toName:   $donation->full_name,
+            data: [
+                'donor_name'      => $donation->full_name,
+                'donation_amount' => '$' . number_format($donation->amount, 2),
+                'donation_date'   => $donation->created_at->format('F j, Y'),
+                'transaction_id'  => $donation->transaction_id ?? '—',
+            ],
+        );
     }
 }

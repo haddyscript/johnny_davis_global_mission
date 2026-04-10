@@ -57,11 +57,11 @@
                     <div class="admin-nav-badge">{{ $pendingDonations }}</div>
                 @endif
             </a>
-            <span class="admin-nav-item admin-nav-item-soon">
+            <a href="{{ route('admin.campaigns.index') }}"
+               class="admin-nav-item {{ request()->routeIs('admin.campaigns.*') ? 'active' : '' }}">
                 <div class="admin-nav-icon">🎯</div>
                 <div class="admin-nav-label">Campaigns</div>
-                <span class="admin-nav-soon-tag">Soon</span>
-            </span>
+            </a>
             <span class="admin-nav-item admin-nav-item-soon">
                 <div class="admin-nav-icon">👥</div>
                 <div class="admin-nav-label">Donors</div>
