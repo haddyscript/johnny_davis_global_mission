@@ -86,6 +86,40 @@ Files to examine:
 
     app/Models/NavigationItem.php (or equivalent)
 
-    app/Http/Controllers/Admin/NavigationController.php
+    app/Http/Controllers/Admin/NavItemController.php
 
     app/Http/Controllers/PageController.php (if it exists)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Task: Create a new "Admin Management" module to list and manage administrative accounts.
+
+Context:
+I need an interface to manage users. The data is stored in the default Laravel users table (see database/migrations/0001_01_01_000000_create_users_table.php).
+
+Requirements:
+
+    Route: Create a new route at /admin/admins or /admin/users within the existing admin middleware group.
+
+    Controller: Create an AdminManagementController with an index method to fetch and paginate users.
+
+    View: Create a Blade template that displays the users in a table. The table should include:
+
+        Name
+
+        Email
+
+        Created At
+
+        Placeholders for "Edit" and "Delete" actions.
+
+    Styling: Ensure the view extends my existing admin layout (check resources/views/layouts/admin.blade.php or similar) so the sidebar and navigation remain consistent.
+
+Files to reference:
+
+    database/migrations/0001_01_01_000000_create_users_table.php (for schema)
+
+    routes/web.php (to add the new route)
+
+    app/Models/User.php
