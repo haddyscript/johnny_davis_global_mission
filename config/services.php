@@ -41,4 +41,10 @@ return [
         'webhook_secret'  => env('STRIPE_WEBHOOK_SECRET'),
     ],
 
+    'social' => [
+        'facebook'  => env('SOCIAL_FACEBOOK_URL'),
+        'instagram' => env('SOCIAL_INSTAGRAM_URL'),
+        'youtube'   => env('SOCIAL_YOUTUBE_URL'),
+    ],
+
 ];

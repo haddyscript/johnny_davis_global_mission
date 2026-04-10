@@ -188,17 +188,26 @@
                     </a>
                 </p>
 
-                {{-- Social icons (inline SVG via emoji fallback for email) --}}
+                {{-- Social icons --}}
                 <p style="margin:0 0 16px;">
-                    <a href="#" style="display:inline-block;margin:0 5px;text-decoration:none;" title="Facebook">
-                        <span style="display:inline-block;width:32px;height:32px;background:#1877f2;border-radius:8px;line-height:32px;text-align:center;font-size:14px;color:#fff;">f</span>
+                    @if(config('services.social.facebook'))
+                    <a href="{{ config('services.social.facebook') }}" target="_blank"
+                       style="display:inline-block;margin:0 5px;text-decoration:none;" title="Facebook">
+                        <span style="display:inline-block;width:32px;height:32px;background:#1877f2;border-radius:8px;line-height:32px;text-align:center;font-size:14px;color:#fff;font-weight:700;">f</span>
                     </a>
-                    <a href="#" style="display:inline-block;margin:0 5px;text-decoration:none;" title="Instagram">
+                    @endif
+                    @if(config('services.social.instagram'))
+                    <a href="{{ config('services.social.instagram') }}" target="_blank"
+                       style="display:inline-block;margin:0 5px;text-decoration:none;" title="Instagram">
                         <span style="display:inline-block;width:32px;height:32px;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border-radius:8px;line-height:32px;text-align:center;font-size:14px;color:#fff;">&#9679;</span>
                     </a>
-                    <a href="#" style="display:inline-block;margin:0 5px;text-decoration:none;" title="YouTube">
+                    @endif
+                    @if(config('services.social.youtube'))
+                    <a href="{{ config('services.social.youtube') }}" target="_blank"
+                       style="display:inline-block;margin:0 5px;text-decoration:none;" title="YouTube">
                         <span style="display:inline-block;width:32px;height:32px;background:#ff0000;border-radius:8px;line-height:32px;text-align:center;font-size:14px;color:#fff;">&#9654;</span>
                     </a>
+                    @endif
                 </p>
 
                 {{-- Copyright --}}
