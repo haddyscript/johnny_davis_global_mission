@@ -47,6 +47,43 @@
     </div>
 </div>
 
+{{-- ── New Donors Highlight ──────────────────────────────────── --}}
+@if($newDonors->isNotEmpty())
+<div class="db-card" style="margin-bottom:24px;">
+    <div class="db-card-header" style="padding-bottom:12px;">
+        <div>
+            <div class="db-card-title">🆕 New Donors</div>
+            <div class="db-card-sub">First-time donors · Most recent</div>
+        </div>
+        <a href="{{ route('admin.donations.index', ['sort' => 'top_donors']) }}" class="db-btn db-btn-sm db-btn-ghost">
+            View Top Donors →
+        </a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;padding:4px 0 8px;">
+        @foreach($newDonors as $nd)
+        <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--surface-strong);border-radius:12px;border:1px solid rgba(139,92,246,.12);">
+            <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);color:#fff;display:grid;place-items:center;font-weight:700;font-size:16px;flex-shrink:0;">
+                {{ strtoupper(substr($nd->first_name, 0, 1)) }}
+            </div>
+            <div style="min-width:0;">
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                    <div style="font-weight:600;font-size:13px;color:var(--text-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px;" title="{{ $nd->full_name }}">
+                        {{ $nd->full_name }}
+                    </div>
+                    <span style="font-size:10px;font-weight:700;padding:1px 6px;border-radius:5px;background:rgba(139,92,246,.12);color:#7c3aed;text-transform:uppercase;letter-spacing:.04em;border:1px solid rgba(139,92,246,.2);">New</span>
+                </div>
+                <div style="font-size:13px;font-weight:700;color:#16a34a;margin-top:1px;">${{ number_format((float)$nd->amount, 2) }}</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:1px;">{{ $nd->created_at->format('M j, Y') }} · {{ $nd->campaign_name }}</div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    <div style="padding:8px 0 0;border-top:1px solid var(--border);margin-top:4px;">
+        <a href="{{ route('admin.donations.index') }}" class="db-view-all-link">View All Donations →</a>
+    </div>
+</div>
+@endif
+
 {{-- ── 8-card stats grid ────────────────────────────────────── --}}
 <div class="db-stats-grid">
 

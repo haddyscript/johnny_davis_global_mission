@@ -65,7 +65,13 @@ class CampaignController extends Controller
         $validated = $this->validateCampaign($request);
         $validated['is_active'] = $request->boolean('is_active', true);
 
-        Campaign::create($validated);
+        try {
+            Campaign::create($validated);
+        } catch (\Throwable $e) {
+            return back()->withInput()->withErrors([
+                'general' => 'An unexpected error occurred while saving the campaign. Please try again or contact support.',
+            ]);
+        }
 
         return redirect()
             ->route('admin.campaigns.index')
@@ -82,7 +88,13 @@ class CampaignController extends Controller
         $validated = $this->validateCampaign($request);
         $validated['is_active'] = $request->boolean('is_active', true);
 
-        $campaign->update($validated);
+        try {
+            $campaign->update($validated);
+        } catch (\Throwable $e) {
+            return back()->withInput()->withErrors([
+                'general' => 'An unexpected error occurred while updating the campaign. Please try again or contact support.',
+            ]);
+        }
 
         return redirect()
             ->route('admin.campaigns.index')

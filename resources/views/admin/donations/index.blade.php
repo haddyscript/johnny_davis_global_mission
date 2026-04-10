@@ -88,7 +88,13 @@
                         <option value="monthly"  {{ request('frequency') === 'monthly'  ? 'selected' : '' }}>Monthly</option>
                     </select>
                 </div>
-                @if(request()->hasAny(['search','status','payment_method','frequency']))
+                <div class="filter-select-wrap">
+                    <select name="sort" class="filter-select" onchange="this.form.submit()">
+                        <option value="latest"     {{ $sort === 'latest'     ? 'selected' : '' }}>Latest First</option>
+                        <option value="top_donors" {{ $sort === 'top_donors' ? 'selected' : '' }}>⭐ Top Donors</option>
+                    </select>
+                </div>
+                @if(request()->hasAny(['search','status','payment_method','frequency','sort']))
                     <a href="{{ route('admin.donations.index') }}" class="filter-clear-link">Clear</a>
                 @endif
             </div>
@@ -116,6 +122,9 @@
                     <th>Donor</th>
                     <th>Campaign</th>
                     <th>Amount</th>
+                    @if($sort === 'top_donors')
+                    <th>Total Given</th>
+                    @endif
                     <th>Method</th>
                     <th>Frequency</th>
                     <th>Status</th>
@@ -130,9 +139,16 @@
                     <td style="color:var(--text-muted);font-size:12px;">{{ $donation->id }}</td>
                     <td>
                         <div style="display:flex;align-items:center;gap:10px;">
-                            <div class="don-avatar">{{ strtoupper(substr($donation->first_name, 0, 1)) }}</div>
+                            <div class="don-avatar {{ $newDonorEmails->has($donation->email) ? 'don-avatar-new' : '' }}">
+                                {{ strtoupper(substr($donation->first_name, 0, 1)) }}
+                            </div>
                             <div>
-                                <div class="page-name">{{ $donation->full_name }}</div>
+                                <div style="display:flex;align-items:center;gap:6px;">
+                                    <div class="page-name">{{ $donation->full_name }}</div>
+                                    @if($newDonorEmails->has($donation->email))
+                                        <span class="don-new-badge">New</span>
+                                    @endif
+                                </div>
                                 <div style="font-size:12px;color:var(--text-muted);">{{ $donation->email }}</div>
                             </div>
                         </div>
@@ -145,6 +161,15 @@
                     <td>
                         <span style="font-weight:700;font-size:15px;color:#16a34a;">${{ number_format($donation->amount, 2) }}</span>
                     </td>
+                    @if($sort === 'top_donors')
+                    <td>
+                        @php $donorTotal = (float) ($donorTotals[$donation->email] ?? 0); @endphp
+                        <div style="display:flex;flex-direction:column;gap:1px;">
+                            <span style="font-weight:700;color:#7c3aed;font-size:14px;">${{ number_format($donorTotal, 0) }}</span>
+                            <span style="font-size:11px;color:var(--text-muted);">lifetime</span>
+                        </div>
+                    </td>
+                    @endif
                     <td>
                         <span class="don-method-badge don-method-{{ $donation->payment_method }}">
                             @if($donation->payment_method === 'card') 💳
@@ -286,6 +311,17 @@
     background: linear-gradient(135deg, #22c55e, #16a34a);
     color: #fff; display: grid; place-items: center;
     font-weight: 700; font-size: 14px;
+}
+.don-avatar-new {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    box-shadow: 0 0 0 2px rgba(139,92,246,.3);
+}
+.don-new-badge {
+    display: inline-flex; align-items: center;
+    padding: 2px 7px; border-radius: 6px; font-size: 10px; font-weight: 700;
+    background: rgba(139,92,246,.12); color: #7c3aed;
+    letter-spacing: .04em; text-transform: uppercase;
+    border: 1px solid rgba(139,92,246,.2);
 }
 .don-status-badge {
     display: inline-flex; align-items: center; gap: 5px;

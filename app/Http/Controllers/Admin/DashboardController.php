@@ -127,6 +127,19 @@ class DashboardController extends Controller
         $recentDonations     = Donation::latest()->take(5)->get();
         $totalDonationsCount = Donation::count();
 
+        // ── New donors (first-time donors, most recent) ───────────
+        $firstTimerEmails = Donation::where('status', 'completed')
+            ->selectRaw('email')
+            ->groupBy('email')
+            ->havingRaw('COUNT(*) = 1')
+            ->pluck('email');
+
+        $newDonors = Donation::where('status', 'completed')
+            ->whereIn('email', $firstTimerEmails)
+            ->latest()
+            ->take(6)
+            ->get();
+
         // ── Greeting ─────────────────────────────────────────────
         $hour     = (int) $now->format('H');
         $greeting = $hour < 12 ? 'Good morning' : ($hour < 17 ? 'Good afternoon' : 'Good evening');
@@ -191,6 +204,7 @@ class DashboardController extends Controller
             'campaigns',
             'chartDates', 'chartTotals',
             'recentDonations', 'totalDonationsCount',
+            'newDonors',
             'greeting', 'userName', 'dayLabel',
             'actionItems'
         ));

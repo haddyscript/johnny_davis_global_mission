@@ -9,6 +9,18 @@
 
     <a href="{{ route('admin.campaigns.index') }}" class="form-back-link">← Back to Campaigns</a>
 
+    @if($errors->has('general'))
+    <div style="display:flex;align-items:center;gap:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:#dc2626;padding:14px 18px;border-radius:12px;font-size:14px;margin-bottom:18px;">
+        ❌ {{ $errors->first('general') }}
+    </div>
+    @endif
+
+    @if($errors->any() && !$errors->has('general'))
+    <div style="display:flex;align-items:center;gap:10px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#d97706;padding:14px 18px;border-radius:12px;font-size:14px;margin-bottom:18px;">
+        ⚠️ Please fix the errors below before saving.
+    </div>
+    @endif
+
     <form id="campaign-form" method="POST" action="{{ route('admin.campaigns.store') }}" novalidate>
         @csrf
 
