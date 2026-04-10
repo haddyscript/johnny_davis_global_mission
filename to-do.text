@@ -123,3 +123,18 @@ Files to reference:
     routes/web.php (to add the new route)
 
     app/Models/User.php
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Task: Completely remove the "Campaign Tour" feature from the /donate page.
+
+Context: I want to abolish the tour/onboarding sequence currently active on the /donate route. This feature is no longer needed and should be fully decommissioned.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Task: Implement PayPal payment integration on the /donate page, mirroring the existing Stripe (Credit/Debit Card) functionality.
+
+Context:
+The /donate page currently has a fully functional Stripe integration. I want to add PayPal as a second payment option. It should follow the same behavior—handling the transaction, updating the database, and redirecting to a "Thank You" or "Success" page.
