@@ -260,7 +260,8 @@ replySubmit.addEventListener('click', function () {
     replyBtnText.textContent = 'Sending…';
     replySpinner.style.display = 'inline-block';
 
-    var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    var csrfMeta  = document.querySelector('meta[name="csrf-token"]');
+    var csrfToken = csrfMeta ? csrfMeta.getAttribute('content') : '{{ csrf_token() }}';
 
     fetch('{{ route("admin.contact-messages.reply", $contactMessage) }}', {
         method: 'POST',

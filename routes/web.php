@@ -25,14 +25,19 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/contact',  [ContactController::class, 'index'])->name('contact');
+// Public page GET routes — blocked by nav.visibility if the matching nav item is hidden
+Route::middleware('nav.visibility')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+    Route::get('/news', [NewsController::class, 'index'])->name('news');
+    Route::get('/who-we-are', [WhoWeAreController::class, 'index'])->name('who-we-are');
+    Route::get('/ministry', [MinistryController::class, 'index'])->name('ministry');
+    Route::get('/donate', [DonationController::class, 'index'])->name('donate');
+});
+
+// Non-page routes — never blocked by nav visibility
 Route::post('/contact',             [ContactController::class, 'store'])->name('contact.store');
 Route::post('/newsletter/subscribe', [SubscriberController::class, 'store'])->name('newsletter.subscribe');
-Route::get('/news', [NewsController::class, 'index'])->name('news');
-Route::get('/who-we-are', [WhoWeAreController::class, 'index'])->name('who-we-are');
-Route::get('/ministry', [MinistryController::class, 'index'])->name('ministry');
-Route::get('/donate',          [DonationController::class, 'index'])->name('donate');
 Route::post('/donate/charge',  [DonationController::class, 'charge'])->name('donate.charge');
 Route::post('/donate/confirm', [DonationController::class, 'confirm'])->name('donate.confirm');
 Route::post('/stripe/webhook', [DonationController::class, 'webhook'])->name('stripe.webhook');
