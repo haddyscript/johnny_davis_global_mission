@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\NavItem;
 use App\Models\Page;
 use Illuminate\Http\Request;
 
@@ -10,27 +11,45 @@ class PageController extends Controller
 {
     public function index()
     {
-        $pages = Page::orderBy('sort_order')->get();
+        $pages = Page::with('navItem')->orderBy('sort_order')->get();
 
         return view('admin.pages.index', compact('pages'));
     }
 
     public function create()
     {
-        return view('admin.pages.create');
+        // Only nav items not yet linked to a page can be selected
+        $navItems = NavItem::orderBy('sort_order')
+            ->whereDoesntHave('page')
+            ->get();
+
+        return view('admin.pages.create', compact('navItems'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'slug' => 'required|unique:pages',
-            'name' => 'required',
-            'description' => 'nullable',
+        $validated = $request->validate([
+            'nav_item_id' => 'nullable|exists:nav_items,id|unique:pages,nav_item_id',
+            'name'        => 'required|string|max:255',
+            'slug'        => 'required|string|max:255|unique:pages,slug',
+            'description' => 'nullable|string|max:300',
+            'is_active'   => 'boolean',
+            'sort_order'  => 'nullable|integer|min:0',
         ]);
 
-        Page::create($request->all());
+        $validated['is_active']  = $request->boolean('is_active', true);
+        $validated['sort_order'] = $validated['sort_order'] ?? 0;
 
-        return redirect()->route('admin.pages.index')->with('success', 'Page created successfully.');
+        // Derive slug from nav item URL when one is selected
+        if (! empty($validated['nav_item_id'])) {
+            $navItem = NavItem::find($validated['nav_item_id']);
+            $validated['slug'] = $this->slugFromNavUrl($navItem->url);
+        }
+
+        Page::create($validated);
+
+        return redirect()->route('admin.pages.index')
+            ->with('success', 'Page "' . $validated['name'] . '" created successfully.');
     }
 
     public function show(Page $page)
@@ -40,35 +59,68 @@ class PageController extends Controller
 
     public function edit(Page $page)
     {
-        return view('admin.pages.edit', compact('page'));
+        // Available = items with no linked page, plus the one already linked to this page
+        $navItems = NavItem::orderBy('sort_order')
+            ->where(function ($q) use ($page) {
+                $q->whereDoesntHave('page')
+                  ->orWhereHas('page', fn($q2) => $q2->where('pages.id', $page->id));
+            })
+            ->get();
+
+        return view('admin.pages.edit', compact('page', 'navItems'));
     }
 
     public function update(Request $request, Page $page)
     {
-        $request->validate([
-            'slug' => 'required|unique:pages,slug,'.$page->id,
-            'name' => 'required',
-            'description' => 'nullable',
-            'is_active' => 'boolean',
-            'sort_order' => 'integer',
+        $validated = $request->validate([
+            'nav_item_id' => 'nullable|exists:nav_items,id|unique:pages,nav_item_id,' . $page->id,
+            'name'        => 'required|string|max:255',
+            'slug'        => 'required|string|max:255|unique:pages,slug,' . $page->id,
+            'description' => 'nullable|string|max:300',
+            'is_active'   => 'boolean',
+            'sort_order'  => 'nullable|integer|min:0',
         ]);
 
-        $page->update($request->all());
+        $validated['is_active']  = $request->boolean('is_active');
+        $validated['sort_order'] = $validated['sort_order'] ?? $page->sort_order;
 
-        return redirect()->route('admin.pages.index')->with('success', 'Page updated successfully.');
+        // Re-derive slug if a (different) nav item is linked
+        if (! empty($validated['nav_item_id'])) {
+            $navItem = NavItem::find($validated['nav_item_id']);
+            $validated['slug'] = $this->slugFromNavUrl($navItem->url);
+        }
+
+        $page->update($validated);
+
+        return redirect()->route('admin.pages.index')
+            ->with('success', 'Page "' . $page->name . '" updated successfully.');
     }
 
     public function destroy(Page $page)
     {
+        $title = $page->name;
         $page->delete();
 
-        return redirect()->route('admin.pages.index')->with('success', 'Page deleted successfully.');
+        return redirect()->route('admin.pages.index')
+            ->with('success', 'Page "' . $title . '" deleted.');
     }
 
     public function toggle(Page $page)
     {
-        $page->update(['is_active' => !$page->is_active]);
+        $page->update(['is_active' => ! $page->is_active]);
 
         return response()->json(['is_active' => $page->is_active]);
+    }
+
+    // ── Helpers ─────────────────────────────────────────────────────────────
+
+    /**
+     * Derive a page slug from a nav item URL.
+     * "/" → "home", "/donate" → "donate", "/who-we-are" → "who-we-are"
+     */
+    private function slugFromNavUrl(string $url): string
+    {
+        $path = ltrim(trim($url), '/');
+        return $path === '' ? 'home' : $path;
     }
 }

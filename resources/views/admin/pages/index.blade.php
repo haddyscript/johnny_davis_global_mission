@@ -78,6 +78,7 @@
                     <th class="sortable" data-col="name">
                         Name <span class="sort-icon">↕</span>
                     </th>
+                    <th>URL</th>
                     <th>Description</th>
                     <th class="sortable" data-col="status">
                         Status <span class="sort-icon">↕</span>
@@ -103,6 +104,25 @@
                     </td>
                     <td>
                         <span class="page-name">{{ $page->name }}</span>
+                    </td>
+                    <td>
+                        <div style="display:flex;flex-direction:column;gap:4px;">
+                            <a href="{{ $page->resolved_url }}"
+                               target="_blank"
+                               rel="noopener"
+                               style="font-size:13px;font-weight:600;color:var(--brand-dark);text-decoration:none;display:inline-flex;align-items:center;gap:4px;"
+                               title="Open {{ $page->resolved_url }}">
+                                {{ $page->resolved_url }}
+                                <span style="font-size:10px;opacity:.6;">↗</span>
+                            </a>
+                            @if($page->navItem)
+                                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#7c3aed;background:rgba(124,58,237,.08);padding:2px 7px;border-radius:20px;width:fit-content;">
+                                    🔗 {{ $page->navItem->label }}
+                                </span>
+                            @else
+                                <span style="font-size:11px;color:var(--text-muted);">manual slug</span>
+                            @endif
+                        </div>
                     </td>
                     <td class="desc-cell">
                         {{ \Illuminate\Support\Str::limit($page->description, 65) }}
@@ -147,7 +167,7 @@
                 </tr>
                 @empty
                 <tr id="no-data-row">
-                    <td colspan="6" style="text-align:center;padding:48px;color:var(--text-muted);">
+                    <td colspan="7" style="text-align:center;padding:48px;color:var(--text-muted);">
                         No pages yet. <a href="{{ route('admin.pages.create') }}" style="color:var(--brand-dark);font-weight:600;">Create your first page →</a>
                     </td>
                 </tr>

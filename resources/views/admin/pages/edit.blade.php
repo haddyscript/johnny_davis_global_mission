@@ -57,7 +57,13 @@
                 <div class="pf-group {{ $errors->has('slug') ? 'has-error' : '' }}">
                     <label class="pf-label" for="slug">
                         Slug <span class="pf-required">*</span>
-                        <span class="pf-hint">Changing the slug may break existing links.</span>
+                        <span class="pf-hint" id="slug-hint">
+                            @if($page->nav_item_id)
+                                Derived from the linked nav item URL.
+                            @else
+                                Changing the slug may break existing links.
+                            @endif
+                        </span>
                     </label>
                     <div class="slug-input-wrap">
                         <span class="slug-prefix">/</span>
@@ -70,6 +76,7 @@
                             placeholder="about-us"
                             autocomplete="off"
                             required
+                            @if($page->nav_item_id) readonly style="background:var(--surface-strong,#f1f5f9);" @endif
                         >
                     </div>
                     @error('slug')
@@ -99,6 +106,38 @@
 
             {{-- ── Settings sidebar ── --}}
             <div class="form-sidebar">
+
+                {{-- Nav Item link --}}
+                <div class="form-section">
+                    <div class="form-section-header">
+                        <span class="form-section-icon">🔗</span>
+                        <div>
+                            <div class="form-section-title">Nav Item Link</div>
+                            <div class="form-section-sub">Link this page to a navigation item. The slug will be derived automatically.</div>
+                        </div>
+                    </div>
+
+                    <div class="pf-group {{ $errors->has('nav_item_id') ? 'has-error' : '' }}">
+                        <label class="pf-label" for="nav_item_id">Nav Item</label>
+                        <select id="nav_item_id" name="nav_item_id" class="pf-input">
+                            <option value="">— None (manual slug) —</option>
+                            @foreach($navItems as $nav)
+                            <option value="{{ $nav->id }}"
+                                data-url="{{ $nav->url }}"
+                                {{ old('nav_item_id', $page->nav_item_id) == $nav->id ? 'selected' : '' }}>
+                                {{ $nav->label }} — {{ $nav->url }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @error('nav_item_id')
+                            <div class="pf-error">⚠ {{ $message }}</div>
+                        @enderror
+                        <div class="pf-hint-text" id="nav-resolved-url"
+                             style="{{ $page->nav_item_id ? '' : 'display:none;' }}margin-top:6px;color:var(--brand-dark);font-weight:600;">
+                            Resolves to: <span id="nav-url-preview">{{ $page->navItem?->url }}</span>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-section">
                     <div class="form-section-header">
@@ -153,6 +192,7 @@
                         @enderror
                     </div>
                 </div>
+                {{-- /Settings --}}
 
                 {{-- Meta --}}
                 <div class="form-meta-card">
@@ -227,6 +267,39 @@
 <script>
 (function () {
 'use strict';
+
+/* ── Nav item → slug derivation ── */
+var navSelect    = document.getElementById('nav_item_id');
+var slugInput    = document.getElementById('slug');
+var slugHint     = document.getElementById('slug-hint');
+var resolvedWrap = document.getElementById('nav-resolved-url');
+var urlPreview   = document.getElementById('nav-url-preview');
+
+function slugFromUrl(url) {
+    var path = url.replace(/^\//, '');
+    return path === '' ? 'home' : path;
+}
+
+function applyNavItem(option) {
+    if (!option || !option.value) {
+        slugInput.readOnly = false;
+        slugInput.style.background = '';
+        slugHint.textContent = 'Changing the slug may break existing links.';
+        resolvedWrap.style.display = 'none';
+        return;
+    }
+    var url = option.dataset.url;
+    slugInput.value    = slugFromUrl(url);
+    slugInput.readOnly = true;
+    slugInput.style.background = 'var(--surface-strong, #f1f5f9)';
+    slugHint.textContent = 'Derived from the selected nav item URL.';
+    urlPreview.textContent = url;
+    resolvedWrap.style.display = 'block';
+}
+
+navSelect.addEventListener('change', function () {
+    applyNavItem(this.options[this.selectedIndex]);
+});
 
 /* ── Character counter ── */
 var desc = document.getElementById('description');

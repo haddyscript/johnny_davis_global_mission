@@ -56,7 +56,7 @@
                 <div class="pf-group {{ $errors->has('slug') ? 'has-error' : '' }}">
                     <label class="pf-label" for="slug">
                         Slug <span class="pf-required">*</span>
-                        <span class="pf-hint">Auto-generated from name, or enter manually.</span>
+                        <span class="pf-hint" id="slug-hint">Auto-generated from name, or enter manually.</span>
                     </label>
                     <div class="slug-input-wrap">
                         <span class="slug-prefix">/</span>
@@ -98,6 +98,37 @@
 
             {{-- ── Settings sidebar ── --}}
             <div class="form-sidebar">
+
+                {{-- Nav Item link --}}
+                <div class="form-section">
+                    <div class="form-section-header">
+                        <span class="form-section-icon">🔗</span>
+                        <div>
+                            <div class="form-section-title">Nav Item Link</div>
+                            <div class="form-section-sub">Link this page to a navigation item. The slug will be derived automatically.</div>
+                        </div>
+                    </div>
+
+                    <div class="pf-group {{ $errors->has('nav_item_id') ? 'has-error' : '' }}">
+                        <label class="pf-label" for="nav_item_id">Nav Item</label>
+                        <select id="nav_item_id" name="nav_item_id" class="pf-input">
+                            <option value="">— None (manual slug) —</option>
+                            @foreach($navItems as $nav)
+                            <option value="{{ $nav->id }}"
+                                data-url="{{ $nav->url }}"
+                                {{ old('nav_item_id') == $nav->id ? 'selected' : '' }}>
+                                {{ $nav->label }} — {{ $nav->url }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @error('nav_item_id')
+                            <div class="pf-error">⚠ {{ $message }}</div>
+                        @enderror
+                        <div class="pf-hint-text" id="nav-resolved-url" style="display:none;margin-top:6px;color:var(--brand-dark);font-weight:600;">
+                            Resolves to: <span id="nav-url-preview"></span>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-section">
                     <div class="form-section-header">
@@ -150,6 +181,7 @@
                         @enderror
                     </div>
                 </div>
+                {{-- /Settings --}}
 
                 {{-- Form actions --}}
                 <div class="form-actions-card">
@@ -174,17 +206,58 @@
 (function () {
 'use strict';
 
-/* ── Auto-slug from name ── */
-var nameInput = document.getElementById('name');
-var slugInput = document.getElementById('slug');
-var slugManual = false;
+var nameInput    = document.getElementById('name');
+var slugInput    = document.getElementById('slug');
+var navSelect    = document.getElementById('nav_item_id');
+var slugHint     = document.getElementById('slug-hint');
+var resolvedWrap = document.getElementById('nav-resolved-url');
+var urlPreview   = document.getElementById('nav-url-preview');
+var slugManual   = false;
 
+/* ── Nav item → slug derivation ── */
+function slugFromUrl(url) {
+    var path = url.replace(/^\//, '');
+    return path === '' ? 'home' : path;
+}
+
+function applyNavItem(option) {
+    if (!option || !option.value) {
+        // Cleared — restore manual mode
+        slugInput.readOnly = false;
+        slugInput.style.background = '';
+        slugHint.textContent = 'Auto-generated from name, or enter manually.';
+        resolvedWrap.style.display = 'none';
+        slugManual = false;
+        return;
+    }
+    var url  = option.dataset.url;
+    var slug = slugFromUrl(url);
+    slugInput.value    = slug;
+    slugInput.readOnly = true;
+    slugInput.style.background = 'var(--surface-strong, #f1f5f9)';
+    slugHint.textContent = 'Derived from the selected nav item URL.';
+    urlPreview.textContent = url;
+    resolvedWrap.style.display = 'block';
+    slugManual = true;
+}
+
+navSelect.addEventListener('change', function () {
+    applyNavItem(this.options[this.selectedIndex]);
+});
+
+// On page load with old() value
+(function () {
+    var sel = navSelect.selectedIndex;
+    if (sel > 0) applyNavItem(navSelect.options[sel]);
+})();
+
+/* ── Auto-slug from name (only when no nav item linked) ── */
 slugInput.addEventListener('input', function () {
-    slugManual = slugInput.value.trim() !== '';
+    if (!navSelect.value) slugManual = slugInput.value.trim() !== '';
 });
 
 nameInput.addEventListener('input', function () {
-    if (!slugManual) {
+    if (!slugManual && !navSelect.value) {
         slugInput.value = nameInput.value
             .toLowerCase()
             .replace(/[^a-z0-9\s-]/g, '')

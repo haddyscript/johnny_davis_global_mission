@@ -3,9 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class NavItem extends Model
 {
+    public function page(): HasOne
+    {
+        return $this->hasOne(Page::class);
+    }
+
     protected $fillable = [
         'label',
         'url',
