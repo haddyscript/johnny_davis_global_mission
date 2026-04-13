@@ -234,12 +234,33 @@
     panelPaypal.style.display = method === 'paypal' ? '' : 'none';
     // PayPal has its own Buttons — hide the generic CTA when it's active
     ctaBtn.style.display = method === 'paypal' ? 'none' : '';
-    if (method === 'paypal') initPayPalButtons();
+    if (method === 'paypal') {
+      initPayPalButtons();
+      syncPaypalOverlay();
+    }
     clearPaymentError();
   }
   payTabCard.addEventListener('click',   () => switchPay('card'));
   payTabGcash.addEventListener('click',  () => switchPay('gcash'));
   payTabPaypal.addEventListener('click', () => switchPay('paypal'));
+
+  /* ── PayPal overlay: disable button until form is filled ── */
+  function paypalFormValid() {
+    const first = document.getElementById('firstName').value.trim();
+    const last  = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('emailAddr').value.trim();
+    return first && last && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function syncPaypalOverlay() {
+    const overlay = document.getElementById('paypal-btn-overlay');
+    if (!overlay) return;
+    overlay.style.display = paypalFormValid() ? 'none' : 'flex';
+  }
+
+  ['firstName', 'lastName', 'emailAddr'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', syncPaypalOverlay);
+  });
 
   /* ─────────────────────────────────────────────────────────
      STRIPE INTEGRATION
@@ -308,6 +329,25 @@
       container.innerHTML = '<p style="text-align:center;font-size:13px;color:#64748b;padding:12px 0;">PayPal is not configured. Please use Credit/Debit Card.</p>';
       return;
     }
+
+    // Wrap container so overlay can sit on top of the SDK iframe
+    const ppContainer = document.getElementById('paypal-button-container');
+    const ppWrapper   = document.createElement('div');
+    ppWrapper.style.cssText = 'position:relative;margin-top:16px;';
+    ppContainer.style.marginTop = '0';
+    ppContainer.parentNode.insertBefore(ppWrapper, ppContainer);
+    ppWrapper.appendChild(ppContainer);
+
+    const ppOverlay = document.createElement('div');
+    ppOverlay.id = 'paypal-btn-overlay';
+    ppOverlay.style.cssText = [
+      'position:absolute', 'inset:0', 'z-index:10',
+      'background:rgba(255,255,255,0.82)', 'border-radius:8px',
+      'display:flex', 'align-items:center', 'justify-content:center',
+      'cursor:not-allowed',
+    ].join(';');
+    ppOverlay.innerHTML = '<p style="margin:0;font-size:12px;color:#64748b;text-align:center;padding:8px 16px;">Please fill in your name and email above to continue.</p>';
+    ppWrapper.appendChild(ppOverlay);
 
     paypal.Buttons({
       style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'donate', height: 48 },
