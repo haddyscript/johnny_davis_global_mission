@@ -91,13 +91,11 @@ class SubscriberController extends Controller
             ], 422);
         }
 
-        // Extra variables provided by the admin (e.g. {{message}}, {{unsubscribe_link}})
+        // Extra variables provided by the admin (e.g. {{message}})
+        // Note: unsubscribe_link is intentionally excluded — EmailService auto-generates
+        // a per-recipient signed URL for each subscriber automatically.
         $customData = $request->input('custom_data', []);
-
-        // Auto-fill unsubscribe_link if the template uses it and the admin didn't provide one
-        if (!isset($customData['unsubscribe_link']) || trim($customData['unsubscribe_link']) === '') {
-            $customData['unsubscribe_link'] = route('home');
-        }
+        unset($customData['unsubscribe_link']); // never let a stale/generic value override the signed URL
 
         $sent   = 0;
         $failed = 0;
