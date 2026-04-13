@@ -2939,7 +2939,7 @@ body {
 }
 .db-card-title { font-size: 14px; font-weight: 700; color: var(--text-dark); }
 .db-card-sub   { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
-.db-chart-wrap { padding: 0 16px 16px; }
+.db-chart-wrap { padding: 0 16px 16px; height: 200px; position: relative; }
 .db-mid-grid {
   display: grid;
   grid-template-columns: 1fr 380px;

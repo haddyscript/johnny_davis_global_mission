@@ -197,7 +197,7 @@
             </div>
         </div>
         <div class="db-chart-wrap">
-            <canvas id="revenueChart" height="200"></canvas>
+            <canvas id="revenueChart"></canvas>
         </div>
     </div>
 
@@ -451,7 +451,7 @@ new Chart(ctx, {
     },
     options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: { display: false },
             tooltip: {
