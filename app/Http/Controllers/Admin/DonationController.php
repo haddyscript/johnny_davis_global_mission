@@ -16,58 +16,58 @@ class DonationController extends Controller
     {
         $sort = $request->input('sort', 'latest');
 
-        // Base query — join donor totals subquery when sorting by top donors
         if ($sort === 'top_donors') {
-            $donorTotalsSubquery = Donation::selectRaw('email AS donor_email, SUM(amount) AS donor_total')
-                ->where('status', 'completed')
-                ->groupBy('email');
+            // Grouped query: one row per donor, filters applied before GROUP BY
+            $query = Donation::selectRaw(
+                'email,
+                 MAX(first_name)  AS first_name,
+                 MAX(last_name)   AS last_name,
+                 SUM(amount)      AS total_amount,
+                 COUNT(*)         AS donation_count,
+                 MAX(created_at)  AS last_donated_at'
+            )->groupBy('email');
 
-            $query = Donation::select('donations.*')
-                ->leftJoinSub($donorTotalsSubquery, 'dt', 'donations.email', '=', 'dt.donor_email')
-                ->orderByDesc('dt.donor_total')
-                ->orderByDesc('donations.created_at');
+            if ($request->filled('search')) {
+                $s = $request->search;
+                $query->where(function ($q) use ($s) {
+                    $q->where('first_name',     'like', "%{$s}%")
+                      ->orWhere('last_name',    'like', "%{$s}%")
+                      ->orWhere('email',        'like', "%{$s}%")
+                      ->orWhere('campaign_name','like', "%{$s}%");
+                });
+            }
+            if ($request->filled('status'))         { $query->where('status',         $request->status); }
+            if ($request->filled('payment_method')) { $query->where('payment_method', $request->payment_method); }
+            if ($request->filled('frequency'))      { $query->where('frequency',      $request->frequency); }
+
+            $query->orderByDesc('total_amount');
         } else {
-            $query = Donation::latest();
-        }
+            $query = Donation::query();
 
-        if ($request->filled('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('donations.first_name',     'like', '%' . $request->search . '%')
-                  ->orWhere('donations.last_name',    'like', '%' . $request->search . '%')
-                  ->orWhere('donations.email',        'like', '%' . $request->search . '%')
-                  ->orWhere('donations.transaction_id','like', '%' . $request->search . '%')
-                  ->orWhere('donations.campaign_name','like', '%' . $request->search . '%');
-            });
-        }
+            if ($request->filled('search')) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('first_name',      'like', '%' . $request->search . '%')
+                      ->orWhere('last_name',     'like', '%' . $request->search . '%')
+                      ->orWhere('email',         'like', '%' . $request->search . '%')
+                      ->orWhere('transaction_id','like', '%' . $request->search . '%')
+                      ->orWhere('campaign_name', 'like', '%' . $request->search . '%');
+                });
+            }
+            if ($request->filled('status'))         { $query->where('status',         $request->status); }
+            if ($request->filled('payment_method')) { $query->where('payment_method', $request->payment_method); }
+            if ($request->filled('frequency'))      { $query->where('frequency',      $request->frequency); }
 
-        if ($request->filled('status')) {
-            $query->where('donations.status', $request->status);
-        }
-
-        if ($request->filled('payment_method')) {
-            $query->where('donations.payment_method', $request->payment_method);
-        }
-
-        if ($request->filled('frequency')) {
-            $query->where('donations.frequency', $request->frequency);
+            $query->latest();
         }
 
         $donations = $query->paginate(15)->withQueryString();
 
-        // New donor detection: emails appearing only once across all donations
+        // New donor = only one lifetime donation (used in both views)
         $newDonorEmails = Donation::selectRaw('email')
             ->groupBy('email')
             ->havingRaw('COUNT(*) = 1')
             ->pluck('email')
             ->flip();
-
-        // Per-donor cumulative totals (completed) for the top-donor sort view
-        $donorTotals = ($sort === 'top_donors')
-            ? Donation::where('status', 'completed')
-                ->selectRaw('email, SUM(amount) as total')
-                ->groupBy('email')
-                ->pluck('total', 'email')
-            : collect();
 
         $stats = [
             'total'     => Donation::count(),
@@ -77,7 +77,7 @@ class DonationController extends Controller
             'revenue'   => Donation::where('status', 'completed')->sum('amount'),
         ];
 
-        return view('admin.donations.index', compact('donations', 'stats', 'newDonorEmails', 'donorTotals', 'sort'));
+        return view('admin.donations.index', compact('donations', 'stats', 'newDonorEmails', 'sort'));
     }
 
     public function export(Request $request): StreamedResponse

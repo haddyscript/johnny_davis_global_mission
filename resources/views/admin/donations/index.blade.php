@@ -117,14 +117,21 @@
     <div class="table-wrap">
         <table class="admin-table pages-table" id="donations-table">
             <thead>
+                @if($sort === 'top_donors')
+                <tr>
+                    <th style="width:48px;">#</th>
+                    <th>Donor</th>
+                    <th>Total Donated</th>
+                    <th># Donations</th>
+                    <th>Last Donation</th>
+                    <th style="width:80px;">Actions</th>
+                </tr>
+                @else
                 <tr>
                     <th style="width:48px;">#</th>
                     <th>Donor</th>
                     <th>Campaign</th>
                     <th>Amount</th>
-                    @if($sort === 'top_donors')
-                    <th>Total Given</th>
-                    @endif
                     <th>Method</th>
                     <th>Frequency</th>
                     <th>Status</th>
@@ -133,8 +140,57 @@
                     <th style="min-width:140px;">Follow-up</th>
                     <th style="width:80px;">Actions</th>
                 </tr>
+                @endif
             </thead>
             <tbody>
+                @if($sort === 'top_donors')
+                @foreach($donations as $donor)
+                <tr class="page-row" style="opacity:0;transform:translateY(8px);">
+                    <td style="color:var(--text-muted);font-size:12px;font-weight:600;">
+                        {{ $donations->firstItem() + $loop->index }}
+                    </td>
+                    <td>
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div class="don-avatar {{ $newDonorEmails->has($donor->email) ? 'don-avatar-new' : '' }}"
+                                 style="{{ $loop->iteration <= 3 ? 'background:linear-gradient(135deg,#f59e0b,#d97706);' : '' }}">
+                                {{ strtoupper(substr($donor->first_name, 0, 1)) }}
+                            </div>
+                            <div>
+                                <div style="display:flex;align-items:center;gap:6px;">
+                                    <div class="page-name">{{ $donor->first_name }} {{ $donor->last_name }}</div>
+                                    @if($newDonorEmails->has($donor->email))
+                                        <span class="don-new-badge">New</span>
+                                    @endif
+                                </div>
+                                <div style="font-size:12px;color:var(--text-muted);">{{ $donor->email }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display:flex;flex-direction:column;gap:1px;">
+                            <span style="font-weight:700;color:#7c3aed;font-size:15px;">${{ number_format($donor->total_amount, 2) }}</span>
+                            <span style="font-size:11px;color:var(--text-muted);">total</span>
+                        </div>
+                    </td>
+                    <td>
+                        <span style="font-size:14px;font-weight:600;color:var(--text-dark);">{{ $donor->donation_count }}</span>
+                        <span style="font-size:11px;color:var(--text-muted);"> {{ $donor->donation_count === 1 ? 'donation' : 'donations' }}</span>
+                    </td>
+                    <td>
+                        <span class="cm-date" title="{{ \Carbon\Carbon::parse($donor->last_donated_at)->format('M j, Y g:i A') }}">
+                            {{ \Carbon\Carbon::parse($donor->last_donated_at)->format('M j, Y') }}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="row-actions">
+                            <a class="row-btn row-btn-view"
+                               title="View all donations from this donor"
+                               href="{{ route('admin.donations.index', ['search' => $donor->email]) }}">👁️</a>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+                @else
                 @foreach($donations as $donation)
                 <tr class="page-row" style="opacity:0;transform:translateY(8px);">
                     <td style="color:var(--text-muted);font-size:12px;">{{ $donation->id }}</td>
@@ -162,15 +218,6 @@
                     <td>
                         <span style="font-weight:700;font-size:15px;color:#16a34a;">${{ number_format($donation->amount, 2) }}</span>
                     </td>
-                    @if($sort === 'top_donors')
-                    <td>
-                        @php $donorTotal = (float) ($donorTotals[$donation->email] ?? 0); @endphp
-                        <div style="display:flex;flex-direction:column;gap:1px;">
-                            <span style="font-weight:700;color:#7c3aed;font-size:14px;">${{ number_format($donorTotal, 0) }}</span>
-                            <span style="font-size:11px;color:var(--text-muted);">lifetime</span>
-                        </div>
-                    </td>
-                    @endif
                     <td>
                         <span class="don-method-badge don-method-{{ $donation->payment_method }}">
                             @if($donation->payment_method === 'card') 💳
@@ -250,12 +297,13 @@
                     </td>
                 </tr>
                 @endforeach
+                @endif
             </tbody>
         </table>
     </div>
 
     <div class="table-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-        <span>Showing {{ $donations->firstItem() }}–{{ $donations->lastItem() }} of {{ $donations->total() }} donation{{ $donations->total() !== 1 ? 's' : '' }}</span>
+        <span>Showing {{ $donations->firstItem() }}–{{ $donations->lastItem() }} of {{ $donations->total() }} {{ $sort === 'top_donors' ? 'donor' : 'donation' }}{{ $donations->total() !== 1 ? 's' : '' }}</span>
         @if($donations->hasPages())
             <div class="pagination-wrap">{{ $donations->links('vendor.pagination.admin') }}</div>
         @endif
