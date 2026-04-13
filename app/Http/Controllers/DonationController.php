@@ -10,6 +10,7 @@ use App\Models\Page;
 use App\Services\EmailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\PaymentIntent;
@@ -216,13 +217,26 @@ class DonationController extends Controller
             $token = $this->paypalAccessToken();
 
             $response = Http::withToken($token)
-                ->post($this->paypalApi("/v2/checkout/orders/{$request->order_id}/capture"));
+                ->contentType('application/json')
+                ->post($this->paypalApi("/v2/checkout/orders/{$request->order_id}/capture"), []);
+
+            $body = $response->json();
 
             if (! $response->successful()) {
-                return response()->json(['error' => 'Payment capture failed. Please try again.'], 422);
+                $ppIssue = $body['details'][0]['issue']      ?? null;
+                $ppDesc  = $body['details'][0]['description'] ?? ($body['message'] ?? 'unknown');
+                Log::error('PayPal capture failed', [
+                    'order_id' => $request->order_id,
+                    'status'   => $response->status(),
+                    'body'     => $body,
+                ]);
+                return response()->json([
+                    'error'    => 'Payment capture failed. Please try again.',
+                    'pp_issue' => $ppIssue,
+                    'pp_desc'  => $ppDesc,
+                ], 422);
             }
 
-            $body   = $response->json();
             $status = $body['status'] ?? '';
 
             if ($status !== 'COMPLETED') {
@@ -249,6 +263,11 @@ class DonationController extends Controller
 
             return response()->json(['success' => true]);
         } catch (\Throwable $e) {
+            Log::error('PayPal capture exception', [
+                'order_id'    => $request->order_id ?? null,
+                'donation_id' => $request->donation_id ?? null,
+                'message'     => $e->getMessage(),
+            ]);
             return response()->json(['error' => 'Capture failed. Please contact support.'], 422);
         }
     }
