@@ -15,9 +15,11 @@
       <div class="card-body-inner">
         <p class="card-meta">{{ $c->label }}</p>
         <h3>{{ $c->icon }} {{ $c->title }}</h3>
-        <small>Goal {{ $c->goal_amount }} · {{ $c->goal_pct }}% reached</small>
+        <small>
+          {{ $c->live_raised_fmt }} raised · Goal {{ $c->goal_amount }} · {{ $c->live_pct }}% reached
+        </small>
         <div class="progress" style="margin:6px 0 10px;">
-          <div class="progress-fill" style="width:{{ $c->goal_pct }}%;{{ $c->bar_style }}"></div>
+          <div class="progress-fill" style="width:{{ $c->live_pct }}%;{{ $c->bar_style }}"></div>
         </div>
         <p class="story-snippet">{{ $c->snippet }}</p>
         <p class="card-goal">Story: {{ $c->story }}</p>

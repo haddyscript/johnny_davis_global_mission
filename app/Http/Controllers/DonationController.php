@@ -32,11 +32,30 @@ class DonationController extends Controller
 
         $cms = new CmsPageData($page);
 
+        $campaigns = Campaign::active()->get();
+
+        // One query: sum completed donations grouped by campaign name
+        $donationTotals = Donation::where('status', 'completed')
+            ->selectRaw('campaign_name, SUM(amount) AS total')
+            ->groupBy('campaign_name')
+            ->pluck('total', 'campaign_name');
+
+        // Attach live raised/pct to each campaign without touching the DB row
+        $campaigns->each(function ($c) use ($donationTotals) {
+            $raised            = (float) ($donationTotals[$c->title] ?? 0);
+            $goalNumeric       = (float) preg_replace('/[^0-9.]/', '', $c->goal_amount ?? '0');
+            $c->live_raised    = $raised;
+            $c->live_pct       = $goalNumeric > 0
+                ? min(100, (int) round($raised / $goalNumeric * 100))
+                : 0;
+            $c->live_raised_fmt = '$' . number_format($raised, 0);
+        });
+
         return view('donation', [
             'title'       => $cms->text('meta', 'title', 'Donate — Johnny Davis Global Missions'),
             'description' => $cms->text('meta', 'description', 'Donate to Johnny Davis Global Missions — Feed Filipino Children, support disaster relief, and bring hope to communities in need.'),
             'cms'         => $cms,
-            'campaigns'   => Campaign::active()->get(),
+            'campaigns'   => $campaigns,
             'pastorImg'   => 'https://d14tal8bchn59o.cloudfront.net/RhGkp7h3Fm5bBymv78FLEpsQSnC3q7PFpecGpojrkak/w:2000/plain/https://02f0a56ef46d93f03c90-22ac5f107621879d5667e0d7ed595bdb.ssl.cf2.rackcdn.com/sites/104216/photos/23052432/JDM_Logo_6_original.jpg',
             'stripeKey'   => config('services.stripe.key'),
         ]);
