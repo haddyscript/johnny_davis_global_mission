@@ -217,8 +217,8 @@ class DonationController extends Controller
             $token = $this->paypalAccessToken();
 
             $response = Http::withToken($token)
-                ->contentType('application/json')
-                ->post($this->paypalApi("/v2/checkout/orders/{$request->order_id}/capture"), []);
+                ->withBody('{}', 'application/json')
+                ->post($this->paypalApi("/v2/checkout/orders/{$request->order_id}/capture"));
 
             $body = $response->json();
 
