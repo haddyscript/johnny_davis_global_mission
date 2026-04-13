@@ -326,5 +326,6 @@
 </script>
 @endif
 
+@include('partials.chatbot')
 </body>
 </html>

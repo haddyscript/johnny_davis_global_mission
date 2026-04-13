@@ -47,6 +47,13 @@ return [
         'mode'      => env('PAYPAL_MODE', 'sandbox'), // 'sandbox' or 'live'
     ],
 
+    'gemini' => [
+        'api_key'        => env('GEMINI_API_KEY'),
+        'primary_model'  => env('GEMINI_PRIMARY_MODEL',  'gemini-2.5-flash'),
+        'fallback_model' => env('GEMINI_FALLBACK_MODEL', 'gemini-2.5-flash-lite'),
+        'timeout'        => (int) env('GEMINI_TIMEOUT', 20),
+    ],
+
     'social' => [
         'facebook'  => env('SOCIAL_FACEBOOK_URL'),
         'instagram' => env('SOCIAL_INSTAGRAM_URL'),

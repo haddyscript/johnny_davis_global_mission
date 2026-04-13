@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SubscriberController;
@@ -45,6 +46,8 @@ Route::post('/donate/confirm',         [DonationController::class, 'confirm'])->
 Route::post('/donate/paypal/order',    [DonationController::class, 'paypalOrder'])->name('donate.paypal.order');
 Route::post('/donate/paypal/capture',  [DonationController::class, 'paypalCapture'])->name('donate.paypal.capture');
 Route::post('/stripe/webhook',         [DonationController::class, 'webhook'])->name('stripe.webhook');
+Route::post('/chatbot',                [ChatbotController::class, 'chat'])->name('chatbot.chat');
+Route::post('/chatbot/stream',         [ChatbotController::class, 'stream'])->name('chatbot.stream');
 
 Route::get('/dashboard', function () {
     return redirect()->route('admin.dashboard');

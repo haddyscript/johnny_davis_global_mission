@@ -35,5 +35,6 @@
 @include('partials.footer-ministry')
 
 <script src="{{ asset('js/for_ministry.js') }}"></script>
+@include('partials.chatbot')
 </body>
 </html>

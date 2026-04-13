@@ -43,5 +43,6 @@
 <script src="https://www.paypal.com/sdk/js?client-id={{ config('services.paypal.client_id') }}&currency=USD&intent=capture&components=buttons&disable-funding=credit,card"></script>
 @endif
 <script src="{{ asset('js/for_donationpage.js') }}"></script>
+@include('partials.chatbot')
 </body>
 </html>

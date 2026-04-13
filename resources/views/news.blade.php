@@ -714,5 +714,6 @@
 
 <script src="{{ asset('js/for_news.js') }}"></script>
 
+@include('partials.chatbot')
 </body>
 </html>

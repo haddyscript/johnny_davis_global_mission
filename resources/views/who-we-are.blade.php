@@ -404,5 +404,6 @@
 
 <script src="{{ asset('js/for_who_we_are.js') }}"></script>
 
+@include('partials.chatbot')
 </body>
 </html>

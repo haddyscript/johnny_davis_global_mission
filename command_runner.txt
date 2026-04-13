@@ -56,3 +56,7 @@ Card number: 4000 0000 0000 9995
 
 ### Email Sending 
 - Global Mission
+
+
+### WHEN GIT PUSH FAIL ###
+- git config --global http.postBuffer 524288000
