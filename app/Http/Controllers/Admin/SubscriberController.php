@@ -31,6 +31,9 @@ class SubscriberController extends Controller
             'total'    => NewsletterSubscriber::count(),
             'active'   => NewsletterSubscriber::where('is_active', true)->count(),
             'inactive' => NewsletterSubscriber::where('is_active', false)->count(),
+            'monthly'  => NewsletterSubscriber::where('subscriber_type', 'monthly')->count(),
+            'one_time' => NewsletterSubscriber::where('subscriber_type', 'one_time')->count(),
+            'normal'   => NewsletterSubscriber::where('subscriber_type', 'normal')->count(),
         ];
 
         $templates = EmailTemplate::where('is_active', true)->orderBy('name')->get(['id', 'name', 'subject', 'variables']);
@@ -53,13 +56,18 @@ class SubscriberController extends Controller
             });
         }
 
+        if ($request->filled('type') && in_array($request->type, ['normal', 'one_time', 'monthly'])) {
+            $query->where('subscriber_type', $request->type);
+        }
+
         $subscribers = $query->paginate(50);
 
         return response()->json([
             'data'         => $subscribers->map(fn ($s) => [
-                'id'         => $s->id,
-                'first_name' => $s->first_name,
-                'email'      => $s->email,
+                'id'              => $s->id,
+                'first_name'      => $s->first_name,
+                'email'           => $s->email,
+                'subscriber_type' => $s->subscriber_type,
             ]),
             'total'        => $subscribers->total(),
             'current_page' => $subscribers->currentPage(),

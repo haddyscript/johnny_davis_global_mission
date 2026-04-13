@@ -6,6 +6,7 @@ use App\Helpers\CmsPageData;
 use App\Models\Campaign;
 use App\Models\Donation;
 use App\Models\EmailTemplate;
+use App\Models\NewsletterSubscriber;
 use App\Models\Page;
 use App\Services\EmailService;
 use Illuminate\Http\Request;
@@ -364,6 +365,13 @@ class DonationController extends Controller
 
     private function sendDonationConfirmation(Donation $donation): void
     {
+        // Auto-add the donor to the newsletter subscribers list
+        NewsletterSubscriber::syncDonor(
+            email:     $donation->email,
+            firstName: $donation->first_name,
+            frequency: $donation->frequency,
+        );
+
         $template = EmailTemplate::where('name', 'Donation Confirmation')
             ->where('is_active', true)
             ->first();

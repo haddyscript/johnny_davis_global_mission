@@ -59,7 +59,15 @@
                         <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Unsubscribed</option>
                     </select>
                 </div>
-                @if(request()->hasAny(['search','status']))
+                <div class="filter-select-wrap">
+                    <select name="type" class="filter-select" onchange="this.form.submit()">
+                        <option value="">All Types</option>
+                        <option value="monthly"  {{ request('type') === 'monthly'  ? 'selected' : '' }}>Monthly Donor</option>
+                        <option value="one_time" {{ request('type') === 'one_time' ? 'selected' : '' }}>One-time Donor</option>
+                        <option value="normal"   {{ request('type') === 'normal'   ? 'selected' : '' }}>Normal Subscriber</option>
+                    </select>
+                </div>
+                @if(request()->hasAny(['search','status','type']))
                     <a href="{{ route('admin.subscribers.index') }}" class="filter-clear-link">Clear</a>
                 @endif
             </div>
@@ -85,6 +93,7 @@
                 <tr>
                     <th>Subscriber</th>
                     <th>Email</th>
+                    <th>Type</th>
                     <th>Status</th>
                     <th>Joined</th>
                     <th style="width:110px;">Actions</th>
@@ -103,6 +112,21 @@
                     </td>
                     <td>
                         <code class="slug-chip" style="font-family:inherit;font-size:13px;">{{ $sub->email }}</code>
+                    </td>
+                    <td>
+                        @if($sub->subscriber_type === 'monthly')
+                            <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;background:rgba(139,92,246,0.12);color:#7c3aed;">
+                                🔁 Monthly Donor
+                            </span>
+                        @elseif($sub->subscriber_type === 'one_time')
+                            <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;background:rgba(20,184,166,0.12);color:#0f766e;">
+                                💛 One-time Donor
+                            </span>
+                        @else
+                            <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;background:rgba(148,163,184,0.15);color:#64748b;">
+                                📧 Subscriber
+                            </span>
+                        @endif
                     </td>
                     <td>
                         <button
@@ -179,6 +203,14 @@
 
         {{-- ── STEP 1: Recipient selection ── --}}
         <div id="be-panel-1" class="be-panel" style="padding:20px 24px;">
+
+            {{-- Type filter pills --}}
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
+                <button type="button" class="be-type-filter be-type-active" data-type="">All</button>
+                <button type="button" class="be-type-filter" data-type="monthly">🔁 Monthly Donors</button>
+                <button type="button" class="be-type-filter" data-type="one_time">💛 One-time Donors</button>
+                <button type="button" class="be-type-filter" data-type="normal">📧 Normal Subscribers</button>
+            </div>
 
             <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
                 <div style="display:flex;align-items:center;gap:10px;">
@@ -358,6 +390,26 @@
 }
 .be-btn-secondary:hover { background: var(--border); }
 
+/* ── Type filter pills ── */
+.be-type-filter {
+    padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    border: 1px solid var(--border); background: var(--surface-strong);
+    color: var(--text-muted); cursor: pointer; transition: all .15s;
+}
+.be-type-filter:hover { border-color: #0f766e; color: #0f766e; }
+.be-type-filter.be-type-active {
+    background: #0f766e; color: #fff; border-color: #0f766e;
+}
+
+/* ── Subscriber type badge in modal ── */
+.be-sub-type {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 10px; font-weight: 700; margin-top: 2px;
+}
+.be-sub-type-monthly  { background: rgba(139,92,246,.12); color: #7c3aed; }
+.be-sub-type-one_time { background: rgba(20,184,166,.12);  color: #0f766e; }
+.be-sub-type-normal   { background: rgba(148,163,184,.15); color: #64748b; }
+
 /* ── Subscriber list items ── */
 .be-sub-item {
     display: flex; align-items: center; gap: 12px; padding: 10px 14px;
@@ -502,6 +554,17 @@ var allIds         = [];          /* ids of all loaded subscribers */
 var currentPage    = 1;
 var lastPage       = 1;
 var searchTimer;
+var activeType     = '';          /* '', 'monthly', 'one_time', 'normal' */
+
+/* ── Type filter pills ── */
+document.querySelectorAll('.be-type-filter').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+        document.querySelectorAll('.be-type-filter').forEach(function (b) { b.classList.remove('be-type-active'); });
+        this.classList.add('be-type-active');
+        activeType = this.dataset.type;
+        loadSubscribers(1, true, document.getElementById('be-sub-search').value);
+    });
+});
 
 /* ── Open / close ── */
 if (openBtn) {
@@ -564,6 +627,7 @@ function loadSubscribers(page, reset, search) {
 
     var url = FETCH_URL + '?page=' + (page || 1);
     if (search) url += '&search=' + encodeURIComponent(search);
+    if (activeType) url += '&type=' + encodeURIComponent(activeType);
 
     fetch(url, { headers: { 'Accept': 'application/json' } })
         .then(function (r) { return r.json(); })
@@ -596,6 +660,10 @@ function buildSubItem(sub) {
     var div = document.createElement('div');
     div.className = 'be-sub-item' + (selectedIds.has(sub.id) ? ' be-selected' : '');
     div.dataset.id = sub.id;
+    var typeLabels = { monthly: '🔁 Monthly', one_time: '💛 One-time', normal: '📧 Subscriber' };
+    var typeClass  = 'be-sub-type be-sub-type-' + (sub.subscriber_type || 'normal');
+    var typeLabel  = typeLabels[sub.subscriber_type] || typeLabels['normal'];
+
     div.innerHTML =
         '<input type="checkbox" style="width:16px;height:16px;flex-shrink:0;accent-color:#0f766e;" ' +
             (selectedIds.has(sub.id) ? 'checked' : '') + '>' +
@@ -603,6 +671,7 @@ function buildSubItem(sub) {
         '<div style="flex:1;min-width:0;">' +
             '<div style="font-size:13px;font-weight:600;color:var(--text-dark);">' + escHtml(sub.first_name) + '</div>' +
             '<div style="font-size:12px;color:var(--text-muted);">' + escHtml(sub.email) + '</div>' +
+            '<span class="' + typeClass + '">' + typeLabel + '</span>' +
         '</div>';
 
     div.addEventListener('click', function (e) {
@@ -830,6 +899,7 @@ document.getElementById('be-send-btn').addEventListener('click', function () {
 function resetModal() {
     selectedIds.clear();
     allIds = [];
+    activeType = '';
     goToStep(1);
     document.getElementById('be-sub-list').innerHTML = '';
     document.getElementById('be-sub-list').style.display = 'none';
@@ -846,6 +916,10 @@ function resetModal() {
     document.getElementById('be-var-fields').style.display = 'none';
     document.getElementById('be-var-fields-inner').innerHTML = '';
     document.getElementById('be-next-2').disabled = true;
+    /* Reset type filter pills */
+    document.querySelectorAll('.be-type-filter').forEach(function (b) { b.classList.remove('be-type-active'); });
+    var allPill = document.querySelector('.be-type-filter[data-type=""]');
+    if (allPill) allPill.classList.add('be-type-active');
 }
 
 /* ── Collect custom var fields ── */
