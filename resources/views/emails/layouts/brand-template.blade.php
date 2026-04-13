@@ -211,10 +211,21 @@
                 </p>
 
                 {{-- Copyright --}}
-                <p style="margin:0;font-size:11px;color:#94a3b8;line-height:1.6;">
+                <p style="margin:0 0 12px;font-size:11px;color:#94a3b8;line-height:1.6;">
                     &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.<br>
                     You received this email because you are a member of our community.
                 </p>
+
+                {{-- Unsubscribe --}}
+                @if(!empty($unsubscribeUrl))
+                <p style="margin:0;font-size:11px;color:#94a3b8;line-height:1.6;">
+                    No longer want to receive these emails?
+                    <a href="{{ $unsubscribeUrl }}"
+                       style="color:#94a3b8;text-decoration:underline;">
+                        Unsubscribe
+                    </a>
+                </p>
+                @endif
             </td>
         </tr>
 

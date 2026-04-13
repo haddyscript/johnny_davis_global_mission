@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Controllers\SubscriberController;
 use App\Mail\TemplateMail;
 use App\Models\EmailLog;
 use App\Models\EmailTemplate;
@@ -26,11 +27,16 @@ class EmailService
         ?string $toName = null,
         array $data = [],
     ): EmailLog {
+        // Always provide a real unsubscribe link — overridable by caller
+        $data['unsubscribe_link'] = $data['unsubscribe_link']
+            ?? SubscriberController::signedUnsubscribeUrl($toEmail);
+
         $subject      = $this->render($template->subject, $data);
         $renderedBody = $this->render($template->body, $data);
         $brandedHtml  = View::make('emails.layouts.brand-template', [
-            'subject' => $subject,
-            'body'    => $renderedBody,
+            'subject'        => $subject,
+            'body'           => $renderedBody,
+            'unsubscribeUrl' => $data['unsubscribe_link'],
         ])->render();
 
         try {

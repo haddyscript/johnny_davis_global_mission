@@ -38,7 +38,8 @@ Route::middleware('nav.visibility')->group(function () {
 
 // Non-page routes — never blocked by nav visibility
 Route::post('/contact',             [ContactController::class, 'store'])->name('contact.store');
-Route::post('/newsletter/subscribe', [SubscriberController::class, 'store'])->name('newsletter.subscribe');
+Route::post('/newsletter/subscribe',      [SubscriberController::class, 'store'])->name('newsletter.subscribe');
+Route::get('/newsletter/unsubscribe',     [SubscriberController::class, 'unsubscribe'])->name('newsletter.unsubscribe')->middleware('signed');
 Route::post('/donate/charge',          [DonationController::class, 'charge'])->name('donate.charge');
 Route::post('/donate/confirm',         [DonationController::class, 'confirm'])->name('donate.confirm');
 Route::post('/donate/paypal/order',    [DonationController::class, 'paypalOrder'])->name('donate.paypal.order');

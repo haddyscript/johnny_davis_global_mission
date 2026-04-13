@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\NewsletterSubscriber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class SubscriberController extends Controller
 {
@@ -38,5 +39,32 @@ class SubscriberController extends Controller
         ]);
 
         return response()->json(['success' => true], 201);
+    }
+
+    public function unsubscribe(Request $request)
+    {
+        $email = $request->query('email');
+
+        $subscriber = NewsletterSubscriber::where('email', $email)->first();
+
+        if ($subscriber && $subscriber->is_active) {
+            $subscriber->update(['is_active' => false]);
+            $status = 'unsubscribed';
+        } elseif ($subscriber && ! $subscriber->is_active) {
+            $status = 'already_unsubscribed';
+        } else {
+            $status = 'not_found';
+        }
+
+        return view('newsletter.unsubscribed', compact('status', 'email'));
+    }
+
+    /**
+     * Generate a signed unsubscribe URL for a given email address.
+     * Used by EmailService to inject {{unsubscribe_link}} automatically.
+     */
+    public static function signedUnsubscribeUrl(string $email): string
+    {
+        return URL::signedRoute('newsletter.unsubscribe', ['email' => $email]);
     }
 }
