@@ -23,7 +23,7 @@ class EmailTemplateSeeder extends Seeder
                     'name'             => 'Subscriber\'s full name',
                     'email'            => 'Subscriber\'s email address',
                     'message'          => 'Main announcement or update content',
-                    'unsubscribe_link' => 'One-click unsubscribe URL',
+                    'unsubscribe_link' => 'Auto-generated signed URL — injected automatically by the system. Always available in the template body as {{unsubscribe_link}}.',
                 ],
                 'body' => <<<HTML
 <h2>Dear {{name}},</h2>
@@ -38,11 +38,6 @@ class EmailTemplateSeeder extends Seeder
 <p>God bless you abundantly,<br>
 <strong>Pastor Johnny Davis</strong><br>
 Johnny Davis Global Missions</p>
-
-<p style="margin-top:24px;font-size:12px;color:#94a3b8;">
-You are receiving this email because you subscribed to our newsletter with {{email}}.<br>
-<a href="{{unsubscribe_link}}" style="color:#0f766e;">Unsubscribe</a>
-</p>
 HTML,
             ],
 
@@ -302,7 +297,7 @@ HTML,
         ];
 
         foreach ($templates as $data) {
-            EmailTemplate::firstOrCreate(
+            EmailTemplate::updateOrCreate(
                 ['type' => $data['type']],
                 array_merge($data, ['is_active' => true])
             );
