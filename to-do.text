@@ -1,0 +1,140 @@
+Make the /admin/campaigns/{id}/edit page fully dynamic in my Laravel project.
+
+Requirements :
+
+Dynamic Campaign Data :
+Load all campaign fields dynamically based on the campaign ID.
+Ensure existing campaign data is pre-filled in the form for editing.
+Raised So Far Calculation
+Dynamically compute “Raised So Far” using the total successful donations linked to that campaign from the donations table.
+
+Progress Percentage :
+
+Automatically compute the progress percentage using:
+Total raised amount
+Campaign target goal
+
+Formula:
+
+progress = (total_raised / goal_amount) * 100
+
+UI Updates : 
+Display the Raised So Far amount dynamically.
+Display the progress percentage and update the progress bar accordingly.
+
+
+General Requirements :
+Ensure computations are database-driven and accurate.
+Maintain clean admin UI consistency.
+Implement proper error handling and validation.
+
+------------------------------------------------------------------------------------
+
+Add a Reply by Email feature to the /admin/contact-messages/{id} page.
+
+Requirements:
+Add a “Reply by Email” button that opens a reply form/modal.
+Allow admin to compose a message and send it to the sender’s email.
+Include sender name, original message (optional), and admin reply in the email.
+Show success/error notifications after sending.
+(Optional) Store reply logs in DB (replied_at, reply_message, replied_by) to track responses.
+
+Requirements:
+Fully dynamic and production-ready.
+Proper validation and error handling.
+Maintain clean admin UI consistency.
+
+------------------------------------------------------------------------------------
+
+In the /admin/nav-items page, implement a rule where any navigation item marked as hidden (e.g., /news) 
+cannot be accessed directly via URL on the user side. If a user manually enters the hidden route, 
+it should be blocked (redirect or 404) to ensure secure access control and prevent unauthorized visibility.
+
+------------------------------------------------------------------------------------
+
+The Prompt
+
+Task: Debug and implement a routing/controller fix for the Navigation module in my Laravel application.
+
+Context:
+I am encountering a 404 error when accessing newly created Navigation Items. Currently, the system allows me to create items at /admin/nav-items, but these items do not have corresponding routes defined in web.php or the CMS controller.
+
+My Database Schema / Structure:
+
+    /admin/pages: The master list of pages.
+
+    /admin/sections: Contains page sections with slug, name, and type.
+
+    /admin/content-blocks: Contains the actual data linked via section_id, key, and content.
+
+The Goal:
+When a user clicks a Navigation Item created in the admin panel, the application should resolve the slug, find the associated Page/Section data, and render it instead of throwing a 404.
+
+Please perform the following:
+
+    Route Analysis: Check routes/web.php to see if there is a catch-all route for dynamic slugs. If not, suggest a route definition that points to a PageController.
+
+    Controller Logic: Review (or create) the logic to fetch data from sections and content-blocks based on the requested slug.
+
+    Navigation Linking: Ensure that when a nav-item is saved, it correctly associates with the slug found in the sections table.
+
+    Verification: Identify why the current implementation is triggering a 404 (likely a missing route or a mismatch between the nav-items URL and the sections slug).
+
+Files to examine:
+
+    routes/web.php
+
+    app/Models/NavigationItem.php (or equivalent)
+
+    app/Http/Controllers/Admin/NavItemController.php
+
+    app/Http/Controllers/PageController.php (if it exists)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Task: Create a new "Admin Management" module to list and manage administrative accounts.
+
+Context:
+I need an interface to manage users. The data is stored in the default Laravel users table (see database/migrations/0001_01_01_000000_create_users_table.php).
+
+Requirements:
+
+    Route: Create a new route at /admin/admins or /admin/users within the existing admin middleware group.
+
+    Controller: Create an AdminManagementController with an index method to fetch and paginate users.
+
+    View: Create a Blade template that displays the users in a table. The table should include:
+
+        Name
+
+        Email
+
+        Created At
+
+        Placeholders for "Edit" and "Delete" actions.
+
+    Styling: Ensure the view extends my existing admin layout (check resources/views/layouts/admin.blade.php or similar) so the sidebar and navigation remain consistent.
+
+Files to reference:
+
+    database/migrations/0001_01_01_000000_create_users_table.php (for schema)
+
+    routes/web.php (to add the new route)
+
+    app/Models/User.php
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Task: Completely remove the "Campaign Tour" feature from the /donate page.
+
+Context: I want to abolish the tour/onboarding sequence currently active on the /donate route. This feature is no longer needed and should be fully decommissioned.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Task: Implement PayPal payment integration on the /donate page, mirroring the existing Stripe (Credit/Debit Card) functionality.
+
+Context:
+The /donate page currently has a fully functional Stripe integration. I want to add PayPal as a second payment option. It should follow the same behavior—handling the transaction, updating the database, and redirecting to a "Thank You" or "Success" page.

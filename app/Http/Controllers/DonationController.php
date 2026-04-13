@@ -174,14 +174,6 @@ class DonationController extends Controller
                             'value'         => number_format((float) $validated['amount'], 2, '.', ''),
                         ],
                     ]],
-                    'payment_source' => [
-                        'paypal' => [
-                            'experience_context' => [
-                                'shipping_preference' => 'NO_SHIPPING',
-                                'user_action'         => 'PAY_NOW',
-                            ],
-                        ],
-                    ],
                 ]);
 
             if (! $response->successful()) {
