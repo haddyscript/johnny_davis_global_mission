@@ -40,7 +40,7 @@
 <script src="https://js.stripe.com/v3/"></script>
 {{-- PayPal JS SDK — only injected when client ID is configured --}}
 @if(config('services.paypal.client_id'))
-<script src="https://www.paypal.com/sdk/js?client-id={{ config('services.paypal.client_id') }}&currency=USD&intent=capture&components=buttons&disable-funding=credit,card"></script>
+<script src="https://www.paypal.com/sdk/js?client-id={{ config('services.paypal.client_id') }}&currency=USD&vault=true&components=buttons&disable-funding=credit,card"></script>
 @endif
 <script src="{{ asset('js/for_donationpage.js') }}"></script>
 @include('partials.chatbot')
