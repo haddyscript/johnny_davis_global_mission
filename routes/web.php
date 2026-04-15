@@ -41,11 +41,14 @@ Route::middleware('nav.visibility')->group(function () {
 Route::post('/contact',             [ContactController::class, 'store'])->name('contact.store');
 Route::post('/newsletter/subscribe',      [SubscriberController::class, 'store'])->name('newsletter.subscribe');
 Route::get('/newsletter/unsubscribe',     [SubscriberController::class, 'unsubscribe'])->name('newsletter.unsubscribe')->middleware('signed');
-Route::post('/donate/charge',          [DonationController::class, 'charge'])->name('donate.charge');
-Route::post('/donate/confirm',         [DonationController::class, 'confirm'])->name('donate.confirm');
-Route::post('/donate/paypal/order',    [DonationController::class, 'paypalOrder'])->name('donate.paypal.order');
-Route::post('/donate/paypal/capture',  [DonationController::class, 'paypalCapture'])->name('donate.paypal.capture');
-Route::post('/stripe/webhook',         [DonationController::class, 'webhook'])->name('stripe.webhook');
+Route::post('/donate/charge',                      [DonationController::class, 'charge'])->name('donate.charge');
+Route::post('/donate/confirm',                     [DonationController::class, 'confirm'])->name('donate.confirm');
+Route::post('/donate/paypal/order',                [DonationController::class, 'paypalOrder'])->name('donate.paypal.order');
+Route::post('/donate/paypal/capture',              [DonationController::class, 'paypalCapture'])->name('donate.paypal.capture');
+Route::post('/donate/paypal/subscription/create',  [DonationController::class, 'paypalCreateSubscription'])->name('donate.paypal.subscription.create');
+Route::post('/donate/paypal/subscription/confirm', [DonationController::class, 'paypalConfirmSubscription'])->name('donate.paypal.subscription.confirm');
+Route::post('/stripe/webhook',                     [DonationController::class, 'webhook'])->name('stripe.webhook');
+Route::post('/paypal/webhook',                     [DonationController::class, 'paypalWebhook'])->name('paypal.webhook');
 Route::post('/chatbot',                [ChatbotController::class, 'chat'])->name('chatbot.chat');
 Route::post('/chatbot/stream',         [ChatbotController::class, 'stream'])->name('chatbot.stream');
 

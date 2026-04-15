@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: '*');
         $middleware->validateCsrfTokens(except: [
             'stripe/webhook',
+            'paypal/webhook',
         ]);
         $middleware->alias([
             'nav.visibility' => \App\Http\Middleware\EnforceNavVisibility::class,

@@ -100,6 +100,20 @@
     sync();
   }
 
+  function showThankYou() {
+    thankCampaign.textContent = selectedCampaign;
+    thankAmt.textContent      = fmt(selectedAmt) + (isMonthly ? ' / month' : ' one-time');
+
+    const message = `I just donated to ${selectedCampaign} via JDGM — join me!`;
+    const pageUrl = encodeURIComponent(window.location.href);
+    const text    = encodeURIComponent(message);
+    document.getElementById('share-twitter').href   = `https://twitter.com/intent/tweet?text=${text}&url=${pageUrl}`;
+    document.getElementById('share-facebook').href  = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+    document.getElementById('share-whatsapp').href  = `https://wa.me/?text=${text}%20${pageUrl}`;
+
+    showScreen(thankScreen);
+  }
+
   /* ── Sync UI with state ─────────────────────────────────── */
   function sync() {
     const amtStr  = fmt(selectedAmt);
@@ -120,8 +134,8 @@
     const data = campaigns[name];
 
     campaignOpts.forEach(opt => {
-      const title   = opt.dataset.campaignOpt;
-      const radio   = opt.querySelector('.camp-radio');
+      const title    = opt.dataset.campaignOpt;
+      const radio    = opt.querySelector('.camp-radio');
       const isActive = title === name;
       opt.classList.toggle('active', isActive);
       opt.setAttribute('aria-checked', isActive ? 'true' : 'false');
@@ -217,6 +231,13 @@
       tab.setAttribute('aria-pressed', 'true');
       isMonthly = tab.textContent.includes('Monthly');
       sync();
+
+      // Re-render PayPal buttons if the PayPal tab is currently visible,
+      // because monthly uses createSubscription and one-time uses createOrder
+      if (currentPayMethod === 'paypal') {
+        resetPaypalButtons();
+        initPayPalButtons();
+      }
     });
   });
 
@@ -303,24 +324,54 @@
 
     cardElement.addEventListener('change', event => {
       if (event.error) {
-        cardErrors.textContent    = event.error.message;
-        cardErrors.style.display  = 'block';
+        cardErrors.textContent   = event.error.message;
+        cardErrors.style.display = 'block';
       } else {
-        cardErrors.textContent    = '';
-        cardErrors.style.display  = 'none';
+        cardErrors.textContent   = '';
+        cardErrors.style.display = 'none';
       }
     });
   }
 
   /* ─────────────────────────────────────────────────────────
      PAYPAL INTEGRATION
+     NOTE: The PayPal SDK script tag in your Blade view must
+     include vault=true to support both order and subscription
+     flows from a single SDK load:
+       src="https://www.paypal.com/sdk/js?client-id=...&vault=true&currency=USD"
   ───────────────────────────────────────────────────────── */
 
   const paypalClientId   = document.querySelector('meta[name="paypal-client-id"]')?.content ?? '';
-  let   paypalButtonsDone = false;
+  let   paypalRenderedMode = null; // tracks which button type is currently rendered: 'one-time' | 'monthly'
+  let   paypalWrapperEl    = null; // reference to the wrapper div we inject around the container
+
+  /**
+   * Tear down the current PayPal button wrapper so we can re-render
+   * a fresh set of buttons (needed when switching between one-time and monthly).
+   */
+  function resetPaypalButtons() {
+    paypalRenderedMode = null;
+
+    const container = document.getElementById('paypal-button-container');
+    if (!container) return;
+
+    // Restore the container to its original position (outside the wrapper)
+    if (paypalWrapperEl && paypalWrapperEl.parentNode) {
+      paypalWrapperEl.parentNode.insertBefore(container, paypalWrapperEl);
+      paypalWrapperEl.remove();
+      paypalWrapperEl = null;
+    }
+
+    // Clear the container so the SDK can render fresh buttons into it
+    container.innerHTML = '';
+    container.style.marginTop = '';
+  }
 
   function initPayPalButtons() {
-    if (paypalButtonsDone) return;
+    const mode = isMonthly ? 'monthly' : 'one-time';
+
+    // Already showing the correct button type — nothing to do
+    if (paypalRenderedMode === mode) return;
 
     const container = document.getElementById('paypal-button-container');
     if (!container) return;
@@ -330,29 +381,39 @@
       return;
     }
 
-    // Wrap container so overlay can sit on top of the SDK iframe
-    const ppContainer = document.getElementById('paypal-button-container');
-    const ppWrapper   = document.createElement('div');
-    ppWrapper.style.cssText = 'position:relative;margin-top:16px;';
-    ppContainer.style.marginTop = '0';
-    ppContainer.parentNode.insertBefore(ppWrapper, ppContainer);
-    ppWrapper.appendChild(ppContainer);
+    // Wrap container so the overlay can sit on top of the SDK iframe
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'position:relative;margin-top:16px;';
+    container.style.marginTop = '0';
+    container.parentNode.insertBefore(wrapper, container);
+    wrapper.appendChild(container);
+    paypalWrapperEl = wrapper;
 
-    const ppOverlay = document.createElement('div');
-    ppOverlay.id = 'paypal-btn-overlay';
-    ppOverlay.style.cssText = [
+    const overlay = document.createElement('div');
+    overlay.id = 'paypal-btn-overlay';
+    overlay.style.cssText = [
       'position:absolute', 'inset:0', 'z-index:10',
       'background:rgba(255,255,255,0.82)', 'border-radius:8px',
       'display:flex', 'align-items:center', 'justify-content:center',
       'cursor:not-allowed',
     ].join(';');
-    ppOverlay.innerHTML = '<p style="margin:0;font-size:12px;color:#64748b;text-align:center;padding:8px 16px;">Please fill in your name and email above to continue.</p>';
-    ppWrapper.appendChild(ppOverlay);
+    overlay.innerHTML = '<p style="margin:0;font-size:12px;color:#64748b;text-align:center;padding:8px 16px;">Please fill in your name and email above to continue.</p>';
+    wrapper.appendChild(overlay);
 
+    if (mode === 'monthly') {
+      renderPaypalSubscriptionButtons(container);
+    } else {
+      renderPaypalOrderButtons(container);
+    }
+
+    paypalRenderedMode = mode;
+  }
+
+  /* ── PayPal one-time order buttons ──────────────────────── */
+  function renderPaypalOrderButtons(container) {
     paypal.Buttons({
       style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'donate', height: 48 },
 
-      /* ── Step 1: create the order on our server ── */
       createOrder: async () => {
         clearPaymentError();
 
@@ -383,7 +444,7 @@
               last_name:     lastName,
               email:         email,
               amount:        selectedAmt,
-              frequency:     isMonthly ? 'monthly' : 'one-time',
+              frequency:     'one-time',
             }),
           });
 
@@ -394,17 +455,15 @@
             return undefined;
           }
 
-          // Stash donation_id so the capture step can reference it
           window._ppDonationId = data.donation_id;
           return data.orderID;
 
-        } catch (err) {
+        } catch {
           showPaymentError('Network error. Please check your connection and try again.');
           return undefined;
         }
       },
 
-      /* ── Step 2: capture after buyer approves ── */
       onApprove: async (data) => {
         try {
           const res = await fetch('/donate/paypal/capture', {
@@ -420,26 +479,15 @@
             return;
           }
 
-          // ── Success — show thank-you screen ──
-          thankCampaign.textContent = selectedCampaign;
-          thankAmt.textContent      = fmt(selectedAmt) + (isMonthly ? ' / month' : ' one-time');
+          showThankYou();
 
-          const message = `I just donated to ${selectedCampaign} via JDGM — join me!`;
-          const pageUrl = encodeURIComponent(window.location.href);
-          const text    = encodeURIComponent(message);
-          document.getElementById('share-twitter').href  = `https://twitter.com/intent/tweet?text=${text}&url=${pageUrl}`;
-          document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
-          document.getElementById('share-whatsapp').href = `https://wa.me/?text=${text}%20${pageUrl}`;
-
-          showScreen(thankScreen);
-
-        } catch (err) {
+        } catch {
           showPaymentError('An unexpected error occurred. Please contact support if payment was taken.');
         }
       },
 
       onCancel: () => {
-        showPaymentError('PayPal payment cancelled. You can try again whenever you\'re ready.');
+        showPaymentError("PayPal payment cancelled. You can try again whenever you're ready.");
       },
 
       onError: (err) => {
@@ -448,15 +496,116 @@
       },
 
     }).render('#paypal-button-container');
-
-    paypalButtonsDone = true;
   }
 
-  /* ── Complete donation ──────────────────────────────────── */
+  /* ── PayPal monthly subscription buttons ────────────────── */
+  function renderPaypalSubscriptionButtons(container) {
+    paypal.Buttons({
+      style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'subscribe', height: 48 },
+
+      /**
+       * Step 1 — create a billing plan on our server, then hand the
+       * plan_id to PayPal so it can open the subscription approval flow.
+       */
+      createSubscription: async (data, actions) => {
+        clearPaymentError();
+
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName  = document.getElementById('lastName').value.trim();
+        const email     = document.getElementById('emailAddr').value.trim();
+
+        if (!firstName || !lastName) {
+          showPaymentError('Please enter your first and last name before continuing.');
+          return undefined;
+        }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showPaymentError('Please enter a valid email address before continuing.');
+          return undefined;
+        }
+        if (!selectedAmt || selectedAmt < 1) {
+          showPaymentError('Please select a donation amount of at least $1.');
+          return undefined;
+        }
+
+        try {
+          const res = await fetch('/donate/paypal/subscription/create', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+            body: JSON.stringify({
+              campaign_name: selectedCampaign,
+              first_name:    firstName,
+              last_name:     lastName,
+              email:         email,
+              amount:        selectedAmt,
+            }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            showPaymentError(data.message || data.error || 'Failed to set up PayPal subscription.');
+            return undefined;
+          }
+
+          // Stash the donation_id so onApprove can reference it
+          window._ppDonationId = data.donation_id;
+
+          // Let PayPal open the subscription approval popup
+          return actions.subscription.create({ plan_id: data.plan_id });
+
+        } catch {
+          showPaymentError('Network error. Please check your connection and try again.');
+          return undefined;
+        }
+      },
+
+      /**
+       * Step 2 — buyer approved the subscription; confirm on our server.
+       */
+      onApprove: async (data) => {
+        try {
+          const res = await fetch('/donate/paypal/subscription/confirm', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+            body: JSON.stringify({
+              subscription_id: data.subscriptionID,
+              donation_id:     window._ppDonationId,
+            }),
+          });
+
+          const result = await res.json();
+
+          if (!res.ok) {
+            showPaymentError(result.error || 'Subscription confirmation failed. Please contact support.');
+            return;
+          }
+
+          showThankYou();
+
+        } catch {
+          showPaymentError('An unexpected error occurred. Please contact support if your subscription was created.');
+        }
+      },
+
+      onCancel: () => {
+        showPaymentError("PayPal subscription cancelled. You can try again whenever you're ready.");
+      },
+
+      onError: (err) => {
+        console.error('PayPal subscription SDK error:', err);
+        showPaymentError('PayPal encountered an error. Please try again or use Credit/Debit Card.');
+      },
+
+    }).render('#paypal-button-container');
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     STRIPE: Complete donation (card)
+  ───────────────────────────────────────────────────────── */
+
   ctaBtn.addEventListener('click', async () => {
     clearPaymentError();
 
-    // PayPal uses its own Buttons; GCash is not yet live
     if (currentPayMethod !== 'card') {
       if (currentPayMethod === 'gcash') {
         showPaymentError('GCash integration is coming soon. Please use Credit/Debit Card or PayPal.');
@@ -487,19 +636,14 @@
       return;
     }
 
-    // Disable button and show processing state
     ctaBtn.disabled    = true;
     ctaBtn.textContent = '⏳ Processing…';
 
     try {
-      /* Step 1 — Create PaymentIntent on our server */
+      /* ── Step 1: Create PaymentIntent (one-time) or SetupIntent (monthly) ── */
       const chargeRes = await fetch('/donate/charge', {
-        method: 'POST',
-        headers: {
-          'Content-Type':  'application/json',
-          'X-CSRF-TOKEN':  csrfToken,
-          'Accept':        'application/json',
-        },
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
         body: JSON.stringify({
           campaign_name:  selectedCampaign,
           first_name:     firstName,
@@ -517,60 +661,71 @@
         throw new Error(chargeData.message || chargeData.error || 'Failed to initiate payment.');
       }
 
-      const { client_secret, donation_id } = chargeData;
+      const { client_secret, donation_id, flow } = chargeData;
 
-      /* Step 2 — Confirm payment client-side via Stripe */
-      ctaBtn.textContent = '🔒 Verifying with Stripe…';
+      /* ── Step 2a: One-time — confirmCardPayment ── */
+      if (flow === 'payment') {
+        ctaBtn.textContent = '🔒 Verifying with Stripe…';
 
-      const result = await stripe.confirmCardPayment(client_secret, {
-        payment_method: {
-          card: cardElement,
-          billing_details: {
-            name:  `${firstName} ${lastName}`,
-            email: email,
+        const result = await stripe.confirmCardPayment(client_secret, {
+          payment_method: {
+            card:            cardElement,
+            billing_details: { name: `${firstName} ${lastName}`, email },
           },
-        },
-      });
+        });
 
-      if (result.error) {
-        throw new Error(result.error.message);
+        if (result.error) throw new Error(result.error.message);
+
+        ctaBtn.textContent = '✅ Confirming…';
+
+        await fetch('/donate/confirm', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+          body: JSON.stringify({ payment_intent_id: result.paymentIntent.id, donation_id }),
+        });
+
+        showThankYou();
+        return;
       }
 
-      /* Step 3 — Confirm server-side and update donation record */
-      ctaBtn.textContent = '✅ Confirming…';
+      /* ── Step 2b: Monthly — confirmCardSetup (saves card for subscription) ── */
+      if (flow === 'setup') {
+        ctaBtn.textContent = '🔒 Saving card with Stripe…';
 
-      const confirmRes = await fetch('/donate/confirm', {
-        method: 'POST',
-        headers: {
-          'Content-Type':  'application/json',
-          'X-CSRF-TOKEN':  csrfToken,
-          'Accept':        'application/json',
-        },
-        body: JSON.stringify({
-          payment_intent_id: result.paymentIntent.id,
-          donation_id:       donation_id,
-        }),
-      });
+        const setupResult = await stripe.confirmCardSetup(client_secret, {
+          payment_method: {
+            card:            cardElement,
+            billing_details: { name: `${firstName} ${lastName}`, email },
+          },
+        });
 
-      const confirmData = await confirmRes.json();
+        if (setupResult.error) throw new Error(setupResult.error.message);
 
-      if (!confirmRes.ok) {
-        // Payment succeeded but record update failed — non-critical, show success anyway
-        console.warn('Record update issue:', confirmData.error);
+        ctaBtn.textContent = '✅ Activating subscription…';
+
+        const confirmRes = await fetch('/donate/confirm', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+          body: JSON.stringify({ setup_intent_id: setupResult.setupIntent.id, donation_id }),
+        });
+
+        const confirmData = await confirmRes.json();
+
+        if (!confirmRes.ok) {
+          throw new Error(confirmData.message || confirmData.error || 'Subscription activation failed.');
+        }
+
+        // Some cards require 3D Secure authentication on the first invoice charge
+        if (confirmData.requires_action && confirmData.client_secret) {
+          ctaBtn.textContent = '🔐 Extra verification required…';
+
+          const actionResult = await stripe.confirmCardPayment(confirmData.client_secret);
+
+          if (actionResult.error) throw new Error(actionResult.error.message);
+        }
+
+        showThankYou();
       }
-
-      /* ── Success — show thank-you screen ── */
-      thankCampaign.textContent = selectedCampaign;
-      thankAmt.textContent      = fmt(selectedAmt) + (isMonthly ? ' / month' : ' one-time');
-
-      const message = `I just donated to ${selectedCampaign} via JDGM — join me!`;
-      const pageUrl = encodeURIComponent(window.location.href);
-      const text    = encodeURIComponent(message);
-      document.getElementById('share-twitter').href   = `https://twitter.com/intent/tweet?text=${text}&url=${pageUrl}`;
-      document.getElementById('share-facebook').href  = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
-      document.getElementById('share-whatsapp').href  = `https://wa.me/?text=${text}%20${pageUrl}`;
-
-      showScreen(thankScreen);
 
     } catch (err) {
       showPaymentError(err.message || 'An unexpected error occurred. Please try again.');

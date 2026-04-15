@@ -28,12 +28,17 @@ class Donation extends Model
         'card_exp_year',
         'transaction_id',
         'status',
+        'stripe_customer_id',
+        'subscription_id',
+        'subscription_status',
+        'next_billing_date',
         'follow_up_sent_at',
         'follow_up_count',
     ];
 
     protected $casts = [
         'amount'            => 'decimal:2',
+        'next_billing_date' => 'datetime',
         'follow_up_sent_at' => 'datetime',
         'follow_up_count'   => 'integer',
         'created_at'        => 'datetime',
