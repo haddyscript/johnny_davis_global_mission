@@ -271,7 +271,9 @@ class DonationController extends Controller
             $donation->update([
                 'subscription_id'     => $subscription->id,
                 'subscription_status' => $subscription->status,
-                'next_billing_date'   => Carbon::createFromTimestamp($subscription->current_period_end),
+                'next_billing_date'   => $subscription->current_period_end
+                    ? Carbon::createFromTimestamp($subscription->current_period_end)
+                    : null,
                 'transaction_id'      => $subscription->latest_invoice->id ?? null,
                 'card_brand'          => $pm?->card?->brand,
                 'card_last_four'      => $pm?->card?->last4,
@@ -700,7 +702,9 @@ class DonationController extends Controller
 
             Donation::where('subscription_id', $subscriptionId)->update([
                 'subscription_status' => $sub->status,
-                'next_billing_date'   => Carbon::createFromTimestamp($sub->current_period_end),
+                'next_billing_date'   => $sub->current_period_end
+                    ? Carbon::createFromTimestamp($sub->current_period_end)
+                    : null,
                 'status'              => 'completed',
             ]);
         } catch (ApiErrorException $e) {
@@ -724,7 +728,9 @@ class DonationController extends Controller
     {
         Donation::where('subscription_id', $subscription->id)->update([
             'subscription_status' => $subscription->status,
-            'next_billing_date'   => Carbon::createFromTimestamp($subscription->current_period_end),
+            'next_billing_date'   => $subscription->current_period_end
+                ? Carbon::createFromTimestamp($subscription->current_period_end)
+                : null,
         ]);
     }
 
