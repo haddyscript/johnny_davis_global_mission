@@ -16,6 +16,7 @@
 - $7.99 Feeds a Child Monthly
 
 ### Mission
+- link : https://johnnydavisglobalmissions.org/#mission
 - Our Mission
 - Bringing Hope to the Philippines
 - At Johnny Davis Global Missions, our mission is to help those in need in the Philippines. From providing food and medical care, to education and disaster relief, our organization provides the necessary resources and support that every child, adult, and community deserves.
@@ -74,7 +75,7 @@
 
 ---
 
-## Contact (/contact)
+## Contact (https://johnnydavisglobalmissions.org/contact)
 
 ### Hero
 - Get Connected — Get in Touch
@@ -101,7 +102,7 @@
 
 ---
 
-## News (/news)
+## News (https://johnnydavisglobalmissions.org/news)
 
 ### Hero
 - Stories from the Field
@@ -187,7 +188,7 @@
 
 ---
 
-## Who We Are (/who-we-are)
+## Who We Are (https://johnnydavisglobalmissions.org/who-we-are)
 
 ### Hero
 - Transforming Lives Since 2017
@@ -231,7 +232,7 @@
 
 ---
 
-## Ministry (/ministry)
+## Ministry (https://johnnydavisglobalmissions.org/ministry)
 
 ### Hero
 - Ministry · Outreach · Missions
@@ -305,7 +306,7 @@
 
 ---
 
-## Donate (/donate)
+## Donate (https://johnnydavisglobalmissions.org/donate)
 
 ### Campaign Overview
 - Make a Difference — Campaigns for Change
