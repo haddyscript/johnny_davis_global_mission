@@ -349,7 +349,11 @@
         <span class="disaster-ribbon" aria-label="Urgent alert">&#9888; Urgent Relief Needed</span>
         <img src="{{ asset('images/landingpage/pray_for_earthquake_victems.webp') }}"
              alt="Earthquake victims in Cebu Province, Philippines needing urgent aid"
-             loading="lazy" />
+             loading="lazy"
+             class="disaster-img-clickable"
+             role="button"
+             tabindex="0"
+             aria-label="View full image" />
       </div>
 
       <div class="disaster-text reveal-right">
@@ -395,7 +399,7 @@
           severe structural damage, leaving families without safe shelter. Your support can make an immediate difference.
         </div>
 
-        <a href=\"{{ route('donate') }}\" class=\"btn btn-primary btn-lg\">
+        <a href="{{ route('donate') }}\" class=\"btn btn-primary btn-lg\">
           &#9829; Support Disaster Relief
         </a>
       </div>
@@ -734,7 +738,111 @@
 </footer>
 
 
+{{-- Disaster image modal --}}
+<div id="disasterImgModal" class="dimg-overlay" hidden role="dialog" aria-modal="true" aria-label="Full image view">
+  <div class="dimg-backdrop"></div>
+  <div class="dimg-box">
+    <button class="dimg-close" aria-label="Close image">&times;</button>
+    <img src="{{ asset('images/landingpage/pray_for_earthquake_victems.webp') }}"
+         alt="Earthquake victims in Cebu Province, Philippines needing urgent aid"
+         class="dimg-photo" />
+  </div>
+</div>
+
+<style>
+  .disaster-img-clickable {
+    cursor: zoom-in;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .disaster-img-clickable:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 36px rgba(0,0,0,.4);
+  }
+  .dimg-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dimg-overlay[hidden] { display: none; }
+  .dimg-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.88);
+    backdrop-filter: blur(4px);
+  }
+  .dimg-box {
+    position: relative;
+    z-index: 1;
+    max-width: min(92vw, 820px);
+    animation: dimgFadeIn .25s ease;
+  }
+  @keyframes dimgFadeIn {
+    from { opacity: 0; transform: scale(.94); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .dimg-photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 24px 64px rgba(0,0,0,.65);
+  }
+  .dimg-close {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: #f07c1e;
+    color: #fff;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,.4);
+    transition: background .2s;
+    z-index: 2;
+  }
+  .dimg-close:hover { background: #d4680e; }
+</style>
+
 <script src="{{ asset('js/for_index.js') }}"></script>
+<script>
+(function () {
+  var modal    = document.getElementById('disasterImgModal');
+  var closeBtn = modal.querySelector('.dimg-close');
+  var backdrop = modal.querySelector('.dimg-backdrop');
+  var trigger  = document.querySelector('.disaster-img-clickable');
+
+  function openModal() {
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    trigger.focus();
+  }
+
+  trigger.addEventListener('click', openModal);
+  trigger.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); }
+  });
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.hidden) closeModal();
+  });
+})();
+</script>
 @include('partials.chatbot')
 </body>
 </html>
