@@ -3,6 +3,9 @@
 
     /* Active-state detection — compare current URL path to item URL path */
     $currentPath = '/' . ltrim(request()->path(), '/');
+    $logoSrc = request()->is('ministry*')
+        ? asset('images/ministry-logo.png')
+        : asset('images/logo.webp');
 
     $navItems = NavItem::forNav();
 @endphp
@@ -11,7 +14,7 @@
   <div class="container">
     <nav class="nav-inner" aria-label="Main navigation">
       <a href="{{ url('/') }}" class="nav-logo" aria-label="Johnny Davis Global Missions Home">
-        <img src="{{ asset('images/logo.webp') }}" alt="Johnny Davis Global Missions Logo" />
+        <img src="{{ $logoSrc }}" alt="Johnny Davis Global Missions Logo" />
       </a>
 
       <ul class="nav-links" role="list">
