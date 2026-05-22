@@ -50,7 +50,7 @@ class ContactController extends Controller
         ]);
 
         try {
-            $adminEmail = 'info@johnnydavis-globalmissions.org';
+            $adminEmail = 'info@johnnydavisglobalmissions.org';
             $subjectLabel = match ($validated['subject'] ?? '') {
                 'donation'    => 'Donation Question',
                 'volunteer'   => 'Volunteer Opportunities',
