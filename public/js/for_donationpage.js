@@ -30,10 +30,12 @@
   const payTabCard        = document.getElementById('pay-tab-card');
   const payTabGcash       = document.getElementById('pay-tab-gcash');
   const payTabCashapp     = document.getElementById('pay-tab-cashapp');
+  const payTabGivelify    = document.getElementById('pay-tab-givelify');
   const payTabPaypal      = document.getElementById('pay-tab-paypal');
   const panelCard         = document.getElementById('pay-panel-card');
   const panelGcash        = document.getElementById('pay-panel-gcash');
   const panelCashapp      = document.getElementById('pay-panel-cashapp');
+  const panelGivelify     = document.getElementById('pay-panel-givelify');
   const panelPaypal       = document.getElementById('pay-panel-paypal');
   const paymentErrorEl    = document.getElementById('payment-error-msg');
 
@@ -252,14 +254,17 @@
     payTabGcash.setAttribute('aria-selected', method === 'gcash');
     payTabCashapp.classList.toggle('active', method === 'cashapp');
     payTabCashapp.setAttribute('aria-selected', method === 'cashapp');
+    payTabGivelify.classList.toggle('active', method === 'givelify');
+    payTabGivelify.setAttribute('aria-selected', method === 'givelify');
     payTabPaypal.classList.toggle('active', method === 'paypal');
     payTabPaypal.setAttribute('aria-selected', method === 'paypal');
     panelCard.style.display   = method === 'card'   ? '' : 'none';
     panelGcash.style.display  = method === 'gcash'  ? '' : 'none';
     panelCashapp.style.display = method === 'cashapp' ? '' : 'none';
+    panelGivelify.style.display = method === 'givelify' ? '' : 'none';
     panelPaypal.style.display = method === 'paypal' ? '' : 'none';
     // Hide the generic complete CTA for payment methods that require an external wallet flow
-    ctaBtn.style.display = (method === 'paypal' || method === 'cashapp') ? 'none' : '';
+    ctaBtn.style.display = (method === 'paypal' || method === 'cashapp' || method === 'givelify') ? 'none' : '';
     if (method === 'paypal') {
       initPayPalButtons();
       syncPaypalOverlay();
@@ -269,6 +274,7 @@
   payTabCard.addEventListener('click',   () => switchPay('card'));
   payTabGcash.addEventListener('click',  () => switchPay('gcash'));
   payTabCashapp.addEventListener('click', () => switchPay('cashapp'));
+  payTabGivelify.addEventListener('click', () => switchPay('givelify'));
   payTabPaypal.addEventListener('click', () => switchPay('paypal'));
 
   /* ── PayPal overlay: disable button until form is filled ── */

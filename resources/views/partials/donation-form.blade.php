@@ -153,6 +153,10 @@
           <span style="width:22px;height:22px;border-radius:6px;background:#13B443;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;" aria-hidden="true">$</span>
           Cash App
         </button>
+        <button class="pay-tab" id="pay-tab-givelify" role="tab" aria-selected="false" aria-controls="pay-panel-givelify">
+          <span style="width:22px;height:22px;border-radius:6px;background:#003087;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;" aria-hidden="true">G</span>
+          Givelify
+        </button>
         <button class="pay-tab" id="pay-tab-paypal" role="tab" aria-selected="false" aria-controls="pay-panel-paypal">
           <span style="width:22px;height:22px;border-radius:6px;background:#0070BA;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;" aria-hidden="true">P</span>
           PayPal
@@ -228,7 +232,38 @@
           <h2>Scan to Donate via Cash App</h2>
           <p>Open your Cash App camera, point it at the QR code, and confirm the payment to complete your gift. Use the code to give quickly and securely.</p>
         </div>
+
         <p class="cashapp-note">If the scan doesn’t open automatically, open Cash App and tap the QR scanner icon in the top-right corner.</p>
+      </div>
+
+      <div id="pay-panel-givelify" style="display:none;" class="givelify-panel" role="tabpanel" aria-labelledby="pay-tab-givelify">
+        <div class="givelify-header">
+          <div class="givelify-logo-badge" aria-hidden="true">G</div>
+          <div>
+            <div class="givelify-label">Give via Givelify</div>
+            <div class="givelify-sublabel">Scan the QR code or click the button to donate directly.</div>
+          </div>
+        </div>
+        <div class="givelify-qr-shell">
+          <a href="https://www.givelify.com/donate/johnny-davis-ministries-suwanee-ga-2j7wy5MTQ5ODAwMw==/donation/amount"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="Give via Givelify">
+            <img src="{{ asset('images/qr-and-logo-ministry/give-lify-snap-to-give.jpeg') }}"
+                 alt="Givelify QR code to donate to Johnny Davis Ministries"
+                 class="givelify-qr-image"
+                 loading="lazy" />
+          </a>
+        </div>
+        <div class="givelify-copy">
+          <p>Open your camera or Givelify scanner, then scan the QR code to give. You can also tap the button below to go directly to the donation page.</p>
+        </div>
+        <a class="givelify-action-btn"
+           href="https://www.givelify.com/donate/johnny-davis-ministries-suwanee-ga-2j7wy5MTQ5ODAwMw==/donation/amount"
+           target="_blank"
+           rel="noopener noreferrer">
+          Donate on Givelify
+        </a>
       </div>
 
       <!-- Payment error -->
