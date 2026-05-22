@@ -152,13 +152,13 @@
       </div>
 
       <div class="contact-info-sidebar reveal delay-1">
-        <div class="contact-card">
+        <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSMTFMtlZGJXcJhjphjpWLKHJZHPzMzqwfJpkKMRnMJCKwmMVNCZRdXHLbklvSMwkZlPjHhR" target="_blank" rel="noopener noreferrer" class="contact-card contact-card-link" aria-label="Send us an email via Gmail">
           <div class="contact-icon" aria-hidden="true">✉️</div>
           <h3 class="contact-title">Email</h3>
-          <div class="contact-text">
-            <a href="mailto:info@johnnydavisglobalmissions.org" style="color:var(--orange); text-decoration:none; font-weight:600;">info@johnnydavisglobalmissions.org</a>
+          <div class="contact-text" style="color:var(--orange); font-weight:600;">
+            info@johnnydavisglobalmissions.org
           </div>
-        </div>
+        </a>
 
         <div class="contact-card">
           <div class="contact-icon" aria-hidden="true">📞</div>
@@ -168,14 +168,14 @@
           </div>
         </div>
 
-        <div class="contact-card">
+        <a href="https://www.google.com/maps/search/?api=1&query=P.O.+Box+1904%2C+Suwanee%2C+GA+30024" target="_blank" rel="noopener noreferrer" class="contact-card contact-card-link" aria-label="Open address in Google Maps">
           <div class="contact-icon" aria-hidden="true">📍</div>
           <h3 class="contact-title">Address</h3>
           <div class="contact-text">
             P.O. Box 1904<br/>
             Suwanee, GA 30024
           </div>
-        </div>
+        </a>
 
         <div class="contact-card">
           <div class="contact-icon" aria-hidden="true">🕐</div>
@@ -301,6 +301,23 @@
   </div>
 </footer>
 
+<style>
+  a.contact-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  a.contact-card-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(240,124,30,.18);
+  }
+  a.contact-card-link .contact-title,
+  a.contact-card-link .contact-text {
+    color: inherit;
+  }
+</style>
 <script src="{{ asset('js/for_contact.js') }}"></script>
 
 @if(session('contact_success'))
