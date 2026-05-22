@@ -610,10 +610,10 @@
       </div>
 
       <div class="donate-cta-btns">
-        <a href="https://filipinochildren.org" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+        <a href="https://filipinochildren.org/donate" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
           &#9829; Donate Now
         </a>
-        <a href="https://filipinochildren.org" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg">
+        <a href="https://filipinochildren.org/donate" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg">
           Give Monthly — $7.99
         </a>
       </div>

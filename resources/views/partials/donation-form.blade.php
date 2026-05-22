@@ -173,25 +173,34 @@
 
       <!-- GCash panel -->
       <div id="pay-panel-gcash" style="display:none;" class="gcash-panel" role="tabpanel" aria-labelledby="pay-tab-gcash">
-        <div class="gcash-header">
-          <div class="gcash-logo-badge" aria-hidden="true">G</div>
-          <div>
-            <div class="gcash-label">GCash Mobile Payment</div>
-            <div class="gcash-sublabel">Fast, cashless giving via your GCash wallet · Philippines</div>
+        <div class="payment-coming-soon" aria-live="polite">
+          <div class="coming-soon-badge">Coming Soon</div>
+          <p class="coming-soon-copy">
+            GCash integration is coming soon. Backend setup in progress.
+          </p>
+
+          <div class="coming-soon-placeholder">
+            <div class="coming-soon-icon" aria-hidden="true">⌛</div>
+            <div class="coming-soon-text">
+              <h3>GCash donations will be enabled shortly</h3>
+              <p>
+                We’re preparing a smooth, secure mobile wallet experience for the Philippines.
+              </p>
+            </div>
           </div>
         </div>
-        <label class="form-label" for="gcashNumber">GCash-registered mobile number</label>
-        <input class="form-input" id="gcashNumber" placeholder="+63 9XX XXX XXXX" type="tel" style="margin-bottom:0;" autocomplete="tel"/>
-        <div class="gcash-steps">
-          <div class="gcash-step"><div class="gcash-step-num" aria-hidden="true">1</div>Enter your GCash number above and tap the button below</div>
-          <div class="gcash-step"><div class="gcash-step-num" aria-hidden="true">2</div>Open your GCash app — you'll receive a payment request notification instantly</div>
-          <div class="gcash-step"><div class="gcash-step-num" aria-hidden="true">3</div>Confirm the amount with your GCash MPIN to complete your gift</div>
-        </div>
-        <p class="gcash-note">📱 Your tax-deductible receipt will be sent to your GCash-registered email and your JDGM donor account.</p>
       </div>
 
       <!-- PayPal panel -->
       <div id="pay-panel-paypal" style="display:none;" class="paypal-panel" role="tabpanel" aria-labelledby="pay-tab-paypal">
+        <div class="paypal-warning-banner" role="status" aria-live="polite">
+          <div class="alert-icon" aria-hidden="true">⚠️</div>
+          <p>
+            PayPal donations are temporarily unavailable while we finalize account setup.
+            Thank you for your patience!
+          </p>
+        </div>
+
         <div class="paypal-header">
           <div class="paypal-logo-badge" aria-hidden="true">P</div>
           <div>
