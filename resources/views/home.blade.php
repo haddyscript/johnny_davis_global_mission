@@ -307,14 +307,28 @@
       </div>
 
       <div class="urgency-card reveal-right">
-        <div class="qr-placeholder" role="img" aria-label="QR code for FilipinoChildren.org donation page">
-          <span>Scan to<br/>Donate<br/><br/>QR Code</span>
+        <div class="urgency-card-inner">
+          <div class="qr-shell">
+            <a href="https://www.givelify.com/donate/johnny-davis-ministries-suwanee-ga-2j7wy5MTQ5ODAwMw==/donation/amount" target="_blank" rel="noopener noreferrer" aria-label="Open FilipinoChildren.org donation page">
+              <img src="{{ asset('images/qr-and-logo-ministry/give-lify-snap-to-give.jpeg') }}"
+                   alt="QR code to donate to FilipinoChildren.org — opens in a new tab"
+                   class="qr-image"
+                   loading="lazy" />
+            </a>
+          </div>
+
+          <div class="qr-content">
+            <h3 class="scan-title">Scan &amp; Give</h3>
+            <p class="scan-help">
+              Scan the QR code or visit FilipinoChildren.org to donate and feed a child today.
+            </p>
+            <div class="scan-action">
+              <a href="https://filipinochildren.org" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                Visit FilipinoChildren.org
+              </a>
+            </div>
+          </div>
         </div>
-        <h3>Scan &amp; Give</h3>
-        <p>Scan the QR code or visit FilipinoChildren.org to donate and feed a child today.</p>
-        <a href="https://filipinochildren.org" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-          Visit FilipinoChildren.org
-        </a>
       </div>
 
     </div>

@@ -713,45 +713,97 @@ ul { list-style: none; }
   padding-left: 20px;
 }
 .urgency-card {
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.12);
+  /* keep outer layout container to inherit grid placement */
+  background: transparent;
+  border: none;
+  padding: 0;
+  text-align: left;
+}
+
+.urgency-card-inner {
+  background-color: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.12);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
-  border-radius: var(--radius-lg);
-  padding: 40px 32px;
-  text-align: center;
-}
-.qr-placeholder {
-  width: 140px;
-  height: 140px;
-  background: var(--white);
-  border-radius: var(--radius-sm);
-  margin: 0 auto 20px;
-  display: flex;
+  border-radius: 28px;
+  padding: 28px;
+  display: grid;
+  grid-template-columns: minmax(20rem, 26rem) minmax(0, 1fr);
+  gap: 28px;
   align-items: center;
+  box-shadow: 0 22px 60px rgba(0,0,0,0.35);
+}
+
+.qr-shell {
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 1.25rem;
+  display: flex;
   justify-content: center;
-  font-size: .7rem;
-  color: var(--gray-600);
-  font-weight: 600;
-  text-align: center;
-  padding: 12px;
-  line-height: 1.4;
-  /* QR code pattern via CSS */
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 7px, rgba(0,0,0,.08) 7px, rgba(0,0,0,.08) 8px),
-    repeating-linear-gradient(90deg, transparent, transparent 7px, rgba(0,0,0,.08) 7px, rgba(0,0,0,.08) 8px);
+  align-items: center;
+  box-shadow: 0 28px 70px rgba(0,0,0,0.24);
+  border: 1px solid rgba(15,23,42,0.08);
 }
-.urgency-card h3 {
+
+.qr-image {
+  width: 100%;
+  max-width: 18rem;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  display: block;
+}
+
+.qr-content {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+}
+
+.scan-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
-  color: var(--white);
-  margin-bottom: 8px;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.08;
+  margin: 0;
 }
-.urgency-card p {
-  font-size: .9rem;
-  color: rgba(255,255,255,.65);
-  margin-bottom: 28px;
+
+.scan-help {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+  max-width: 36rem;
+  margin: 0;
 }
-.urgency-card .btn { width: 100%; justify-content: center; }
+
+.scan-action .btn {
+  padding: 0.95rem 1.75rem;
+  font-size: 0.95rem;
+  min-width: 12rem;
+}
+
+@media (max-width: 920px) {
+  .urgency-card-inner {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+  .qr-shell { width: min(100%, 22rem); margin: 0 auto; }
+  .scan-action { display: flex; justify-content: center; }
+}
+
+@media (max-width: 639px) {
+  .urgency-card-inner {
+    padding: 20px;
+    gap: 20px;
+  }
+  .qr-shell {
+    padding: 1rem;
+  }
+  .scan-action .btn {
+    width: 100%;
+  }
+}
 
 /* ============================================================
    DISASTER RELIEF
