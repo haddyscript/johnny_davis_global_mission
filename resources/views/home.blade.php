@@ -66,7 +66,9 @@
       <div class="hero-badge" aria-label="Active campaign">{{ $cms->text('hero', 'eyebrow', 'Active Campaign 2026') }}</div>
 
       @if($cms->has('hero', 'headline'))
-        <h1 class="hero-headline">{{ $cms->text('hero', 'headline', '') }}</h1>
+        <h1 class="hero-headline">{{ $cms->text('hero', 'headline', '') }}
+          <span class="accent">"Hunger Can't Wait"</span>
+        </h1>
       @else
         <h1 class="hero-headline">
           Feed Filipino Children
