@@ -35,6 +35,22 @@
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
   </button>
 
+  <style>
+    .slider-dots {
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      right: auto !important;
+    }
+    .hero-scroll {
+      left: auto !important;
+      right: 2rem !important;
+      transform: none !important;
+    }
+    @media (max-width: 480px) {
+      .hero-scroll { right: 1rem !important; }
+    }
+  </style>
+
   <!-- Dots -->
   <div class="slider-dots" role="list" aria-label="Slide indicators">
     <button class="slider-dot active" data-index="0" aria-label="Slide 1"></button>

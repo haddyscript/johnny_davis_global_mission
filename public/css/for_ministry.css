@@ -522,7 +522,7 @@
       background: var(--blue-dark);
       color: var(--white);
       border-color: var(--blue-dark);
-      transform: translateX(6px);
+      transform: translateX(20px);
     }
     .mp-icon {
       font-size: 1.3rem;

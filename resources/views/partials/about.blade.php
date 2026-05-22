@@ -11,6 +11,10 @@
           src="{{ $cms->image('about', 'image', asset('images/johnny-davis-ministry/hero-image1.webp')) }}"
           alt="Evangelist Johnny Davis"
           loading="lazy"
+          class="about-img-clickable"
+          role="button"
+          tabindex="0"
+          aria-label="View full image of Evangelist Johnny Davis"
         />
         <div class="about-accent">
           <strong>{{ $cms->text('about', 'accent_number', '30+') }}</strong>
@@ -62,3 +66,116 @@
     </div>
   </div>
 </section>
+
+{{-- About image modal --}}
+<div id="aboutImgModal" class="aimg-overlay" hidden role="dialog" aria-modal="true" aria-label="Full image view">
+  <div class="aimg-backdrop"></div>
+  <div class="aimg-box">
+    <button class="aimg-close" aria-label="Close image">&times;</button>
+    <img id="aboutImgSrc" src="" alt="Evangelist Johnny Davis" class="aimg-photo" />
+  </div>
+</div>
+
+<style>
+  .about-img-clickable {
+    cursor: zoom-in;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .about-img-clickable:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 36px rgba(0,0,0,.35);
+  }
+
+  .aimg-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .aimg-overlay[hidden] { display: none; }
+
+  .aimg-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.85);
+    backdrop-filter: blur(4px);
+  }
+
+  .aimg-box {
+    position: relative;
+    z-index: 1;
+    max-width: min(90vw, 760px);
+    animation: aimgFadeIn .25s ease;
+  }
+  @keyframes aimgFadeIn {
+    from { opacity: 0; transform: scale(.94); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .aimg-photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 24px 64px rgba(0,0,0,.6);
+  }
+
+  .aimg-close {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: #f07c1e;
+    color: #fff;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,.4);
+    transition: background .2s;
+    z-index: 2;
+  }
+  .aimg-close:hover { background: #d4680e; }
+</style>
+
+<script>
+(function () {
+  var modal   = document.getElementById('aboutImgModal');
+  var imgEl   = document.getElementById('aboutImgSrc');
+  var closeBtn = modal ? modal.querySelector('.aimg-close') : null;
+  var backdrop = modal ? modal.querySelector('.aimg-backdrop') : null;
+  var trigger  = document.querySelector('.about-img-clickable');
+
+  if (!modal || !trigger) return;
+
+  function openModal() {
+    imgEl.src = trigger.src;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    trigger.focus();
+  }
+
+  trigger.addEventListener('click', openModal);
+  trigger.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); }
+  });
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.hidden) closeModal();
+  });
+})();
+</script>

@@ -117,10 +117,10 @@
     </div>
   </div>
 
-  <div class="hero-scroll" aria-hidden="true">
+  <a href="#mission" class="hero-scroll" aria-label="Scroll to Mission section">
     <div class="hero-scroll-line"></div>
     <span>Scroll</span>
-  </div>
+  </a>
 </section>
 
 
@@ -299,7 +299,7 @@
           This is love moving.<br/><br/>
           <strong style="color: var(--orange-light);">Because of YOU… they eat.</strong>
         </blockquote>
-        <a href="https://filipinochildren.org" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+        <a href="https://filipinochildren.org/donate" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
           &#9829; Donate @if ($cms->has('urgency', 'price')) 
             {{ $cms->text('urgency', 'price', '') }}
            @else
