@@ -149,6 +149,10 @@
           <span style="width:22px;height:22px;border-radius:6px;background:#007DFF;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;" aria-hidden="true">G</span>
           GCash
         </button>
+        <button class="pay-tab" id="pay-tab-cashapp" role="tab" aria-selected="false" aria-controls="pay-panel-cashapp">
+          <span style="width:22px;height:22px;border-radius:6px;background:#13B443;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;" aria-hidden="true">$</span>
+          Cash App
+        </button>
         <button class="pay-tab" id="pay-tab-paypal" role="tab" aria-selected="false" aria-controls="pay-panel-paypal">
           <span style="width:22px;height:22px;border-radius:6px;background:#0070BA;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;" aria-hidden="true">P</span>
           PayPal
@@ -199,6 +203,32 @@
         {{-- PayPal Buttons are rendered here by the JS SDK --}}
         <div id="paypal-button-container" style="margin-top:16px;min-height:48px;"></div>
         <p class="paypal-note" style="margin-top:12px;">💳 You can pay with your PayPal balance, bank account, or credit card. Your tax-deductible receipt will be emailed after payment.</p>
+      </div>
+
+      <!-- Cash App panel -->
+      <div id="pay-panel-cashapp" style="display:none;" class="cashapp-panel" role="tabpanel" aria-labelledby="pay-tab-cashapp">
+        <div class="cashapp-header">
+          <div class="cashapp-logo-badge" aria-hidden="true">$</div>
+          <div>
+            <div class="cashapp-label">Cash App</div>
+            <div class="cashapp-sublabel">Scan the QR code with Cash App to send your donation instantly.</div>
+          </div>
+        </div>
+
+        <div class="cashapp-qr-shell">
+          <a href="https://cash.app/$JDGlobalM?qr=1" target="_blank" rel="noopener noreferrer" aria-label="Open Cash App to donate">
+            <img src="{{ asset('images/qr-and-logo-ministry/scan-to-pay-jdm.jpeg') }}"
+                 alt="Cash App QR code to donate to Johnny Davis Ministries"
+                 class="cashapp-qr-image"
+                 loading="lazy" />
+          </a>
+        </div>
+
+        <div class="cashapp-copy">
+          <h2>Scan to Donate via Cash App</h2>
+          <p>Open your Cash App camera, point it at the QR code, and confirm the payment to complete your gift. Use the code to give quickly and securely.</p>
+        </div>
+        <p class="cashapp-note">If the scan doesn’t open automatically, open Cash App and tap the QR scanner icon in the top-right corner.</p>
       </div>
 
       <!-- Payment error -->

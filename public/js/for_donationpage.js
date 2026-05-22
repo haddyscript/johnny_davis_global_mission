@@ -29,9 +29,11 @@
   const tellBtn           = document.getElementById('tell-friend-btn');
   const payTabCard        = document.getElementById('pay-tab-card');
   const payTabGcash       = document.getElementById('pay-tab-gcash');
+  const payTabCashapp     = document.getElementById('pay-tab-cashapp');
   const payTabPaypal      = document.getElementById('pay-tab-paypal');
   const panelCard         = document.getElementById('pay-panel-card');
   const panelGcash        = document.getElementById('pay-panel-gcash');
+  const panelCashapp      = document.getElementById('pay-panel-cashapp');
   const panelPaypal       = document.getElementById('pay-panel-paypal');
   const paymentErrorEl    = document.getElementById('payment-error-msg');
 
@@ -248,13 +250,16 @@
     payTabCard.setAttribute('aria-selected', method === 'card');
     payTabGcash.classList.toggle('active', method === 'gcash');
     payTabGcash.setAttribute('aria-selected', method === 'gcash');
+    payTabCashapp.classList.toggle('active', method === 'cashapp');
+    payTabCashapp.setAttribute('aria-selected', method === 'cashapp');
     payTabPaypal.classList.toggle('active', method === 'paypal');
     payTabPaypal.setAttribute('aria-selected', method === 'paypal');
     panelCard.style.display   = method === 'card'   ? '' : 'none';
     panelGcash.style.display  = method === 'gcash'  ? '' : 'none';
+    panelCashapp.style.display = method === 'cashapp' ? '' : 'none';
     panelPaypal.style.display = method === 'paypal' ? '' : 'none';
-    // PayPal has its own Buttons — hide the generic CTA when it's active
-    ctaBtn.style.display = method === 'paypal' ? 'none' : '';
+    // Hide the generic complete CTA for payment methods that require an external wallet flow
+    ctaBtn.style.display = (method === 'paypal' || method === 'cashapp') ? 'none' : '';
     if (method === 'paypal') {
       initPayPalButtons();
       syncPaypalOverlay();
@@ -263,6 +268,7 @@
   }
   payTabCard.addEventListener('click',   () => switchPay('card'));
   payTabGcash.addEventListener('click',  () => switchPay('gcash'));
+  payTabCashapp.addEventListener('click', () => switchPay('cashapp'));
   payTabPaypal.addEventListener('click', () => switchPay('paypal'));
 
   /* ── PayPal overlay: disable button until form is filled ── */
@@ -609,6 +615,8 @@
     if (currentPayMethod !== 'card') {
       if (currentPayMethod === 'gcash') {
         showPaymentError('GCash integration is coming soon. Please use Credit/Debit Card or PayPal.');
+      } else if (currentPayMethod === 'cashapp') {
+        showPaymentError('Please scan the QR code with your Cash App to complete your donation.');
       }
       return;
     }
