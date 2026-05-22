@@ -1348,6 +1348,85 @@
     }
 
     /* ============================================================
+       EVENT IMAGE MODAL
+    ============================================================ */
+    .eimg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: eimgFadeIn .22s ease both;
+    }
+    .eimg-overlay[hidden] { display: none; }
+    @keyframes eimgFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .eimg-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(4, 10, 22, .92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      cursor: pointer;
+    }
+    .eimg-box {
+      position: relative;
+      z-index: 1;
+      max-width: min(92vw, 960px);
+      width: 100%;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,.7);
+      animation: eimgSlideUp .28s cubic-bezier(.22,1,.36,1) both;
+      background: #060f1e;
+    }
+    @keyframes eimgSlideUp {
+      from { transform: translateY(32px) scale(.97); opacity: 0; }
+      to   { transform: translateY(0)    scale(1);   opacity: 1; }
+    }
+    .eimg-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      z-index: 10;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(6px);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .eimg-close:hover {
+      background: var(--orange);
+      transform: scale(1.1);
+    }
+    .eimg-photo {
+      display: block;
+      width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      background: #060f1e;
+    }
+    .eimg-caption {
+      padding: 14px 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.75);
+      text-align: center;
+      letter-spacing: .01em;
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+
+    /* ============================================================
        VIDEO MODAL
     ============================================================ */
     .modal-overlay {

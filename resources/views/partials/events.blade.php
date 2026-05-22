@@ -15,7 +15,10 @@
     <div class="events-grid">
 
       <!-- Elevation Prayer -->
-      <article class="event-card reveal" style="transition-delay:.05s" aria-label="Elevation Prayer — Virtual Prayer Gathering">
+      <article class="event-card reveal" style="transition-delay:.05s" aria-label="Elevation Prayer — Virtual Prayer Gathering"
+               data-img="{{ asset('images/johnny-davis-ministry/elevation-prayer.webp') }}"
+               data-title="Elevation Prayer"
+               role="button" tabindex="0">
         <div class="event-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/elevation-prayer.webp') }}')"></div>
         <div class="event-overlay"></div>
         <div class="event-body">
@@ -44,7 +47,10 @@
       </article>
 
       <!-- Wake Up To Prayer -->
-      <article class="event-card reveal" style="transition-delay:.15s" aria-label="Wake Up To Prayer — Live on TikTok">
+      <article class="event-card reveal" style="transition-delay:.15s" aria-label="Wake Up To Prayer — Live on TikTok"
+               data-img="{{ asset('images/johnny-davis-ministry/wake-up-to-prayer.webp') }}"
+               data-title="Wake Up To Prayer"
+               role="button" tabindex="0">
         <div class="event-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/wake-up-to-prayer.webp') }}')"></div>
         <div class="event-overlay"></div>
         <div class="event-body">
@@ -68,7 +74,10 @@
       </article>
 
       <!-- Elevation Prayer Breakfast -->
-      <article class="event-card reveal" style="transition-delay:.25s" aria-label="Elevation Prayer Breakfast">
+      <article class="event-card reveal" style="transition-delay:.25s" aria-label="Elevation Prayer Breakfast"
+               data-img="{{ asset('images/johnny-davis-ministry/elevation-prayer-breakfast.webp') }}"
+               data-title="Elevation Prayer Breakfast"
+               role="button" tabindex="0">
         <div class="event-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/elevation-prayer-breakfast.webp') }}')"></div>
         <div class="event-overlay"></div>
         <div class="event-body">
@@ -97,7 +106,10 @@
       </article>
 
       <!-- Vision & Mission Empowerment -->
-      <article class="event-card reveal" style="transition-delay:.35s" aria-label="12 Keys to Expanding Your Vision and Mission">
+      <article class="event-card reveal" style="transition-delay:.35s" aria-label="12 Keys to Expanding Your Vision and Mission"
+               data-img="{{ asset('images/johnny-davis-ministry/vision-and-mision.webp') }}"
+               data-title="12 Keys to Expanding Your Vision &amp; Mission"
+               role="button" tabindex="0">
         <div class="event-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/vision-and-mision.webp') }}')"></div>
         <div class="event-overlay"></div>
         <div class="event-body">
@@ -123,3 +135,61 @@
     </div>
   </div>
 </section>
+
+<!-- ============================================================
+     EVENT IMAGE MODAL
+============================================================ -->
+<div id="eventImgModal" class="eimg-overlay" role="dialog" aria-modal="true" aria-label="Event image preview" hidden>
+  <div class="eimg-backdrop"></div>
+  <div class="eimg-box">
+    <button class="eimg-close" aria-label="Close">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <img id="eventImgSrc" src="" alt="" class="eimg-photo" />
+    <p id="eventImgCaption" class="eimg-caption"></p>
+  </div>
+</div>
+
+<script>
+(function () {
+  const modal    = document.getElementById('eventImgModal');
+  const imgEl    = document.getElementById('eventImgSrc');
+  const caption  = document.getElementById('eventImgCaption');
+  const backdrop = modal.querySelector('.eimg-backdrop');
+  const closeBtn = modal.querySelector('.eimg-close');
+
+  function openModal(src, title) {
+    imgEl.src        = src;
+    imgEl.alt        = title;
+    caption.innerHTML = title;
+    modal.hidden     = false;
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    imgEl.src    = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.event-card[data-img]').forEach(function (card) {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function () {
+      openModal(card.dataset.img, card.dataset.title);
+    });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openModal(card.dataset.img, card.dataset.title);
+      }
+    });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.hidden) closeModal();
+  });
+})();
+</script>
