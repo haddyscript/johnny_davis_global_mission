@@ -140,6 +140,34 @@ Serving communities in the Philippines and Uganda.
 
 ---
 
+## 14. app/Http/Controllers/NewsController.php — Uganda post in getPosts()
+```php
+[
+    'featured'   => false,
+    'categories' => 'field-reports impact-stories',
+    'country'    => 'Uganda',
+    'flag'       => '🇺🇬',
+    'image'      => 'images/landingpage/clean_drink_water.webp',
+    'img_alt'    => 'Clean water flowing from a newly completed well in Uganda',
+    'category'   => 'Field Report',
+    'cat_class'  => 'cat-field',
+    'date'       => 'February 28, 2025',
+    'read_time'  => '4 min read',
+    'title'      => 'Well #7 is Complete — 200 Families Now Have Clean Water',
+    'excerpt'    => "After four months of drilling and community preparation, Well #7 in Mbale, Uganda was activated...",
+    'cta_label'  => 'Read the Story',
+    'cta_href'   => '#',
+    'delay'      => 'delay-1',
+],
+```
+
+## 15. app/Http/Controllers/NewsController.php — meta description fallback (line 22)
+```php
+'Blog & News — Johnny Davis Global Missions. Monthly field updates, impact stories, and mission reports from the Philippines and Uganda.'
+```
+
+---
+
 ## Notes
 - `partials/donation-form.blade.php` lines 16 & 359 — Uganda references **kept** (donation page).
 - `database/seeders/CampaignSeeder.php` line 50 — Uganda Water Wells campaign **kept** (donation-related).
