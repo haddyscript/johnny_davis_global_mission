@@ -755,6 +755,30 @@ ul { list-style: none; }
 }
 .urgency-card .btn { width: 100%; justify-content: center; }
 
+.urgency-gift-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.urgency-gift-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .97rem;
+  color: rgba(255,255,255,.88);
+  line-height: 1.5;
+}
+.urgency-gift-list li::before {
+  content: '•';
+  color: var(--orange-light);
+  font-size: 1.3rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
 .urgency-btn-group {
   display: flex;
   flex-direction: row;

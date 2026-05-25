@@ -295,6 +295,13 @@
           and bring hope to a hungry family. -->
           For just $29/month, you can help provide urgent disaster relief to families devastated by storms, flooding, and crisis.
         </p>
+        <ul class="urgency-gift-list">
+          <li>Emergency food supplies</li>
+          <li>Clean drinking water</li>
+          <li>Hygiene and medical kits</li>
+          <li>Shelter assistance for displaced families</li>
+          <li>Hope for children and families in crisis</li>
+        </ul>
         <blockquote class="urgency-closing">
           This is more than a donation —<br/>
           This is relief in action.<br/>
