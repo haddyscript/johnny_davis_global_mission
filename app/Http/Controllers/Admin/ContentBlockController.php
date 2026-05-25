@@ -95,7 +95,12 @@ class ContentBlockController extends Controller
             'sort_order' => 'integer',
         ]);
 
-        $contentBlock->update($request->all());
+        $data = $request->only(['section_id', 'key', 'type', 'content', 'url', 'sort_order']);
+        if ($request->input('type') === 'list') {
+            $data['extra']   = json_decode($request->input('extra', '[]'), true) ?? [];
+            $data['content'] = null;
+        }
+        $contentBlock->update($data);
 
         return redirect()->route('admin.content-blocks.index')->with('success', 'Content block updated successfully.');
     }

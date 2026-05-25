@@ -58,11 +58,22 @@
                     @error('key')<div class="pf-error">⚠ {{ $message }}</div>@enderror
                 </div>
 
-                <div class="pf-group {{ $errors->has('content') ? 'has-error' : '' }}">
+                {{-- Plain content field (text / image / link) --}}
+                <div class="pf-group {{ $errors->has('content') ? 'has-error' : '' }}" id="content-group">
                     <label class="pf-label" for="content">Content</label>
                     <textarea id="content" name="content" class="pf-input pf-textarea" rows="5"
                         placeholder="Enter text, alt text, or list items…">{{ old('content', $contentBlock->content) }}</textarea>
                     @error('content')<div class="pf-error">⚠ {{ $message }}</div>@enderror
+                </div>
+
+                {{-- List item editor (list type only) --}}
+                <div class="pf-group" id="list-editor-group" style="display:none;">
+                    <label class="pf-label">List Items</label>
+                    <div id="list-items-wrap"></div>
+                    <button type="button" id="add-list-item" class="admin-btn-secondary" style="margin-top:10px;font-size:.85rem;padding:7px 16px;">
+                        + Add Item
+                    </button>
+                    <input type="hidden" id="extra-hidden" name="extra">
                 </div>
 
                 <div class="pf-group {{ $errors->has('url') ? 'has-error' : '' }}" id="url-group"
@@ -269,10 +280,15 @@ keyCustomInput.addEventListener('input', function () {
 
 /* ── Type picker ── */
 function updateUrlVisibility() {
-    var checked = document.querySelector('input[name="type"]:checked');
-    var urlGroup = document.getElementById('url-group');
-    if (!checked || !urlGroup) return;
-    urlGroup.style.display = (checked.value === 'image' || checked.value === 'link') ? 'block' : 'none';
+    var checked    = document.querySelector('input[name="type"]:checked');
+    var urlGroup   = document.getElementById('url-group');
+    var contentGrp = document.getElementById('content-group');
+    var listGrp    = document.getElementById('list-editor-group');
+    if (!checked) return;
+    var isList = checked.value === 'list';
+    if (urlGroup)   urlGroup.style.display   = (checked.value === 'image' || checked.value === 'link') ? 'block' : 'none';
+    if (contentGrp) contentGrp.style.display = isList ? 'none' : 'block';
+    if (listGrp)    listGrp.style.display    = isList ? 'block' : 'none';
 }
 
 document.querySelectorAll('.type-pick-option input').forEach(function (radio) {
@@ -283,10 +299,40 @@ document.querySelectorAll('.type-pick-option input').forEach(function (radio) {
     });
 });
 
-updateUrlVisibility();
+/* ── List item editor ── */
+var EXISTING_EXTRA = @json($contentBlock->extra ?? []);
+var listWrap       = document.getElementById('list-items-wrap');
+var extraHidden    = document.getElementById('extra-hidden');
 
-/* ── Init: pre-populate dropdown with current block's section + key ── */
+function escHtml(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function makeRow(value, label) {
+    var row = document.createElement('div');
+    row.className = 'list-item-row';
+    row.style.cssText = 'display:flex;gap:10px;align-items:center;margin-bottom:8px;';
+    row.innerHTML =
+        '<input type="text" class="pf-input item-value" placeholder="Value (e.g. 5,000+)" value="' + escHtml(value) + '" style="flex:1;">' +
+        '<input type="text" class="pf-input item-label" placeholder="Label (e.g. Lives Touched)" value="' + escHtml(label) + '" style="flex:2;">' +
+        '<button type="button" title="Remove" style="background:none;border:none;cursor:pointer;font-size:1.1rem;color:#ef4444;padding:0 6px;flex-shrink:0;">✕</button>';
+    row.querySelector('button').addEventListener('click', function () { row.remove(); });
+    return row;
+}
+function populateList(items) {
+    listWrap.innerHTML = '';
+    (items || []).forEach(function (it) { listWrap.appendChild(makeRow(it.value || '', it.label || '')); });
+    if (!items || !items.length) listWrap.appendChild(makeRow('', ''));
+}
+
+document.getElementById('add-list-item').addEventListener('click', function () {
+    listWrap.appendChild(makeRow('', ''));
+});
+
+populateList(EXISTING_EXTRA);
+
+/* ── Init ── */
 populateKeyDropdown(sectionSelect.value, currentKey);
+updateUrlVisibility();
 
 /* ── Form submit guard ── */
 document.getElementById('cb-form').addEventListener('submit', function (e) {
@@ -296,6 +342,16 @@ document.getElementById('cb-form').addEventListener('submit', function (e) {
         keyHint.style.color = '#ef4444';
         keySelect.focus();
         return;
+    }
+    var checked = document.querySelector('input[name="type"]:checked');
+    if (checked && checked.value === 'list') {
+        var items = [];
+        listWrap.querySelectorAll('.list-item-row').forEach(function (row) {
+            var v = row.querySelector('.item-value').value.trim();
+            var l = row.querySelector('.item-label').value.trim();
+            if (v || l) items.push({ value: v, label: l });
+        });
+        extraHidden.value = JSON.stringify(items);
     }
     var btn = document.getElementById('submit-btn');
     btn.classList.add('submitting');
