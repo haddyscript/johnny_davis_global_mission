@@ -310,10 +310,10 @@
           <strong style="color: var(--orange-light);">Because of YOU… families survive, recover, and rebuild.</strong>
         </blockquote>
         <div class="urgency-btn-group">
-          <a href="https://filipinochildren.org/donate" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg urgency-btn-main">
+          <a href="{{ route('donate') }}?campaign=where&amount=29.99" class="btn btn-primary btn-lg urgency-btn-main">
             &#9829; Give $29 Monthly
           </a>
-          <a href="https://filipinochildren.org/donate" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-md urgency-btn-secondary">
+          <a href="{{ route('donate') }}?campaign=where" class="btn btn-outline btn-md urgency-btn-secondary">
             🤝 Give One-Time Relief Gift
           </a>
         </div>
@@ -385,7 +385,7 @@
           severe structural damage, leaving families without safe shelter. Your support can make an immediate difference.
         </div>
 
-        <a href="{{ route('donate') }}\" class=\"btn btn-primary btn-lg\">
+        <a href="{{ route('donate') }}?campaign=cebu" class="btn btn-primary btn-lg">
           &#9829; Support Disaster Relief
         </a>
       </div>
@@ -600,10 +600,10 @@
       </div>
 
       <div class="donate-cta-btns">
-        <a href="https://johnnydavisglobalmissions.org/donate" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+        <a href="{{ route('donate') }}?campaign=where" class="btn btn-primary btn-lg">
           &#9829; Donate Now
         </a>
-        <a href="https://johnnydavisglobalmissions.org/donate" rel="noopener noreferrer" class="btn btn-outline btn-lg">
+        <a href="{{ route('donate') }}?campaign=where&amount=7.99" class="btn btn-outline btn-lg">
           Give Monthly — $7.99
         </a>
       </div>

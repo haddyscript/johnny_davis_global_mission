@@ -794,4 +794,61 @@
   backBtn.style.display        = 'none';
   setCampaign('Feed Filipino Children');
 
+  /* ── URL param pre-selection ─────────────────────────────
+     Allows links like /donate?campaign=where&amount=29.99
+     to skip the overview and land directly on the form with
+     the correct campaign and amount pre-selected.
+  ──────────────────────────────────────────────────────── */
+  (function applyUrlParams() {
+    const params   = new URLSearchParams(window.location.search);
+    const campaign = params.get('campaign');
+    const amount   = params.get('amount');
+
+    if (!campaign && !amount) return;
+
+    const campaignMap = {
+      'where':  "Where it's needed most",
+      'cebu':   'Cebu Earthquake Relief',
+      'uganda': 'Uganda Water Wells',
+      'feed':   'Feed Filipino Children',
+    };
+
+    if (campaign) {
+      const name = campaignMap[campaign] || campaign;
+      setCampaign(name);
+    }
+
+    if (amount) {
+      const targetAmt = parseFloat(amount);
+      let matched = false;
+
+      amountBtns.forEach(btn => {
+        const btnAmt = parseFloat(btn.querySelector('.amount-price').textContent.replace('$', ''));
+        if (Math.abs(btnAmt - targetAmt) < 0.01) {
+          amountBtns.forEach(b => { b.classList.remove('selected'); b.removeAttribute('aria-pressed'); });
+          btn.classList.add('selected');
+          btn.setAttribute('aria-pressed', 'true');
+          if (customInput) customInput.value = '';
+          selectedAmt = btnAmt;
+          matched = true;
+        }
+      });
+
+      if (!matched) {
+        amountBtns.forEach(b => { b.classList.remove('selected'); b.removeAttribute('aria-pressed'); });
+        if (customInput) customInput.value = targetAmt;
+        selectedAmt = targetAmt;
+      }
+
+      sync();
+    }
+
+    showLoadingScreen();
+    setTimeout(() => {
+      hideLoadingScreen();
+      showScreen(donateScreen);
+      backBtn.style.display = 'inline-flex';
+    }, 1500);
+  })();
+
 })();
