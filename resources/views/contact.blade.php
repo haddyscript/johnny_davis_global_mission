@@ -228,7 +228,7 @@
 
       <div class="footer-brand">
         <img src="{{ asset('images/logo.webp') }}" alt="Johnny Davis Global Missions" />
-        <p>A nonprofit founded on the belief that a little help can go a long way. Serving communities in the Philippines and Uganda through food, water, medical care, and education.</p>
+        <p>A nonprofit founded on the belief that a little help can go a long way. Serving communities across the Philippines through food, water, medical care, and education.</p>
         <div class="footer-socials" aria-label="Social media">
           <a href="https://www.facebook.com/GlobalMissions55" class="social-icon" aria-label="Facebook">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>

@@ -5,6 +5,7 @@
 - docker compose exec app php artisan db:seed --class=EmailTemplateSeeder
 - docker compose exec app php artisan db:seed --class=NavItemSeeder
 - docker compose exec app php artisan db:seed --class=CampaignSeeder
+- docker compose exec app php artisan db:seed --class=ContentSeeder
 
 
 ### Down docker and Build ###

@@ -130,7 +130,7 @@ class ContentSeeder extends Seeder
         $news = $this->createPage(
             'news',
             'News',
-            'Blog & News — Johnny Davis Global Missions. Monthly field updates, impact stories, and mission reports from the Philippines and Uganda.',
+            'Blog & News — Johnny Davis Global Missions. Monthly field updates, impact stories, and mission reports from the Philippines.',
             ['template' => 'news']
         );
 
@@ -138,7 +138,7 @@ class ContentSeeder extends Seeder
             ['key' => 'eyebrow', 'type' => 'text', 'content' => 'Stories from the Field', 'sort_order' => 10],
             ['key' => 'headline', 'type' => 'text', 'content' => 'Stories of Impact', 'sort_order' => 20],
             ['key' => 'subtitle', 'type' => 'text', 'content' => 'Updates From the Front Lines of Our Mission', 'sort_order' => 30],
-            ['key' => 'description', 'type' => 'text', 'content' => 'Every meal served, every child helped, and every life changed has a story. Follow the journey of communities in the Philippines and Uganda as hope becomes reality.', 'sort_order' => 40],
+            ['key' => 'description', 'type' => 'text', 'content' => 'Every meal served, every child helped, and every life changed has a story. Follow the journey of communities across the Philippines as hope becomes reality.', 'sort_order' => 40],
             ['key' => 'primary_cta', 'type' => 'text', 'content' => 'Read Latest Stories', 'url' => '#posts-section', 'sort_order' => 50],
             ['key' => 'secondary_cta', 'type' => 'text', 'content' => 'Get Updates by Email', 'url' => '#newsletter', 'sort_order' => 60],
             ['key' => 'stats', 'type' => 'list', 'extra' => [

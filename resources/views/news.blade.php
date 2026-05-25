@@ -67,7 +67,7 @@
       @endif
       <p class="hero-subtitle">{{ $cms->text('hero', 'subtitle', 'Updates From the Front Lines of Our Mission') }}</p>
       <p class="hero-desc">
-        {{ $cms->text('hero', 'description', '"Every meal served, every child helped, and every life changed has a story. Follow the journey of communities in the Philippines and Uganda as hope becomes reality."') }}
+        {{ $cms->text('hero', 'description', '"Every meal served, every child helped, and every life changed has a story. Follow the journey of communities across the Philippines as hope becomes reality."') }}
       </p>
       <div class="hero-actions">
         <a href="#posts-section" class="btn btn-primary">
@@ -186,9 +186,6 @@
       </button>
       <button class="filter-btn" data-filter="disaster-response">
         <span>Disaster Response <span class="filter-count">1</span></span>
-      </button>
-      <button class="filter-btn" data-filter="uganda">
-        <span>Uganda <span class="filter-count">1</span></span>
       </button>
       <button class="filter-btn" data-filter="philippines">
         <span>Philippines <span class="filter-count">5</span></span>
@@ -331,7 +328,7 @@
         <div class="stat-icon" aria-hidden="true">🍽️</div>
         <div class="stat-number" data-target="42000">0</div>
         <div class="stat-label">Meals Served</div>
-        <div class="stat-desc">Children fed monthly across Cebu and Uganda</div>
+        <div class="stat-desc">Children fed monthly across Cebu and Leyte</div>
       </div>
       <div class="stat-card reveal delay-2">
         <div class="stat-icon" aria-hidden="true">🏘️</div>
@@ -365,7 +362,7 @@
       <span class="section-label">Where We Serve</span>
       <h2 class="section-title" id="locations-title">Mission Locations</h2>
       <p class="locations-subtitle">
-        Our work spans two countries, touching lives in communities that need hope the most.
+        Our work spans the Philippines, touching lives in communities that need hope the most.
       </p>
     </div>
     <div class="locations-grid">
@@ -387,26 +384,6 @@
           </p>
           <button class="location-btn" data-location="philippines">
             View Philippines Stories
-          </button>
-        </div>
-      </div>
-      <div class="location-card uganda reveal delay-2">
-        <div class="location-image">
-          <img src="{{ asset('images/landingpage/clean_drink_water.webp') }}"
-               alt="Uganda mission work in Mbale" loading="lazy"/>
-          <div class="location-overlay"></div>
-          <div class="location-flag">🇺🇬</div>
-        </div>
-        <div class="location-content">
-          <h3 class="location-title">Uganda</h3>
-          <div class="location-areas">
-            <span class="location-area">Mbale</span>
-          </div>
-          <p class="location-desc">
-            Bringing clean water through well drilling and community development initiatives in Mbale region.
-          </p>
-          <button class="location-btn" data-location="uganda">
-            View Uganda Stories
           </button>
         </div>
       </div>
@@ -436,22 +413,15 @@
             <p class="trending-title">Marco's Story: From Malnourished to Thriving in 6 Months</p>
           </div>
         </div>
-        <div class="trending-item" role="button" tabindex="0" aria-label="Read: Well #7 Complete">
-          <span class="trending-num" aria-hidden="true">02</span>
-          <div class="trending-info">
-            <p class="trending-cat">Field Report · Uganda</p>
-            <p class="trending-title">Well #7 is Complete — 200 Families Now Have Clean Water</p>
-          </div>
-        </div>
         <div class="trending-item" role="button" tabindex="0" aria-label="Read: 2,400 Meals Served">
-          <span class="trending-num" aria-hidden="true">03</span>
+          <span class="trending-num" aria-hidden="true">02</span>
           <div class="trending-info">
             <p class="trending-cat">Field Report · Philippines</p>
             <p class="trending-title">2,400 Meals Served in February — Our Biggest Month Yet</p>
           </div>
         </div>
         <div class="trending-item" role="button" tabindex="0" aria-label="Read: 18 Children Enrolled">
-          <span class="trending-num" aria-hidden="true">04</span>
+          <span class="trending-num" aria-hidden="true">03</span>
           <div class="trending-info">
             <p class="trending-cat">Education · Philippines</p>
             <p class="trending-title">18 Children Enrolled in Education Sponsorship for 2025</p>
@@ -478,12 +448,12 @@
         <span class="section-label">Stay Connected</span>
         <h2 class="section-title" id="newsletter-title">Get Field Updates in Your Inbox</h2>
         <p class="body-text" style="color:rgba(255,255,255,.7); margin-bottom:32px;">
-          "Receive real mission reports directly from Cebu and Uganda. No spam. Just impact."
+          "Receive real mission reports directly from Cebu and Leyte. No spam. Just impact."
         </p>
         <div class="newsletter-perks" role="list">
           <div class="newsletter-perk" role="listitem">
             <div class="perk-icon" aria-hidden="true">📍</div>
-            <span>Field reports from Cebu &amp; Uganda, every month</span>
+            <span>Field reports from Cebu &amp; Leyte, every month</span>
           </div>
           <div class="newsletter-perk" role="listitem">
             <div class="perk-icon" aria-hidden="true">📊</div>
@@ -580,23 +550,10 @@
           </div>
         </div>
       </div>
-      <div class="testimonial-card reveal delay-3">
-        <div class="testimonial-quote">
-          "Clean water changed everything for our village. No more walking miles to find water, no more children getting sick. This well is a miracle from God."
-        </div>
-        <div class="testimonial-author">
-          <div class="author-avatar">👨‍👩‍👧‍👦</div>
-          <div class="author-info">
-            <div class="author-name">James Okello</div>
-            <div class="author-title">Village Elder, Mbale, Uganda</div>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="testimonial-dots">
       <button class="dot active" data-slide="0" aria-label="Show testimonial 1"></button>
       <button class="dot" data-slide="1" aria-label="Show testimonial 2"></button>
-      <button class="dot" data-slide="2" aria-label="Show testimonial 3"></button>
     </div>
   </div>
 </section>
@@ -638,7 +595,7 @@
 
       <div class="footer-brand">
         <img src="{{ asset('images/logo.webp') }}" alt="Johnny Davis Global Missions" />
-        <p>A nonprofit founded on the belief that a little help can go a long way. Serving communities in the Philippines and Uganda through food, water, medical care, and education.</p>
+        <p>A nonprofit founded on the belief that a little help can go a long way. Serving communities across the Philippines through food, water, medical care, and education.</p>
         <div class="footer-socials" aria-label="Social media">
           <a href="https://www.facebook.com/GlobalMissions55" class="social-icon" aria-label="Facebook">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
