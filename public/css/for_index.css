@@ -755,6 +755,27 @@ ul { list-style: none; }
 }
 .urgency-card .btn { width: 100%; justify-content: center; }
 
+.urgency-btn-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.urgency-btn-main {
+  flex: 0 0 auto;
+  font-size: 1.15rem;
+  padding: 20px 48px;
+  font-weight: 700;
+}
+.urgency-btn-secondary {
+  flex: 0 0 auto;
+  font-size: 0.9rem;
+  padding: 13px 28px;
+  opacity: 0.88;
+}
+
 /* ============================================================
    DISASTER RELIEF
 ============================================================ */

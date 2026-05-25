@@ -77,12 +77,13 @@
       @endif
 
       <p class="hero-sub">
-        {!! nl2br(e($cms->text('hero', 'subtitle', "Help us fight hunger and crisis in the Philippines.\nTogether we can make a difference."))) !!}
+        {!! nl2br(e($cms->text('hero', 'subtitle', "Help us fight hunger and crisis in the Philippines.\n Together we can make a difference."))) !!}
       </p>
 
       <div class="hero-ctas">
         <a href="{{ $cms->url('hero', 'primary_cta_label', route('donate')) }}" class="btn btn-primary btn-lg">
-          &#9829; {{ $cms->text('hero', 'primary_cta_label', 'Donate Now') }}
+          &#9829; Donate Now / $7.99 Monthly
+          <!-- {{ $cms->text('hero', 'primary_cta_label', 'Donate Now / $7.99 Monthly') }} -->
         </a>
         <button class="btn btn-outline btn-lg" id="watchMissionBtn" aria-label="Watch our mission video">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
@@ -136,7 +137,7 @@
              alt="Johnny Davis Global Missions volunteers feeding children in the Philippines"
              loading="lazy" />
         <div class="mission-badge" aria-label="Since 2015">
-          <strong>{{ $cms->text('mission', 'badge_number', '10+') }}</strong>
+          <strong>{{ $cms->text('mission', 'badge_number', '4+') }}</strong>
           <span>{{ $cms->text('mission', 'badge_label', 'Years of Impact') }}</span>
         </div>
       </div>
@@ -284,52 +285,29 @@
           </p>
         @endif
         <p class="urgency-price">
-          For just @if ($cms->has('urgency', 'price'))
+          <!-- For just @if ($cms->has('urgency', 'price'))
             {{ $cms->text('urgency', 'price', '') }}
           @else
             $7.99 a month
           @endif 
           , you can help feed Filipino children in need
-          and bring hope to a hungry family.
+          and bring hope to a hungry family. -->
+          For just $29/month, you can help provide urgent disaster relief to families devastated by storms, flooding, and crisis.
         </p>
         <blockquote class="urgency-closing">
           This is more than a donation —<br/>
-          This is compassion in action.<br/>
-          This is faith with works.<br/>
-          This is love moving.<br/><br/>
-          <strong style="color: var(--orange-light);">Because of YOU… they eat.</strong>
+          This is relief in action.<br/>
+          This is compassion responding quickly.<br/>
+          This is hope reaching families in their darkest hour.<br/><br/>
+          <strong style="color: var(--orange-light);">Because of YOU… families survive, recover, and rebuild.</strong>
         </blockquote>
-        <a href="https://filipinochildren.org/donate" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
-          &#9829; Donate @if ($cms->has('urgency', 'price')) 
-            {{ $cms->text('urgency', 'price', '') }}
-           @else
-             $7.99 Monthly
-           @endif 
-        </a>
-      </div>
-
-      <div class="urgency-card reveal-right">
-        <div class="urgency-card-inner">
-          <div class="qr-shell">
-            <a href="https://www.givelify.com/donate/johnny-davis-ministries-suwanee-ga-2j7wy5MTQ5ODAwMw==/donation/amount" target="_blank" rel="noopener noreferrer" aria-label="Open FilipinoChildren.org donation page">
-              <img src="{{ asset('images/qr-and-logo-ministry/give-lify-snap-to-give.jpeg') }}"
-                   alt="QR code to donate to FilipinoChildren.org — opens in a new tab"
-                   class="qr-image"
-                   loading="lazy" />
-            </a>
-          </div>
-
-          <div class="qr-content">
-            <h3 class="scan-title">Scan &amp; Give</h3>
-            <p class="scan-help">
-              Scan the QR code or visit FilipinoChildren.org to donate and feed a child today.
-            </p>
-            <div class="scan-action">
-              <a href="https://filipinochildren.org" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                Visit FilipinoChildren.org
-              </a>
-            </div>
-          </div>
+        <div class="urgency-btn-group">
+          <a href="https://filipinochildren.org/donate" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg urgency-btn-main">
+            &#9829; Give $29 Monthly
+          </a>
+          <a href="https://filipinochildren.org/donate" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-md urgency-btn-secondary">
+            🤝 Give One-Time Relief Gift
+          </a>
         </div>
       </div>
 
