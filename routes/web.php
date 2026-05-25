@@ -33,9 +33,9 @@ Route::middleware('nav.visibility')->group(function () {
     Route::get('/contact', [ContactController::class, 'index'])->name('contact');
     Route::get('/news', [NewsController::class, 'index'])->name('news');
     Route::get('/who-we-are', [WhoWeAreController::class, 'index'])->name('who-we-are');
-    Route::get('/ministry', [MinistryController::class, 'index'])->name('ministry');
     Route::get('/donate', [DonationController::class, 'index'])->name('donate');
 });
+Route::get('/ministry', [MinistryController::class, 'index'])->name('ministry');
 
 // Non-page routes — never blocked by nav visibility
 Route::post('/contact',             [ContactController::class, 'store'])->name('contact.store');

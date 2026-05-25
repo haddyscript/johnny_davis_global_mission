@@ -1,13 +1,18 @@
 @php
     use App\Models\NavItem;
 
-    $currentPath = '/' . ltrim(request()->path(), '/');
-    $logoSrc = asset('images/logo.webp');
-    $navItems = NavItem::forNav();
+    $currentPath   = '/' . ltrim(request()->path(), '/');
+    $isMinistryPage = $currentPath === '/ministry';
+    $logoSrc        = $isMinistryPage
+        ? asset('images/ministry-logo.png')
+        : asset('images/logo.webp');
+    $logoHref       = $isMinistryPage ? url('/ministry') : url('/');
+    $logoAlt        = $isMinistryPage ? 'Johnny Davis Ministries' : 'Johnny Davis Global Missions Home';
+    $navItems       = NavItem::forNav();
 @endphp
 
 <style>
-  /* ── Ministry logo ── */
+  /* ── Ministry logo (inline icon next to nav label) ── */
   .nav-ministry-logo {
     height: 22px;
     width: auto;
@@ -18,6 +23,18 @@
     margin-top: -2px;
     filter: brightness(0) invert(1) opacity(.75);
     transition: filter .2s ease;
+  }
+
+  /* ── Ministry page: centre the lone logo in the navbar ── */
+  .nav-ministry-only .nav-inner {
+    justify-content: center;
+  }
+  .nav-ministry-only .nav-logo img {
+    height: 48px;
+    width: auto;
+    max-width: 220px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
   }
 
   /* ── Transitions ── */
@@ -52,65 +69,70 @@
   }
 </style>
 
-<header id="navbar" role="banner">
+<header id="navbar" role="banner"{{ $isMinistryPage ? ' class="nav-ministry-only"' : '' }}>
   <div class="container">
     <nav class="nav-inner" aria-label="Main navigation">
-      <a href="{{ url('/') }}" class="nav-logo" aria-label="Johnny Davis Global Missions Home">
-        <img src="{{ $logoSrc }}" alt="Johnny Davis Global Missions Logo" />
+      <a href="{{ $logoHref }}" class="nav-logo" aria-label="{{ $logoAlt }}">
+        <img src="{{ $logoSrc }}" alt="{{ $logoAlt }}" />
       </a>
 
-      <ul class="nav-links" role="list">
-        @foreach($navItems as $item)
-          @php
-            $itemPath  = parse_url($item->url, PHP_URL_PATH) ?? '';
-            $isActive  = $itemPath && !in_array($itemPath, ['/#', '#'])
-                ? rtrim($itemPath, '/') === rtrim($currentPath, '/')
-                : false;
-            $baseClass = trim($item->nav_class ?? '');
-            $classes   = trim($baseClass . ($isActive ? ' active nav-active' : ''));
-            $attrs     = $item->is_external ? ' target="_blank" rel="noopener noreferrer"' : '';
-            $href      = str_starts_with($item->url, '/') ? url($item->url) : $item->url;
-          @endphp
-          <li>
-            <a href="{{ $href }}"{{ $classes ? ' class="' . e($classes) . '"' : '' }}{!! $attrs !!}>
-              @if(strtolower(strip_tags($item->label)) === 'ministry')
-                <img src="{{ asset('images/ministry-logo.png') }}" alt="" class="nav-ministry-logo" aria-hidden="true" />
-              @endif
-              {!! $item->label !!}
-            </a>
-          </li>
-        @endforeach
-      </ul>
+      @if(!$isMinistryPage)
+        <ul class="nav-links" role="list">
+          @foreach($navItems as $item)
+            @php
+              $itemPath  = parse_url($item->url, PHP_URL_PATH) ?? '';
+              $isActive  = $itemPath && !in_array($itemPath, ['/#', '#'])
+                  ? rtrim($itemPath, '/') === rtrim($currentPath, '/')
+                  : false;
+              $baseClass = trim($item->nav_class ?? '');
+              $classes   = trim($baseClass . ($isActive ? ' active nav-active' : ''));
+              $attrs     = $item->is_external ? ' target="_blank" rel="noopener noreferrer"' : '';
+              $href      = str_starts_with($item->url, '/') ? url($item->url) : $item->url;
+            @endphp
+            <li>
+              <a href="{{ $href }}"{{ $classes ? ' class="' . e($classes) . '"' : '' }}{!! $attrs !!}>
+                @if(strtolower(strip_tags($item->label)) === 'ministry')
+                  <img src="{{ asset('images/ministry-logo.png') }}" alt="" class="nav-ministry-logo" aria-hidden="true" />
+                @endif
+                {!! $item->label !!}
+              </a>
+            </li>
+          @endforeach
+        </ul>
 
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle mobile menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle mobile menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      @endif
     </nav>
   </div>
 
-  {{-- Mobile nav --}}
-  <nav class="nav-mobile" id="navMobile" aria-label="Mobile navigation">
-    @foreach($navItems as $item)
-      @php
-        $itemPath  = parse_url($item->url, PHP_URL_PATH) ?? '';
-        $isActive  = $itemPath && !in_array($itemPath, ['/#', '#'])
-            ? rtrim($itemPath, '/') === rtrim($currentPath, '/')
-            : false;
-        $baseClass = trim($item->nav_class ?? '');
-        $classes   = trim($baseClass . ($isActive ? ' active nav-active' : ''));
-        $attrs     = $item->is_external ? ' target="_blank" rel="noopener noreferrer"' : '';
-        $href      = str_starts_with($item->url, '/') ? url($item->url) : $item->url;
-      @endphp
-      <a href="{{ $href }}"{{ $classes ? ' class="' . e($classes) . '"' : '' }}{!! $attrs !!}>
-        @if(strtolower(strip_tags($item->label)) === 'ministry')
-          <img src="{{ asset('images/ministry-logo.png') }}" alt="" class="nav-ministry-logo" aria-hidden="true" />
-        @endif
-        {!! $item->label !!}
-      </a>
-    @endforeach
-  </nav>
+  @if(!$isMinistryPage)
+    {{-- Mobile nav --}}
+    <nav class="nav-mobile" id="navMobile" aria-label="Mobile navigation">
+      @foreach($navItems as $item)
+        @php
+          $itemPath  = parse_url($item->url, PHP_URL_PATH) ?? '';
+          $isActive  = $itemPath && !in_array($itemPath, ['/#', '#'])
+              ? rtrim($itemPath, '/') === rtrim($currentPath, '/')
+              : false;
+          $baseClass = trim($item->nav_class ?? '');
+          $classes   = trim($baseClass . ($isActive ? ' active nav-active' : ''));
+          $attrs     = $item->is_external ? ' target="_blank" rel="noopener noreferrer"' : '';
+          $href      = str_starts_with($item->url, '/') ? url($item->url) : $item->url;
+        @endphp
+        <a href="{{ $href }}"{{ $classes ? ' class="' . e($classes) . '"' : '' }}{!! $attrs !!}>
+          @if(strtolower(strip_tags($item->label)) === 'ministry')
+            <img src="{{ asset('images/ministry-logo.png') }}" alt="" class="nav-ministry-logo" aria-hidden="true" />
+          @endif
+          {!! $item->label !!}
+        </a>
+      @endforeach
+    </nav>
+  @endif
 </header>
 
+@if(!$isMinistryPage)
 {{-- JS fallback: sets nav-active client-side so it works regardless of
      server-side URL format or CSS cascade order issues. --}}
 <script>
@@ -130,3 +152,4 @@
   });
 })();
 </script>
+@endif
