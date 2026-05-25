@@ -77,7 +77,8 @@
       @endif
 
       <p class="hero-sub">
-        {!! nl2br(e($cms->text('hero', 'subtitle', "Help us fight hunger and crisis in the Philippines.\n Together we can make a difference."))) !!}
+        <!-- {!! nl2br(e($cms->text('hero', 'subtitle', "Help us fight hunger and crisis in the Philippines.\n Together we can make a difference."))) !!} -->
+         Help us fight hunger and crisis in the Philippines. </b> Together we can make a difference.
       </p>
 
       <div class="hero-ctas">
