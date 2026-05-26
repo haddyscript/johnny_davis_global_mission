@@ -669,6 +669,89 @@
 </footer>
 
 
+<!-- ============================================================
+     FULL STORY MODAL
+============================================================ -->
+<div id="storyModal" class="story-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="storyModalTitle" hidden>
+  <div class="story-modal-box" role="document">
+
+    <button class="story-modal-close" id="storyModalClose" aria-label="Close story">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <!-- Story image -->
+    <div class="story-modal-img-wrap">
+      <img src="{{ asset('images/landingpage/community_outreach.png') }}"
+           alt="Community outreach workers with children in Cebu, Philippines"
+           class="story-modal-img"/>
+      <div class="story-modal-img-overlay" aria-hidden="true"></div>
+      <div class="story-modal-img-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        Featured Impact Story
+      </div>
+    </div>
+
+    <!-- Story body -->
+    <div class="story-modal-body">
+
+      <div class="story-modal-meta">
+        <span class="story-modal-cat">Impact Story</span>
+        <span class="story-modal-location">
+          <span aria-hidden="true">🇵🇭</span> Cebu, Philippines
+        </span>
+        <span class="story-modal-readtime">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+          4 min read
+        </span>
+      </div>
+
+      <h2 class="story-modal-title" id="storyModalTitle">
+        Marco's Story: From Malnourished to Thriving
+      </h2>
+
+      <div class="story-modal-content">
+
+        <p>When Marco first arrived at our feeding center in Cebu, he weighed nearly 40% below the healthy average for his age. His grandmother — who had been raising him alone since his parents left for Manila to search for work — could barely afford one small meal a day for the two of them.</p>
+
+        <p>The staff noticed him immediately. He was quiet, withdrawn, and too weak to join the other children playing outside. Our local coordinator, <strong>Sister Maricel</strong>, sat with him during his first meal and gently learned his story. He hadn't been to school in three months. His body simply didn't have the energy to make the walk.</p>
+
+        <blockquote class="story-modal-quote">
+          "He sat at the table and stared at the food for a long moment — like he wasn't sure it was real. Then he ate every single bite. I'll never forget his face."
+          <cite>— Sister Maricel, Program Coordinator</cite>
+        </blockquote>
+
+        <p>Over the next six weeks, Marco came to the program every single day. He received two full meals — rice, vegetables, a protein source, and fresh fruit when available. Slowly, the change became visible. He began to smile. Then laugh. By week eight, he walked up to Sister Maricel and asked if he could go back to school.</p>
+
+        <p>Our education team worked with the local principal to re-enroll him immediately. We provided his school supplies, his uniform, and a small daily nutrition stipend. His teacher, <strong>Mrs. Reyes</strong>, reported that within just one month, Marco was one of the most engaged and enthusiastic students in her entire class.</p>
+
+        <p>Today, Marco is 8 years old and <em>thriving</em>. He says he wants to be a doctor when he grows up. His grandmother wept when she told our team what it meant to her.</p>
+
+        <blockquote class="story-modal-quote story-modal-quote--highlight">
+          "I thought I had lost him. I watched him fade a little more every week and I didn't know what to do. You gave him back to me."
+          <cite>— Marco's Grandmother</cite>
+        </blockquote>
+
+        <p>Stories like Marco's unfold every single month in our feeding centers across Cebu and Leyte. Children arrive malnourished, withdrawn, and falling behind. They leave nourished, enrolled in school, and full of possibility. But none of this happens without the people who give.</p>
+
+        <p>Every donation — no matter the size — becomes a meal on a table. It becomes a child with energy to learn, a grandmother with hope, and a future that almost wasn't.</p>
+
+      </div>
+
+      <div class="story-modal-footer">
+        <a href="{{ route('donate') }}" class="btn btn-primary story-modal-cta">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          Help Feed the Next Marco
+        </a>
+        <button class="btn story-modal-close-btn" id="storyModalCloseBtn">
+          Close Story
+        </button>
+      </div>
+
+    </div><!-- /story-modal-body -->
+  </div><!-- /story-modal-box -->
+</div><!-- /storyModal -->
+
+
 <script src="{{ asset('js/for_news.js') }}"></script>
 
 @include('partials.chatbot')

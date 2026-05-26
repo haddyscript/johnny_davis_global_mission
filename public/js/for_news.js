@@ -370,4 +370,31 @@
     showTestimonial(nextIndex);
   }, 5000);
 
+  /* ── Story Modal ─────────────────────────────────────────── */
+  const storyModal         = document.getElementById('storyModal');
+  const storyModalClose    = document.getElementById('storyModalClose');
+  const storyModalCloseBtn = document.getElementById('storyModalCloseBtn');
+  const featuredCta        = document.querySelector('.featured-cta');
+
+  if (featuredCta && storyModal) {
+    function openStoryModal() {
+      storyModal.removeAttribute('hidden');
+      requestAnimationFrame(() => storyModal.classList.add('open'));
+      document.body.style.overflow = 'hidden';
+      if (storyModalClose) storyModalClose.focus();
+    }
+    function closeStoryModal() {
+      storyModal.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(() => storyModal.setAttribute('hidden', ''), 380);
+    }
+    featuredCta.addEventListener('click', e => { e.preventDefault(); openStoryModal(); });
+    if (storyModalClose)    storyModalClose.addEventListener('click', closeStoryModal);
+    if (storyModalCloseBtn) storyModalCloseBtn.addEventListener('click', closeStoryModal);
+    storyModal.addEventListener('click', e => { if (e.target === storyModal) closeStoryModal(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && storyModal.classList.contains('open')) closeStoryModal();
+    });
+  }
+
 })();
