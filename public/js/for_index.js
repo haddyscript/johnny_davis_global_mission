@@ -196,6 +196,36 @@
     });
   }());
 
+  // ─── Scroll To Top ──────────────────────────────────────────
+  (function () {
+    const btn = document.createElement('button');
+    btn.id = 'scrollToTop';
+    btn.setAttribute('aria-label', 'Scroll to top');
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
+    document.body.appendChild(btn);
+
+    const THRESHOLD = 0.65;
+    let ticking = false;
+    let isVisible = false;
+
+    function checkScroll() {
+      const scrolled = window.scrollY;
+      const total    = document.documentElement.scrollHeight - window.innerHeight;
+      const show     = total > 0 && scrolled / total >= THRESHOLD;
+      if (show !== isVisible) {
+        isVisible = show;
+        btn.classList.toggle('visible', show);
+      }
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(checkScroll); ticking = true; }
+    }, { passive: true });
+
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  }());
+
   // ─── Smooth scroll for nav links ────────────────────────────
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
