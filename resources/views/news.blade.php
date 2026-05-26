@@ -317,25 +317,33 @@
     </div>
     <div class="stats-grid">
       <div class="stat-card reveal delay-1">
-        <div class="stat-icon" aria-hidden="true">🍽️</div>
+        <div class="stat-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white"><path d="M11 3H9v7c0 2.21 1.79 4 4 4s4-1.79 4-4V3h-2v4h-1V3h-2v4h-1V3zm-4 0H5C3.9 3 3 3.9 3 5v3c0 2.08 1.42 3.83 3.37 4.29L7 21h2l-.63-8.71A4.002 4.002 0 0 0 11 8.5V3H7z"/></svg>
+        </div>
         <div class="stat-number" data-target="42000">0</div>
         <div class="stat-label">Meals Served</div>
         <div class="stat-desc">Children fed monthly across Cebu and Leyte</div>
       </div>
       <div class="stat-card reveal delay-2">
-        <div class="stat-icon" aria-hidden="true">🏘️</div>
+        <div class="stat-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        </div>
         <div class="stat-number" data-target="18">0</div>
         <div class="stat-label">Communities Reached</div>
         <div class="stat-desc">Barangays and villages served this year</div>
       </div>
       <div class="stat-card reveal delay-3">
-        <div class="stat-icon" aria-hidden="true">⚕️</div>
+        <div class="stat-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white"><path d="M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>
+        </div>
         <div class="stat-number" data-target="340">0</div>
         <div class="stat-label">Patients Treated</div>
         <div class="stat-desc">Free medical care provided in mobile clinics</div>
       </div>
       <div class="stat-card reveal delay-4">
-        <div class="stat-icon" aria-hidden="true">💧</div>
+        <div class="stat-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z"/></svg>
+        </div>
         <div class="stat-number" data-target="200">0</div>
         <div class="stat-label">Families With Clean Water</div>
         <div class="stat-desc">Wells drilled and water systems installed</div>
