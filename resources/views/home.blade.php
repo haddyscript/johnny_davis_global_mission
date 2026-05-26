@@ -82,13 +82,12 @@
       </p>
 
       <div class="hero-ctas">
-        <a href="{{ $cms->url('hero', 'primary_cta_label', route('donate')) }}" class="btn btn-primary btn-lg">
-          &#9829; Donate Now / $7.99 Monthly
-          <!-- {{ $cms->text('hero', 'primary_cta_label', 'Donate Now / $7.99 Monthly') }} -->
+        <a href="{{ $cms->url('hero', 'primary_cta_label', route('donate')) }}" class="btn btn-primary btn-lg hero-donate-btn">
+          <span class="hero-heart" aria-hidden="true">&#9829;</span> Donate Now / $7.99 Monthly
         </a>
-        <button class="btn btn-outline btn-lg" id="watchMissionBtn" aria-label="Watch our mission video">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          {{ $cms->text('hero', 'secondary_cta_label', 'Watch Our Mission') }}
+        <button class="btn btn-outline btn-lg hero-watch-btn" id="watchMissionBtn" aria-label="Watch our mission video">
+          <svg class="hero-play-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <span class="hero-watch-text">{{ $cms->text('hero', 'secondary_cta_label', 'Watch Our Mission') }}</span>
         </button>
       </div>
 

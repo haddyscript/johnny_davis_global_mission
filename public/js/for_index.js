@@ -226,11 +226,13 @@
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }());
 
-  // ─── Donate CTA buttons: ripple + magnetic cursor ───────────
+  // ─── Donate CTA + Hero buttons: ripple + magnetic cursor ────
   (function () {
-    const heroBtn    = document.querySelector('.donate-hero-btn');
-    const monthlyBtn = document.querySelector('.donate-monthly-btn');
-    const ctaBtns    = [heroBtn, monthlyBtn].filter(Boolean);
+    const heroBtn      = document.querySelector('.donate-hero-btn');
+    const monthlyBtn   = document.querySelector('.donate-monthly-btn');
+    const heroDonateBtn= document.querySelector('.hero-donate-btn');
+    const heroWatchBtn = document.querySelector('.hero-watch-btn');
+    const ctaBtns      = [heroBtn, monthlyBtn, heroDonateBtn, heroWatchBtn].filter(Boolean);
 
     /* Ripple on click */
     ctaBtns.forEach(btn => {
