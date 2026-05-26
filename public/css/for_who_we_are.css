@@ -259,6 +259,17 @@
       transform: translateY(-2px);
       box-shadow: 0 14px 30px rgba(0,0,0,.35);
     }
+    /* Override pulseButton when wwa effects are active */
+    #stickyDonate.wwa-donate-btn {
+      animation: none;
+    }
+    #stickyDonate.wwa-donate-btn:hover {
+      transform: translateY(-8px) scale(1.08);
+      box-shadow:
+        0 28px 64px rgba(240,124,30,.7),
+        0 0 0 8px  rgba(240,124,30,.18),
+        0 0 0 18px rgba(240,124,30,.07);
+    }
     @keyframes pulseButton {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-3px); }
