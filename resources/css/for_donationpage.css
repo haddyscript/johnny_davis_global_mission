@@ -319,7 +319,7 @@ body { padding-top: 72px; }
 .donate-hero {
   background:
     linear-gradient(105deg, rgba(13,42,78,.92) 0%, rgba(13,42,78,.72) 50%, rgba(26,68,128,.55) 100%),
-    url('../images/landingpage/feed_the_hungry.webp') center/cover no-repeat;
+    url('../images/landingpage/feedthehungry.png') center/cover no-repeat;
   padding: 52px 64px;
   position:relative; overflow:hidden;
 }

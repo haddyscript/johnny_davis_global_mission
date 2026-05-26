@@ -91,7 +91,7 @@
 
       <div class="about-image-wrap reveal-left">
         <img
-          src="{{ asset('images/landingpage/community_outreach.webp') }}"
+          src="{{ asset('images/landingpage/community_outreach.png') }}"
           alt="Johnny Davis Global Missions community outreach in the Philippines"
           loading="lazy"
         />

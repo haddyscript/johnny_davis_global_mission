@@ -120,7 +120,7 @@
   <div class="container">
     <div class="featured-story-card reveal">
       <div class="featured-story-image">
-        <img src="{{ asset('images/landingpage/community_outreach.webp') }}"
+        <img src="{{ asset('images/landingpage/community_outreach.png') }}"
              alt="Marco's transformation from malnourished to thriving child"
              loading="lazy"/>
         <div class="featured-story-overlay"></div>
@@ -360,7 +360,7 @@
     <div class="locations-grid">
       <div class="location-card philippines reveal delay-1">
         <div class="location-image">
-          <img src="{{ asset('images/landingpage/community_outreach.webp') }}"
+          <img src="{{ asset('images/landingpage/community_outreach.png') }}"
                alt="Philippines mission work in Cebu and Leyte" loading="lazy"/>
           <div class="location-overlay"></div>
           <div class="location-flag">🇵🇭</div>
@@ -556,7 +556,7 @@
 ============================================================ -->
 <section id="donation-reminder" aria-labelledby="donation-title">
   <div class="donation-bg">
-    <img src="{{ asset('images/landingpage/community_outreach.webp') }}" alt="Mission work in action" loading="lazy"/>
+    <img src="{{ asset('images/landingpage/community_outreach.png') }}" alt="Mission work in action" loading="lazy"/>
     <div class="donation-overlay"></div>
   </div>
   <div class="container">

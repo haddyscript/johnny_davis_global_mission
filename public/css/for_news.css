@@ -307,7 +307,7 @@ button { font-family:inherit; cursor:pointer; }
 }
 .hero-visual-img {
   width:100%; height:100%;
-  background:url('../images/landingpage/community_outreach.webp') center/cover no-repeat;
+  background:url('../images/landingpage/community_outreach.png') center/cover no-repeat;
   filter:brightness(.65) saturate(.8);
   transition:transform 12s ease;
 }

@@ -134,7 +134,7 @@
     <div class="mission-grid">
 
       <div class="mission-image-wrap reveal-left">
-        <img src="{{ asset('images/landingpage/feedthehungry.webp') }}"
+        <img src="{{ asset('images/landingpage/feedthehungry.png') }}"
              alt="Johnny Davis Global Missions volunteers feeding children in the Philippines"
              loading="lazy" />
         <div class="mission-badge" aria-label="Since 2015">
@@ -422,7 +422,7 @@
     <div class="help-cards">
 
       <article class="help-card reveal" style="transition-delay:.1s">
-        <img class="help-card-img" src="{{ asset('images/landingpage/community_outreach.webp') }}"
+        <img class="help-card-img" src="{{ asset('images/landingpage/community_outreach.png') }}"
              alt="Volunteers making a donation for community outreach"
              loading="lazy" />
         <div class="help-card-body">
@@ -439,7 +439,7 @@
       </article>
 
       <article class="help-card reveal" style="transition-delay:.2s">
-        <img class="help-card-img" src="{{ asset('images/landingpage/education.webp') }}"
+        <img class="help-card-img" src="{{ asset('images/landingpage/education.png') }}"
              alt="Volunteers participating in community education programs"
              loading="lazy" />
         <div class="help-card-body">
@@ -456,7 +456,7 @@
       </article>
 
       <article class="help-card reveal" style="transition-delay:.3s">
-        <img class="help-card-img" src="{{ asset('images/landingpage/medical_care.webp') }}"
+        <img class="help-card-img" src="{{ asset('images/landingpage/medical_care.png') }}"
              alt="Community awareness and outreach programs in the Philippines"
              loading="lazy" />
         <div class="help-card-body">

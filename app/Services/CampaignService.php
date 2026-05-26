@@ -23,7 +23,7 @@ class CampaignService
                 'icon' => '🍽️',
                 'label' => 'Active Campaign',
                 'status' => 'active-campaign',
-                'image' => 'images/landingpage/feed_the_hungry.webp',
+                'image' => 'images/landingpage/feedthehungry.png',
                 'goal' => '$45,000',
                 'pct' => 72,
                 'raised' => '$32,480',
