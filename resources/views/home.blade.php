@@ -692,10 +692,10 @@
       </div>
 
       <div class="donate-cta-btns">
-        <a href="{{ route('donate') }}?campaign=where" class="btn btn-primary btn-lg">
+        <a href="{{ route('donate') }}?campaign=where" class="btn btn-primary btn-lg donate-hero-btn">
           &#9829; Donate Now
         </a>
-        <a href="{{ route('donate') }}?campaign=where&amount=7.99" class="btn btn-outline btn-lg">
+        <a href="{{ route('donate') }}?campaign=where&amount=7.99" class="btn btn-outline btn-lg donate-monthly-btn">
           Give Monthly — $7.99
         </a>
       </div>

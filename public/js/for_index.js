@@ -226,6 +226,47 @@
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }());
 
+  // ─── Donate CTA buttons: ripple + magnetic cursor ───────────
+  (function () {
+    const heroBtn    = document.querySelector('.donate-hero-btn');
+    const monthlyBtn = document.querySelector('.donate-monthly-btn');
+    const ctaBtns    = [heroBtn, monthlyBtn].filter(Boolean);
+
+    /* Ripple on click */
+    ctaBtns.forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        const rect   = this.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className  = 'btn-ripple';
+        ripple.style.left = (e.clientX - rect.left)  + 'px';
+        ripple.style.top  = (e.clientY - rect.top)   + 'px';
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 680);
+      });
+    });
+
+    /* Magnetic cursor follow */
+    ctaBtns.forEach(btn => {
+      const STRENGTH = 0.22;
+      let isHovered  = false;
+
+      btn.addEventListener('mouseenter', () => { isHovered = true; });
+      btn.addEventListener('mouseleave', () => {
+        isHovered = false;
+        btn.style.transform = '';
+      });
+      btn.addEventListener('mousemove', function (e) {
+        if (!isHovered) return;
+        const rect = this.getBoundingClientRect();
+        const cx   = rect.left + rect.width  / 2;
+        const cy   = rect.top  + rect.height / 2;
+        const dx   = (e.clientX - cx) * STRENGTH;
+        const dy   = (e.clientY - cy) * STRENGTH;
+        this.style.transform = `translateY(-7px) scale(1.07) translate(${dx}px,${dy}px)`;
+      });
+    });
+  }());
+
   // ─── Smooth scroll for nav links ────────────────────────────
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
