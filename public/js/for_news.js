@@ -399,6 +399,43 @@
     });
   }
 
+  /* ── News Hero Buttons: ripple + magnetic cursor ─────────── */
+  (function () {
+    const readBtns = Array.from(document.querySelectorAll('.news-read-btn'));
+    const emailBtn = document.querySelector('.news-email-btn');
+    const heroBtns = [...readBtns, emailBtn].filter(Boolean);
+
+    heroBtns.forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        const rect   = this.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className  = 'wwa-btn-ripple';
+        ripple.style.left = (e.clientX - rect.left) + 'px';
+        ripple.style.top  = (e.clientY - rect.top)  + 'px';
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 680);
+      });
+
+      const STRENGTH = 0.2;
+      let isHovered = false;
+      btn.addEventListener('mouseenter', () => { isHovered = true; });
+      btn.addEventListener('mouseleave', () => {
+        isHovered = false;
+        btn.style.transform = '';
+      });
+      btn.addEventListener('mousemove', function (e) {
+        if (!isHovered) return;
+        const rect = this.getBoundingClientRect();
+        const cx = rect.left + rect.width  / 2;
+        const cy = rect.top  + rect.height / 2;
+        const dx = (e.clientX - cx) * STRENGTH;
+        const dy = (e.clientY - cy) * STRENGTH;
+        const scale = this === emailBtn ? 1.06 : 1.08;
+        this.style.transform = `translateY(-8px) scale(${scale}) translate(${dx}px,${dy}px)`;
+      });
+    });
+  }());
+
   /* ── Sticky Donate: ripple + magnetic cursor ─────────────── */
   (function () {
     const stickyBtn = document.getElementById('stickyDonate');

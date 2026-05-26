@@ -70,11 +70,11 @@
         {{ $cms->text('hero', 'description', '"Every meal served, every child helped, and every life changed has a story. Follow the journey of communities across the Philippines as hope becomes reality."') }}
       </p>
       <div class="hero-actions">
-        <a href="#posts-section" class="btn btn-primary">
+        <a href="#posts-section" class="btn btn-primary wwa-donate-btn news-read-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
           Read Latest Stories
         </a>
-        <a href="#newsletter" class="btn btn-ghost" style="color:rgba(255,255,255,.85);border-color:rgba(255,255,255,.3);">
+        <a href="#newsletter" class="btn btn-ghost news-email-btn" style="color:rgba(255,255,255,.85);border-color:rgba(255,255,255,.3);">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
           Get Updates by Email
         </a>
@@ -140,7 +140,7 @@
         <p class="featured-story-excerpt">
           When Marco first came to our feeding program, he hadn't eaten a full meal in two days. Six months later, he attends school every day and his health has completely transformed. This is why we do what we do.
         </p>
-        <a href="#" class="btn btn-primary featured-cta">
+        <a href="#" class="btn btn-primary featured-cta wwa-donate-btn news-read-btn">
           Read Full Story →
         </a>
       </div>
@@ -574,10 +574,10 @@
         Every update you read is made possible by people who care. Your support helps us reach more children, families, and communities in need.
       </p>
       <div class="donation-actions">
-        <a href="{{ route('donate') }}" class="btn btn-primary donation-btn">
+        <a href="{{ route('donate') }}" class="btn btn-primary donation-btn wwa-donate-btn news-read-btn">
           Donate Now
         </a>
-        <a href="{{ route('donate') }}" class="btn btn-ghost donation-btn-secondary">
+        <a href="{{ route('donate') }}" class="btn btn-ghost donation-btn-secondary news-email-btn">
           Sponsor a Child
         </a>
       </div>
