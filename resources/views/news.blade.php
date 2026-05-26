@@ -32,7 +32,7 @@
 <!-- ============================================================
      STICKY DONATE
 ============================================================ -->
-<a href="{{ route('donate') }}" id="stickyDonate" aria-label="Donate Now">&#9829; Donate</a>
+<a href="{{ route('donate') }}" id="stickyDonate" class="wwa-donate-btn" aria-label="Donate Now"><span class="wwa-heart" aria-hidden="true">&#9829;</span> Donate</a>
 
 
 @include('partials.nav')

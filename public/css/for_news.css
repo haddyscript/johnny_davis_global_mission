@@ -1477,6 +1477,80 @@ button { font-family:inherit; cursor:pointer; }
   background:var(--gray-50);
 }
 
+/* ============================================================
+   WW A  DONATE BUTTON — STICKY
+============================================================ */
+.wwa-donate-btn {
+  overflow: hidden !important;
+  isolation: isolate;
+}
+.wwa-donate-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -90%; width: 60%; height: 100%;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.38) 50%, transparent 100%);
+  transform: skewX(-20deg);
+  pointer-events: none;
+  z-index: 10;
+  animation: wwaShimmerIdle 3.5s ease-in-out infinite;
+}
+.wwa-donate-btn:hover {
+  transform: translateY(-8px) scale(1.08) !important;
+  box-shadow: 0 18px 40px rgba(240,124,30,.55), 0 0 0 3px rgba(240,124,30,.18) !important;
+}
+.wwa-donate-btn:hover::before {
+  animation: wwaShimmerHover .7s ease forwards;
+}
+.wwa-donate-btn:active {
+  transform: translateY(-3px) scale(1.02) !important;
+}
+.wwa-heart {
+  display: inline-block;
+  color: #fff;
+  animation: wwaHeartbeat 1.8s ease-in-out infinite;
+  transform-origin: center;
+  margin-right: 2px;
+}
+.wwa-donate-btn:hover .wwa-heart {
+  animation: wwaHeartbeat .6s ease-in-out infinite;
+}
+.wwa-btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  width: 8px; height: 8px;
+  background: rgba(255,255,255,.45);
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+  z-index: 10;
+  animation: wwaRipple .68s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes wwaShimmerIdle {
+  0%, 100% { left: -90%; }
+  50%       { left: 160%; }
+}
+@keyframes wwaShimmerHover {
+  0%   { left: -90%; }
+  100% { left: 160%; }
+}
+@keyframes wwaHeartbeat {
+  0%, 100% { transform: scale(1); }
+  14%       { transform: scale(1.45); }
+  28%       { transform: scale(1); }
+  42%       { transform: scale(1.25); }
+  56%       { transform: scale(1); }
+}
+@keyframes wwaRipple {
+  to { transform: translate(-50%, -50%) scale(28); opacity: 0; }
+}
+#stickyDonate.wwa-donate-btn {
+  animation: none !important;
+  transition: transform .32s cubic-bezier(.34,1.56,.64,1), box-shadow .32s ease !important;
+}
+#stickyDonate.wwa-donate-btn:hover {
+  transform: translateY(-8px) scale(1.08) !important;
+  box-shadow: 0 18px 40px rgba(240,124,30,.55) !important;
+}
+
 /* Responsive */
 @media (max-width:600px) {
   .story-modal-overlay { padding:0; align-items:flex-end; }

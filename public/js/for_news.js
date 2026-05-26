@@ -399,4 +399,37 @@
     });
   }
 
+  /* ── Sticky Donate: ripple + magnetic cursor ─────────────── */
+  (function () {
+    const stickyBtn = document.getElementById('stickyDonate');
+    if (!stickyBtn) return;
+
+    stickyBtn.addEventListener('click', function (e) {
+      const rect   = this.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className  = 'wwa-btn-ripple';
+      ripple.style.left = (e.clientX - rect.left) + 'px';
+      ripple.style.top  = (e.clientY - rect.top)  + 'px';
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 680);
+    });
+
+    const STRENGTH = 0.22;
+    let isHovered = false;
+    stickyBtn.addEventListener('mouseenter', () => { isHovered = true; });
+    stickyBtn.addEventListener('mouseleave', () => {
+      isHovered = false;
+      stickyBtn.style.transform = '';
+    });
+    stickyBtn.addEventListener('mousemove', function (e) {
+      if (!isHovered) return;
+      const rect = this.getBoundingClientRect();
+      const cx = rect.left + rect.width  / 2;
+      const cy = rect.top  + rect.height / 2;
+      const dx = (e.clientX - cx) * STRENGTH;
+      const dy = (e.clientY - cy) * STRENGTH;
+      this.style.transform = `translateY(-8px) scale(1.08) translate(${dx}px,${dy}px)`;
+    });
+  }());
+
 })();
