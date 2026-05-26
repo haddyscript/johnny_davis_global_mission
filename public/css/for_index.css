@@ -656,6 +656,8 @@ ul { list-style: none; }
   padding: 0;
   overflow: hidden;
 }
+
+/* Background photo */
 .urgency-bg {
   position: absolute;
   inset: 0;
@@ -663,141 +665,272 @@ ul { list-style: none; }
   background-size: cover;
   background-position: center;
 }
+
+/* Multi-layer overlay: deep gradient left → semi-transparent right
+   keeps photo visible on the right while guaranteeing WCAG AAA on text */
 .urgency-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(13,42,78,.95) 0%, rgba(13,42,78,.82) 100%);
+  background:
+    linear-gradient(105deg,
+      rgba(8,24,56,.97)  0%,
+      rgba(13,42,78,.92) 45%,
+      rgba(13,42,78,.78) 70%,
+      rgba(13,42,78,.60) 100%
+    );
 }
+
+/* Two-column grid: narrative left, action card right */
 .urgency-content {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 1fr 420px;
-  gap: 60px;
-  align-items: center;
-  padding: 100px 0;
+  grid-template-columns: 1fr 400px;
+  gap: 64px;
+  align-items: start;
+  padding: 112px 0 100px;
 }
-.urgency-text .overline {
+
+/* ── Kicker badge ── */
+.urgency-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(240,124,30,.18);
+  border: 1px solid rgba(240,124,30,.35);
+  border-radius: 50px;
+  padding: 6px 16px 6px 12px;
   font-size: .72rem;
   font-weight: 700;
-  letter-spacing: .15em;
+  letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--orange-light);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
+.urgency-pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--orange);
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ── Heading ── */
 .urgency-heading {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-size: clamp(2rem, 3.8vw, 3rem);
   font-weight: 800;
   color: var(--white);
-  line-height: 1.15;
-  margin-bottom: 24px;
+  line-height: 1.12;
+  margin-bottom: 20px;
 }
+/* Italic accent line in the heading */
+.urgency-heading-em {
+  font-style: italic;
+  color: var(--orange-light);
+  display: block;
+}
+
+/* ── Body copy ── */
 .urgency-body {
   font-size: 1.05rem;
-  color: rgba(255,255,255,.85);
+  color: rgba(255,255,255,.82);
   line-height: 1.85;
-  margin-bottom: 16px;
-}
-.urgency-price {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-  color: var(--orange-light);
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-.urgency-closing {
-  font-size: 1rem;
-  color: rgba(255,255,255,.8);
-  line-height: 1.9;
-  margin-bottom: 36px;
-  border-left: 3px solid var(--orange);
-  padding-left: 20px;
-}
-.urgency-card {
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.12);
-  backdrop-filter: blur(12px);
-  border-radius: var(--radius-lg);
-  padding: 40px 32px;
-  text-align: center;
-}
-.qr-placeholder {
-  width: 140px;
-  height: 140px;
-  background: var(--white);
-  border-radius: var(--radius-sm);
-  margin: 0 auto 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: .7rem;
-  color: var(--gray-600);
-  font-weight: 600;
-  text-align: center;
-  padding: 12px;
-  line-height: 1.4;
-  /* QR code pattern via CSS */
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 7px, rgba(0,0,0,.08) 7px, rgba(0,0,0,.08) 8px),
-    repeating-linear-gradient(90deg, transparent, transparent 7px, rgba(0,0,0,.08) 7px, rgba(0,0,0,.08) 8px);
-}
-.urgency-card h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
-  color: var(--white);
-  margin-bottom: 8px;
-}
-.urgency-card p {
-  font-size: .9rem;
-  color: rgba(255,255,255,.65);
   margin-bottom: 28px;
+  max-width: 520px;
 }
-.urgency-card .btn { width: 100%; justify-content: center; }
 
+/* ── Feature list — custom SVG check icons ── */
 .urgency-gift-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 28px;
+  margin: 0 0 32px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 .urgency-gift-list li {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-size: .97rem;
-  color: rgba(255,255,255,.88);
+  color: rgba(255,255,255,.90);
   line-height: 1.5;
 }
-.urgency-gift-list li::before {
-  content: '•';
-  color: var(--orange-light);
-  font-size: 1.3rem;
-  line-height: 1;
+/* Icon wrapper: filled orange circle */
+.urgency-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  background: var(--orange);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(240,124,30,.4);
   flex-shrink: 0;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.urgency-gift-list li:hover .urgency-check {
+  transform: scale(1.15);
+  box-shadow: 0 4px 14px rgba(240,124,30,.55);
 }
 
-.urgency-btn-group {
+/* ── Blockquote card ── */
+.urgency-quote-card {
+  position: relative;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.10);
+  /* gradient top border accent */
+  border-top: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--orange), var(--orange-light)) 1;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 28px 28px 28px 32px;
+  margin-bottom: 0;
+}
+.urgency-quote-mark {
+  color: var(--orange);
+  opacity: .55;
+  margin-bottom: 14px;
+}
+.urgency-quote-lines {
+  font-size: .98rem;
+  color: rgba(255,255,255,.78);
+  line-height: 2;
+  font-style: italic;
+  margin-bottom: 14px;
+}
+.urgency-quote-close {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--orange-light);
+  line-height: 1.5;
+}
+.urgency-quote-close strong {
+  font-weight: 800;
+}
+
+/* ── RIGHT: Glassmorphism action card ── */
+.urgency-action-card {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.13);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: var(--radius-lg);
+  padding: 44px 36px 36px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-top: 8px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  /* sticky within the grid row so it tracks scroll */
+  position: sticky;
+  top: 100px;
+  /* subtle glow around the card */
+  box-shadow: 0 0 0 1px rgba(240,124,30,.12), 0 24px 60px rgba(0,0,0,.35);
 }
+
+/* Price hero */
+.urgency-price-hero {
+  text-align: center;
+  margin-bottom: 10px;
+  line-height: 1;
+}
+.urgency-price-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.2rem, 5vw, 4.4rem);
+  font-weight: 900;
+  color: var(--orange-light);
+  letter-spacing: -.02em;
+}
+.urgency-price-period {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.6);
+  vertical-align: super;
+  margin-left: 4px;
+}
+.urgency-card-tagline {
+  font-size: .9rem;
+  color: rgba(255,255,255,.68);
+  line-height: 1.7;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+/* Thin divider */
+.urgency-card-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+  margin-bottom: 28px;
+}
+
+/* Buttons inside the card */
 .urgency-btn-main {
-  flex: 0 0 auto;
-  font-size: 1.15rem;
-  padding: 20px 48px;
-  font-weight: 700;
+  width: 100%;
+  justify-content: center;
+  font-size: 1.05rem;
+  padding: 18px 28px;
+  margin-bottom: 14px;
+  /* stronger glow on the primary CTA */
+  box-shadow: 0 6px 24px rgba(240,124,30,.45);
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
 }
+.urgency-btn-main:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 36px rgba(240,124,30,.6);
+}
+.urgency-btn-main:active {
+  transform: translateY(0) scale(.99);
+}
+.urgency-btn-main:focus-visible {
+  outline: 3px solid var(--orange-light);
+  outline-offset: 4px;
+}
+
 .urgency-btn-secondary {
-  flex: 0 0 auto;
-  font-size: 0.9rem;
-  padding: 13px 28px;
-  opacity: 0.88;
+  width: 100%;
+  justify-content: center;
+  font-size: .9rem;
+  padding: 14px 24px;
+  margin-bottom: 24px;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+.urgency-btn-secondary:hover {
+  background: rgba(255,255,255,.14);
+  border-color: var(--white);
+  transform: translateY(-2px);
+}
+.urgency-btn-secondary:focus-visible {
+  outline: 3px solid rgba(255,255,255,.6);
+  outline-offset: 4px;
+}
+
+/* Trust signals row */
+.urgency-trust-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding-top: 20px;
+}
+.urgency-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+}
+.urgency-trust-item svg {
+  color: var(--orange-light);
+  opacity: .8;
+  flex-shrink: 0;
 }
 
 /* ============================================================
@@ -1246,7 +1379,10 @@ ul { list-style: none; }
   .mission-text { padding-left: 0; }
   .mission-image-wrap img { height: 400px; }
   .mission-badge { right: 12px; bottom: -12px; }
-  .urgency-content { grid-template-columns: 1fr; gap: 40px; }
+  .urgency-content { grid-template-columns: 1fr; gap: 40px; padding: 80px 0 72px; }
+  .urgency-action-card { position: static; }
+  .urgency-btn-main, .urgency-btn-secondary { width: 100%; }
+  .urgency-trust-row { justify-content: center; gap: 20px; }
   .disaster-grid { grid-template-columns: 1fr; gap: 48px; }
   .disaster-image-wrap img { height: 360px; }
   .help-cards { grid-template-columns: repeat(2, 1fr); }
@@ -1271,4 +1407,7 @@ ul { list-style: none; }
   .btn-lg { padding: 15px 28px; font-size: 1rem; }
   .mission-badge { position: static; margin-top: 16px; display: inline-block; }
   .disaster-ribbon { position: static; border-radius: var(--radius-sm); margin-bottom: 16px; display: inline-block; }
+  .urgency-content { padding: 64px 0 56px; }
+  .urgency-action-card { padding: 32px 24px 28px; }
+  .urgency-trust-row { flex-direction: column; align-items: center; gap: 12px; }
 }

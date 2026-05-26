@@ -268,55 +268,121 @@
   <div class="container">
     <div class="urgency-content">
 
+      {{-- ── LEFT: Narrative column ── --}}
       <div class="urgency-text reveal-left">
-        <p class="overline">Urgent Campaign</p>
+
+        {{-- Pulsing kicker badge --}}
+        <div class="urgency-kicker" aria-label="Urgent Campaign">
+          <span class="urgency-pulse-dot" aria-hidden="true"></span>
+          Urgent Campaign
+        </div>
+
+        {{-- Main heading --}}
         <h2 class="urgency-heading" id="urgency-title">
           @if($cms->has('urgency', 'headline'))
             {{ $cms->text('urgency', 'headline', '') }}
           @else
-            Hunger Can't Wait —<br/>This Is The Moment
+            Urgent Relief<br/><em class="urgency-heading-em">Needed Now</em>
           @endif
         </h2>
+
+        {{-- Body copy --}}
         @if($cms->has('urgency', 'body'))
           <p class="urgency-body">{!! nl2br(e($cms->text('urgency', 'body', ''))) !!}</p>
         @else
           <p class="urgency-body">
-            There is a child praying for a meal right now.<br/>
-            <strong style="color:#fff;">You can be the answer.</strong>
+            A typhoon left families without food, shelter, or clean water.
+            Your support helps us mobilise immediate relief — emergency meals,
+            hygiene kits, and medical care for children still recovering from the storm.
           </p>
         @endif
-        <p class="urgency-price">
-          <!-- For just @if ($cms->has('urgency', 'price'))
-            {{ $cms->text('urgency', 'price', '') }}
-          @else
-            $7.99 a month
-          @endif 
-          , you can help feed Filipino children in need
-          and bring hope to a hungry family. -->
-          For just $29/month, you can help provide urgent disaster relief to families devastated by storms, flooding, and crisis.
-        </p>
-        <ul class="urgency-gift-list">
-          <li>Emergency food supplies</li>
-          <li>Clean drinking water</li>
-          <li>Hygiene and medical kits</li>
-          <li>Shelter assistance for displaced families</li>
-          <li>Hope for children and families in crisis</li>
+
+        {{-- Feature list with SVG check icons --}}
+        <ul class="urgency-gift-list" aria-label="Your donation provides">
+          @php
+          $gifts = [
+            'Emergency food supplies',
+            'Clean drinking water',
+            'Hygiene and medical kits',
+            'Shelter assistance for displaced families',
+            'Hope for children and families in crisis',
+          ];
+          @endphp
+          @foreach($gifts as $gift)
+          <li>
+            <span class="urgency-check" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            {{ $gift }}
+          </li>
+          @endforeach
         </ul>
-        <blockquote class="urgency-closing">
-          This is more than a donation —<br/>
-          This is relief in action.<br/>
-          This is compassion responding quickly.<br/>
-          This is hope reaching families in their darkest hour.<br/><br/>
-          <strong style="color: var(--orange-light);">Because of YOU… families survive, recover, and rebuild.</strong>
+
+        {{-- Elevated blockquote card --}}
+        <blockquote class="urgency-quote-card">
+          <svg class="urgency-quote-mark" width="32" height="24" viewBox="0 0 32 24" fill="none" aria-hidden="true">
+            <path d="M0 24V14.4C0 10.56 0.96 7.28 2.88 4.56C4.8 1.84 7.68 0.16 11.52 0L12.48 2.16C10.08 2.72 8.24 3.92 6.96 5.76C5.68 7.6 5.04 9.52 5.04 11.52H9.6V24H0ZM19.2 24V14.4C19.2 10.56 20.16 7.28 22.08 4.56C24 1.84 26.88 0.16 30.72 0L31.68 2.16C29.28 2.72 27.44 3.92 26.16 5.76C24.88 7.6 24.24 9.52 24.24 11.52H28.8V24H19.2Z" fill="currentColor"/>
+          </svg>
+          <p class="urgency-quote-lines">
+            This is more than a donation —<br/>
+            This is relief in action.<br/>
+            This is compassion responding quickly.<br/>
+            This is hope reaching families in their darkest hour.
+          </p>
+          <p class="urgency-quote-close">
+            Because of <strong>YOU</strong>&hellip; families survive, recover, and rebuild.
+          </p>
         </blockquote>
-        <div class="urgency-btn-group">
-          <a href="{{ route('donate') }}?campaign=where&amount=29.99" class="btn btn-primary btn-lg urgency-btn-main">
-            &#9829; Give $29 Monthly
-          </a>
-          <a href="{{ route('donate') }}?campaign=where" class="btn btn-outline btn-md urgency-btn-secondary">
-            🤝 Give One-Time Relief Gift
-          </a>
+
+      </div>
+
+      {{-- ── RIGHT: Glassmorphism action card ── --}}
+      <div class="urgency-action-card reveal-right" role="complementary" aria-label="Donation options">
+
+        {{-- Price hero --}}
+        <div class="urgency-price-hero">
+          <span class="urgency-price-amount">$29</span>
+          <span class="urgency-price-period">/month</span>
         </div>
+        <p class="urgency-card-tagline">
+          Provide urgent disaster relief to families devastated by storms, flooding, and crisis.
+        </p>
+
+        <div class="urgency-card-divider" aria-hidden="true"></div>
+
+        {{-- Primary CTA --}}
+        <a href="{{ route('donate') }}?campaign=where&amount=29.99"
+           class="btn btn-primary btn-lg urgency-btn-main"
+           aria-label="Give $29 monthly to disaster relief">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          Give $29 Monthly
+        </a>
+
+        {{-- Secondary CTA --}}
+        <a href="{{ route('donate') }}?campaign=where"
+           class="btn btn-outline urgency-btn-secondary"
+           aria-label="Give a one-time relief gift">
+          Give a One-Time Relief Gift
+        </a>
+
+        {{-- Trust signals --}}
+        <div class="urgency-trust-row">
+          <div class="urgency-trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Secure &amp; encrypted</span>
+          </div>
+          <div class="urgency-trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>Tax-deductible</span>
+          </div>
+          <div class="urgency-trust-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span>Cancel anytime</span>
+          </div>
+        </div>
+
       </div>
 
     </div>
