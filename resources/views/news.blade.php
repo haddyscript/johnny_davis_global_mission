@@ -173,22 +173,22 @@
     </div>
     <div class="filter-row reveal" role="group" aria-label="Filter posts by category">
       <button class="filter-btn active" data-filter="all">
-        <span>All Posts <span class="filter-count">6</span></span>
+        <span>All Posts <span class="filter-count">{{ count($posts) }}</span></span>
       </button>
       <button class="filter-btn" data-filter="field-reports">
-        <span>Field Reports <span class="filter-count">3</span></span>
+        <span>Field Reports <span class="filter-count">{{ collect($posts)->filter(fn($p) => str_contains($p['categories'], 'field-reports'))->count() }}</span></span>
       </button>
       <button class="filter-btn" data-filter="impact-stories">
-        <span>Impact Stories <span class="filter-count">2</span></span>
+        <span>Impact Stories <span class="filter-count">{{ collect($posts)->filter(fn($p) => str_contains($p['categories'], 'impact-stories'))->count() }}</span></span>
       </button>
       <button class="filter-btn" data-filter="prayer-requests">
-        <span>Prayer Requests <span class="filter-count">0</span></span>
+        <span>Prayer Requests <span class="filter-count">{{ collect($posts)->filter(fn($p) => str_contains($p['categories'], 'prayer-requests'))->count() }}</span></span>
       </button>
       <button class="filter-btn" data-filter="disaster-response">
-        <span>Disaster Response <span class="filter-count">1</span></span>
+        <span>Disaster Response <span class="filter-count">{{ collect($posts)->filter(fn($p) => str_contains($p['categories'], 'disaster-response'))->count() }}</span></span>
       </button>
       <button class="filter-btn" data-filter="philippines">
-        <span>Philippines <span class="filter-count">5</span></span>
+        <span>Philippines <span class="filter-count">{{ collect($posts)->filter(fn($p) => strtolower($p['country']) === 'philippines')->count() }}</span></span>
       </button>
     </div>
     <p class="results-count reveal" id="resultsCount">Showing <strong>{{ count($posts) }}</strong> posts</p>
@@ -292,16 +292,8 @@
 
     </div><!-- /posts-grid -->
 
-    <!-- Pagination -->
-    <nav id="pagination" aria-label="Post pagination">
-      <button class="pg-btn arrow" disabled aria-label="Previous page">← Prev</button>
-      <button class="pg-btn active" aria-label="Page 1, current">1</button>
-      <button class="pg-btn" aria-label="Page 2">2</button>
-      <button class="pg-btn" aria-label="Page 3">3</button>
-      <span style="color:var(--gray-200); font-size:.9rem;">…</span>
-      <button class="pg-btn" aria-label="Page 8">8</button>
-      <button class="pg-btn arrow" aria-label="Next page">Next →</button>
-    </nav>
+    <!-- Pagination (built dynamically by for_news.js) -->
+    <nav id="pagination" aria-label="Post pagination"></nav>
 
   </div>
 </section>

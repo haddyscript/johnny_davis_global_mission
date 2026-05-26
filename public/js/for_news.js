@@ -36,47 +36,110 @@
     revealEls.forEach(el => el.classList.add('visible'));
   }
 
-  /* ── Category Filter ─────────────────────────────────────── */
-  const filterBtns  = document.querySelectorAll('.filter-btn');
-  const posts       = document.querySelectorAll('.post-card');
-  const noResults   = document.getElementById('noResults');
+  /* ── Category Filter + Pagination ───────────────────────── */
+  const filterBtns   = document.querySelectorAll('.filter-btn');
+  const allPosts     = Array.from(document.querySelectorAll('.post-card'));
+  const noResults    = document.getElementById('noResults');
   const resultsCount = document.getElementById('resultsCount');
+  const pagination   = document.getElementById('pagination');
+
+  const POSTS_PER_PAGE = 3;
+  let currentFilter = 'all';
+  let currentPage   = 1;
+  let filteredPosts = allPosts.slice();
+
+  function getFilteredPosts(cat) {
+    return allPosts.filter(card => {
+      const cats    = card.dataset.categories || '';
+      const country = (card.dataset.country || '').toLowerCase();
+      return cat === 'all' ||
+             cats.includes(cat) ||
+             (cat === 'philippines' && country === 'philippines') ||
+             (cat === 'uganda'      && country === 'uganda');
+    });
+  }
+
+  function renderPage(page) {
+    const start = (page - 1) * POSTS_PER_PAGE;
+    const end   = start + POSTS_PER_PAGE;
+
+    allPosts.forEach(card => { card.style.display = 'none'; });
+
+    const pageItems = filteredPosts.slice(start, end);
+    pageItems.forEach(card => {
+      card.style.display = '';
+      card.classList.remove('visible');
+      requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('visible')));
+    });
+
+    noResults.classList.toggle('show', filteredPosts.length === 0);
+    resultsCount.innerHTML = `Showing <strong>${filteredPosts.length}</strong> post${filteredPosts.length !== 1 ? 's' : ''}`;
+  }
+
+  function renderPagination() {
+    if (!pagination) return;
+    const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE));
+
+    /* rebuild inner buttons */
+    pagination.innerHTML = '';
+
+    const prevBtn = document.createElement('button');
+    prevBtn.className  = 'pg-btn arrow';
+    prevBtn.textContent = '← Prev';
+    prevBtn.setAttribute('aria-label', 'Previous page');
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.addEventListener('click', () => goToPage(currentPage - 1));
+    pagination.appendChild(prevBtn);
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.className  = 'pg-btn' + (i === currentPage ? ' active' : '');
+      btn.textContent = i;
+      btn.setAttribute('aria-label', `Page ${i}${i === currentPage ? ', current' : ''}`);
+      btn.addEventListener('click', () => goToPage(i));
+      pagination.appendChild(btn);
+    }
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className  = 'pg-btn arrow';
+    nextBtn.textContent = 'Next →';
+    nextBtn.setAttribute('aria-label', 'Next page');
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.addEventListener('click', () => goToPage(currentPage + 1));
+    pagination.appendChild(nextBtn);
+  }
+
+  function goToPage(page) {
+    const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+    if (page < 1 || page > totalPages) return;
+    currentPage = page;
+    renderPage(currentPage);
+    renderPagination();
+    /* scroll to top of posts grid */
+    const postsSection = document.getElementById('posts-section');
+    if (postsSection) {
+      window.scrollTo({ top: postsSection.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' });
+    }
+  }
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const cat = btn.dataset.filter;
+      currentFilter = btn.dataset.filter;
+      currentPage   = 1;
 
-      /* update active state */
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      let visible = 0;
-      posts.forEach(card => {
-        const cats = card.dataset.categories || '';
-        const country = card.dataset.country || '';
-        const show = cat === 'all' ||
-                    cats.includes(cat) ||
-                    (cat === 'uganda' && country.toLowerCase() === 'uganda') ||
-                    (cat === 'philippines' && country.toLowerCase() === 'philippines');
-
-        if (show) {
-          card.style.display = '';
-          /* re-trigger reveal animation */
-          card.classList.remove('visible');
-          requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('visible')));
-          visible++;
-        } else {
-          card.style.display = 'none';
-        }
-      });
-
-      /* no results */
-      noResults.classList.toggle('show', visible === 0);
-
-      /* update counter */
-      resultsCount.innerHTML = `Showing <strong>${visible}</strong> post${visible !== 1 ? 's' : ''}`;
+      filteredPosts = getFilteredPosts(currentFilter);
+      renderPage(currentPage);
+      renderPagination();
     });
   });
+
+  /* initial render */
+  filteredPosts = getFilteredPosts(currentFilter);
+  renderPage(currentPage);
+  renderPagination();
 
   /* ── Newsletter Subscribe ────────────────────────────────── */
   const subscribeForm = document.getElementById('subscribeForm');
