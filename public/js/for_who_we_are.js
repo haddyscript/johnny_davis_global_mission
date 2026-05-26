@@ -45,6 +45,46 @@
 
   revealEls.forEach(el => revealObs.observe(el));
 
+  // ─── Hero CTA buttons: ripple + magnetic cursor ──────────────
+  (function () {
+    const donateBtn = document.querySelector('.wwa-donate-btn');
+    const storyBtn  = document.querySelector('.wwa-story-btn');
+    const ctaBtns   = [donateBtn, storyBtn].filter(Boolean);
+
+    /* Ripple on click */
+    ctaBtns.forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        const rect   = this.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className  = 'wwa-btn-ripple';
+        ripple.style.left = (e.clientX - rect.left) + 'px';
+        ripple.style.top  = (e.clientY - rect.top)  + 'px';
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 680);
+      });
+    });
+
+    /* Magnetic cursor follow */
+    ctaBtns.forEach(btn => {
+      const STRENGTH = 0.22;
+      let isHovered  = false;
+      btn.addEventListener('mouseenter', () => { isHovered = true; });
+      btn.addEventListener('mouseleave', () => {
+        isHovered = false;
+        btn.style.transform = '';
+      });
+      btn.addEventListener('mousemove', function (e) {
+        if (!isHovered) return;
+        const rect = this.getBoundingClientRect();
+        const cx = rect.left + rect.width  / 2;
+        const cy = rect.top  + rect.height / 2;
+        const dx = (e.clientX - cx) * STRENGTH;
+        const dy = (e.clientY - cy) * STRENGTH;
+        this.style.transform = `translateY(-8px) scale(1.08) translate(${dx}px,${dy}px)`;
+      });
+    });
+  }());
+
   // ─── Scroll To Top ───────────────────────────────────────────
   (function () {
     const btn = document.createElement('button');

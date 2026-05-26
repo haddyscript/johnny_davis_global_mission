@@ -65,10 +65,11 @@
       </p>
 
       <div class="hero-ctas">
-        <a href="{{ route('donate') }}" class="btn btn-primary btn-lg">
-          &#9829; Donate Here
+        <a href="{{ route('donate') }}" class="btn btn-primary btn-lg wwa-donate-btn">
+          <span class="wwa-heart" aria-hidden="true">&#9829;</span> Donate Here
         </a>
-        <a href="#about" class="btn btn-outline btn-lg">
+        <a href="#about" class="btn btn-outline btn-lg wwa-story-btn">
+          <svg class="wwa-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Learn Our Story
         </a>
       </div>
@@ -286,10 +287,11 @@
       </p>
 
       <div class="donate-cta-btns">
-        <a href="{{ route('donate') }}" class="btn btn-primary btn-lg pulse-cta">
-          &#9829; Donate Now
+        <a href="{{ route('donate') }}" class="btn btn-primary btn-lg wwa-donate-btn">
+          <span class="wwa-heart" aria-hidden="true">&#9829;</span> Donate Now
         </a>
-        <a href="{{ route('donate') }}" class="btn btn-outline btn-lg">
+        <a href="{{ route('donate') }}" class="btn btn-outline btn-lg wwa-story-btn">
+          <svg class="wwa-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           Support the Mission
         </a>
       </div>
