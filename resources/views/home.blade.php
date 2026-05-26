@@ -446,9 +446,35 @@
           </li>
         </ul>
 
-        <div class="disaster-alert" role="alert">
-          <strong>Critical situation:</strong> Hospitals are overwhelmed with patients and many homes have sustained
-          severe structural damage, leaving families without safe shelter. Your support can make an immediate difference.
+        <div class="disaster-alert" role="alert" aria-live="assertive">
+          <div class="disaster-alert-inner">
+            <div class="disaster-alert-header">
+              <span class="disaster-alert-badge">
+                <span class="disaster-alert-dot" aria-hidden="true"></span>
+                Critical Situation
+              </span>
+            </div>
+            <div class="disaster-alert-stats" aria-label="Key statistics">
+              <div class="disaster-stat-chip">
+                <strong>500+</strong>
+                <span>Families displaced</span>
+              </div>
+              <div class="disaster-stat-chip">
+                <strong>72hrs</strong>
+                <span>Most critical window</span>
+              </div>
+              <div class="disaster-stat-chip">
+                <strong>3 cities</strong>
+                <span>Affected provinces</span>
+              </div>
+            </div>
+            <div class="disaster-alert-divider" aria-hidden="true"></div>
+            <p class="disaster-alert-body">
+              Hospitals are overwhelmed with patients and many homes have sustained
+              <strong>severe structural damage</strong>, leaving families without safe shelter.
+              Your support can make an immediate difference — every hour counts.
+            </p>
+          </div>
         </div>
 
         <a href="{{ route('donate') }}?campaign=cebu" class="btn btn-primary btn-lg">
