@@ -151,6 +151,51 @@
     allReveal.forEach(el => el.classList.add('visible'));
   }
 
+  // ─── Hero stats counting animation ──────────────────────────
+  (function () {
+    const statEls = document.querySelectorAll('.hero-stat strong');
+    if (!statEls.length) return;
+
+    function parseStatValue(text) {
+      // Extract leading number (supports commas and decimals), keep rest as suffix
+      const match = text.match(/^([\d,]+)/);
+      if (!match) return { num: null, suffix: text };
+      const num    = parseInt(match[1].replace(/,/g, ''), 10);
+      const suffix = text.slice(match[1].length); // e.g. "+", "K+", " Countries"
+      return { num, suffix };
+    }
+
+    function formatNum(n) {
+      return n.toLocaleString();
+    }
+
+    function animateStat(el) {
+      const original      = el.textContent.trim();
+      const { num, suffix } = parseStatValue(original);
+      if (num === null || num === 0) return;
+
+      const duration = 2000;
+      const steps    = 60;
+      const interval = duration / steps;
+      let current    = 0;
+
+      const timer = setInterval(() => {
+        current++;
+        const value = Math.round((current / steps) * num);
+        el.textContent = formatNum(value) + suffix;
+        if (current >= steps) {
+          el.textContent = formatNum(num) + suffix;
+          clearInterval(timer);
+        }
+      }, interval);
+    }
+
+    /* Stats are in the hero — visible on load, so animate after a short delay */
+    window.addEventListener('load', () => {
+      setTimeout(() => statEls.forEach(el => animateStat(el)), 400);
+    });
+  }());
+
   // ─── Smooth scroll for nav links ────────────────────────────
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -163,3 +208,122 @@
       }
     });
   });
+
+  // ─── Confetti burst from badge number ───────────────────────
+  (function () {
+    const badge       = document.querySelector('.mission-badge');
+    const badgeNumber = badge && badge.querySelector('strong');
+    if (!badgeNumber) return;
+
+    const COLORS    = ['#f97316','#fbbf24','#34d399','#60a5fa','#a78bfa','#f472b6','#ffffff'];
+    const DURATION  = 2000;
+    const INTERVAL  = 40;
+    const PER_BURST = 8;
+
+    let canvas, ctx, particles = [], animId, intervalId, startTime, originX, originY;
+
+    function createCanvas() {
+      canvas = document.createElement('canvas');
+      canvas.style.cssText = [
+        'position:fixed', 'inset:0', 'width:100%', 'height:100%',
+        'pointer-events:none', 'z-index:9999'
+      ].join(';');
+      document.body.appendChild(canvas);
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+    }
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function getOrigin() {
+      const rect = badgeNumber.getBoundingClientRect();
+      originX = rect.left + rect.width  / 2;
+      originY = rect.top  + rect.height / 2;
+    }
+
+    function spawnParticles() {
+      getOrigin();
+      for (let i = 0; i < PER_BURST; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 6 + 2;
+        particles.push({
+          x:     originX,
+          y:     originY,
+          r:     Math.random() * 7 + 4,
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          vx:    Math.cos(angle) * speed,
+          vy:    Math.sin(angle) * speed - 2,
+          angle: Math.random() * Math.PI * 2,
+          spin:  (Math.random() - 0.5) * 0.25,
+          shape: Math.random() < 0.5 ? 'rect' : 'circle',
+          life:  1,
+          decay: Math.random() * 0.015 + 0.008,
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(0, p.life);
+        if (p.shape === 'rect') {
+          ctx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r);
+        } else {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.r / 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+
+        p.x     += p.vx;
+        p.y     += p.vy;
+        p.vy    += 0.12; // gravity
+        p.angle += p.spin;
+        p.life  -= p.decay;
+      });
+
+      particles = particles.filter(p => p.life > 0);
+      animId = requestAnimationFrame(draw);
+    }
+
+    function stopConfetti() {
+      clearInterval(intervalId);
+      setTimeout(() => {
+        cancelAnimationFrame(animId);
+        window.removeEventListener('resize', resize);
+        canvas.remove();
+        particles = [];
+      }, 3000);
+    }
+
+    function launchConfetti() {
+      createCanvas();
+      ctx = canvas.getContext('2d');
+      startTime = Date.now();
+      spawnParticles();
+      draw();
+      intervalId = setInterval(() => {
+        if (Date.now() - startTime >= DURATION) { stopConfetti(); return; }
+        spawnParticles();
+      }, INTERVAL);
+    }
+
+    if ('IntersectionObserver' in window) {
+      const badgeObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            badgeObserver.unobserve(badge);
+            launchConfetti();
+          }
+        });
+      }, { threshold: 0.6 });
+      badgeObserver.observe(badge);
+    }
+  }());
