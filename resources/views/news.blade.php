@@ -118,7 +118,7 @@
 ============================================================ -->
 <section id="featured-story" aria-labelledby="featured-title">
   <div class="container">
-    <div class="featured-story-card reveal">
+    <div class="featured-story-card reveal-flip">
       <div class="featured-story-image">
         <img src="{{ asset('images/landingpage/community_outreach.png') }}"
              alt="Marco's transformation from malnourished to thriving child"
@@ -168,26 +168,26 @@
 ============================================================ -->
 <section id="filter-section" aria-labelledby="filter-heading">
   <div class="container">
-    <div class="filter-header reveal">
+    <div class="filter-header reveal-blur">
       <span class="section-label" id="filter-heading">Browse by Category</span>
     </div>
-    <div class="filter-row reveal" role="group" aria-label="Filter posts by category">
-      <button class="filter-btn active" data-filter="all">
+    <div class="filter-row" role="group" aria-label="Filter posts by category">
+      <button class="filter-btn active reveal-pop delay-1" data-filter="all">
         <span>All Posts <span class="filter-count">{{ count($posts) }}</span></span>
       </button>
-      <button class="filter-btn" data-filter="field-reports">
+      <button class="filter-btn reveal-pop delay-2" data-filter="field-reports">
         <span>Field Reports <span class="filter-count">{{ collect($posts)->filter(fn($p) => str_contains($p['categories'], 'field-reports'))->count() }}</span></span>
       </button>
-      <button class="filter-btn" data-filter="impact-stories">
+      <button class="filter-btn reveal-pop delay-3" data-filter="impact-stories">
         <span>Impact Stories <span class="filter-count">{{ collect($posts)->filter(fn($p) => str_contains($p['categories'], 'impact-stories'))->count() }}</span></span>
       </button>
-      <button class="filter-btn" data-filter="prayer-requests">
+      <button class="filter-btn reveal-pop delay-4" data-filter="prayer-requests">
         <span>Prayer Requests <span class="filter-count">{{ collect($posts)->filter(fn($p) => str_contains($p['categories'], 'prayer-requests'))->count() }}</span></span>
       </button>
-      <button class="filter-btn" data-filter="disaster-response">
+      <button class="filter-btn reveal-pop delay-5" data-filter="disaster-response">
         <span>Disaster Response <span class="filter-count">{{ collect($posts)->filter(fn($p) => str_contains($p['categories'], 'disaster-response'))->count() }}</span></span>
       </button>
-      <button class="filter-btn" data-filter="philippines">
+      <button class="filter-btn reveal-pop delay-6" data-filter="philippines">
         <span>Philippines <span class="filter-count">{{ collect($posts)->filter(fn($p) => strtolower($p['country']) === 'philippines')->count() }}</span></span>
       </button>
     </div>
@@ -308,7 +308,7 @@
     <div class="stats-bg-pattern" aria-hidden="true"></div>
   </div>
   <div class="container">
-    <div class="stats-header reveal">
+    <div class="stats-header reveal-blur">
       <span class="section-label">Real Impact</span>
       <h2 class="section-title white" id="stats-title">Numbers That Tell Stories</h2>
       <p class="stats-subtitle">
@@ -316,7 +316,7 @@
       </p>
     </div>
     <div class="stats-grid">
-      <div class="stat-card reveal delay-1">
+      <div class="stat-card reveal-pop delay-1">
         <div class="stat-icon" aria-hidden="true">
           <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white"><path d="M11 3H9v7c0 2.21 1.79 4 4 4s4-1.79 4-4V3h-2v4h-1V3h-2v4h-1V3zm-4 0H5C3.9 3 3 3.9 3 5v3c0 2.08 1.42 3.83 3.37 4.29L7 21h2l-.63-8.71A4.002 4.002 0 0 0 11 8.5V3H7z"/></svg>
         </div>
@@ -324,7 +324,7 @@
         <div class="stat-label">Meals Served</div>
         <div class="stat-desc">Children fed monthly across Cebu and Leyte</div>
       </div>
-      <div class="stat-card reveal delay-2">
+      <div class="stat-card reveal-pop delay-2">
         <div class="stat-icon" aria-hidden="true">
           <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         </div>
@@ -332,7 +332,7 @@
         <div class="stat-label">Communities Reached</div>
         <div class="stat-desc">Barangays and villages served this year</div>
       </div>
-      <div class="stat-card reveal delay-3">
+      <div class="stat-card reveal-pop delay-3">
         <div class="stat-icon" aria-hidden="true">
           <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white"><path d="M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>
         </div>
@@ -340,7 +340,7 @@
         <div class="stat-label">Patients Treated</div>
         <div class="stat-desc">Free medical care provided in mobile clinics</div>
       </div>
-      <div class="stat-card reveal delay-4">
+      <div class="stat-card reveal-pop delay-4">
         <div class="stat-icon" aria-hidden="true">
           <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z"/></svg>
         </div>
@@ -358,7 +358,7 @@
 ============================================================ -->
 <section id="mission-locations" aria-labelledby="locations-title">
   <div class="container">
-    <div class="locations-header reveal">
+    <div class="locations-header reveal-blur">
       <span class="section-label">Where We Serve</span>
       <h2 class="section-title" id="locations-title">Mission Locations</h2>
       <p class="locations-subtitle">
@@ -366,7 +366,7 @@
       </p>
     </div>
     <div class="locations-grid">
-      <div class="location-card philippines reveal delay-1">
+      <div class="location-card philippines reveal-scale delay-1">
         <div class="location-image">
           <img src="{{ asset('images/landingpage/community_outreach.png') }}"
                alt="Philippines mission work in Cebu and Leyte" loading="lazy"/>
@@ -406,21 +406,21 @@
       </div>
 
       <div class="trending-list reveal-right">
-        <div class="trending-item" role="button" tabindex="0" aria-label="Read: Marco's Story">
+        <div class="trending-item reveal-right delay-1" role="button" tabindex="0" aria-label="Read: Marco's Story">
           <span class="trending-num" aria-hidden="true">01</span>
           <div class="trending-info">
             <p class="trending-cat">Impact Story</p>
             <p class="trending-title">Marco's Story: From Malnourished to Thriving in 6 Months</p>
           </div>
         </div>
-        <div class="trending-item" role="button" tabindex="0" aria-label="Read: 2,400 Meals Served">
+        <div class="trending-item reveal-right delay-2" role="button" tabindex="0" aria-label="Read: 2,400 Meals Served">
           <span class="trending-num" aria-hidden="true">02</span>
           <div class="trending-info">
             <p class="trending-cat">Field Report · Philippines</p>
             <p class="trending-title">2,400 Meals Served in February — Our Biggest Month Yet</p>
           </div>
         </div>
-        <div class="trending-item" role="button" tabindex="0" aria-label="Read: 18 Children Enrolled">
+        <div class="trending-item reveal-right delay-3" role="button" tabindex="0" aria-label="Read: 18 Children Enrolled">
           <span class="trending-num" aria-hidden="true">03</span>
           <div class="trending-info">
             <p class="trending-cat">Education · Philippines</p>
@@ -470,7 +470,7 @@
         </div>
       </div>
 
-      <div class="newsletter-form-card reveal-right">
+      <div class="newsletter-form-card reveal-scale">
         <div id="nlForm">
           <h3>Join 1,200+ Supporters</h3>
           <p>Monthly updates. Real impact. Straight to your inbox.</p>
@@ -518,7 +518,7 @@
 ============================================================ -->
 <section id="testimonials" aria-labelledby="testimonials-title">
   <div class="container">
-    <div class="testimonials-header reveal">
+    <div class="testimonials-header reveal-blur">
       <span class="section-label">Voices from the Field</span>
       <h2 class="section-title" id="testimonials-title">What People Are Saying</h2>
       <p class="testimonials-subtitle">
@@ -526,7 +526,7 @@
       </p>
     </div>
     <div class="testimonials-carousel">
-      <div class="testimonial-card reveal delay-1 active">
+      <div class="testimonial-card reveal-scale delay-1 active">
         <div class="testimonial-quote">
           "These meals mean our children can finally focus in school again. Before the program, many were too hungry to learn. Now they come to class with energy and hope."
         </div>
@@ -538,7 +538,7 @@
           </div>
         </div>
       </div>
-      <div class="testimonial-card reveal delay-2">
+      <div class="testimonial-card reveal-scale delay-2">
         <div class="testimonial-quote">
           "The medical mission saved my grandmother's life. She couldn't afford the medicine she needed, but the doctors here treated her for free. God bless this ministry."
         </div>
@@ -568,7 +568,7 @@
     <div class="donation-overlay"></div>
   </div>
   <div class="container">
-    <div class="donation-content reveal">
+    <div class="donation-content reveal-scale">
       <h2 class="donation-title" id="donation-title">Be Part of the Next Story</h2>
       <p class="donation-text">
         Every update you read is made possible by people who care. Your support helps us reach more children, families, and communities in need.

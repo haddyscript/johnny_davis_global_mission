@@ -24,13 +24,15 @@
   );
 
   /* ── Scroll Reveal ───────────────────────────────────────── */
-  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const revealEls = document.querySelectorAll(
+    '.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-pop, .reveal-flip, .reveal-blur'
+  );
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
       });
-    }, { threshold:.1, rootMargin:'0px 0px -40px 0px' });
+    }, { threshold:.08, rootMargin:'0px 0px -32px 0px' });
     revealEls.forEach(el => io.observe(el));
   } else {
     revealEls.forEach(el => el.classList.add('visible'));
