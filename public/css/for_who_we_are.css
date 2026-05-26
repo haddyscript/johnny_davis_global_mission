@@ -278,7 +278,7 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-image: url('../images/who-we-are/second-image.webp');
+      background-image: url('../images/who-we-are/second-image.png');
       background-size: cover;
       background-position: center 30%;
       transform: scale(1.06);
