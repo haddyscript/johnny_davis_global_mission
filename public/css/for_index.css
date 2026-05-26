@@ -396,7 +396,7 @@ ul { list-style: none; }
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('../images/landingpage/landing.webp');
+  background-image: url('../images/landingpage/landing.png');
   background-size: cover;
   background-position: center 30%;
   transform: scale(1.04);
