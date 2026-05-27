@@ -1330,3 +1330,236 @@
     bottom: calc(14px + env(safe-area-inset-bottom, 0px));
   }
 }
+
+/* ================================================================
+   MOBILE WHO WE ARE — elite editorial overhaul (≤768px only)
+   Desktop untouched — all rules scoped inside media queries below.
+================================================================ */
+
+/* —— Disable JS parallax on mobile via CSS override ————————— */
+@media (max-width: 768px) {
+  .hero-bg {
+    transform: scale(1) !important;
+    transition: none !important;
+  }
+}
+
+/* —— 1. Hero ————————————————————————————————————————————————— */
+@media (max-width: 768px) {
+  #hero { min-height: 100svh; }
+
+  .hero-content { padding: 60px 0 44px; }
+
+  .hero-badge {
+    font-size: .72rem;
+    padding: 5px 14px;
+    margin-bottom: 18px;
+  }
+
+  .hero-headline {
+    font-size: clamp(2.1rem, 9vw, 2.8rem);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  .hero-sub {
+    font-size: .92rem;
+    line-height: 1.65;
+    margin-bottom: 28px;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 52px;
+    font-size: .95rem;
+  }
+
+  .hero-scroll { bottom: 20px; }
+}
+
+/* —— 2. About Section ——————————————————————————————————————— */
+@media (max-width: 768px) {
+  #about { padding: 56px 0; }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  /* Image bleeds to screen edges for editorial impact */
+  .about-image-wrap {
+    order: -1;
+    margin: 0 -24px;
+  }
+
+  .about-image-wrap img {
+    height: 260px;
+    border-radius: 0;
+    box-shadow: none;
+    width: 100%;
+    object-position: center 20%;
+  }
+
+  .about-badge {
+    bottom: 16px;
+    right: 24px;
+    padding: 14px 18px;
+  }
+  .about-badge strong { font-size: 1.8rem; }
+  .about-badge span { font-size: .68rem; }
+
+  .about-text { padding-top: 28px; }
+
+  .about-body { font-size: .95rem; line-height: 1.75; margin-bottom: 14px; }
+
+  /* Service icons: horizontal scrollable chip rail */
+  .service-icons {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    gap: 10px;
+    margin: 20px -24px 0;
+    padding: 4px 24px 12px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .service-icons::-webkit-scrollbar { display: none; }
+
+  .service-icon-item {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: .84rem;
+  }
+}
+
+/* —— 3. Mission Highlights ————————————————————————————————— */
+@media (max-width: 768px) {
+  #mission-highlights { padding: 56px 0; }
+
+  .mh-header { margin-bottom: 32px; }
+  .mh-header .body-text { font-size: .92rem; }
+
+  .mh-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .mh-card {
+    padding: 22px 16px;
+    border-radius: var(--radius-md);
+  }
+  .mh-card:active { transform: scale(.97); transition: transform .1s ease; }
+
+  .mh-icon { font-size: 2.2rem; margin-bottom: 12px; }
+  .mh-title { font-size: 1rem; margin-bottom: 6px; }
+  .mh-desc { font-size: .8rem; line-height: 1.6; }
+
+  .mh-card.reveal {
+    transform: translate3d(0, 24px, 0);
+    transition: opacity .45s ease, transform .5s cubic-bezier(.4,0,.2,1);
+    will-change: transform, opacity;
+  }
+  .mh-card.reveal.visible { transform: translate3d(0, 0, 0); }
+}
+
+/* —— 4. Meet the Team ——————————————————————————————————————— */
+@media (max-width: 768px) {
+  #team { padding: 56px 0; }
+
+  .team-header { margin-bottom: 36px; }
+  .team-header .body-text { font-size: .92rem; }
+
+  /* Founder card */
+  .team-founder-card {
+    flex-direction: column;
+    gap: 20px;
+    padding: 28px 20px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    align-items: center;
+  }
+
+  .founder-photo { width: 100px; height: 100px; }
+
+  .founder-info .founder-label { font-size: .68rem; padding: 3px 12px; }
+  .founder-info h3 { font-size: 1.5rem; }
+  .founder-info .founder-role { font-size: .88rem; margin-bottom: 10px; }
+  .founder-info .founder-bio { font-size: .84rem; line-height: 1.65; }
+
+  /* Team grid → horizontal swipe carousel */
+  .team-grid {
+    display: flex;
+    flex-direction: row;
+    grid-template-columns: unset;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    margin: 0 -24px;
+    padding: 4px 24px 16px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .team-grid::-webkit-scrollbar { display: none; }
+
+  .team-card {
+    flex: 0 0 calc(47% - 6px);
+    scroll-snap-align: start;
+    border-radius: var(--radius-md);
+  }
+
+  .team-photo-wrap { height: 180px; }
+
+  .team-info { padding: 14px 16px; }
+  .team-info h3 { font-size: .92rem; margin-bottom: 2px; }
+  .team-info p { font-size: .78rem; }
+  .team-role-bar { margin-top: 8px; width: 20px; }
+
+  .team-card.reveal {
+    transform: translate3d(0, 16px, 0);
+    transition: opacity .4s ease, transform .45s cubic-bezier(.4,0,.2,1);
+    will-change: transform, opacity;
+  }
+  .team-card.reveal.visible { transform: translate3d(0, 0, 0); }
+}
+
+/* —— 5. Donation CTA ————————————————————————————————————————— */
+@media (max-width: 768px) {
+  #donate-cta { padding: 76px 0; }
+
+  .donate-cta-content .section-title {
+    font-size: clamp(1.7rem, 7vw, 2.4rem);
+    margin-bottom: 14px;
+  }
+  .donate-cta-content .body-text {
+    font-size: .92rem;
+    margin-bottom: 28px;
+  }
+
+  .donate-cta-btns {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .donate-cta-btns .btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 52px;
+    font-size: .95rem;
+  }
+
+  .impact-note { font-size: .75rem; margin-top: 20px; line-height: 1.6; }
+}
