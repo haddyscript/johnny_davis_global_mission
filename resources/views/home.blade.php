@@ -189,15 +189,15 @@
           Please watch the Johnny Davis Global Missions team video below.
         </p>
         <p class="farmers-body">
-          In this segment, we are interviewing farmers in the mountains of the Province of Sarangani Province. We are hearing directly from families and local communities about the challenges they face and the need for sustainable solutions to hunger.
+          In this segment, our team is interviewing farmers in the mountains of Sarangani Province, Philippines. We are hearing directly from families and local communities about the challenges they face and the ongoing need for sustainable solutions to hunger.
         </p>
         <div class="farmers-highlight">
           <p>
-            Our mission is not only to provide temporary relief, but to create <strong>long-term impact</strong>. We desire to partner with local farmers by helping provide seeds and agricultural support so they can grow their own crops such as <strong>rice, vegetables, and corn</strong>.
+            Our mission is not only to provide temporary relief but also to create <strong>long-term impact</strong>. We desire to partner with local farmers by helping provide seeds, agricultural resources, and support so they can grow crops such as <strong>rice, vegetables, and corn</strong>.
           </p>
         </div>
         <p class="farmers-body">
-          By empowering communities to grow food locally, we can help create a pathway toward lasting change and help fight hunger in this region.
+          By empowering communities to grow food locally, we can help create a pathway toward lasting change, strengthen families, and fight hunger throughout the region.
         </p>
         <a href="{{ route('donate') }}?campaign=gensan" class="btn btn-lg farmers-cta wwa-donate-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 8C8 10 5.9 16.17 3.82 19.07L5.71 21c2-2.25 4-6.25 7.29-7 2.09 9.75 11 10 11 10S17 20.25 17 8z"/></svg>
