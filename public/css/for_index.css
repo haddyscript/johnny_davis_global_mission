@@ -1876,17 +1876,21 @@ ul { list-style: none; }
    WW A  DONATE BUTTON — STICKY
 ============================================================ */
 .wwa-donate-btn {
+  position: relative;
   overflow: hidden !important;
   isolation: isolate;
 }
 .wwa-donate-btn::before {
   content: '';
   position: absolute;
-  top: 0; left: -90%; width: 60%; height: 100%;
-  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.38) 50%, transparent 100%);
-  transform: skewX(-20deg);
+  inset: 0;
+  background: linear-gradient(120deg,
+    transparent 0%, transparent 28%,
+    rgba(255,255,255,.40) 50%,
+    transparent 72%, transparent 100%);
+  transform: translateX(-150%) skewX(-20deg);
   pointer-events: none;
-  z-index: 10;
+  z-index: 1;
   animation: wwaShimmerIdle 3.5s ease-in-out infinite;
 }
 .wwa-donate-btn:hover {
@@ -1920,12 +1924,14 @@ ul { list-style: none; }
   animation: wwaRipple .68s cubic-bezier(.4,0,.2,1) forwards;
 }
 @keyframes wwaShimmerIdle {
-  0%, 100% { left: -90%; }
-  50%       { left: 160%; }
+  0%, 25%   { transform: translateX(-150%) skewX(-20deg); opacity: 0; }
+  30%        { opacity: 1; }
+  60%        { transform: translateX(150%) skewX(-20deg); opacity: 1; }
+  65%, 100%  { transform: translateX(150%) skewX(-20deg); opacity: 0; }
 }
 @keyframes wwaShimmerHover {
-  0%   { left: -90%; }
-  100% { left: 160%; }
+  0%   { transform: translateX(-150%) skewX(-20deg); opacity: 1; }
+  100% { transform: translateX(150%) skewX(-20deg); opacity: 0; }
 }
 @keyframes wwaHeartbeat {
   0%, 100% { transform: scale(1); }
