@@ -362,7 +362,7 @@
       <span class="section-label">Where We Serve</span>
       <h2 class="section-title" id="locations-title">Mission Locations</h2>
       <p class="locations-subtitle">
-        Our work spans the Philippines, touching lives in communities that need hope the most.
+        Our work spans the Philippines — from General Santos to Leyte and Cebu — touching lives in communities that need hope the most.
       </p>
     </div>
     <div class="locations-grid">
@@ -376,11 +376,12 @@
         <div class="location-content">
           <h3 class="location-title">Philippines</h3>
           <div class="location-areas">
-            <span class="location-area">Cebu</span>
+            <span class="location-area">Gensan</span>
             <span class="location-area">Leyte</span>
+            <span class="location-area">Cebu</span>
           </div>
           <p class="location-desc">
-            Serving communities through feeding programs, medical missions, and education support across Cebu and Leyte provinces.
+            Serving communities through feeding programs, medical missions, and education support across General Santos, Leyte, and Cebu provinces.
           </p>
           <button class="location-btn" data-location="philippines">
             View Philippines Stories
