@@ -493,3 +493,15 @@
     });
   });
 }());
+
+/* ─── MOBILE FILTER BAR: scroll active chip into center ─────── */
+(function initMobileFilterScroll() {
+  'use strict';
+  if (window.innerWidth > 768) return;
+
+  document.querySelectorAll('.filter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      this.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }, { passive: true });
+  });
+}());
