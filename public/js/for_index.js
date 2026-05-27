@@ -503,3 +503,151 @@
       if (e.key === 'Escape' && farmersModal.classList.contains('open')) closeFarmersModal();
     });
   }());
+
+// ═══════════════════════════════════════════════════════════
+//  MOBILE ELITE — all code below runs on ≤ 768 px only
+// ═══════════════════════════════════════════════════════════
+(function () {
+  if (window.innerWidth > 768) return;
+
+  var noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ── Help cards: pointer drag + snap dots ──────────────────
+  var helpTrack = document.querySelector('.help-cards');
+  if (helpTrack) {
+    var helpCards = helpTrack.querySelectorAll('.help-card');
+
+    // Pointer-drag-to-scroll (feels native on tablet, smooth on desktop)
+    if (!noMotion) {
+      var isDragging = false, startX = 0, scrollStart = 0;
+
+      helpTrack.addEventListener('pointerdown', function (e) {
+        isDragging  = true;
+        startX      = e.clientX;
+        scrollStart = helpTrack.scrollLeft;
+        helpTrack.setPointerCapture(e.pointerId);
+        helpTrack.style.scrollSnapType = 'none';  // release snap during drag
+      });
+
+      helpTrack.addEventListener('pointermove', function (e) {
+        if (!isDragging) return;
+        helpTrack.scrollLeft = scrollStart - (e.clientX - startX);
+      });
+
+      ['pointerup', 'pointercancel'].forEach(function (ev) {
+        helpTrack.addEventListener(ev, function () {
+          if (!isDragging) return;
+          isDragging = false;
+          helpTrack.style.scrollSnapType = '';    // re-engage snap
+        });
+      });
+    }
+
+    // Build pill-dot indicator
+    var dotsWrap = document.createElement('div');
+    dotsWrap.className = 'help-carousel-dots';
+    dotsWrap.setAttribute('role', 'tablist');
+    dotsWrap.setAttribute('aria-label', 'Navigate help cards');
+
+    helpCards.forEach(function (_, i) {
+      var dot = document.createElement('button');
+      dot.className = 'help-carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-label', 'Card ' + (i + 1) + ' of ' + helpCards.length);
+      dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      dot.addEventListener('click', function () {
+        var card = helpCards[i];
+        helpTrack.scrollTo({ left: card.offsetLeft - 20, behavior: 'smooth' });
+      });
+      dotsWrap.appendChild(dot);
+    });
+
+    helpTrack.parentNode.insertBefore(dotsWrap, helpTrack.nextSibling);
+
+    var dots = dotsWrap.querySelectorAll('.help-carousel-dot');
+
+    // Sync active dot + dim non-active card via IntersectionObserver
+    var dotIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var idx = Array.from(helpCards).indexOf(entry.target);
+        if (idx < 0) return;
+        dots.forEach(function (d, i) {
+          d.classList.toggle('active', i === idx);
+          d.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+        });
+        helpCards.forEach(function (c, i) {
+          c.classList.toggle('snapped', i === idx);
+        });
+      });
+    }, { root: helpTrack, threshold: 0.55 });
+
+    helpCards.forEach(function (c) { dotIO.observe(c); });
+
+    // Mark first card as active on load
+    if (helpCards.length) helpCards[0].classList.add('snapped');
+  }
+
+  // ── Hero CTAs: staggered entrance animation ──────────────
+  if (!noMotion) {
+    var heroBtns = document.querySelectorAll('.hero-ctas .btn');
+    heroBtns.forEach(function (btn, i) {
+      btn.style.opacity   = '0';
+      btn.style.transform = 'translateY(22px) translateZ(0)';
+      var delay = (0.18 + i * 0.11) + 's';
+      btn.style.transition = [
+        'opacity .5s ease ' + delay,
+        'transform .52s cubic-bezier(.34,1.56,.64,1) ' + delay
+      ].join(',');
+    });
+
+    window.addEventListener('load', function () {
+      requestAnimationFrame(function () {
+        heroBtns.forEach(function (btn) {
+          btn.style.opacity   = '';
+          btn.style.transform = '';
+        });
+      });
+    });
+  }
+
+  // ── Testimonial carousel: touch-velocity momentum ────────
+  // Amplify the existing auto-scroll with a gentler snap interval on mobile
+  var testCarousel = document.querySelector('.testimonial-carousel');
+  if (testCarousel) {
+    // Add swipe-end snap alignment assist
+    var swipeStartX = 0;
+    testCarousel.addEventListener('touchstart', function (e) {
+      swipeStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    testCarousel.addEventListener('touchend', function (e) {
+      var delta = swipeStartX - e.changedTouches[0].clientX;
+      if (Math.abs(delta) < 10) return; // tap — ignore
+      var dir = delta > 0 ? 1 : -1;
+      testCarousel.scrollBy({ left: dir * testCarousel.clientWidth * 0.85, behavior: 'smooth' });
+    }, { passive: true });
+  }
+
+  // ── Hint animation: nudge the help carousel on first view ─
+  if (!noMotion) {
+    var hintIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        hintIO.disconnect();
+        var track = entry.target.querySelector('.help-cards');
+        if (!track || track.scrollLeft > 0) return;
+        setTimeout(function () {
+          track.scrollTo({ left: 60, behavior: 'smooth' });
+          setTimeout(function () {
+            track.scrollTo({ left: 0, behavior: 'smooth' });
+          }, 600);
+        }, 800);
+      });
+    }, { threshold: 0.7 });
+
+    var helpSection = document.getElementById('help');
+    if (helpSection) hintIO.observe(helpSection);
+  }
+
+}());
