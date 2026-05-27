@@ -55,6 +55,23 @@
 
 
 <!-- ============================================================
+     FARMERS VIDEO MODAL
+============================================================ -->
+<div class="modal-overlay" id="farmersVideoModal" role="dialog" aria-modal="true" aria-label="Gensan Farmers Partnership video">
+  <div class="modal-box">
+    <button class="modal-close" id="farmersModalClose" aria-label="Close video">&times;</button>
+    <iframe id="farmersYoutubeFrame"
+      src=""
+      title="Johnny Davis Global Missions — Farmers of Sarangani Province"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
+
+
+<!-- ============================================================
      HERO
 ============================================================ -->
 <section id="hero" aria-label="Hero — Feed Filipino Children">
@@ -89,6 +106,10 @@
           <svg class="hero-play-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
           <span class="hero-watch-text">{{ $cms->text('hero', 'secondary_cta_label', 'Watch Our Mission') }}</span>
         </button>
+        <button class="btn btn-lg hero-farmers-btn" id="watchFarmersBtn" aria-label="Watch our Gensan Farmers Partnership video">
+          <svg class="hero-play-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <span>🌾 Gensan Farmers <span class="farmers-new-tag">NEW</span></span>
+        </button>
       </div>
 
       <div class="hero-stats" role="list" aria-label="Impact statistics">
@@ -122,6 +143,70 @@
     <div class="hero-scroll-line"></div>
     <span>Scroll</span>
   </a>
+</section>
+
+
+<!-- ============================================================
+     FARMERS PARTNERSHIP MISSION SECTION
+============================================================ -->
+<section id="farmers-mission" aria-labelledby="farmers-title">
+  <div class="farmers-mission-bg" aria-hidden="true"></div>
+  <div class="container">
+    <div class="farmers-mission-inner">
+
+      {{-- Left: Video card --}}
+      <div class="farmers-video-col reveal-left">
+        <button class="farmers-video-card" id="watchFarmersFromSection" aria-label="Watch Gensan Farmers Partnership video">
+          <div class="farmers-video-thumb">
+            <img src="https://img.youtube.com/vi/TRVCOGhuZUQ/maxresdefault.jpg"
+                 alt="Farmers in the mountains of Sarangani Province, Philippines"
+                 loading="lazy"/>
+            <div class="farmers-play-overlay">
+              <div class="farmers-play-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <span class="farmers-play-label">Watch Video</span>
+            </div>
+          </div>
+          <div class="farmers-video-footer">
+            <span class="farmers-video-tag"><span aria-hidden="true">🌾</span> New Mission</span>
+            <span class="farmers-video-title">Sarangani Province · Gensan Farmers</span>
+          </div>
+        </button>
+      </div>
+
+      {{-- Right: Mission text --}}
+      <div class="farmers-text-col reveal-right">
+        <div class="farmers-eyebrow">
+          <span class="farmers-eyebrow-dot" aria-hidden="true"></span>
+          New Mission Partnership
+        </div>
+        <h2 class="farmers-heading" id="farmers-title">
+          Empowering Farmers<br/>
+          <em class="farmers-heading-em">in Sarangani Province</em>
+        </h2>
+        <p class="farmers-desc-intro">
+          Please watch the Johnny Davis Global Missions team video below.
+        </p>
+        <p class="farmers-body">
+          In this segment, we are interviewing farmers in the mountains of the Province of Sarangani Province. We are hearing directly from families and local communities about the challenges they face and the need for sustainable solutions to hunger.
+        </p>
+        <div class="farmers-highlight">
+          <p>
+            Our mission is not only to provide temporary relief, but to create <strong>long-term impact</strong>. We desire to partner with local farmers by helping provide seeds and agricultural support so they can grow their own crops such as <strong>rice, vegetables, and corn</strong>.
+          </p>
+        </div>
+        <p class="farmers-body">
+          By empowering communities to grow food locally, we can help create a pathway toward lasting change and help fight hunger in this region.
+        </p>
+        <a href="{{ route('donate') }}?campaign=gensan" class="btn btn-lg farmers-cta wwa-donate-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 8C8 10 5.9 16.17 3.82 19.07L5.71 21c2-2.25 4-6.25 7.29-7 2.09 9.75 11 10 11 10S17 20.25 17 8z"/></svg>
+          Support Gensan Farmers
+        </a>
+      </div>
+
+    </div>
+  </div>
 </section>
 
 

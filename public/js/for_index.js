@@ -470,3 +470,36 @@
       this.style.transform = `translateY(-8px) scale(1.08) translate(${dx}px,${dy}px)`;
     });
   }());
+
+  // ─── Farmers video modal ─────────────────────────────────────
+  (function () {
+    const farmersModal = document.getElementById('farmersVideoModal');
+    const farmersFrame = document.getElementById('farmersYoutubeFrame');
+    const FARMERS_SRC  = 'https://www.youtube.com/embed/TRVCOGhuZUQ?autoplay=1&rel=0';
+
+    function openFarmersModal() {
+      farmersFrame.src = FARMERS_SRC;
+      farmersModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeFarmersModal() {
+      farmersModal.classList.remove('open');
+      farmersFrame.src = '';
+      document.body.style.overflow = '';
+    }
+
+    ['watchFarmersBtn', 'watchFarmersFromSection'].forEach(function (id) {
+      const btn = document.getElementById(id);
+      if (btn) btn.addEventListener('click', openFarmersModal);
+    });
+
+    const farmersCloseBtn = document.getElementById('farmersModalClose');
+    if (farmersCloseBtn) farmersCloseBtn.addEventListener('click', closeFarmersModal);
+    farmersModal.addEventListener('click', function (e) {
+      if (e.target === farmersModal) closeFarmersModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && farmersModal.classList.contains('open')) closeFarmersModal();
+    });
+  }());
