@@ -2314,46 +2314,7 @@ ul { list-style: none; }
    Desktop layout is completely untouched.
 ============================================================ */
 
-/* ────────────────────────────────────────────────────────────
-   NAV — animated slide-down with staggered link entry
-──────────────────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  /* Replace display:none/flex toggle with max-height animation */
-  .nav-mobile {
-    display: flex;
-    flex-direction: column;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    padding: 0 24px;
-    border-top: 1px solid rgba(255,255,255,0);
-    transition:
-      max-height .42s cubic-bezier(.4,0,.2,1),
-      opacity    .32s ease,
-      padding    .32s ease,
-      border-color .32s ease;
-  }
-  .nav-mobile.open {
-    max-height: 560px;
-    opacity: 1;
-    padding: 12px 24px 28px;
-    border-top: 1px solid rgba(255,255,255,.09);
-  }
-
-  /* Each link slides in from the left with a stagger */
-  .nav-mobile a {
-    opacity: 0;
-    transform: translateX(-16px) translateZ(0);
-    transition: opacity .26s ease, transform .26s ease, color var(--transition);
-  }
-  .nav-mobile.open a:nth-child(1) { opacity:1; transform:translateZ(0); transition-delay:.06s }
-  .nav-mobile.open a:nth-child(2) { opacity:1; transform:translateZ(0); transition-delay:.10s }
-  .nav-mobile.open a:nth-child(3) { opacity:1; transform:translateZ(0); transition-delay:.14s }
-  .nav-mobile.open a:nth-child(4) { opacity:1; transform:translateZ(0); transition-delay:.18s }
-  .nav-mobile.open a:nth-child(5) { opacity:1; transform:translateZ(0); transition-delay:.22s }
-  .nav-mobile.open a:nth-child(6) { opacity:1; transform:translateZ(0); transition-delay:.26s }
-  .nav-mobile.open a:nth-child(7) { opacity:1; transform:translateZ(0); transition-delay:.30s }
-}
+/* Nav mobile styles now live in partials/nav.blade.php (global scope) */
 
 /* ────────────────────────────────────────────────────────────
    HERO — full-bleed, bottom-anchored layout
