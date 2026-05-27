@@ -242,9 +242,12 @@
         </div>
       </div>
 
-      <nav aria-label="Quick links">
-        <h3 class="footer-heading">Quick Links</h3>
-        <div class="footer-links">
+      <nav class="footer-nav-accordion" aria-label="Quick links">
+        <button class="footer-heading footer-accordion-btn" aria-expanded="false" aria-controls="footer-quick-links">
+          Quick Links
+          <svg class="footer-accordion-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="footer-links footer-accordion-content" id="footer-quick-links">
           <a href="{{ route('home') }}">Home</a>
           <a href="{{ route('home') }}#mission">Who We Are</a>
           <a href="{{ route('home') }}#help">What We Do</a>
@@ -254,9 +257,12 @@
         </div>
       </nav>
 
-      <nav aria-label="Programs">
-        <h3 class="footer-heading">Our Programs</h3>
-        <div class="footer-links">
+      <nav class="footer-nav-accordion" aria-label="Programs">
+        <button class="footer-heading footer-accordion-btn" aria-expanded="false" aria-controls="footer-programs">
+          Our Programs
+          <svg class="footer-accordion-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="footer-links footer-accordion-content" id="footer-programs">
           <a href="{{ route('home') }}#urgency">Feed the Hungry</a>
           <a href="{{ route('home') }}#disaster">Disaster Relief</a>
           <a href="{{ route('home') }}#help">Medical Missions</a>

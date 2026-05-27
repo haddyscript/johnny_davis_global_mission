@@ -258,9 +258,15 @@
     let isVisible = false;
 
     function checkScroll() {
-      const scrolled = window.scrollY;
-      const total    = document.documentElement.scrollHeight - window.innerHeight;
-      const show     = total > 0 && scrolled / total >= THRESHOLD;
+      const scrolled   = window.scrollY;
+      const total      = document.documentElement.scrollHeight - window.innerHeight;
+      const nearBottom = window.innerWidth <= 768 && total > 0 && scrolled / total >= 0.94;
+      if (nearBottom) {
+        if (isVisible) { isVisible = false; btn.classList.remove('visible'); }
+        ticking = false;
+        return;
+      }
+      const show = total > 0 && scrolled / total >= THRESHOLD;
       if (show !== isVisible) {
         isVisible = show;
         btn.classList.toggle('visible', show);
@@ -470,3 +476,20 @@
   }());
 
 })();
+
+/* ─── MOBILE FOOTER ACCORDION ──────────────────────────────── */
+(function initFooterAccordion() {
+  'use strict';
+  if (window.innerWidth > 768) return;
+
+  document.querySelectorAll('.footer-nav-accordion').forEach(function(nav) {
+    var trigger = nav.querySelector('.footer-accordion-btn');
+    var content = nav.querySelector('.footer-accordion-content');
+    if (!trigger || !content) return;
+
+    trigger.addEventListener('click', function() {
+      var isOpen = nav.classList.toggle('open');
+      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  });
+}());

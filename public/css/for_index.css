@@ -2598,3 +2598,100 @@ ul { list-style: none; }
   .farmers-play-btn,
   .disaster-alert::before { animation: none !important; }
 }
+
+/* ────────────────────────────────────────────────────────────
+   MOBILE FOOTER OVERHAUL — accordion + widget-collision fix
+──────────────────────────────────────────────────────────── */
+
+/* Desktop: button renders as a plain non-interactive heading */
+.footer-accordion-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: default;
+  padding: 0;
+  display: block;
+  width: 100%;
+  text-align: left;
+  pointer-events: none;
+}
+.footer-accordion-icon { display: none; }
+
+@media (max-width: 768px) {
+  /* — Interactive accordion trigger ——————————————————————— */
+  .footer-accordion-btn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+    pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .footer-accordion-icon {
+    display: block;
+    flex-shrink: 0;
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    will-change: transform;
+  }
+
+  .footer-nav-accordion.open .footer-accordion-icon {
+    transform: rotate(180deg);
+  }
+
+  /* — Collapse/expand content —————————————————————————— */
+  .footer-accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height .35s cubic-bezier(.4,0,.2,1),
+                opacity .3s ease;
+  }
+
+  .footer-nav-accordion.open .footer-accordion-content {
+    max-height: 400px;
+    opacity: 1;
+  }
+
+  /* — Link spacing inside accordion ——————————————————— */
+  .footer-accordion-content li,
+  .footer-accordion-content > a {
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+
+  .footer-accordion-content li:last-child,
+  .footer-accordion-content > a:last-child {
+    border-bottom: none;
+  }
+
+  /* — Social icon touch targets (44×44 min) ————————————— */
+  .footer-social a,
+  .social-links a {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* — Extra padding so sticky elements don't obscure links */
+  #footer { padding-bottom: 140px; }
+
+  /* — Push sticky donate above chat bubble (~60px tall) ——— */
+  #stickyDonate {
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* — Scroll-to-top: lower-left, clear of chat/donate —— */
+  #scrollToTop {
+    left: 14px;
+    right: auto;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  }
+}

@@ -828,9 +828,12 @@
       </div>
 
       <!-- Quick Links -->
-      <nav aria-label="Footer navigation">
-        <h3 class="footer-heading">Quick Links</h3>
-        <ul class="footer-links" role="list">
+      <nav class="footer-nav-accordion" aria-label="Footer navigation">
+        <button class="footer-heading footer-accordion-btn" aria-expanded="false" aria-controls="footer-quick-links">
+          Quick Links
+          <svg class="footer-accordion-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <ul class="footer-links footer-accordion-content" id="footer-quick-links" role="list">
           <li><a href="#hero">Home</a></li>
           <li><a href="#mission">Who We Are</a></li>
           <li><a href="#help">What We Do</a></li>
@@ -841,9 +844,12 @@
       </nav>
 
       <!-- Programs -->
-      <nav aria-label="Programs navigation">
-        <h3 class="footer-heading">Our Programs</h3>
-        <ul class="footer-links" role="list">
+      <nav class="footer-nav-accordion" aria-label="Programs navigation">
+        <button class="footer-heading footer-accordion-btn" aria-expanded="false" aria-controls="footer-programs">
+          Our Programs
+          <svg class="footer-accordion-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <ul class="footer-links footer-accordion-content" id="footer-programs" role="list">
           <li><a href="#urgency">Feed the Hungry</a></li>
           <li><a href="#disaster">Disaster Relief</a></li>
           <li><a href="#help">Medical Missions</a></li>

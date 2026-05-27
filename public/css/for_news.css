@@ -1712,3 +1712,92 @@ button { font-family:inherit; cursor:pointer; }
 @media (max-width:480px) {
   #scrollToTop { left:8px; right:auto; bottom:72px; width:44px; height:44px; }
 }
+
+/* ────────────────────────────────────────────────────────────
+   MOBILE FOOTER OVERHAUL — accordion + widget-collision fix
+──────────────────────────────────────────────────────────── */
+
+.footer-accordion-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: default;
+  padding: 0;
+  display: block;
+  width: 100%;
+  text-align: left;
+  pointer-events: none;
+}
+.footer-accordion-icon { display: none; }
+
+@media (max-width: 768px) {
+  .footer-accordion-btn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+    pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .footer-accordion-icon {
+    display: block;
+    flex-shrink: 0;
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    will-change: transform;
+  }
+
+  .footer-nav-accordion.open .footer-accordion-icon {
+    transform: rotate(180deg);
+  }
+
+  .footer-accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height .35s cubic-bezier(.4,0,.2,1),
+                opacity .3s ease;
+  }
+
+  .footer-nav-accordion.open .footer-accordion-content {
+    max-height: 400px;
+    opacity: 1;
+  }
+
+  .footer-accordion-content li,
+  .footer-accordion-content > a {
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+
+  .footer-accordion-content li:last-child,
+  .footer-accordion-content > a:last-child {
+    border-bottom: none;
+  }
+
+  .footer-social a,
+  .social-links a {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #footer { padding-bottom: 140px; }
+
+  #stickyDonate {
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+
+  #scrollToTop {
+    left: 14px;
+    right: auto;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  }
+}
