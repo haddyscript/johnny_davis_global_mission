@@ -677,8 +677,21 @@
 }
 
 /* ─────────────────────────────────────────
-   Mobile
+   Mobile — prevent overlap with sticky donate
 ───────────────────────────────────────── */
+@media (max-width: 768px) {
+    /* Chatbot sits at the very bottom-right corner */
+    #jdgm-chat-toggle {
+        bottom: 24px;
+        right: 20px;
+    }
+    /* Sticky Donate floats above the chatbot button */
+    #stickyDonate {
+        bottom: 100px;
+        right: 20px;
+    }
+}
+
 @media (max-width: 480px) {
     #jdgm-chat-window {
         bottom: 0;
@@ -689,7 +702,11 @@
         max-height: 78vh;
     }
     #jdgm-chat-toggle {
-        bottom: 82px;
+        bottom: 24px;
+        right: 16px;
+    }
+    #stickyDonate {
+        bottom: 100px;
         right: 16px;
     }
     .jdgm-toggle-tooltip { display: none; }
