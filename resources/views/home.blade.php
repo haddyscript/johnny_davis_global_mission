@@ -24,7 +24,7 @@
         JDGM
       </text>
     </svg>">
-  <link rel="stylesheet" href="{{ asset('css/for_index.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/for_index.css') }}?v={{ filemtime(public_path('css/for_index.css')) }}" />
 </head>
 <body>
 
@@ -981,7 +981,7 @@
   .dimg-close:hover { background: #d4680e; }
 </style>
 
-<script src="{{ asset('js/for_index.js') }}"></script>
+<script src="{{ asset('js/for_index.js') }}?v={{ filemtime(public_path('js/for_index.js')) }}"></script>
 <script>
 (function () {
   var modal    = document.getElementById('disasterImgModal');
