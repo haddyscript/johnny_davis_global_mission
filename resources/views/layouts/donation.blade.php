@@ -26,7 +26,7 @@
         JDGM
       </text>
     </svg>">
-  <link rel="stylesheet" href="{{ asset('css/for_donationpage.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/for_donationpage.css') }}?v={{ filemtime(public_path('css/for_donationpage.css')) }}" />
 </head>
 <body>
 
@@ -42,7 +42,7 @@
 @if(config('services.paypal.client_id'))
 <script src="https://www.paypal.com/sdk/js?client-id={{ config('services.paypal.client_id') }}&currency=USD&vault=true&components=buttons&disable-funding=credit,card"></script>
 @endif
-<script src="{{ asset('js/for_donationpage.js') }}"></script>
+<script src="{{ asset('js/for_donationpage.js') }}?v={{ filemtime(public_path('js/for_donationpage.js')) }}"></script>
 @include('partials.chatbot')
 </body>
 </html>
