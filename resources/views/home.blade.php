@@ -186,7 +186,7 @@
           <em class="farmers-heading-em">in Sarangani Province</em>
         </h2>
         <p class="farmers-desc-intro">
-          Please watch the Johnny Davis Global Missions team video below.
+          Please watch the Johnny Davis Global Missions team video.
         </p>
         <p class="farmers-body">
           In this segment, our team is interviewing farmers in the mountains of Sarangani Province, Philippines. We are hearing directly from families and local communities about the challenges they face and the ongoing need for sustainable solutions to hunger.
