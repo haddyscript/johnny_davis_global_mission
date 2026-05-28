@@ -19,10 +19,10 @@
 
         <div class="card-raised-row">
           <span><strong>$18,750</strong> raised</span>
-          <span>Goal $30,000 &middot; <strong>63%</strong></span>
+          <span>Goal $50,000 &middot; <strong>38%</strong></span>
         </div>
         <div class="progress">
-          <div class="progress-fill" style="width:63%;background:linear-gradient(90deg,#f97316,#fb923c);"></div>
+          <div class="progress-fill" style="width:38%;background:linear-gradient(90deg,#f97316,#fb923c);"></div>
         </div>
 
         <p class="story-snippet">Thousands of children in rural Philippines go to bed hungry every night. Your gift provides hot, nutritious meals that fuel young minds and growing bodies.</p>
@@ -46,11 +46,11 @@
         <h3>🏚️ Cebu Earthquake Relief</h3>
 
         <div class="card-raised-row">
-          <span><strong>$34,200</strong> raised</span>
-          <span>Goal $60,000 &middot; <strong>57%</strong></span>
+          <span><strong>$6,850</strong> raised</span>
+          <span>Goal $40,000 &middot; <strong>17%</strong></span>
         </div>
         <div class="progress">
-          <div class="progress-fill" style="width:57%;background:linear-gradient(90deg,#ef4444,#f87171);"></div>
+          <div class="progress-fill" style="width:17%;background:linear-gradient(90deg,#ef4444,#f87171);"></div>
         </div>
 
         <p class="story-snippet">The earthquake left hundreds of families without shelter, food, or clean water. Every dollar goes directly to emergency supplies and rebuilding homes.</p>
@@ -74,21 +74,21 @@
         <h3>💧 Uganda Water Wells</h3>
 
         <div class="card-raised-row">
-          <span><strong>$11,500</strong> raised</span>
-          <span>Goal $20,000 &middot; <strong>58%</strong></span>
+          <span><strong>Launching Soon</strong></span>
+          <span>Goal $40,000</span>
         </div>
         <div class="progress">
-          <div class="progress-fill" style="width:58%;background:linear-gradient(90deg,#3b82f6,#60a5fa);"></div>
+          <div class="progress-fill" style="width:0%;background:linear-gradient(90deg,#3b82f6,#60a5fa);"></div>
         </div>
 
-        <p class="story-snippet">Villages in rural Uganda walk miles each day for unsafe water. One drilled well serves up to 500 people with clean, safe water for decades.</p>
+        <p class="story-snippet">Many communities in Uganda walk miles each day for unsafe water. Your gift helps provide clean, safe water through life-changing wells.</p>
 
         <div class="card-story-block">
           <span class="card-story-arrow">→</span>
-          <p class="card-story-text">A mother used to carry muddy water home for her children. A new well changed her village forever — yours can too.</p>
+          <p class="card-story-text">Help us begin our first clean water initiative in Uganda.</p>
         </div>
 
-        <span class="card-cta-link">Support this campaign ›</span>
+        <span class="card-cta-link">Be the first to make an impact ›</span>
       </div>
     </div>
 
