@@ -310,6 +310,10 @@
             <div class="impact-emoji" aria-hidden="true">🏥</div>
             <div class="impact-copy"><strong>$99/mo</strong> covers medicine for an entire village clinic visit</div>
           </div>
+          <div class="impact-row">
+            <div class="impact-emoji" aria-hidden="true">🌱</div>
+            <div class="impact-copy"><strong>$99/mo</strong> provides seed and agricultural resources to feed families</div>
+          </div>
         </div>
       </div>
 
