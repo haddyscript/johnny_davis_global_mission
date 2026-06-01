@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'nav.visibility' => \App\Http\Middleware\EnforceNavVisibility::class,
         ]);
+        $middleware->appendToGroup('web', \App\Http\Middleware\CheckSiteLock::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

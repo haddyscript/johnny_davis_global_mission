@@ -10,6 +10,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\WhoWeAreController;
 use App\Http\Controllers\MinistryController;
 use App\Http\Controllers\DonationController;
+use App\Http\Controllers\SiteLockController;
 
 use App\Http\Controllers\Admin\ContentBlockController;
 use App\Http\Controllers\Admin\DonationController as AdminDonationController;
@@ -26,6 +27,13 @@ use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
+// Site lock/unlock — password-protected, never blocked by site lock middleware
+Route::get('/lock-website',   [SiteLockController::class, 'showLock'])->name('site-lock.show-lock');
+Route::post('/lock-website',  [SiteLockController::class, 'lock'])->name('site-lock.lock');
+Route::get('/unlock-website', [SiteLockController::class, 'showUnlock'])->name('site-lock.show-unlock');
+Route::post('/unlock-website',[SiteLockController::class, 'unlock'])->name('site-lock.unlock');
+Route::get('/site-locked',    [SiteLockController::class, 'locked'])->name('site-locked');
 
 // Public page GET routes — blocked by nav.visibility if the matching nav item is hidden
 Route::middleware('nav.visibility')->group(function () {
