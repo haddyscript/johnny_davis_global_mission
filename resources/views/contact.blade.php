@@ -40,6 +40,8 @@
   <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
   <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
   <div class="hero-orb hero-orb-3" aria-hidden="true"></div>
+  <div class="hero-glow"      aria-hidden="true"></div>
+  <div class="hero-spotlight" aria-hidden="true"></div>
 
   <div class="container">
     <div class="hero-content">
@@ -160,13 +162,13 @@
           </div>
         </a>
 
-        <div class="contact-card">
+        <a href="tel:+14044262856" class="contact-card contact-card-link" aria-label="Call us at (404) 426-2856">
           <div class="contact-icon" aria-hidden="true">📞</div>
           <h3 class="contact-title">Phone</h3>
-          <div class="contact-text">
-            <a href="tel:+14044262856" style="color:var(--orange); text-decoration:none; font-weight:600;">(404) 426-2856</a>
+          <div class="contact-text" style="color:var(--orange); font-weight:600;">
+            (404) 426-2856
           </div>
-        </div>
+        </a>
 
         <a href="https://www.google.com/maps/search/?api=1&query=P.O.+Box+1904%2C+Suwanee%2C+GA+30024" target="_blank" rel="noopener noreferrer" class="contact-card contact-card-link" aria-label="Open address in Google Maps">
           <div class="contact-icon" aria-hidden="true">📍</div>

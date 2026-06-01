@@ -101,16 +101,21 @@
       if (response.ok || response.status === 302) {
         // Success — hide form, show success panel
         contactForm.style.display = 'none';
-        formSuccess.classList.add('show');
-        formSuccess.style.opacity = '0';
+        formSuccess.style.display  = 'block';
+        formSuccess.style.opacity  = '0';
         formSuccess.style.transform = 'translateY(16px)';
+        formSuccess.style.width    = '100%';
+        formSuccess.style.boxSizing = 'border-box';
         requestAnimationFrame(() => {
           formSuccess.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-          formSuccess.style.opacity = '1';
-          formSuccess.style.transform = 'translateY(0)';
+          formSuccess.style.opacity    = '1';
+          formSuccess.style.transform  = 'translateY(0)';
         });
         contactForm.reset();
         if (charCounter) { charCounter.textContent = '0 / 1000'; charCounter.style.color = 'var(--gray-400)'; }
+        // Scroll to success message so it's visible on mobile
+        const card = document.querySelector('.contact-form-card');
+        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
 
