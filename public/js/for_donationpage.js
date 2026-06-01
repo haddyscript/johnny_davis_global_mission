@@ -369,7 +369,7 @@
     });
 
     paymentRequest.canMakePayment().then(result => {
-      if (result && (result.applePay || result.googlePay)) {
+      if (result && (result.applePay || result.googlePay || result.link)) {
         prButton.mount('#apple-pay-btn');
         const section = document.getElementById('express-checkout-section');
         if (section) section.style.display = 'block';
