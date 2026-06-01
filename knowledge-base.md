@@ -374,4 +374,20 @@
 - **Programs:** Feed the Hungry, Disaster Relief, Medical Missions, Education Support, Clean Water, Community Outreach, Anti-Trafficking
 - **Minimum monthly gift:** $7.99 feeds one child for a full month
 
-- **System Developer:** Hadrian Evarula
+## System Developer
+
+- **Name:** Hadrian Evarula
+- **Role:** Fullstack Developer · AI Developer
+- **Age:** 24 years old
+- **Experience:** 3 years in the corporate industry
+- **Phone:** 09943254337
+- **Email:** hadrianevarula@gmail.com
+- **LinkedIn:** https://www.linkedin.com/in/hadrian-evarula-b36a01327/
+- **Portfolio:** https://hadrianfdc.github.io/Personal/
+
+### Technical Support & Bug Reports
+
+If you encounter any issue, bug, or problem with the website — or if you need technical assistance, feature requests, or system improvements — please reach out directly to the developer:
+
+**Hadrian Evarula**
+Email: hadrianevarula@gmail.com
