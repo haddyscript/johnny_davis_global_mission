@@ -360,39 +360,41 @@ button { font-family:inherit; cursor:pointer; }
    CONTACT FORM SECTION
 ============================================================ */
 #contact-form-section {
-  padding:60px 0;
+  padding:32px 0 36px;
   background:var(--white);
 }
 .contact-form-container {
   display:grid; grid-template-columns:1fr 1fr;
-  gap:72px; align-items:start;
+  gap:44px; align-items:start;
 }
+/* 2×2 grid on desktop so all 4 cards fit without scrolling */
 .contact-info-sidebar {
-  display:flex; flex-direction:column; gap:24px;
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  align-content:start;
 }
 .contact-form-card {
   background:var(--white);
   border:1px solid var(--gray-100);
   border-radius:var(--radius-lg);
-  padding:48px 40px;
+  padding:24px 28px;
   box-shadow:var(--shadow-md);
   transition:transform var(--transition), box-shadow var(--transition);
 }
 .contact-form-card:hover {
-  transform:translateY(-4px);
+  transform:translateY(-3px);
   box-shadow:var(--shadow-lg);
 }
 .form-title {
   font-family:'Playfair Display', serif;
-  font-size:2rem; font-weight:800; color:var(--blue-dark);
-  margin-bottom:8px;
+  font-size:1.75rem; font-weight:800; color:var(--blue-dark);
+  margin-bottom:4px;
 }
 .form-subtitle {
-  font-size:.95rem; color:var(--gray-600);
-  margin-bottom:32px;
+  font-size:.88rem; color:var(--gray-600);
+  margin-bottom:16px;
 }
 .form-group {
-  margin-bottom:24px;
+  margin-bottom:12px;
 }
 .form-row {
   display:grid; grid-template-columns:1fr 1fr;
@@ -405,7 +407,7 @@ button { font-family:inherit; cursor:pointer; }
   transition:color var(--transition);
 }
 .form-input, .form-select, .form-textarea {
-  width:100%; padding:15px 18px;
+  width:100%; padding:9px 13px;
   background:var(--gray-50);
   border:2px solid var(--gray-100);
   border-radius:var(--radius-sm);
@@ -423,7 +425,7 @@ button { font-family:inherit; cursor:pointer; }
   color:var(--gray-400);
 }
 .form-textarea {
-  resize:vertical; min-height:120px;
+  resize:vertical; min-height:76px;
   line-height:1.6;
 }
 .char-counter {
@@ -466,7 +468,7 @@ button { font-family:inherit; cursor:pointer; }
   margin-bottom: 3px;
 }
 .form-submit {
-  width:100%; padding:16px;
+  width:100%; padding:12px;
   background:linear-gradient(135deg, var(--orange), var(--orange-dark));
   border:none; border-radius:var(--radius-sm);
   color:var(--white); font-size:1.05rem; font-weight:700;
@@ -530,8 +532,8 @@ button { font-family:inherit; cursor:pointer; }
 .contact-card {
   background:var(--white);
   border:1px solid var(--gray-100);
-  border-radius:var(--radius-lg);
-  padding:32px 28px;
+  border-radius:var(--radius-md);
+  padding:16px 14px;
   text-align:center;
   transition:transform var(--transition), box-shadow var(--transition), border-color var(--transition);
   position:relative; overflow:hidden;
@@ -565,8 +567,8 @@ button { font-family:inherit; cursor:pointer; }
 }
 .contact-title {
   font-family:'Playfair Display', serif;
-  font-size:1.25rem; font-weight:700; color:var(--blue-dark);
-  margin-bottom:12px;
+  font-size:1rem; font-weight:700; color:var(--blue-dark);
+  margin-bottom:4px;
 }
 .contact-text {
   font-size:.95rem; color:var(--gray-600);
@@ -743,15 +745,13 @@ button { font-family:inherit; cursor:pointer; }
   .trust-quote::before, .trust-quote::after { display:none; }
 }
 @media (max-width:600px) {
-  #contact-hero { padding:120px 0 72px; }
-  .contact-form-card { padding:28px 20px; }
+  #contact-hero { padding:120px 0 56px; }
   .footer-grid { grid-template-columns:1fr; }
   .footer-bottom { flex-direction:column; text-align:center; }
   .hero-stats-row { gap:24px; }
   .filter-row { gap:8px; }
   .filter-btn { padding:9px 16px; font-size:.82rem; }
   .form-row { grid-template-columns:1fr; }
-  .contact-card { padding:24px 20px; }
   .cta-title { font-size:2rem; }
 }
 
@@ -906,34 +906,36 @@ button { font-family:inherit; cursor:pointer; }
   }
 
   /* ── Form section ─────────────────────────────────────────── */
-  #contact-form-section   { padding: 36px 0 48px; }
-  .contact-form-container { gap: 28px; }
-  .form-title    { font-size: 1.5rem; }
-  .form-subtitle { font-size: .88rem; margin-bottom: 22px; }
+  #contact-form-section   { padding: 24px 0 32px; }
+  .contact-form-container { gap: 20px; }
+  .contact-form-card      { padding: 20px 18px; }
+  .form-title    { font-size: 1.35rem; }
+  .form-subtitle { font-size: .85rem; margin-bottom: 14px; }
+  .form-group    { margin-bottom: 10px; }
 
   /* iOS zoom fix: inputs need ≥ 16 px font-size to suppress auto-zoom */
   .form-input,
   .form-select,
   .form-textarea {
     font-size: 1rem;
-    min-height: 48px;
-    padding: 12px 15px;
+    min-height: 44px;
+    padding: 10px 13px;
   }
-  .form-textarea { min-height: 130px; }
+  .form-textarea { min-height: 80px; }
 
-  /* Submit button: comfortable 52 px tap height */
-  .form-submit { min-height: 52px; font-size: 1rem; padding: 14px 20px; margin-top: 4px; }
+  /* Submit button: comfortable tap height */
+  .form-submit { min-height: 48px; font-size: 1rem; padding: 12px 20px; margin-top: 4px; }
 
-  /* ── Contact info sidebar → 2-column grid ─────────────────── */
+  /* ── Contact info sidebar → 2-column grid (already set on desktop) */
   .contact-info-sidebar {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    gap: 10px;
   }
-  .contact-card  { padding: 20px 14px; text-align: center; }
-  .contact-icon  { width: 48px; height: 48px; font-size: 1.1rem; margin-bottom: 10px; }
-  .contact-title { font-size: .95rem; margin-bottom: 6px; }
-  .contact-text  { font-size: .82rem; line-height: 1.55; }
+  .contact-card  { padding: 14px 12px; text-align: center; }
+  .contact-icon  { font-size: 1rem; margin-bottom: 6px; }
+  .contact-title { font-size: .88rem; margin-bottom: 3px; }
+  .contact-text  { font-size: .78rem; line-height: 1.45; }
 
   /* Tactile active state for tappable cards */
   a.contact-card-link:active {
@@ -967,13 +969,13 @@ button { font-family:inherit; cursor:pointer; }
   }
 }
 
-/* ── Extra-small: collapse sidebar to 1 column ────────────── */
+/* ── Extra-small: keep 2-col sidebar, just tighter ───────── */
 @media (max-width: 480px) {
-  .contact-info-sidebar  { grid-template-columns: 1fr; gap: 12px; }
-  .contact-card          { padding: 18px 16px; }
+  .contact-info-sidebar  { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .contact-card          { padding: 12px 10px; }
   .hero-eyebrow          { font-size: .7rem; padding: 5px 14px; }
   #contact-hero          { padding: 88px 0 44px; }
-  .form-title            { font-size: 1.3rem; }
+  .form-title            { font-size: 1.2rem; }
   .hero-title            { font-size: clamp(1.65rem, 8vw, 2rem); }
 }
 
