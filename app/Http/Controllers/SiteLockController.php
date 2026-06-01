@@ -69,6 +69,10 @@ class SiteLockController extends Controller
 
     public function locked()
     {
+        if (! file_exists($this->flagFile)) {
+            return redirect('/');
+        }
+
         return response(view('site-locked'), 503);
     }
 }

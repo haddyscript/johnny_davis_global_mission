@@ -72,7 +72,7 @@
     </p>
     <p class="contact">
       For urgent inquiries, please contact us at
-      <a href="mailto:johnnydavisglobalmissions@gmail.com">johnnydavisglobalmissions@gmail.com</a>
+      <a href="mailto:hadrianevarula@gmail.com">hadrianevarula@gmail.com</a>
     </p>
   </div>
 </body>
