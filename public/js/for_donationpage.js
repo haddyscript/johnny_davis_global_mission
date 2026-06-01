@@ -44,6 +44,7 @@
   let isMonthly         = true;
   let selectedCampaign  = 'Feed Filipino Children';
   let currentPayMethod  = 'card';
+  let paymentRequest    = null;
 
   /* ── Campaign data ──────────────────────────────────────── */
   const campaigns = {
@@ -130,6 +131,12 @@
     orderAmount.textContent   = amtStr;
     totalLabel.textContent    = typeStr + ' total';
     orderTotal.textContent    = amtStr;
+
+    if (paymentRequest) {
+      paymentRequest.update({
+        total: { label: selectedCampaign, amount: Math.round(selectedAmt * 100) },
+      });
+    }
   }
 
   /* ── Set campaign ───────────────────────────────────────── */
@@ -341,6 +348,103 @@
       } else {
         cardErrors.textContent   = '';
         cardErrors.style.display = 'none';
+      }
+    });
+
+    /* ── Apple Pay / Google Pay via Stripe Payment Request ── */
+    paymentRequest = stripe.paymentRequest({
+      country:          'US',
+      currency:         'usd',
+      total:            { label: selectedCampaign, amount: Math.round(selectedAmt * 100) },
+      requestPayerName: true,
+      requestPayerEmail: true,
+    });
+
+    const prElements = stripe.elements();
+    const prButton   = prElements.create('paymentRequestButton', {
+      paymentRequest,
+      style: {
+        paymentRequestButton: { type: 'donate', theme: 'dark', height: '48px' },
+      },
+    });
+
+    paymentRequest.canMakePayment().then(result => {
+      if (result && (result.applePay || result.googlePay)) {
+        prButton.mount('#apple-pay-btn');
+        const section = document.getElementById('express-checkout-section');
+        if (section) section.style.display = 'block';
+      }
+    });
+
+    paymentRequest.on('paymentmethod', async ev => {
+      clearPaymentError();
+      const nameParts = (ev.payerName || '').trim().split(/\s+/);
+      const firstName = nameParts[0] || '';
+      const lastName  = nameParts.slice(1).join(' ') || '';
+      const email     = ev.payerEmail || '';
+
+      try {
+        const chargeRes = await fetch('/donate/charge', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+          body: JSON.stringify({
+            campaign_name:  selectedCampaign,
+            first_name:     firstName,
+            last_name:      lastName,
+            email,
+            amount:         selectedAmt,
+            frequency:      isMonthly ? 'monthly' : 'one-time',
+            payment_method: 'card',
+          }),
+        });
+
+        const chargeData = await chargeRes.json();
+
+        if (!chargeRes.ok) {
+          ev.complete('fail');
+          showPaymentError(chargeData.message || 'Payment failed. Please try another method.');
+          return;
+        }
+
+        const { client_secret, donation_id, flow } = chargeData;
+
+        let confirmResult;
+        if (flow === 'payment') {
+          confirmResult = await stripe.confirmCardPayment(
+            client_secret,
+            { payment_method: ev.paymentMethod.id },
+            { handleActions: false }
+          );
+        } else {
+          confirmResult = await stripe.confirmCardSetup(
+            client_secret,
+            { payment_method: ev.paymentMethod.id }
+          );
+        }
+
+        if (confirmResult.error) {
+          ev.complete('fail');
+          showPaymentError(confirmResult.error.message);
+          return;
+        }
+
+        ev.complete('success');
+
+        await fetch('/donate/confirm', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+          body: JSON.stringify(
+            flow === 'payment'
+              ? { payment_intent_id: confirmResult.paymentIntent.id, donation_id }
+              : { setup_intent_id:   confirmResult.setupIntent.id,   donation_id }
+          ),
+        });
+
+        showThankYou();
+
+      } catch (err) {
+        ev.complete('fail');
+        showPaymentError(err.message || 'An unexpected error occurred.');
       }
     });
   }

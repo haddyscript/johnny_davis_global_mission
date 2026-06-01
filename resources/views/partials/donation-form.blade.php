@@ -104,6 +104,13 @@
         </button>
       </div>
 
+      <!-- Express Checkout — Apple Pay / Google Pay (shown only when available) -->
+      <div id="express-checkout-section" style="display:none;margin:20px 0 4px;">
+        <div class="express-divider"><span>Express checkout</span></div>
+        <div id="apple-pay-btn" style="min-height:48px;border-radius:var(--r-lg);overflow:hidden;"></div>
+        <div class="express-divider" style="margin-top:14px;"><span>Or continue below</span></div>
+      </div>
+
       <input class="custom-amount" id="customAmountInput" type="number" min="1"
              placeholder="Or enter a custom amount ($)"
              aria-label="Custom donation amount"

@@ -1,0 +1,5 @@
+Requirements to activate Apple Pay in production:
+
+Your site must be served over HTTPS
+You must verify your domain with Apple via 
+Stripe Dashboard → Settings → Payment methods → Apple Pay → Add domain (Stripe handles the /.well-known/ verification file automatically)

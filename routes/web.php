@@ -37,6 +37,13 @@ Route::middleware('nav.visibility')->group(function () {
 });
 Route::get('/ministry', [MinistryController::class, 'index'])->name('ministry');
 
+// Apple Pay domain verification (Stripe Payment Request Button)
+Route::get('/.well-known/apple-developer-merchantid-domain-association', function () {
+    $file = public_path('.well-known/apple-developer-merchantid-domain-association');
+    abort_unless(file_exists($file), 404);
+    return response()->file($file, ['Content-Type' => 'text/plain']);
+})->withoutMiddleware('*');
+
 // Non-page routes — never blocked by nav visibility
 Route::post('/contact',             [ContactController::class, 'store'])->name('contact.store');
 Route::post('/newsletter/subscribe',      [SubscriberController::class, 'store'])->name('newsletter.subscribe');

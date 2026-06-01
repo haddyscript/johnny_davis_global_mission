@@ -1513,3 +1513,26 @@ body { padding-top: 72px; }
     bottom: calc(14px + env(safe-area-inset-bottom, 0px));
   }
 }
+
+/* ─── Express Checkout divider (Apple Pay / Google Pay) ─── */
+.express-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+.express-divider::before,
+.express-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-md);
+}
+.express-divider span {
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
