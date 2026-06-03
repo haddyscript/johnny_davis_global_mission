@@ -31,28 +31,95 @@
 
       <div class="campaign-list" role="radiogroup" aria-label="Choose a campaign">
 
-        @foreach($campaigns as $i => $c)
-        <div class="campaign-opt {{ $i === 0 ? 'active' : '' }}"
-             data-campaign-opt="{{ $c->title }}"
+        <!-- Feed Filipino Children -->
+        <div class="campaign-opt active"
+             data-campaign-opt="Feed Filipino Children"
+             data-story="Every $7.99 feeds one child nutritious daily meals for an entire month through our feeding centers in Cebu and Leyte."
+             data-goal="Goal: $50,000 — Help us feed 6,250 children this year"
              role="radio"
-             aria-checked="{{ $i === 0 ? 'true' : 'false' }}"
+             aria-checked="true"
              tabindex="0">
-          <div class="camp-icon" aria-hidden="true">{{ $c->icon }}</div>
+          <div class="camp-icon" aria-hidden="true">
+            <img src="{{ asset('images/plate-with-spoon.png') }}" alt="Feed Filipino Children" style="width: 58px;height: 58px;object-fit:contain;"/>
+          </div>
           <div style="flex:1;">
-            <div class="camp-title">{{ $c->title }}</div>
-            <div class="camp-sub">{{ $c->subtitle }}</div>
+            <div class="camp-title">Feed Filipino Children</div>
+            <div class="camp-sub" style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="color:var(--orange);font-weight:600;">$18,750 raised</span>
+              <span style="color:#888;font-size:.82rem;">Goal $50,000 &middot; 38%</span>
+            </div>
             <div class="camp-progress-wrap">
               <div class="progress">
-                <div class="progress-fill" style="width:{{ $c->goal_pct }}%;{{ $c->bar_style }}"></div>
+                <div class="progress-fill" style="width:38%;background:var(--orange);"></div>
               </div>
             </div>
-            <div class="camp-meta">{{ $c->meta }}</div>
+            <div class="camp-meta">Thousands of children in rural Philippines go to bed hungry every night.</div>
           </div>
-          <div class="camp-radio {{ $i === 0 ? 'on' : '' }}" aria-hidden="true"></div>
+          <div class="camp-radio on" aria-hidden="true"></div>
         </div>
-        @endforeach
 
-        <div class="campaign-opt" data-campaign-opt="Where it's needed most" role="radio" aria-checked="false" tabindex="0">
+        <!-- Cebu Earthquake Relief -->
+        <div class="campaign-opt"
+             data-campaign-opt="Cebu Earthquake Relief"
+             data-story="The 6.9 magnitude earthquake left hundreds of families without shelter, food, or clean water. Your gift brings immediate relief to those affected."
+             data-goal="Goal: $40,000 — Emergency relief for 500+ displaced families"
+             role="radio"
+             aria-checked="false"
+             tabindex="0">
+          <div class="camp-icon" aria-hidden="true">
+            <img src="{{ asset('images/house.png') }}" alt="Feed Filipino Children" style="width: 58px;height: 58px;object-fit:contain;"/>
+          </div>
+          <div style="flex:1;">
+            <div class="camp-title">Cebu Earthquake Relief</div>
+            <div class="camp-sub" style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="color:var(--orange);font-weight:600;">$6,850 raised</span>
+              <span style="color:#888;font-size:.82rem;">Goal $40,000 &middot; 17%</span>
+            </div>
+            <div class="camp-progress-wrap">
+              <div class="progress">
+                <div class="progress-fill" style="width:17%;background:var(--orange);"></div>
+              </div>
+            </div>
+            <div class="camp-meta">The earthquake left hundreds of families without shelter, food, or clean water.</div>
+          </div>
+          <div class="camp-radio" aria-hidden="true"></div>
+        </div>
+
+        <!-- Uganda Water Wells -->
+        <div class="campaign-opt"
+             data-campaign-opt="Uganda Water Wells"
+             data-story="Communities in Uganda walk miles each day for unsafe water. Your donation helps drill clean water wells that serve entire villages for generations."
+             data-goal="Goal: $40,000 — Launching Soon · Be the first to give"
+             role="radio"
+             aria-checked="false"
+             tabindex="0">
+          <div class="camp-icon" aria-hidden="true">
+            <img src="{{ asset('images/water.png') }}" alt="Feed Filipino Children" style="width: 58px;height: 58px;object-fit:contain;"/>
+          </div>
+          <div style="flex:1;">
+            <div class="camp-title">Uganda Water Wells</div>
+            <div class="camp-sub" style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="color:#22a96e;font-weight:600;">Launching Soon</span>
+              <span style="color:#888;font-size:.82rem;">Goal $40,000</span>
+            </div>
+            <div class="camp-progress-wrap">
+              <div class="progress">
+                <div class="progress-fill" style="width:2%;background:var(--orange);"></div>
+              </div>
+            </div>
+            <div class="camp-meta">Many communities in Uganda walk miles each day for unsafe water.</div>
+          </div>
+          <div class="camp-radio" aria-hidden="true"></div>
+        </div>
+
+        <!-- Where it's needed most -->
+        <div class="campaign-opt"
+             data-campaign-opt="Where it's needed most"
+             data-story="JDGM allocates your gift to the highest-impact area at that moment — whether feeding, medical care, disaster relief, or clean water."
+             data-goal="Your gift goes where it is needed most right now"
+             role="radio"
+             aria-checked="false"
+             tabindex="0">
           <div class="camp-icon" aria-hidden="true">🌍</div>
           <div style="flex:1;">
             <div class="camp-title">Where it's needed most</div>
@@ -67,10 +134,10 @@
       <div class="story-card">
         <div class="sidebar-heading">Campaign Story</div>
         <p id="campaign-story-text" style="font-size:.88rem;color:var(--text-body);line-height:1.75;margin-bottom:8px;">
-          {{ $campaigns->first()?->story_full }}
+          Every $7.99 feeds one child nutritious daily meals for an entire month through our feeding centers in Cebu and Leyte.
         </p>
         <div id="campaign-goal-text" style="font-size:.82rem;font-weight:700;color:var(--orange-dark);">
-          {{ $campaigns->first()?->goal_full }}
+          Goal: $50,000 — Help us feed 6,250 children this year
         </div>
       </div>
 
@@ -302,23 +369,33 @@
         <div class="sidebar-heading" id="donate-impact-heading">Your $29.99/mo Impact</div>
         <div class="impact-rows">
           <div class="impact-row">
-            <div class="impact-emoji" aria-hidden="true">🍽️</div>
+            <div class="impact-emoji" aria-hidden="true">
+              <img src="{{ asset('images/plate-with-spoon.png') }}" alt="Feed Filipino Children" style="width: 48px;height: 48px;object-fit:contain;"/>
+            </div>
             <div class="impact-copy"><strong>$7.99/mo</strong> feeds one child nutritious daily meals for an entire month</div>
           </div>
           <div class="impact-row">
-            <div class="impact-emoji" aria-hidden="true">👨‍👩‍👧‍👦</div>
+            <div class="impact-emoji" aria-hidden="true">
+              <img src="{{ asset('images/family.png') }}" alt="Feed Filipino Children" style="width: 48px;height: 48px;object-fit:contain;"/>
+            </div>
             <div class="impact-copy"><strong>$29.99/mo</strong> feeds a family of four every single day of the month</div>
           </div>
           <div class="impact-row">
-            <div class="impact-emoji" aria-hidden="true">💊</div>
+            <div class="impact-emoji" aria-hidden="true">
+              <img src="{{ asset('images/medicine.png') }}" alt="Feed Filipino Children" style="width: 48px;height: 48px;object-fit:contain;"/>
+            </div>
             <div class="impact-copy"><strong>$59/mo</strong> provides medicine for 10 children per month</div>
           </div>
           <div class="impact-row">
-            <div class="impact-emoji" aria-hidden="true">🏥</div>
+            <div class="impact-emoji" aria-hidden="true">
+              <img src="{{ asset('images/clinic.png') }}" alt="Feed Filipino Children" style="width: 48px;height: 48px;object-fit:contain;"/>
+            </div>
             <div class="impact-copy"><strong>$99/mo</strong> covers medicine for an entire village clinic visit</div>
           </div>
           <div class="impact-row">
-            <div class="impact-emoji" aria-hidden="true">🌱</div>
+            <div class="impact-emoji" aria-hidden="true">
+              <img src="{{ asset('images/green-leave.png') }}" alt="Feed Filipino Children" style="width: 48px;height: 48px;object-fit:contain;"/>
+            </div>
             <div class="impact-copy"><strong>$99/mo</strong> provides seed and agricultural resources to feed families</div>
           </div>
         </div>

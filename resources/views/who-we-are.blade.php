@@ -212,14 +212,13 @@
             loading="lazy"
           />
         </div>
-        <div class="founder-info">
+        <div class="founder-info" id="founder-president">
           <span class="founder-label">Founder &amp; President</span>
           <h3>Johnny Davis</h3>
           <p class="founder-role">Founder / President</p>
           <p class="founder-bio">
-            Driven by faith and a deep compassion for the Filipino people, Johnny Davis established
-            this mission to ensure no child goes to bed hungry. His vision continues to inspire
-            thousands of donors, volunteers, and partners worldwide.
+            Johnny Davis founded Johnny Davis Global Missions to bring hope, healing, and help to the poor and vulnerable in the Philippines. Through Christ-centered compassion, we provide food for children, disaster relief, clean water, medical care, and the love of Jesus to those who need it most.
+            Our mission is simple: love God, love people, and change lives one community at a time.
           </p>
         </div>
       </div>

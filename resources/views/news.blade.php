@@ -235,7 +235,7 @@
             </span>
           </div>
           <h3 class="post-title">{{ $post['title'] }}</h3>
-          <p class="post-excerpt">{{ $post['excerpt'] }}</p>
+          <p class="post-excerpt">{!! $post['excerpt'] !!}</p>
           <a href="{{ $post['cta_href'] }}" class="btn btn-primary" style="margin-top:8px; align-self:flex-start;">
             {{ $post['cta_label'] }}
           </a>
@@ -266,7 +266,7 @@
             </span>
           </div>
           <h3 class="post-title">{{ $post['title'] }}</h3>
-          <p class="post-excerpt">{{ $post['excerpt'] }}</p>
+          <p class="post-excerpt">{!! $post['excerpt'] !!}</p>
         </div>
         <div class="post-footer">
           <a href="{{ route('donate') }}" class="post-cta">
@@ -345,8 +345,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z"/></svg>
         </div>
         <div class="stat-number" data-target="200">0</div>
-        <div class="stat-label">Families With Clean Water</div>
-        <div class="stat-desc">Wells drilled and water systems installed</div>
+        <div class="stat-label">FAMILIES WITH CLEAN DRINKING WATER</div>
+        <div class="stat-desc">Clean drinking water systems installed</div>
       </div>
     </div>
   </div>
