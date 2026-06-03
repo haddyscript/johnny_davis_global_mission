@@ -452,3 +452,53 @@
   </div><!-- /donate-page-layout -->
 
 </div><!-- /donate-body-screen -->
+
+<!-- ============================================================
+     PAYMENT ERROR MODAL — Elevated Design
+============================================================ -->
+<div id="payment-error-modal" class="pay-err-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="payErrModalTitle" hidden>
+  <div class="pay-err-modal-box">
+
+    <!-- Close -->
+    <button class="pay-err-modal-close" id="payErrModalClose" aria-label="Close">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <!-- Layered Icon -->
+    <div class="pay-err-icon-wrap" aria-hidden="true">
+      <div class="pay-err-icon-ring-outer"></div>
+      <div class="pay-err-icon-ring-inner"></div>
+      <div class="pay-err-icon-core">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="7" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <h3 class="pay-err-modal-title" id="payErrModalTitle">Payment Failed</h3>
+
+    <!-- Split error message -->
+    <div class="pay-err-msg-card">
+      <p class="pay-err-msg-primary" id="payErrMsgPrimary"></p>
+      <p class="pay-err-msg-secondary" id="payErrMsgSecondary" hidden></p>
+    </div>
+
+    <!-- Actions -->
+    <div class="pay-err-modal-actions">
+      <button class="pay-err-btn-retry" id="payErrModalRetry">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.87"/></svg>
+        Try Again
+      </button>
+      <button class="pay-err-btn-alt" id="payErrModalAlt">Use a Different Method</button>
+    </div>
+
+    <!-- Support line -->
+    <p class="pay-err-support-note">
+      Still having trouble?
+      <a href="mailto:info@johnnydavisglobalmissions.org">Contact support</a>
+    </p>
+
+  </div>
+</div>

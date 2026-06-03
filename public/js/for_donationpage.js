@@ -89,15 +89,75 @@
     setTimeout(() => { loadingScreen.hidden = true; }, 300);
   }
 
+  /* ── Payment error modal refs ───────────────────────────── */
+  const payErrModal      = document.getElementById('payment-error-modal');
+  const payErrMsgPrimary = document.getElementById('payErrMsgPrimary');
+  const payErrMsgSecond  = document.getElementById('payErrMsgSecondary');
+  const payErrModalClose = document.getElementById('payErrModalClose');
+  const payErrModalRetry = document.getElementById('payErrModalRetry');
+  const payErrModalAlt   = document.getElementById('payErrModalAlt');
+
+  function openPayErrModal(msg) {
+    if (!payErrModal) return;
+
+    // Split at the first sentence boundary followed by an uppercase letter
+    const splitIdx = msg.search(/[.!]\s+(?=[A-Z])/);
+    if (splitIdx > -1 && payErrMsgSecond) {
+      payErrMsgPrimary.textContent  = msg.slice(0, splitIdx + 1).trim();
+      payErrMsgSecond.textContent   = msg.slice(splitIdx + 2).trim();
+      payErrMsgSecond.hidden        = false;
+    } else {
+      payErrMsgPrimary.textContent  = msg;
+      if (payErrMsgSecond) payErrMsgSecond.hidden = true;
+    }
+
+    payErrModal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePayErrModal() {
+    if (!payErrModal) return;
+    payErrModal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  if (payErrModalClose) payErrModalClose.addEventListener('click', closePayErrModal);
+
+  if (payErrModalRetry) {
+    payErrModalRetry.addEventListener('click', () => {
+      closePayErrModal();
+      ctaBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
+
+  if (payErrModalAlt) {
+    payErrModalAlt.addEventListener('click', () => {
+      closePayErrModal();
+      document.querySelector('.pay-method-selector')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
+
+  if (payErrModal) {
+    payErrModal.addEventListener('click', e => {
+      if (e.target === payErrModal) closePayErrModal();
+    });
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && payErrModal && !payErrModal.hidden) closePayErrModal();
+  });
+
   function showPaymentError(msg) {
     paymentErrorEl.textContent = msg;
     paymentErrorEl.style.display = 'block';
     paymentErrorEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    openPayErrModal(msg);
   }
 
   function clearPaymentError() {
     paymentErrorEl.textContent = '';
     paymentErrorEl.style.display = 'none';
+    closePayErrModal();
   }
 
   function resetCtaBtn() {
