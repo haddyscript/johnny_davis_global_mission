@@ -179,7 +179,8 @@
                 <p style="margin:0 0 14px;font-size:13px;color:#667085;line-height:1.6;">
                     <a href="mailto:{{ config('mail.from.address', 'info@jdgm.org') }}"
                        style="color:#0f766e;text-decoration:none;">
-                        {{ config('mail.from.address', 'info@jdgm.org') }}
+                       Info@johnnydavisglobalmissions.org
+                        <!-- {{ config('mail.from.address', 'info@jdgm.org') }} -->
                     </a>
                     &nbsp;&nbsp;·&nbsp;&nbsp;
                     <a href="{{ config('app.url') }}"
