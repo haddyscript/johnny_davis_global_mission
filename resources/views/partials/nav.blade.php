@@ -298,7 +298,8 @@
           @foreach($navItems as $item)
             @php
               $itemPath  = parse_url($item->url, PHP_URL_PATH) ?? '';
-              $isActive  = $itemPath && !in_array($itemPath, ['/#', '#'])
+              $hasHash   = str_contains($item->url, '#');
+              $isActive  = !$hasHash && $itemPath && !in_array($itemPath, ['/#', '#'])
                   ? rtrim($itemPath, '/') === rtrim($currentPath, '/')
                   : false;
               $baseClass = trim($item->nav_class ?? '');
@@ -494,12 +495,19 @@
 
   /* Active-link detection: drawer links */
   var current = window.location.pathname.replace(/\/$/, '') || '/';
+  var currentHash = window.location.hash;
   overlay.querySelectorAll('.m-nav-links a').forEach(function (a) {
     try {
-      var lp = new URL(a.href, window.location.origin).pathname.replace(/\/$/, '') || '/';
-      if (a.href.indexOf('#') !== -1 && lp === '/') return;
-      if ((lp !== '/' && current === lp) || (lp === '/' && current === '/')) {
-        a.classList.add('nav-active');
+      var url = new URL(a.href, window.location.origin);
+      var lp  = url.pathname.replace(/\/$/, '') || '/';
+      var lh  = url.hash;
+      if (lh) {
+        if (lp === current && lh === currentHash) a.classList.add('nav-active');
+      } else {
+        if ((lp !== '/' && current === lp && !currentHash) ||
+            (lp === '/' && current === '/' && !currentHash)) {
+          a.classList.add('nav-active');
+        }
       }
     } catch (e) {}
   });
@@ -508,12 +516,19 @@
 /* Active-link detection: desktop nav-links */
 (function () {
   var current = window.location.pathname.replace(/\/$/, '') || '/';
+  var currentHash = window.location.hash;
   document.querySelectorAll('.nav-links a').forEach(function (a) {
     try {
-      var lp = new URL(a.href, window.location.origin).pathname.replace(/\/$/, '') || '/';
-      if (a.href.indexOf('#') !== -1 && lp === '/') return;
-      if ((lp !== '/' && current === lp) || (lp === '/' && current === '/')) {
-        a.classList.add('nav-active');
+      var url = new URL(a.href, window.location.origin);
+      var lp  = url.pathname.replace(/\/$/, '') || '/';
+      var lh  = url.hash;
+      if (lh) {
+        if (lp === current && lh === currentHash) a.classList.add('nav-active');
+      } else {
+        if ((lp !== '/' && current === lp && !currentHash) ||
+            (lp === '/' && current === '/' && !currentHash)) {
+          a.classList.add('nav-active');
+        }
       }
     } catch (e) {}
   });
