@@ -28,7 +28,7 @@
 
 @include('partials.nav-ministry')
 
-<a id="stickyDonate" class="btn btn-primary" href="{{ route('donate') }}" aria-label="Donate Now">Donate Now</a>
+<a id="stickyDonate" class="btn btn-primary" href="{{ str_contains(request()->getHost(), 'johnnydavisministries.org') ? route('donate').'?campaign=Feed+Filipino+Children' : route('donate') }}" aria-label="Donate Now">Donate Now</a>
 
 @yield('content')
 

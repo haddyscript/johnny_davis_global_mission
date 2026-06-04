@@ -79,7 +79,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
           Watch Daily Push
         </a>
-        <a href="{{ route('donate') }}" class="btn btn-outline btn-lg">
+        <a href="{{ str_contains(request()->getHost(), 'johnnydavisministries.org') ? route('donate').'?campaign=Feed+Filipino+Children' : route('donate') }}" class="btn btn-outline btn-lg">
           &#9829; Support the Mission
         </a>
       </div>

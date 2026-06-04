@@ -929,11 +929,13 @@
   /* ── Mobile nav toggle ──────────────────────────────────── */
   const toggle    = document.getElementById('navToggle');
   const mobileNav = document.getElementById('navMobile');
-  toggle.addEventListener('click', () => {
-    const open = mobileNav.classList.toggle('open');
-    toggle.classList.toggle('open', open);
-    toggle.setAttribute('aria-expanded', String(open));
-  });
+  if (toggle && mobileNav) {
+    toggle.addEventListener('click', () => {
+      const open = mobileNav.classList.toggle('open');
+      toggle.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  }
 
   /* ── Reveal animations ─────────────────────────────────── */
   const revealEls = document.querySelectorAll('.reveal');

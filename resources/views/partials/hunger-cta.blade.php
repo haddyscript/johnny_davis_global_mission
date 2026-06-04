@@ -22,7 +22,7 @@
       <p class="hunger-result">Because of YOU… they eat.</p>
 
       <div class="hunger-btns">
-        <a href="{{ route('donate') }}" class="btn btn-primary btn-lg glow-cta">
+        <a href="{{ str_contains(request()->getHost(), 'johnnydavisministries.org') ? route('donate').'?campaign=Feed+Filipino+Children' : route('donate') }}" class="btn btn-primary btn-lg glow-cta">
           &#9829; Donate Now
         </a>
         <a href="https://filipinochildren.org" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg">
