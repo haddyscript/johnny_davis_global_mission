@@ -22,7 +22,7 @@
           JDGM
         </text>
       </svg>">
-  <link rel="stylesheet" href="{{ asset('css/for_ministry.css') }}?v={{ filemtime(public_path('css/for_ministry.css')) }}" />
+  <link rel="stylesheet" href="{{ asset('css/for_ministry.css') }}?v={{ @filemtime(public_path('css/for_ministry.css')) ?: time() }}" />
 </head>
 <body>
 
@@ -34,7 +34,7 @@
 
 @include('partials.footer-ministry')
 
-<script src="{{ asset('js/for_ministry.js') }}?v={{ filemtime(public_path('js/for_ministry.js')) }}"></script>
+<script src="{{ asset('js/for_ministry.js') }}?v={{ @filemtime(public_path('js/for_ministry.js')) ?: time() }}"></script>
 @include('partials.chatbot')
 </body>
 </html>

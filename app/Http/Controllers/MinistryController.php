@@ -17,10 +17,15 @@ class MinistryController extends Controller
 
         $cms = new CmsPageData($page);
 
-        return view('ministry', [
-            'title'       => $cms->text('meta', 'title', 'Johnny Davis Ministries — Transforming Lives'),
-            'description' => $cms->text('meta', 'description', 'Johnny Davis Ministries — Transforming Lives, Empowering Communities, Expanding the Kingdom of God. Explore the ministry, Daily Push videos, podcast, and upcoming events.'),
-            'cms'         => $cms,
-        ]);
+        return response()
+            ->view('ministry', [
+                'title'       => $cms->text('meta', 'title', 'Johnny Davis Ministries — Transforming Lives'),
+                'description' => $cms->text('meta', 'description', 'Johnny Davis Ministries — Transforming Lives, Empowering Communities, Expanding the Kingdom of God. Explore the ministry, Daily Push videos, podcast, and upcoming events.'),
+                'cms'         => $cms,
+            ])
+            ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+            ->header('Pragma',        'no-cache')
+            ->header('Expires',       '0')
+            ->header('X-LiteSpeed-Cache-Control', 'no-cache');
     }
 }
