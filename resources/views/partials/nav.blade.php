@@ -2,7 +2,8 @@
     use App\Models\NavItem;
 
     $currentPath    = '/' . ltrim(request()->path(), '/');
-    $isMinistryPage = $currentPath === '/ministry';
+    $isMinistryPage = $currentPath === '/ministry'
+        || str_contains(request()->getHost(), 'johnnydavisministries.org');
     $logoSrc        = $isMinistryPage
         ? asset('images/ministry-logo.png')
         : asset('images/logo.webp');
