@@ -37,7 +37,12 @@ Route::get('/site-locked',    [SiteLockController::class, 'locked'])->name('site
 
 // Public page GET routes — blocked by nav.visibility if the matching nav item is hidden
 Route::middleware('nav.visibility')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/', function () {
+        if (str_contains(request()->getHost(), 'johnnydavisministries.org')) {
+            return app(MinistryController::class)->index();
+        }
+        return app(HomeController::class)->index();
+    })->name('home');
     Route::get('/contact', [ContactController::class, 'index'])->name('contact');
     Route::get('/news', [NewsController::class, 'index'])->name('news');
     Route::get('/who-we-are', [WhoWeAreController::class, 'index'])->name('who-we-are');
