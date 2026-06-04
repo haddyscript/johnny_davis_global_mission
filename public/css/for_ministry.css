@@ -1710,3 +1710,296 @@
       .slider-prev, .slider-next { display: none; }
       #stickyDonate { right: 8px; bottom: 10px; padding: 12px 14px; font-size: .82rem; }
     }
+
+    /* ============================================================
+       MOBILE ENHANCEMENTS — max-width: 768px
+       Desktop (> 768px) is untouched by every rule below
+    ============================================================ */
+    @media (max-width: 768px) {
+
+      /* ── Global touch polish ── */
+      * { -webkit-tap-highlight-color: transparent; }
+
+      /* Tactile press on all interactive cards */
+      .dp-card:active,
+      .event-card:active,
+      .podcast-card:active,
+      .mp-item:active,
+      .vision-item:active,
+      .wutp-card:active,
+      .upcoming-card:active { transform: scale(0.97); transition: transform .12s ease !important; }
+      .btn:active { transform: scale(0.95) !important; transition: transform .1s ease !important; }
+
+      /* ── Mobile Nav — slide-in animation ── */
+      .nav-mobile.open {
+        animation: mobileNavDrop .28s cubic-bezier(.22,1,.36,1) both;
+      }
+      .nav-mobile.open a {
+        opacity: 0;
+        animation: navLinkIn .3s ease forwards;
+      }
+      .nav-mobile.open a:nth-child(1) { animation-delay: .04s; }
+      .nav-mobile.open a:nth-child(2) { animation-delay: .09s; }
+      .nav-mobile.open a:nth-child(3) { animation-delay: .14s; }
+      .nav-mobile.open a:nth-child(4) { animation-delay: .19s; }
+      .nav-mobile.open a:nth-child(5) { animation-delay: .24s; }
+      .nav-mobile.open a:nth-child(6) { animation-delay: .29s; }
+
+      @keyframes mobileNavDrop {
+        from { opacity: 0; transform: translateY(-10px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes navLinkIn {
+        from { opacity: 0; transform: translateX(-18px); }
+        to   { opacity: 1; transform: translateX(0); }
+      }
+
+      /* ── Hero ── */
+      #hero { height: 90vh; min-height: 540px; }
+      .hero-content { padding-top: 84px; padding-bottom: 96px; }
+      .hero-headline { font-size: clamp(2rem, 8.5vw, 3rem); margin-bottom: 12px; }
+      .hero-sub { font-size: .98rem; margin-bottom: 28px; }
+      .hero-ctas { gap: 12px; }
+      .hero-ctas .btn-lg { min-height: 52px; justify-content: center; width: 100%; max-width: 320px; }
+      .hero-badge { font-size: .68rem; padding: 5px 14px; }
+      .hero-scroll { display: none; }
+
+      /* ── About ── */
+      #about { padding: 68px 0 56px; }
+      .about-img-wrap img { height: 300px; }
+      .about-accent { padding: 12px 16px; bottom: -14px; left: -12px; }
+      .about-accent strong { font-size: 1.55rem; }
+      .about-para { font-size: .95rem; line-height: 1.75; margin-bottom: 12px; }
+      .mission-points { gap: 8px; margin-top: 20px; }
+      .mp-item { padding: 14px 16px; min-height: 52px; font-size: .9rem; }
+      .mp-item:hover { transform: none; }
+
+      /* ── Daily Push — Horizontal Scroll Snap Slider ── */
+      #daily-push { padding: 68px 0 60px; }
+      .dp-header { margin-bottom: 36px; padding: 0 4px; }
+
+      .dp-grid {
+        display: flex !important;
+        flex-direction: row !important;
+        grid-template-columns: unset !important;
+        gap: 14px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 6px 20px 20px;
+        margin: 0 -24px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        margin-bottom: 0;
+      }
+      .dp-grid::-webkit-scrollbar { display: none; }
+
+      .dp-card {
+        flex: 0 0 272px;
+        min-width: 272px;
+        scroll-snap-align: start;
+        transition: transform .12s ease, box-shadow .12s ease !important;
+      }
+      .dp-card:hover { transform: none; box-shadow: none; }
+      .dp-thumb { height: 175px; }
+
+      /* Swipe hint (injected via JS) */
+      .dp-swipe-hint {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        font-size: .72rem;
+        color: rgba(255,255,255,.42);
+        letter-spacing: .07em;
+        text-transform: uppercase;
+        margin: 0 0 18px;
+        user-select: none;
+      }
+      .dp-swipe-hint svg { animation: hintArrow 1.7s ease-in-out infinite; }
+
+      /* Progress pill dots (injected via JS) */
+      .dp-progress {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        margin: 14px 0 28px;
+      }
+      .dp-progress-dot {
+        height: 6px;
+        width: 6px;
+        border-radius: 3px;
+        background: rgba(255,255,255,.22);
+        transition: background .3s ease, width .3s ease;
+        flex-shrink: 0;
+      }
+      .dp-progress-dot.active {
+        background: var(--orange);
+        width: 20px;
+      }
+
+      /* ── Podcast ── */
+      #podcast { padding: 68px 0; }
+      .podcast-header { margin-bottom: 32px; }
+      .podcast-card:hover { transform: none; }
+      .podcast-body { padding: 20px; }
+      .podcast-title { font-size: 1.15rem; }
+
+      /* ── Events — Horizontal Scroll Snap ── */
+      #events { padding: 68px 0 56px; }
+      .events-header { margin-bottom: 32px; }
+
+      .events-grid {
+        display: flex !important;
+        flex-direction: row !important;
+        grid-template-columns: unset !important;
+        gap: 14px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 6px 20px 16px;
+        margin: 0 -24px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .events-grid::-webkit-scrollbar { display: none; }
+
+      .event-card {
+        flex: 0 0 82vw;
+        max-width: 320px;
+        min-width: 260px;
+        scroll-snap-align: start;
+        min-height: 340px;
+      }
+      .event-card:hover { transform: none; box-shadow: var(--shadow-md); }
+
+      /* Events swipe hint (injected via JS) */
+      .events-swipe-hint {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        font-size: .72rem;
+        color: var(--gray-400);
+        letter-spacing: .07em;
+        text-transform: uppercase;
+        margin-top: 14px;
+        user-select: none;
+      }
+      .events-swipe-hint svg { animation: hintArrow 1.7s ease-in-out infinite; }
+
+      @keyframes hintArrow {
+        0%, 100% { transform: translateX(0); opacity: .5; }
+        50%       { transform: translateX(6px); opacity: 1; }
+      }
+
+      /* ── Hunger CTA ── */
+      #hunger { padding: 76px 0; }
+      .hunger-headline { font-size: clamp(1.6rem, 7vw, 2.4rem); }
+      .hunger-sub { font-size: 1rem; }
+      .hunger-price { font-size: 1.2rem; }
+      .hunger-btns .btn { width: 100%; max-width: 320px; justify-content: center; }
+      .hunger-result { font-size: .95rem; }
+
+      /* ── Inspire ── */
+      #inspire { padding: 76px 0; }
+      .inspire-content > div[style] { flex-direction: column !important; align-items: center !important; gap: 12px !important; }
+      .inspire-content .btn { width: 100%; max-width: 320px; justify-content: center; }
+
+      /* ── Upcoming ── */
+      #upcoming { padding: 60px 0 calc(60px + 88px); }
+      .wutp-card { padding: 28px 22px; }
+      .wutp-title { font-size: 1.45rem; }
+      .upcoming-cta h3 { font-size: 1.45rem; }
+      .social-row { gap: 8px; }
+      .social-btn { padding: 12px 16px; min-height: 48px; font-size: .82rem; }
+
+      /* ── Footer ── */
+      #footer { padding: 60px 0 16px; }
+      .footer-brand { text-align: center; }
+      .footer-socials { justify-content: center; }
+
+      /* Hide desktop sticky donate — replaced by action bar */
+      #stickyDonate { display: none !important; }
+
+      /* ============================================================
+         WOW FACTOR — Glassmorphic Sticky Bottom Action Bar
+      ============================================================ */
+      #mobileActionBar {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        z-index: 1500;
+        padding: 8px 12px max(12px, env(safe-area-inset-bottom));
+        background: rgba(10, 24, 54, 0.86);
+        backdrop-filter: blur(22px) saturate(1.6);
+        -webkit-backdrop-filter: blur(22px) saturate(1.6);
+        border-top: 1px solid rgba(255,255,255,.09);
+        box-shadow: 0 -4px 32px rgba(0,0,0,.4);
+        display: flex;
+        align-items: stretch;
+        gap: 6px;
+        transform: translateY(110%);
+        transition: transform .38s cubic-bezier(.22,1,.36,1);
+        will-change: transform;
+      }
+      #mobileActionBar.bar-visible { transform: translateY(0); }
+
+      .mob-bar-btn {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        padding: 8px 6px;
+        min-height: 56px;
+        border-radius: 12px;
+        border: none;
+        background: rgba(255,255,255,.06);
+        color: rgba(255,255,255,.72);
+        font-size: .62rem;
+        font-weight: 700;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background .18s ease, color .18s ease, transform .12s ease;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+      .mob-bar-btn:active { transform: scale(0.91) !important; }
+      .mob-bar-btn:hover,
+      .mob-bar-btn:focus-visible {
+        background: rgba(255,255,255,.12);
+        color: var(--white);
+        outline: none;
+      }
+
+      .mob-bar-btn.btn-give {
+        flex: 1.5;
+        background: var(--orange);
+        color: var(--white);
+        border-radius: 14px;
+        font-size: .68rem;
+        animation: barPulse 2.8s ease-in-out infinite;
+        box-shadow: 0 4px 18px rgba(240,124,30,.45);
+      }
+      .mob-bar-btn.btn-give:hover { background: var(--orange-dark); animation: none; }
+      .mob-bar-btn.btn-give:active { background: var(--orange-dark) !important; animation: none !important; transform: scale(0.92) !important; }
+
+      @keyframes barPulse {
+        0%, 100% { box-shadow: 0 4px 18px rgba(240,124,30,.45); }
+        50%       { box-shadow: 0 4px 30px rgba(240,124,30,.75), 0 0 0 5px rgba(240,124,30,.1); }
+      }
+
+      .mob-bar-icon { font-size: 1.1rem; line-height: 1; }
+      .mob-bar-btn svg { display: block; }
+    }
+
+    /* Smaller phones: tighter card widths */
+    @media (max-width: 420px) {
+      .dp-card { flex: 0 0 88vw; min-width: 240px; }
+      .event-card { flex: 0 0 90vw; min-width: 250px; }
+      .hero-ctas .btn-lg { max-width: 100%; }
+    }
