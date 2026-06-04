@@ -1786,7 +1786,8 @@
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
-        padding: 6px 20px 20px;
+        /* Left/right padding = half of remaining viewport so each card snaps centered */
+        padding: 6px calc((100vw - 272px) / 2) 20px;
         margin: 0 -24px;
         scrollbar-width: none;
         -ms-overflow-style: none;
@@ -1797,7 +1798,7 @@
       .dp-card {
         flex: 0 0 272px;
         min-width: 272px;
-        scroll-snap-align: start;
+        scroll-snap-align: center;
         transition: transform .12s ease, box-shadow .12s ease !important;
       }
       .dp-card:hover { transform: none; box-shadow: none; }
@@ -2000,6 +2001,8 @@
     /* Smaller phones: tighter card widths */
     @media (max-width: 420px) {
       .dp-card { flex: 0 0 88vw; min-width: 240px; }
+      /* Re-center padding for the narrower card width on small phones */
+      .dp-grid { padding-left: calc((100vw - 88vw) / 2); padding-right: calc((100vw - 88vw) / 2); }
       .event-card { flex: 0 0 90vw; min-width: 250px; }
       .hero-ctas .btn-lg { max-width: 100%; }
     }
