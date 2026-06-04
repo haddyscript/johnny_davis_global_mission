@@ -1859,7 +1859,8 @@
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
-        padding: 6px 20px 16px;
+        /* 82vw card → 9vw each side so every card snaps centered */
+        padding: 6px 9vw 16px;
         margin: 0 -24px;
         scrollbar-width: none;
         -ms-overflow-style: none;
@@ -1870,10 +1871,31 @@
         flex: 0 0 82vw;
         max-width: 320px;
         min-width: 260px;
-        scroll-snap-align: start;
+        scroll-snap-align: center;
         min-height: 340px;
       }
       .event-card:hover { transform: none; box-shadow: var(--shadow-md); }
+
+      /* Events progress dots (injected via JS) */
+      .events-progress {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        margin: 14px 0 4px;
+      }
+      .events-progress-dot {
+        height: 6px;
+        width: 6px;
+        border-radius: 3px;
+        background: var(--gray-200);
+        transition: background .3s ease, width .3s ease;
+        flex-shrink: 0;
+      }
+      .events-progress-dot.active {
+        background: var(--orange);
+        width: 20px;
+      }
 
       /* Events swipe hint (injected via JS) */
       .events-swipe-hint {
@@ -1885,7 +1907,7 @@
         color: var(--gray-400);
         letter-spacing: .07em;
         text-transform: uppercase;
-        margin-top: 14px;
+        margin-top: 10px;
         user-select: none;
       }
       .events-swipe-hint svg { animation: hintArrow 1.7s ease-in-out infinite; }

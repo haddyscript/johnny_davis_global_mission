@@ -160,10 +160,32 @@
       }, { passive: true, once: true });
     }
 
-    /* ── Events: inject swipe hint ── */
+    /* ── Events: inject progress dots + swipe hint ── */
     var eventsSection = document.getElementById('events');
     var eventsGrid    = eventsSection && eventsSection.querySelector('.events-grid');
-    if (eventsGrid) {
+    var evCards       = eventsGrid    && eventsGrid.querySelectorAll('.event-card');
+
+    if (eventsGrid && evCards && evCards.length) {
+      // Progress dots below the grid
+      var evProg = document.createElement('div');
+      evProg.className = 'events-progress';
+      evProg.setAttribute('aria-hidden', 'true');
+      for (var j = 0; j < evCards.length; j++) {
+        var evDot = document.createElement('div');
+        evDot.className = 'events-progress-dot' + (j === 0 ? ' active' : '');
+        evProg.appendChild(evDot);
+      }
+      eventsGrid.parentNode.insertBefore(evProg, eventsGrid.nextSibling);
+
+      var evProgDots = evProg.querySelectorAll('.events-progress-dot');
+      eventsGrid.addEventListener('scroll', function () {
+        var gap    = 14;
+        var cardW  = evCards[0].offsetWidth + gap;
+        var idx    = Math.min(Math.round(eventsGrid.scrollLeft / cardW), evCards.length - 1);
+        evProgDots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
+      }, { passive: true });
+
+      // Swipe hint below the dots
       var evHint = document.createElement('p');
       evHint.className = 'events-swipe-hint';
       evHint.setAttribute('aria-hidden', 'true');
@@ -171,7 +193,7 @@
         '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">' +
         '<path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>' +
         'Swipe to see all events';
-      eventsGrid.parentNode.insertBefore(evHint, eventsGrid.nextSibling);
+      evProg.parentNode.insertBefore(evHint, evProg.nextSibling);
 
       eventsGrid.addEventListener('scroll', function hideEvHint() {
         evHint.style.opacity = '0';
