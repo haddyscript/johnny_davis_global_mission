@@ -120,18 +120,37 @@
           No border is too far, no need too great — because love has no limits.
         </p>
 
-        <div class="service-icons" role="list" aria-label="Our services">
-          <div class="service-icon-item" role="listitem">
-            <span class="si-icon" aria-hidden="true">🍚</span> Food Support
-          </div>
-          <div class="service-icon-item" role="listitem">
-            <span class="si-icon" aria-hidden="true">🏥</span> Medical Aid
-          </div>
-          <div class="service-icon-item" role="listitem">
-            <span class="si-icon" aria-hidden="true">🎓</span> Education
-          </div>
-          <div class="service-icon-item" role="listitem">
-            <span class="si-icon" aria-hidden="true">🌏</span> Disaster Relief
+        <div class="service-ticker-wrap">
+          <div class="service-icons" role="list" aria-label="Our services">
+
+            {{-- Original items — visible to all --}}
+            <div class="service-icon-item" role="listitem">
+              <span class="si-icon" aria-hidden="true">🍚</span> Food Support
+            </div>
+            <div class="service-icon-item" role="listitem">
+              <span class="si-icon" aria-hidden="true">🏥</span> Medical Aid
+            </div>
+            <div class="service-icon-item" role="listitem">
+              <span class="si-icon" aria-hidden="true">🎓</span> Education
+            </div>
+            <div class="service-icon-item" role="listitem">
+              <span class="si-icon" aria-hidden="true">🌏</span> Disaster Relief
+            </div>
+
+            {{-- Clones for seamless loop — screen-reader hidden, mobile-only via CSS --}}
+            <div class="service-icon-item service-ticker-clone" aria-hidden="true">
+              <span class="si-icon" aria-hidden="true">🍚</span> Food Support
+            </div>
+            <div class="service-icon-item service-ticker-clone" aria-hidden="true">
+              <span class="si-icon" aria-hidden="true">🏥</span> Medical Aid
+            </div>
+            <div class="service-icon-item service-ticker-clone" aria-hidden="true">
+              <span class="si-icon" aria-hidden="true">🎓</span> Education
+            </div>
+            <div class="service-icon-item service-ticker-clone" aria-hidden="true">
+              <span class="si-icon" aria-hidden="true">🌏</span> Disaster Relief
+            </div>
+
           </div>
         </div>
       </div>

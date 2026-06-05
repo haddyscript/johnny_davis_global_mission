@@ -1565,6 +1565,83 @@
 }
 
 /* ============================================================
+   SERVICE ICONS — INFINITE TICKER (mobile only)
+============================================================ */
+
+/* Clones are invisible everywhere except inside the mobile ticker */
+.service-ticker-clone { display: none; }
+
+@media (max-width: 768px) {
+
+  /* ── Outer wrapper: clips & adds edge-fade vignette ────── */
+  .service-ticker-wrap {
+    position: relative;
+    overflow: hidden;
+    margin: 20px -24px 0;          /* bleed to screen edges */
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent  0%,
+      #000        14%,
+      #000        86%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent  0%,
+      #000        14%,
+      #000        86%,
+      transparent 100%
+    );
+  }
+
+  /* ── Track: switch from manual-scroll to auto-ticker ───── */
+  .service-ticker-wrap .service-icons {
+    /* Reset the existing mobile scroll overrides */
+    overflow-x:        visible;
+    scroll-snap-type:  none;
+    scrollbar-width:   auto;
+    -ms-overflow-style: auto;
+    margin:            0;
+    padding:           6px 0 14px;
+
+    /* Ticker geometry: one continuous row whose width = 2× one set */
+    display:    inline-flex;
+    flex-wrap:  nowrap;
+    gap:        14px;
+    width:      max-content;
+
+    /* 60 fps hardware-accelerated scroll */
+    animation:                 serviceTicker 18s linear infinite;
+    will-change:               transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility:         hidden;
+  }
+
+  /* Show clones and lock item width */
+  .service-ticker-clone               { display: flex; }
+  .service-ticker-wrap .service-icon-item { flex-shrink: 0; }
+
+  /* ── Pause: CSS tap-hold via :active ───────────────────── */
+  .service-ticker-wrap:active .service-icons,
+  .service-ticker-wrap.ticker-paused  .service-icons {
+    animation-play-state: paused;
+  }
+
+  /* ── Honour prefers-reduced-motion ─────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .service-ticker-wrap { overflow: visible; mask-image: none; -webkit-mask-image: none; }
+    .service-ticker-wrap .service-icons { animation: none; overflow-x: auto; width: auto; }
+    .service-ticker-clone { display: none; }
+  }
+}
+
+/* Keyframe: moves the track exactly -50% (= width of one set of 4 items) */
+@keyframes serviceTicker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ============================================================
    TEAM CARDS — PREMIUM HOVER & BIO PANEL
 ============================================================ */
 

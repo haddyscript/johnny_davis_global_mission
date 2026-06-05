@@ -121,6 +121,19 @@
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }());
 
+/* ─── SERVICE TICKER — touch pause / resume ─────────────────── */
+(function () {
+  var wrap = document.querySelector('.service-ticker-wrap');
+  if (!wrap) return;
+
+  function pause()  { wrap.classList.add('ticker-paused'); }
+  function resume() { wrap.classList.remove('ticker-paused'); }
+
+  wrap.addEventListener('touchstart',  pause,  { passive: true });
+  wrap.addEventListener('touchend',    resume, { passive: true });
+  wrap.addEventListener('touchcancel', resume, { passive: true });
+}());
+
 /* ─── TEAM CARD BIO PANEL — mobile tap-to-reveal ───────────── */
 (function () {
   /* Only activate on touch/stylus devices that have no fine pointer */
