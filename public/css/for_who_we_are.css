@@ -1785,3 +1785,234 @@
   /* Keep card within the swipe carousel — bio still slides up within */
   .team-card.bio-open { flex-shrink: 0; }
 }
+
+/* ============================================================
+   FOUNDER CARD — PREMIUM REFRESH
+============================================================ */
+
+.team-founder-wrap { max-width: 100%; }
+
+.team-founder-card {
+  max-width: 860px;
+  padding: 48px 52px;
+  gap: 48px;
+  background: linear-gradient(
+    135deg,
+    #09203f  0%,
+    #0d2a4e 40%,
+    #122f58 70%,
+    #1a4480 100%
+  );
+  transition:
+    transform  .45s cubic-bezier(.34,1.2,.64,1),
+    box-shadow .4s ease;
+}
+
+.team-founder-card:hover {
+  transform: translateY(-10px);
+  box-shadow:
+    0 44px 96px rgba(9,32,63,.55),
+    0  0   0 1px rgba(240,124,30,.18),
+    0 20px 48px rgba(240,124,30,.07);
+}
+
+.team-founder-card::before {
+  content: '';
+  position: absolute;
+  bottom: -70px;
+  left: -70px;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(37,99,168,.28) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.team-founder-card::after {
+  width: 260px;
+  height: 260px;
+  top: -50px;
+  right: -50px;
+  background: radial-gradient(circle, rgba(240,124,30,.22) 0%, transparent 65%);
+  transition: transform .45s ease;
+}
+.team-founder-card:hover::after { transform: scale(1.25); }
+
+/* ── Spinning gradient ring ── */
+.founder-photo-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--orange-dark)   0%,
+    var(--orange)       30%,
+    var(--orange-light) 55%,
+    var(--orange)       75%,
+    var(--orange-dark) 100%
+  );
+  animation: founderRingRotate 4s linear infinite;
+  z-index: 0;
+}
+@keyframes founderRingRotate { to { transform: rotate(360deg); } }
+
+.founder-photo {
+  position: relative;
+  z-index: 1;
+  border: none;
+  box-shadow: 0 0 0 4px #0d2a4e, 0 8px 28px rgba(0,0,0,.35);
+  transition: transform .4s ease, box-shadow .4s ease;
+}
+.team-founder-card:hover .founder-photo {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 4px #0d2a4e, 0 12px 36px rgba(0,0,0,.45);
+}
+
+/* ── Bio ── */
+.founder-info .founder-bio {
+  font-size: .9rem;
+  color: #E6ECF4;
+  line-height: 1.88;
+}
+
+/* ── Stat chips ── */
+.founder-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+.founder-stat {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  min-width: 88px;
+  text-align: center;
+  backdrop-filter: blur(4px);
+  transition: background .3s ease, border-color .3s ease, transform .3s ease;
+}
+.founder-stat:hover {
+  background: rgba(240,124,30,.16);
+  border-color: rgba(240,124,30,.38);
+  transform: translateY(-3px);
+}
+.founder-stat strong {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: .95rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.2;
+}
+.founder-stat span {
+  display: block;
+  margin-top: 3px;
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+}
+
+/* ── Monogram watermark ── */
+.founder-card-deco {
+  position: absolute;
+  right: 44px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Playfair Display', serif;
+  font-size: 6.5rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1;
+  color: rgba(255,255,255,.04);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  transition: color .45s ease;
+}
+.team-founder-card:hover .founder-card-deco { color: rgba(255,255,255,.065); }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .team-founder-card   { padding: 28px 20px; gap: 20px; }
+  .founder-card-deco   { display: none; }
+  .founder-stats       { gap: 8px; }
+  .founder-stat        { padding: 8px 12px; min-width: 80px; }
+  .founder-stat strong { font-size: .85rem; }
+}
+
+/* ============================================================
+   FOUNDER CARD — DESKTOP GRID REFACTOR (≥ 1025px)
+   Converts founder-info into a 2-col grid so the stat chips
+   fill the right dead space instead of piling at the bottom.
+============================================================ */
+@media (min-width: 1025px) {
+
+  /* More breathing room in the card itself */
+  .team-founder-card {
+    padding-bottom: 52px;
+    align-items: center;   /* keep photo vertically centered */
+  }
+
+  /* Lock photo-wrap to its natural size so the ::before ring stays small */
+  .founder-photo-wrap {
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  /* ── Inner 2-column grid: text | stats ── */
+  .founder-info {
+    display: grid;
+    grid-template-columns: 1fr 156px;
+    column-gap: 32px;
+    align-items: start;
+  }
+
+  /* Label, name, role span both columns */
+  .founder-info > .founder-label,
+  .founder-info > h3,
+  .founder-info > .founder-role {
+    grid-column: 1 / -1;
+  }
+
+  /* Bio sits in the left column, row 4 */
+  .founder-info > .founder-bio {
+    grid-column: 1;
+    margin-bottom: 0;
+  }
+
+  /* Stats column: same row as bio, vertically centered */
+  .founder-stats {
+    grid-column: 2;
+    grid-row: 4;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 0;
+    align-self: center;
+  }
+
+  /* Chips fill the column width and lose the flex min-width */
+  .founder-stat {
+    width: 100%;
+    min-width: unset;
+    padding: 12px 16px;
+  }
+
+  /* ── Contrast fix: subtext legibility ── */
+  .founder-stat span {
+    color: rgba(255,255,255,.72);
+    font-size: .68rem;
+  }
+
+  /* Strong value text — slightly larger in this layout */
+  .founder-stat strong {
+    font-size: 1rem;
+  }
+
+  /* Hide the monogram so it doesn't overlap the stat column */
+  .founder-card-deco { display: none; }
+}

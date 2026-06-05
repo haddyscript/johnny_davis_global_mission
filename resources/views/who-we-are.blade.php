@@ -223,6 +223,7 @@
     <!-- Founder spotlight -->
     <div class="team-founder-wrap reveal">
       <div class="team-founder-card" aria-label="Johnny Davis — Founder and President">
+
         <div class="founder-photo-wrap">
           <img
             class="founder-photo"
@@ -231,6 +232,7 @@
             loading="lazy"
           />
         </div>
+
         <div class="founder-info" id="founder-president">
           <span class="founder-label">Founder &amp; President</span>
           <h3>Johnny Davis</h3>
@@ -239,7 +241,25 @@
             Johnny Davis founded Johnny Davis Global Missions to bring hope, healing, and help to the poor and vulnerable in the Philippines. Through Christ-centered compassion, we provide food for children, disaster relief, clean water, medical care, and the love of Jesus to those who need it most.
             Our mission is simple: love God, love people, and change lives one community at a time.
           </p>
+
+          <div class="founder-stats" aria-label="Mission highlights">
+            <div class="founder-stat">
+              <strong>Est. 2017</strong>
+              <span>In Service</span>
+            </div>
+            <div class="founder-stat">
+              <strong>5,000+</strong>
+              <span>Lives Touched</span>
+            </div>
+            <div class="founder-stat">
+              <strong>Philippines</strong>
+              <span>Field of Mission</span>
+            </div>
+          </div>
         </div>
+
+        <div class="founder-card-deco" aria-hidden="true">JDGM</div>
+
       </div>
     </div>
 
