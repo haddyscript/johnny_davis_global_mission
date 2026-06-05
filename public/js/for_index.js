@@ -661,3 +661,33 @@
   }
 
 }());
+
+/* ─── MISSION PILLARS — sequential auto-hover loop ─────────── */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var grid = document.querySelector('.mission-pillars');
+  if (!grid) return;
+  var tags = Array.from(grid.querySelectorAll('.pillar-tag'));
+  if (!tags.length) return;
+  var current = 0, timer = null, HOLD_MS = 1000;
+
+  function activate(idx) {
+    tags.forEach(function (t) { t.classList.remove('pillar-active'); });
+    tags[idx].classList.add('pillar-active');
+    current = idx;
+  }
+  function advance() { current = (current + 1) % tags.length; activate(current); }
+  function startLoop() { if (timer) return; activate(current); timer = setInterval(advance, HOLD_MS); }
+  function stopLoop() { clearInterval(timer); timer = null; }
+
+  tags.forEach(function (tag, i) {
+    tag.addEventListener('mouseenter', function () {
+      stopLoop();
+      tags.forEach(function (t) { t.classList.remove('pillar-active'); });
+      tag.classList.add('pillar-active');
+      current = i;
+    });
+  });
+  grid.addEventListener('mouseleave', startLoop);
+  setTimeout(startLoop, 800);
+}());

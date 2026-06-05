@@ -2695,3 +2695,40 @@ ul { list-style: none; }
     bottom: calc(14px + env(safe-area-inset-bottom, 0px));
   }
 }
+
+/* ============================================================
+   MISSION PILLARS — sequential highlight loop
+============================================================ */
+.pillar-tag {
+  transition: background .5s ease, border-color .5s ease,
+              color .4s ease,
+              transform .5s cubic-bezier(.25,.46,.45,.94),
+              box-shadow .5s ease;
+}
+
+.pillar-tag.pillar-active {
+  background: var(--blue-dark);
+  border-color: var(--blue-dark);
+  color: var(--white);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(13,42,78,.22), 0 0 0 2px rgba(13,42,78,.10);
+}
+.pillar-tag.pillar-active svg { color: var(--orange-light, #fb923c); }
+
+@media (max-width: 768px) {
+  .mission-pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .pillar-tag {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pillar-tag { transition: none; }
+  .pillar-tag.pillar-active { transform: none; }
+}
