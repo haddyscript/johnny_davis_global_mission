@@ -1061,3 +1061,183 @@ button { font-family:inherit; cursor:pointer; }
     bottom: calc(14px + env(safe-area-inset-bottom, 0px));
   }
 }
+
+/* ============================================================
+   HERO BUTTON WOW FACTOR
+   GPU-safe: box-shadow, transform, opacity only — 60 fps.
+============================================================ */
+
+/* ── 1. Idle ambient glow — primary button ──────────────────── */
+@keyframes heroBtnGlow {
+  0%, 100% {
+    box-shadow:
+      0 4px 20px rgba(240,124,30,.35),
+      0 0   0   0   rgba(240,124,30,0);
+  }
+  50% {
+    box-shadow:
+      0 12px 40px rgba(240,124,30,.55),
+      0 0   28px  6px rgba(240,124,30,.18);
+  }
+}
+
+#contact-hero .btn-primary {
+  animation: heroBtnGlow 3.2s ease-in-out infinite;
+  will-change: box-shadow;
+  transition:
+    background  .3s ease,
+    transform   .38s cubic-bezier(.34,1.56,.64,1),
+    box-shadow  .3s ease;
+}
+
+/* Pause idle glow while interacting so hover shadow takes over cleanly */
+#contact-hero .btn-primary:hover,
+#contact-hero .btn-primary:active  { animation-play-state: paused; }
+
+/* ── 2. Hover shimmer sweep — primary (replaces base ::after fade) */
+.btn-primary::after {
+  top: 0; bottom: 0; left: 0; right: auto;
+  width: 52%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.32) 50%,
+    transparent
+  );
+  opacity: 1;
+  transform: translateX(-220%) skewX(-14deg);
+  transition: transform .58s cubic-bezier(.4,0,.2,1);
+}
+
+.btn-primary:hover::after,
+.btn-primary:focus-visible::after {
+  transform: translateX(320%) skewX(-14deg);
+  opacity: 1;
+}
+
+/* ── 3. Enhanced primary hover lift (magnetic CSS vars applied here) */
+#contact-hero .btn-primary:hover {
+  transform:
+    translate(calc(var(--mx, 0) * 1px), calc(var(--my, 0) * 1px))
+    translateY(-4px) scale(1.035);
+  box-shadow:
+    0 16px 48px rgba(240,124,30,.65),
+    0 0   28px  6px rgba(240,124,30,.22);
+}
+
+/* ── 4. Ghost button — fluid left-to-right fill on hover ────── */
+.hero-actions .btn-ghost {
+  background:
+    linear-gradient(
+      to right,
+      rgba(255,255,255,.14) 50%,
+      rgba(255,255,255,.04) 50%
+    )
+    right / 200% 100% no-repeat;
+  transition:
+    background-position .44s cubic-bezier(.4,0,.2,1),
+    border-color        .35s ease,
+    color               .35s ease,
+    box-shadow          .3s  ease,
+    transform           .38s cubic-bezier(.34,1.56,.64,1);
+}
+
+.hero-actions .btn-ghost:hover {
+  background-position: left center;
+}
+
+/* Magnetic lift for ghost (CSS vars injected by JS) */
+#contact-hero .btn-ghost:hover {
+  transform:
+    translate(calc(var(--mx, 0) * 1px), calc(var(--my, 0) * 1px))
+    translateY(-2px);
+}
+
+/* ── 5. Honour prefers-reduced-motion ────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  #contact-hero .btn-primary            { animation: none; }
+  .btn-primary::after                   { transition: none; }
+  .hero-actions .btn-ghost              { transition: none; }
+  #contact-hero .btn-primary:hover,
+  #contact-hero .btn-ghost:hover        { transform: translateY(-2px); }
+}
+
+/* ── PRIMARY: continuous idle sheen via ::before ─────────────── */
+#contact-hero .btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 46%;
+  background: linear-gradient(
+    90deg,
+    transparent           0%,
+    rgba(255,255,255,.22) 46%,
+    rgba(255,255,255,.30) 54%,
+    transparent          100%
+  );
+  transform: translateX(-280%) skewX(-18deg);
+  animation: heroBtnIdleSheen 4.4s cubic-bezier(.45, 0, .55, 1) infinite;
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+@keyframes heroBtnIdleSheen {
+  0%, 20%   { transform: translateX(-280%) skewX(-18deg); opacity: 0; }
+  23%       { opacity: 1; }
+  46%       { transform: translateX(360%)  skewX(-18deg); opacity: 1; }
+  49%, 100% { transform: translateX(-280%) skewX(-18deg); opacity: 0; }
+}
+
+/* Freeze idle sheen while hover shimmer (::after) fires */
+#contact-hero .btn-primary:hover::before,
+#contact-hero .btn-primary:active::before {
+  animation-play-state: paused;
+  opacity: 0;
+}
+
+/* ── GHOST: idle border-glow breath ─────────────────────────── */
+@keyframes ghostBorderBreath {
+  0%, 100% {
+    border-color: rgba(255,255,255,.30);
+    box-shadow: none;
+  }
+  50% {
+    border-color: rgba(255,255,255,.65);
+    box-shadow: 0 0 0 3px rgba(255,255,255,.05),
+                0 0 22px rgba(255,255,255,.09);
+  }
+}
+
+#contact-hero .btn-ghost {
+  animation: ghostBorderBreath 3.8s ease-in-out 1.4s infinite;
+  will-change: border-color, box-shadow;
+}
+
+#contact-hero .btn-ghost:hover,
+#contact-hero .btn-ghost:active { animation-play-state: paused; }
+
+/* ── Click ripple (both hero buttons) ───────────────────────── */
+.hero-btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: heroBtnRipple .65s linear forwards;
+  pointer-events: none;
+  z-index: 0;
+}
+.btn-primary .hero-btn-ripple { background: rgba(255,255,255,.30); }
+.btn-ghost   .hero-btn-ripple { background: rgba(255,255,255,.18); }
+
+@keyframes heroBtnRipple {
+  to { transform: scale(5.5); opacity: 0; }
+}
+
+/* Strip new idle animations for reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  #contact-hero .btn-primary::before { animation: none; opacity: 0; }
+  #contact-hero .btn-ghost           { animation: none; }
+  .hero-btn-ripple                   { display: none; }
+}

@@ -192,4 +192,46 @@
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }());
 
+  /* ── Magnetic hover — hero buttons (fine-pointer / desktop only) */
+  if (
+    window.matchMedia('(pointer: fine)').matches &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    document.querySelectorAll('#contact-hero .btn').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        const x = ((e.clientX - r.left  - r.width  / 2) * 0.13).toFixed(2);
+        const y = ((e.clientY - r.top   - r.height / 2) * 0.13).toFixed(2);
+        btn.style.setProperty('--mx', x);
+        btn.style.setProperty('--my', y);
+      }, { passive: true });
+
+      btn.addEventListener('mouseleave', () => {
+        btn.style.setProperty('--mx', '0');
+        btn.style.setProperty('--my', '0');
+      });
+    });
+  }
+
 })();
+
+/* ─── HERO BUTTONS — click ripple ──────────────────────────── */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('#contact-hero .btn').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      var r      = btn.getBoundingClientRect();
+      var size   = Math.max(r.width, r.height) * 2.4;
+      var ripple = document.createElement('span');
+      ripple.className = 'hero-btn-ripple';
+      ripple.style.cssText = [
+        'width:'  + size + 'px',
+        'height:' + size + 'px',
+        'left:'   + (e.clientX - r.left - size / 2) + 'px',
+        'top:'    + (e.clientY - r.top  - size / 2) + 'px',
+      ].join(';');
+      btn.appendChild(ripple);
+      ripple.addEventListener('animationend', function () { ripple.remove(); });
+    });
+  });
+}());
