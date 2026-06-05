@@ -229,14 +229,14 @@
 
       @php
       $teamMembers = [
-          ['photo' => 'pastor-edgardo-buico.webp', 'name' => 'Pastor Edgardo Buico', 'role' => 'Overseer', 'delay' => '.05s'],
-          ['photo' => 'Jennifer-Buico.webp', 'name' => 'Jennifer Buico', 'role' => 'Executive Director', 'delay' => '.10s'],
-          ['photo' => 'Ivy-Claire-Zapatero.webp', 'name' => 'Ivy Claire Zapatero', 'role' => 'Assistant Executive Director', 'delay' => '.15s'],
-          ['photo' => 'Jeffrey-Buico.webp', 'name' => 'Jeffrey Buico', 'role' => 'Transport Operator', 'delay' => '.20s'],
-          ['photo' => 'Jenny-Rose-Canete.webp', 'name' => 'Jenny Rose Canete', 'role' => 'Feeding Program Coordinator', 'delay' => '.25s'],
-          ['photo' => 'Janbe-Buico.webp', 'name' => 'Janbe Buico', 'role' => 'Social Media Administrator', 'delay' => '.30s'],
-          ['photo' => 'Jollibee-Buico.webp', 'name' => 'Jollibee Buico', 'role' => 'Technical Support', 'delay' => '.35s'],
-          ['photo' => 'Geomayma-Ramos.webp', 'name' => 'Geomayma Ramos', 'role' => 'Head Cook', 'delay' => '.40s'],
+          ['photo' => 'pastor-edgardo-buico.webp', 'name' => 'Pastor Edgardo Buico', 'role' => 'Overseer', 'bio' => 'Spiritual anchor of every field mission, guiding operations with prayer and Christ-centered leadership across all communities we serve.', 'delay' => '.05s'],
+          ['photo' => 'Jennifer-Buico.webp', 'name' => 'Jennifer Buico', 'role' => 'Executive Director', 'bio' => 'Oversees daily operations and coordinates programs that deliver tangible, lasting impact to families in need across the Philippines.', 'delay' => '.10s'],
+          ['photo' => 'Ivy-Claire-Zapatero.webp', 'name' => 'Ivy Claire Zapatero', 'role' => 'Assistant Executive Director', 'bio' => 'Supports program coordination and administration, keeping every mission running smoothly and on schedule across all field sites.', 'delay' => '.15s'],
+          ['photo' => 'Jeffrey-Buico.webp', 'name' => 'Jeffrey Buico', 'role' => 'Transport Operator', 'bio' => 'Ensures the safe and timely delivery of supplies and team members to remote mission locations, even the hardest to reach.', 'delay' => '.20s'],
+          ['photo' => 'Jenny-Rose-Canete.webp', 'name' => 'Jenny Rose Canete', 'role' => 'Feeding Program Coordinator', 'bio' => 'Manages nutritious meal programs for children and families, making sure no one in our community goes to bed hungry.', 'delay' => '.25s'],
+          ['photo' => 'Janbe-Buico.webp', 'name' => 'Janbe Buico', 'role' => 'Social Media Administrator', 'bio' => 'Shares the heart of our mission online, connecting thousands of supporters worldwide with stories of hope and transformation.', 'delay' => '.30s'],
+          ['photo' => 'Jollibee-Buico.webp', 'name' => 'Jollibee Buico', 'role' => 'Technical Support', 'bio' => 'Keeps all technical and digital operations running, supporting the infrastructure behind every program and outreach effort.', 'delay' => '.35s'],
+          ['photo' => 'Geomayma-Ramos.webp', 'name' => 'Geomayma Ramos', 'role' => 'Head Cook', 'bio' => 'Prepares nourishing meals for hundreds of beneficiaries with dedication, love, and a servant\'s heart every single day.', 'delay' => '.40s'],
       ];
       @endphp
 
@@ -257,6 +257,9 @@
           <h3>{{ $member['name'] }}</h3>
           <p>{{ $member['role'] }}</p>
           <div class="team-role-bar"></div>
+        </div>
+        <div class="team-bio-panel" aria-hidden="true">
+          <p class="team-bio-text">{{ $member['bio'] }}</p>
         </div>
       </article>
       @endforeach

@@ -1563,3 +1563,100 @@
 
   .impact-note { font-size: .75rem; margin-top: 20px; line-height: 1.6; }
 }
+
+/* ============================================================
+   TEAM CARDS — PREMIUM HOVER & BIO PANEL
+============================================================ */
+
+/* Ensure card is a stacking context for absolute children */
+.team-card { position: relative; }
+
+/* Shimmer sweep that fires once on hover entry */
+.team-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.09), transparent);
+  transform: skewX(-15deg);
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+}
+.team-card:hover::after {
+  animation: teamCardShine .7s ease forwards;
+}
+@keyframes teamCardShine {
+  0%   { left: -80%; opacity: 1; }
+  100% { left: 120%; opacity: 0; }
+}
+
+/* Richer hover: gradient-border illusion via box-shadow + deeper lift */
+.team-card:hover {
+  transform: translateY(-12px);
+  box-shadow:
+    0 28px 70px rgba(13,42,78,.2),
+    0 8px 24px rgba(240,124,30,.1),
+    0 0 0 1.5px rgba(240,124,30,.5);
+}
+
+/* Photo: softer, more natural scale */
+.team-card:hover .team-photo { transform: scale(1.04); }
+
+/* Accent bar: wider + subtle glow */
+.team-card:hover .team-role-bar {
+  width: 52px;
+  box-shadow: 0 0 8px rgba(240,124,30,.45);
+  background: linear-gradient(90deg, var(--orange), var(--orange-light));
+}
+
+/* ── Bio Reveal Panel ─────────────────────────────────────── */
+.team-bio-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 48px 18px 20px;
+  background: linear-gradient(
+    to top,
+    rgba(13,42,78,.98) 0%,
+    rgba(13,42,78,.93) 60%,
+    transparent 100%
+  );
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  transform: translateY(100%);
+  transition: transform .44s cubic-bezier(.4,0,.2,1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.team-card:hover .team-bio-panel,
+.team-card.bio-open    .team-bio-panel {
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.team-bio-text {
+  font-size: .75rem;
+  color: rgba(255,255,255,.84);
+  line-height: 1.72;
+  margin: 0;
+}
+
+/* ── Mobile: no-hover devices — tap to toggle bio ─────────── */
+@media (hover: none) {
+  .team-card:active { transform: scale(.98); transition: transform .1s ease; }
+}
+
+@media (max-width: 768px) {
+  .team-bio-panel {
+    padding: 36px 14px 14px;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+  }
+  .team-bio-text { font-size: .72rem; }
+
+  /* Keep card within the swipe carousel — bio still slides up within */
+  .team-card.bio-open { flex-shrink: 0; }
+}

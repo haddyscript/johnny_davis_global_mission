@@ -121,6 +121,46 @@
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }());
 
+/* ─── TEAM CARD BIO PANEL — mobile tap-to-reveal ───────────── */
+(function () {
+  /* Only activate on touch/stylus devices that have no fine pointer */
+  var isTouchOnly = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  if (!isTouchOnly) return;
+
+  var cards = document.querySelectorAll('.team-card');
+
+  cards.forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      var isOpen = card.classList.contains('bio-open');
+
+      /* Close any other open cards first */
+      cards.forEach(function (c) { c.classList.remove('bio-open'); });
+
+      /* Toggle the tapped card */
+      if (!isOpen) {
+        card.classList.add('bio-open');
+        /* Update accessibility attribute on the bio panel */
+        var panel = card.querySelector('.team-bio-panel');
+        if (panel) panel.setAttribute('aria-hidden', 'false');
+      } else {
+        var panel = card.querySelector('.team-bio-panel');
+        if (panel) panel.setAttribute('aria-hidden', 'true');
+      }
+    });
+  });
+
+  /* Close bio when user taps outside all cards */
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.team-card')) {
+      cards.forEach(function (c) {
+        c.classList.remove('bio-open');
+        var panel = c.querySelector('.team-bio-panel');
+        if (panel) panel.setAttribute('aria-hidden', 'true');
+      });
+    }
+  });
+}());
+
 /* ─── MOBILE FOOTER ACCORDION ──────────────────────────────── */
 (function initFooterAccordion() {
   'use strict';
