@@ -121,6 +121,60 @@
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }());
 
+/* ─── MISSION HIGHLIGHTS — sequential auto-hover loop ────────── */
+(function () {
+  /* Guard: desktop only */
+  if (window.matchMedia('(max-width: 1024px)').matches) return;
+
+  var grid = document.querySelector('.mh-grid');
+  if (!grid) return;
+
+  var cards   = Array.from(grid.querySelectorAll('.mh-card'));
+  var current = 0;
+  var timer   = null;
+  var HOLD_MS = 1200;   /* ms each card holds before advancing */
+
+  function activate(idx) {
+    cards.forEach(function (c) { c.classList.remove('mh-active'); });
+    cards[idx].classList.add('mh-active');
+    grid.classList.add('mh-loop-active');
+    current = idx;
+  }
+
+  function advance() {
+    current = (current + 1) % cards.length;
+    activate(current);
+  }
+
+  function startLoop() {
+    if (timer) return;          /* already running */
+    activate(current);
+    timer = setInterval(advance, HOLD_MS);
+  }
+
+  function stopLoop() {
+    clearInterval(timer);
+    timer = null;
+  }
+
+  /* Manual mouseenter → pause loop, instantly highlight that card */
+  cards.forEach(function (card, i) {
+    card.addEventListener('mouseenter', function () {
+      stopLoop();
+      cards.forEach(function (c) { c.classList.remove('mh-active'); });
+      card.classList.add('mh-active');
+      grid.classList.add('mh-loop-active');
+      current = i;              /* resume from this position */
+    });
+  });
+
+  /* Mouse leaves the grid → resume loop from the last active card */
+  grid.addEventListener('mouseleave', startLoop);
+
+  /* Kick off after the page has settled */
+  setTimeout(startLoop, 1400);
+}());
+
 /* ─── SERVICE TICKER — touch pause / resume ─────────────────── */
 (function () {
   var wrap = document.querySelector('.service-ticker-wrap');

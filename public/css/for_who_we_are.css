@@ -1565,6 +1565,54 @@
 }
 
 /* ============================================================
+   MISSION HIGHLIGHTS — AUTO-HOVER LOOP (desktop ≥ 1025px only)
+============================================================ */
+@media (min-width: 1025px) {
+
+  /* Extend card transition to cover opacity + filter for dimming */
+  .mh-card {
+    transition:
+      transform    .35s ease,
+      box-shadow   .35s ease,
+      border-color .35s ease,
+      opacity      .4s  ease,
+      filter       .4s  ease;
+  }
+
+  /* ── Active card: exact mirror of the :hover ruleset ──────── */
+  .mh-card.mh-active {
+    transform:    translateY(-10px);
+    box-shadow:   0 20px 50px rgba(0,0,0,.13);
+    border-color: transparent;
+  }
+  .mh-card.mh-active::before { transform: scaleX(1); }
+
+  .mh-card.mh-active .mh-icon {
+    transform:   scale(1.2) rotate(-8deg);
+    color:       var(--orange);
+    text-shadow: 0 0 14px rgba(240,124,30,.18);
+  }
+
+  /* Match the icon-specific animation speed-ups from :hover */
+  .mh-card.mh-active .mh-icon-feed      { animation-duration: 5.8s; }
+  .mh-card.mh-active .mh-icon-medical   { animation-duration: 5.2s; }
+  .mh-card.mh-active .mh-icon-education { animation-duration: 5.6s; }
+  .mh-card.mh-active .mh-icon-disaster  { animation-duration: 5.9s; }
+
+  /* ── Dim non-active cards when the loop (or manual hover) runs */
+  .mh-grid.mh-loop-active .mh-card:not(.mh-active) {
+    opacity: 0.6;
+    filter:  grayscale(22%) brightness(.95);
+  }
+
+  /* Active card stays fully vivid */
+  .mh-grid.mh-loop-active .mh-card.mh-active {
+    opacity: 1;
+    filter:  none;
+  }
+}
+
+/* ============================================================
    SERVICE ICONS — INFINITE TICKER (mobile only)
 ============================================================ */
 
