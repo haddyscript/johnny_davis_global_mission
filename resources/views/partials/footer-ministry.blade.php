@@ -41,9 +41,15 @@
         <ul class="footer-links" role="list">
           <li><a href="{{ route('home') }}">Home</a></li>
           <li><a href="{{ route('who-we-are') }}">Who We Are</a></li>
-          <li><a href="{{ route('ministry') }}">Johnny Davis Ministry</a></li>
+          <li>
+            @if($isMinistryPage)
+              <a href="https://johnnydavisglobalmissions.org" target="_blank" rel="noopener noreferrer">Johnny Davis Global Mission</a>
+            @else
+              <a href="{{ route('ministry') }}">Johnny Davis Ministry</a>
+            @endif
+          </li>
           <li><a href="{{ route('donate') }}">Make a Difference</a></li>
-          <li><a href="https://johnnydavisministries.org" target="_blank" rel="noopener noreferrer">Johnny Davis Ministries</a></li>
+          <!-- <li><a href="https://johnnydavisministries.org" target="_blank" rel="noopener noreferrer">Johnny Davis Ministries</a></li> -->
           <li><a href="{{ route('contact') }}">Contact Us</a></li>
         </ul>
       </nav>
