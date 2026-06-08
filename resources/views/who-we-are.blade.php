@@ -244,7 +244,7 @@
 
           <div class="founder-stats" aria-label="Mission highlights">
             <div class="founder-stat">
-              <strong>Est. 2017</strong>
+              <strong>Est. 2022</strong>
               <span>In Service</span>
             </div>
             <div class="founder-stat">

@@ -684,7 +684,7 @@
           <div class="author-avatar" aria-hidden="true">PA</div>
           <div>
             <p class="author-name">Pastor Esther A.</p>
-            <p class="author-location">Manila, Philippines</p>
+            <p class="author-location">Cebu, Philippines</p>
           </div>
         </footer>
       </article>

@@ -1,9 +1,20 @@
+@php
+    $isMinistryPage = request()->path() === 'ministry'
+        || str_contains(request()->getHost(), 'johnnydavisministries.org');
+    $footerLogoSrc = $isMinistryPage
+        ? asset('images/ministry-logo.png')
+        : asset('images/logo.webp');
+    $footerLogoAlt = $isMinistryPage
+        ? 'Johnny Davis Ministries'
+        : 'Johnny Davis Global Missions';
+@endphp
+
 <footer id="footer" role="contentinfo">
   <div class="container">
     <div class="footer-grid">
 
       <div class="footer-brand">
-        <img src="{{ asset('images/logo.webp') }}" alt="Johnny Davis Global Missions Logo" />
+        <img src="{{ $footerLogoSrc }}" alt="{{ $footerLogoAlt }}" />
         <p>
           Johnny Davis Global Missions is a non-profit organization founded on the belief that
           a little help can go a long way. We serve the poorest communities in the Philippines
