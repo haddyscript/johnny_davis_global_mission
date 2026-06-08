@@ -64,14 +64,14 @@
       </div>
     </div>
 
-    {{-- Uganda Water Wells --}}
+    {{-- Uganda Clean Water Initiative --}}
     <div class="campaign-page-card reveal"
-         data-campaign="Uganda Water Wells"
+         data-campaign="Uganda Clean Water Initiative"
          role="button" tabindex="0"
-         aria-label="Support Uganda Water Wells campaign">
+         aria-label="Support Uganda Clean Water Initiative campaign">
       <div class="card-body-inner">
         <p class="card-meta">Clean Water</p>
-        <h3>💧 Uganda Water Wells</h3>
+        <h3>💧 Uganda Clean Water Initiative</h3>
 
         <div class="card-raised-row">
           <span><strong>Launching Soon</strong></span>

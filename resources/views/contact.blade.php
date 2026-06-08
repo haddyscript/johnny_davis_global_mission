@@ -170,12 +170,13 @@
           </div>
         </a>
 
-        <a href="https://www.google.com/maps/search/?api=1&query=P.O.+Box+1904%2C+Suwanee%2C+GA+30024" target="_blank" rel="noopener noreferrer" class="contact-card contact-card-link" aria-label="Open address in Google Maps">
+        <a href="https://www.google.com/maps/search/?api=1&query=2700+Braselton+Hwy+Ste+10-145%2C+Dacula%2C+GA+30019" target="_blank" rel="noopener noreferrer" class="contact-card contact-card-link" aria-label="Open address in Google Maps">
           <div class="contact-icon" aria-hidden="true">📍</div>
           <h3 class="contact-title">Address</h3>
           <div class="contact-text">
-            P.O. Box 1904<br/>
-            Suwanee, GA 30024
+            2700 Braselton Hwy<br/>
+            Ste. #10-145<br/>
+            Dacula, GA 30019
           </div>
         </a>
 
@@ -279,7 +280,7 @@
         <div class="footer-contact">
           <div class="contact-row">
             <div class="contact-icon" aria-hidden="true">📍</div>
-            <span>P.O. Box 1904<br/>Suwanee, GA 30024</span>
+            <span>2700 Braselton Hwy<br/>Ste. #10-145<br/>Dacula, GA 30019</span>
           </div>
           <div class="contact-row">
             <div class="contact-icon" aria-hidden="true">📞</div>
