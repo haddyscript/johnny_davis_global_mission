@@ -724,7 +724,7 @@
           <div class="author-avatar" aria-hidden="true">YM</div>
           <div>
             <p class="author-name">Yvonne M.</p>
-            <p class="author-location">Leyte, Philippines</p>
+            <p class="author-location">Gensan, Philippines</p>
           </div>
         </footer>
       </article>
