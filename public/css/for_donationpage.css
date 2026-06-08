@@ -186,7 +186,7 @@ body { padding-top: 72px; }
 .campaign-page-card:hover { transform:translateY(-8px); box-shadow:var(--shadow-lg); }
 .campaign-page-card[data-campaign='Feed Filipino Children'] { border-top:4px solid var(--orange); }
 .campaign-page-card[data-campaign='Cebu Earthquake Relief']  { border-top:4px solid #c0392b; }
-.campaign-page-card[data-campaign='Uganda Water Wells']       { border-top:4px solid var(--blue-light); }
+.campaign-page-card[data-campaign='Uganda Clean Water Initiative']       { border-top:4px solid var(--blue-light); }
 .campaign-img-area {
   height:180px; background-size:cover;
   background-position:center; background-repeat:no-repeat;
@@ -194,7 +194,7 @@ body { padding-top: 72px; }
 .card-body-inner { padding:20px; flex:1; display:flex; flex-direction:column; gap:8px; }
 .card-meta { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--orange); }
 .campaign-page-card[data-campaign='Cebu Earthquake Relief'] .card-meta { color:#c0392b; }
-.campaign-page-card[data-campaign='Uganda Water Wells'] .card-meta { color:var(--blue-light); }
+.campaign-page-card[data-campaign='Uganda Clean Water Initiative'] .card-meta { color:var(--blue-light); }
 
 .campaign-page-card h3 { font-size:1.08rem; font-weight:700; color:var(--blue-dark); margin:0; line-height:1.3; }
 .campaign-page-card small { font-size:.78rem; color:var(--text-muted); }
@@ -230,14 +230,14 @@ body { padding-top: 72px; }
   border-radius:0 var(--r-sm) var(--r-sm) 0;
 }
 .campaign-page-card[data-campaign='Cebu Earthquake Relief'] .card-story-block { background:#fff5f5; border-left-color:#c0392b; }
-.campaign-page-card[data-campaign='Uganda Water Wells'] .card-story-block { background:#eff6ff; border-left-color:var(--blue-light); }
+.campaign-page-card[data-campaign='Uganda Clean Water Initiative'] .card-story-block { background:#eff6ff; border-left-color:var(--blue-light); }
 
 .card-story-arrow {
   font-size:.9rem; color:var(--orange);
   flex-shrink:0; line-height:1.5; font-weight:700;
 }
 .campaign-page-card[data-campaign='Cebu Earthquake Relief'] .card-story-arrow { color:#c0392b; }
-.campaign-page-card[data-campaign='Uganda Water Wells'] .card-story-arrow { color:var(--blue-light); }
+.campaign-page-card[data-campaign='Uganda Clean Water Initiative'] .card-story-arrow { color:var(--blue-light); }
 
 .card-story-text {
   font-size:.82rem; font-weight:500; color:var(--blue-mid);
@@ -258,7 +258,7 @@ body { padding-top: 72px; }
   transition: transform var(--transition), box-shadow var(--transition), gap var(--transition);
 }
 .campaign-page-card[data-campaign='Cebu Earthquake Relief'] .card-cta-link { background:#c0392b; box-shadow:0 2px 10px rgba(192,57,43,.28); }
-.campaign-page-card[data-campaign='Uganda Water Wells'] .card-cta-link { background:var(--blue-light); box-shadow:0 2px 10px rgba(37,99,168,.28); }
+.campaign-page-card[data-campaign='Uganda Clean Water Initiative'] .card-cta-link { background:var(--blue-light); box-shadow:0 2px 10px rgba(37,99,168,.28); }
 
 .campaign-page-card:hover .card-cta-link {
   transform: translateY(-2px);
@@ -266,7 +266,7 @@ body { padding-top: 72px; }
   gap: 10px;
 }
 .campaign-page-card[data-campaign='Cebu Earthquake Relief']:hover .card-cta-link { box-shadow:0 6px 18px rgba(192,57,43,.42); }
-.campaign-page-card[data-campaign='Uganda Water Wells']:hover .card-cta-link { box-shadow:0 6px 18px rgba(37,99,168,.42); }
+.campaign-page-card[data-campaign='Uganda Clean Water Initiative']:hover .card-cta-link { box-shadow:0 6px 18px rgba(37,99,168,.42); }
 
 /* Reveal animations */
 .reveal {
@@ -790,6 +790,7 @@ body { padding-top: 72px; }
 /* Amount grid */
 .amounts-grid { display:grid; gap:10px; margin-bottom:14px; }
 .amounts-4 { grid-template-columns:repeat(4,1fr); }
+.amounts-3 { grid-template-columns:repeat(3,1fr); }
 .amount-btn {
   padding:14px 8px; border:1.5px solid #e2e8f0;
   border-radius:var(--r-lg);
@@ -1401,6 +1402,7 @@ body { padding-top: 72px; }
   .donate-page-layout { grid-template-columns:1fr; }
   .campaign-pages-grid { grid-template-columns:1fr; }
   .amounts-4 { grid-template-columns:repeat(2,1fr); }
+  .amounts-3 { grid-template-columns:repeat(2,1fr); }
   .nav-links { display:none; }
   .nav-toggle { display:flex; }
   #navbar .container { padding:0 20px; }

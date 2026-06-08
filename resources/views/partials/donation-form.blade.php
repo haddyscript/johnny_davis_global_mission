@@ -85,19 +85,19 @@
           <div class="camp-radio" aria-hidden="true"></div>
         </div>
 
-        <!-- Uganda Water Wells -->
+        <!-- Uganda Clean Water Initiative -->
         <div class="campaign-opt"
-             data-campaign-opt="Uganda Water Wells"
-             data-story="Communities in Uganda walk miles each day for unsafe water. Your donation helps drill clean water wells that serve entire villages for generations."
-             data-goal="Goal: $40,000 — Launching Soon · Be the first to give"
+             data-campaign-opt="Uganda Clean Water Initiative"
+             data-story="Help provide clean and safe drinking water to communities in Uganda through sustainable water projects that improve health, reduce waterborne illness, and strengthen local communities."
+             data-goal="Goal: $40,000 to help fund multiple clean water projects in Uganda."
              role="radio"
              aria-checked="false"
              tabindex="0">
           <div class="camp-icon" aria-hidden="true">
-            <img src="{{ asset('images/water.png') }}" alt="Feed Filipino Children" style="width: 58px;height: 58px;object-fit:contain;"/>
+            <img src="{{ asset('images/water.png') }}" alt="Uganda Clean Water Initiative" style="width: 58px;height: 58px;object-fit:contain;"/>
           </div>
           <div style="flex:1;">
-            <div class="camp-title">Uganda Water Wells</div>
+            <div class="camp-title">Uganda Clean Water Initiative</div>
             <div class="camp-sub" style="display:flex;justify-content:space-between;align-items:center;">
               <span style="color:#22a96e;font-weight:600;">Launching Soon</span>
               <span style="color:#888;font-size:.82rem;">Goal $40,000</span>
@@ -152,7 +152,7 @@
         <button class="dtab" aria-pressed="false">One-time</button>
       </div>
 
-      <div class="amounts-grid amounts-4" role="group" aria-label="Preset donation amounts">
+      <div class="amounts-grid amounts-3" role="group" aria-label="Preset donation amounts">
         <button class="amount-btn" aria-label="Donate $7.99 — feeds 1 child">
           <span class="amount-price">$7.99</span>
           <span class="amount-impact">1 child fed</span>
@@ -168,6 +168,14 @@
         <button class="amount-btn" aria-label="Donate $99 — village medicine">
           <span class="amount-price">$99</span>
           <span class="amount-impact">Village meds</span>
+        </button>
+        <button class="amount-btn" aria-label="Donate $99 — Farmers Seed">
+          <span class="amount-price">$99</span>
+          <span class="amount-impact">Farmers Seed</span>
+        </button>
+        <button class="amount-btn" aria-label="Donate $99 — Uganda Wells">
+          <span class="amount-price">$99</span>
+          <span class="amount-impact">Uganda Wells</span>
         </button>
       </div>
 

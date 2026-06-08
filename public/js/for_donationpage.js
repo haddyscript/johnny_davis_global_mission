@@ -56,9 +56,9 @@
       story: 'Rapid relief for families displaced by the recent quake: shelters, clean water, emergency kits, and safe rebuilding support.',
       goalText: 'Goal: $30,000 for emergency shelter & community recovery',
     },
-    'Uganda Water Wells': {
-      story: 'Build clean water wells that serve 200 people each for 25 years, ending waterborne disease and enabling local growth in Soroti.',
-      goalText: 'Goal: $22,000 for 5 wells in Soroti region',
+    'Uganda Clean Water Initiative': {
+      story: 'Help provide clean and safe drinking water to communities in Uganda through sustainable water projects that improve health, reduce waterborne illness, and strengthen local communities.',
+      goalText: 'Goal: $40,000 to help fund multiple clean water projects in Uganda.',
     },
     "Where it's needed most": {
       story: 'JDGM monitors all active programs and allocates unrestricted gifts to wherever the need is most critical at that moment.',
@@ -975,7 +975,7 @@
     const campaignMap = {
       'where':  "Where it's needed most",
       'cebu':   'Cebu Earthquake Relief',
-      'uganda': 'Uganda Water Wells',
+      'uganda': 'Uganda Clean Water Initiative',
       'feed':   'Feed Filipino Children',
     };
 
