@@ -384,19 +384,72 @@
   const storyModalCloseBtn = document.getElementById('storyModalCloseBtn');
   const featuredCta        = document.querySelector('.featured-cta');
 
-  if (featuredCta && storyModal) {
-    function openStoryModal() {
+  if (storyModal) {
+    // Snapshot the hardcoded Marco's-story content so the featured-section CTA can restore it
+    const _mImg     = storyModal.querySelector('.story-modal-img');
+    const _origSrc  = _mImg ? _mImg.src : '';
+    const _origAlt  = _mImg ? _mImg.alt : '';
+    const _origCat  = (storyModal.querySelector('.story-modal-cat')      || {}).innerHTML || '';
+    const _origLoc  = (storyModal.querySelector('.story-modal-location') || {}).innerHTML || '';
+    const _origTtl  = (document.getElementById('storyModalTitle')        || {}).textContent || '';
+    const _origBody = (storyModal.querySelector('.story-modal-content')  || {}).innerHTML || '';
+
+    const openStoryModal = () => {
       storyModal.removeAttribute('hidden');
       requestAnimationFrame(() => storyModal.classList.add('open'));
       document.body.style.overflow = 'hidden';
       if (storyModalClose) storyModalClose.focus();
-    }
-    function closeStoryModal() {
+    };
+    const closeStoryModal = () => {
       storyModal.classList.remove('open');
       document.body.style.overflow = '';
       setTimeout(() => storyModal.setAttribute('hidden', ''), 380);
+    };
+
+    // Featured story section CTA → always restores full hardcoded Marco's story
+    if (featuredCta) {
+      featuredCta.addEventListener('click', e => {
+        e.preventDefault();
+        if (_mImg) { _mImg.src = _origSrc; _mImg.alt = _origAlt; }
+        const c = storyModal.querySelector('.story-modal-cat');      if (c) c.innerHTML = _origCat;
+        const l = storyModal.querySelector('.story-modal-location'); if (l) l.innerHTML = _origLoc;
+        const t = document.getElementById('storyModalTitle');        if (t) t.textContent = _origTtl;
+        const b = storyModal.querySelector('.story-modal-content');  if (b) b.innerHTML = _origBody;
+        openStoryModal();
+      });
     }
-    featuredCta.addEventListener('click', e => { e.preventDefault(); openStoryModal(); });
+
+    // Post card CTAs → populate modal dynamically from the card's data attributes
+    document.querySelectorAll('.post-story-cta').forEach(cta => {
+      cta.addEventListener('click', e => {
+        e.preventDefault();
+        const title    = cta.dataset.title    || '';
+        const image    = cta.dataset.image    || '';
+        const imgalt   = cta.dataset.imgalt   || '';
+        const category = cta.dataset.category || '';
+        const excerpt  = cta.dataset.excerpt  || '';
+        const flag     = cta.dataset.flag     || '';
+        const country  = cta.dataset.country  || '';
+
+        const modalImg = storyModal.querySelector('.story-modal-img');
+        if (modalImg) { modalImg.src = image; modalImg.alt = imgalt; }
+
+        const modalCat = storyModal.querySelector('.story-modal-cat');
+        if (modalCat) modalCat.textContent = category;
+
+        const modalLoc = storyModal.querySelector('.story-modal-location');
+        if (modalLoc) modalLoc.innerHTML = (flag ? '<span aria-hidden="true">' + flag + '</span> ' : '') + country;
+
+        const modalTitle = document.getElementById('storyModalTitle');
+        if (modalTitle) modalTitle.textContent = title;
+
+        const modalContent = storyModal.querySelector('.story-modal-content');
+        if (modalContent) modalContent.innerHTML = '<p>' + excerpt + '</p>';
+
+        openStoryModal();
+      });
+    });
+
     if (storyModalClose)    storyModalClose.addEventListener('click', closeStoryModal);
     if (storyModalCloseBtn) storyModalCloseBtn.addEventListener('click', closeStoryModal);
     storyModal.addEventListener('click', e => { if (e.target === storyModal) closeStoryModal(); });

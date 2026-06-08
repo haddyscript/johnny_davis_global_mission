@@ -236,7 +236,15 @@
           </div>
           <h3 class="post-title">{{ $post['title'] }}</h3>
           <p class="post-excerpt">{!! $post['excerpt'] !!}</p>
-          <a href="{{ $post['cta_href'] }}" class="btn btn-primary" style="margin-top:8px; align-self:flex-start;">
+          <a href="#" class="btn btn-primary post-story-cta"
+             data-title="{{ $post['title'] }}"
+             data-image="{{ asset($post['image']) }}"
+             data-imgalt="{{ $post['img_alt'] }}"
+             data-category="{{ $post['category'] }}"
+             data-excerpt="{{ strip_tags($post['excerpt']) }}"
+             data-flag="{{ $post['flag'] }}"
+             data-country="{{ $post['country'] }}"
+             style="margin-top:8px; align-self:flex-start;">
             {{ $post['cta_label'] }}
           </a>
         </div>
@@ -269,7 +277,14 @@
           <p class="post-excerpt">{!! $post['excerpt'] !!}</p>
         </div>
         <div class="post-footer">
-          <a href="{{ route('donate') }}" class="post-cta">
+          <a href="#" class="post-cta post-story-cta"
+             data-title="{{ $post['title'] }}"
+             data-image="{{ asset($post['image']) }}"
+             data-imgalt="{{ $post['img_alt'] }}"
+             data-category="{{ $post['category'] }}"
+             data-excerpt="{{ strip_tags($post['excerpt']) }}"
+             data-flag="{{ $post['flag'] }}"
+             data-country="{{ $post['country'] }}">
             {{ $post['cta_label'] }}
             <span class="post-cta-arrow">→</span>
           </a>
