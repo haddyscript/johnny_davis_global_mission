@@ -48,11 +48,11 @@
 
   /* ────────────────────────────────────────────────────────────
      MOBILE DRAWER OVERLAY
-     Applied on all pages via this partial. ≤ 768 px only.
+     Applied on all pages via this partial. ≤ 900 px (covers iPad Air 4 at 820 px).
   ──────────────────────────────────────────────────────────── */
   .m-nav-overlay { display: none; }
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     /* Full-viewport container */
     .m-nav-overlay {
       display: block;

@@ -1498,6 +1498,11 @@ ul { list-style: none; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
 }
 
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+}
+
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-toggle { display: flex; }
