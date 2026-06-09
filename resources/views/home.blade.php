@@ -1116,6 +1116,44 @@
     bar.classList.add('dismissed');
   });
 }());
+
+/* ── Prayer Alert Card — 3D Tilt ── */
+(function () {
+  if (window.innerWidth <= 1024) return;
+  var card = document.querySelector('.prayer-alert-card');
+  if (!card) return;
+
+  var STRENGTH_Y = 7;
+  var STRENGTH_X = 4;
+  var raf = null;
+  var targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+
+  card.addEventListener('mouseenter', function () {
+    card.style.transition = 'box-shadow .3s ease';
+    card.style.boxShadow = '0 32px 80px rgba(0,0,0,.65), 0 0 0 1px rgba(192,57,43,.3), 0 0 120px -8px rgba(192,57,43,.45)';
+  });
+  card.addEventListener('mousemove', function (e) {
+    var rect = card.getBoundingClientRect();
+    targetX = ((e.clientX - rect.left) / rect.width - 0.5) * STRENGTH_Y;
+    targetY = ((e.clientY - rect.top)  / rect.height - 0.5) * -STRENGTH_X;
+    if (!raf) raf = requestAnimationFrame(animateTilt);
+  });
+  card.addEventListener('mouseleave', function () {
+    cancelAnimationFrame(raf); raf = null;
+    targetX = 0; targetY = 0;
+    card.style.transition = 'transform .65s cubic-bezier(.34,1.2,.64,1), box-shadow .4s ease';
+    card.style.transform = 'perspective(1200px) rotateY(0deg) rotateX(0deg) scale3d(1,1,1)';
+    card.style.boxShadow = '';
+  });
+
+  function animateTilt() {
+    currentX += (targetX - currentX) * 0.12;
+    currentY += (targetY - currentY) * 0.12;
+    card.style.transform = 'perspective(1200px) rotateY(' + currentX.toFixed(3) + 'deg) rotateX(' + currentY.toFixed(3) + 'deg) scale3d(1.015,1.015,1.015)';
+    card.style.transition = 'box-shadow .3s ease';
+    raf = requestAnimationFrame(animateTilt);
+  }
+}());
 </script>
 <script src="{{ asset('js/for_index.js') }}?v={{ filemtime(public_path('js/for_index.js')) }}"></script>
 <script>
