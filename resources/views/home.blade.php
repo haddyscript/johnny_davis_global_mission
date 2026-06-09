@@ -252,15 +252,6 @@
             Read Full Message
           </a>
         </div>
-        <div class="prayer-alert-tags" aria-label="Hashtags">
-          <span>#PrayForThePhilippines</span>
-          <span>#GeneralSantos</span>
-          <span>#Sarangani</span>
-          <span>#Leyte</span>
-          <span>#Cebu</span>
-        </div>
-        <p class="prayer-alert-sig">— Johnny Davis, President &amp; Founder</p>
-      </div>
 
     </div>
   </div>
