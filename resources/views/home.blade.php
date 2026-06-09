@@ -867,7 +867,7 @@
             <div class="contact-icon" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
             </div>
-            <span>P.O. Box 1904<br/>Suwanee, GA 30024</span>
+            <span>2700 Braselton Hwy Ste. #10-145 <br/>Dacula, GA 30019</span>
           </div>
           <div class="contact-row">
             <div class="contact-icon" aria-hidden="true">

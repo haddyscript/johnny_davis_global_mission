@@ -660,7 +660,7 @@
         <div class="footer-contact">
           <div class="contact-row">
             <div class="contact-icon" aria-hidden="true">📍</div>
-            <span>P.O. Box 1904<br/>Suwanee, GA 30024</span>
+            <span>2700 Braselton Hwy Ste. #10-145 <br/>Dacula, GA 30019</span>
           </div>
           <div class="contact-row">
             <div class="contact-icon" aria-hidden="true">📞</div>
