@@ -24,7 +24,7 @@
           JDGM
         </text>
       </svg>">
-  <link rel="stylesheet" href="{{ asset('css/for_news.css') }}"/>
+  <link rel="stylesheet" href="{{ asset('css/for_news.css') }}?v={{ filemtime(public_path('css/for_news.css')) }}" />
 </head>
 <body>
 
@@ -774,7 +774,7 @@
 </div><!-- /storyModal -->
 
 
-<script src="{{ asset('js/for_news.js') }}"></script>
+<script src="{{ asset('js/for_news.js') }}?v={{ filemtime(public_path('js/for_news.js')) }}"></script>
 
 @include('partials.chatbot')
 </body>

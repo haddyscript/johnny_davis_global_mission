@@ -24,7 +24,7 @@
         JDGM
       </text>
     </svg>">
-  <link rel="stylesheet" href="{{ asset('css/for_contact.css') }}"/>
+  <link rel="stylesheet" href="{{ asset('css/for_contact.css') }}?v={{ filemtime(public_path('css/for_contact.css')) }}" />
 </head>
 <body>
 
@@ -327,7 +327,7 @@
     color: inherit;
   }
 </style>
-<script src="{{ asset('js/for_contact.js') }}"></script>
+<script src="{{ asset('js/for_contact.js') }}?v={{ filemtime(public_path('js/for_contact.js')) }}"></script>
 
 @if(session('contact_success'))
 <script>

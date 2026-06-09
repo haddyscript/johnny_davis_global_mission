@@ -24,7 +24,7 @@
         JDGM
       </text>
     </svg>">
-  <link rel="stylesheet" href="{{ asset('css/for_who_we_are.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/for_who_we_are.css') }}?v={{ filemtime(public_path('css/for_who_we_are.css')) }}" />
 </head>
 <body>
 
@@ -451,7 +451,7 @@
   </div>
 </footer>
 
-<script src="{{ asset('js/for_who_we_are.js') }}"></script>
+<script src="{{ asset('js/for_who_we_are.js') }}?v={{ filemtime(public_path('js/for_who_we_are.js')) }}"></script>
 
 @include('partials.chatbot')
 </body>
