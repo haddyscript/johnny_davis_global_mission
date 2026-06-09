@@ -312,7 +312,7 @@
           By empowering communities to grow food locally, we can help create a pathway toward lasting change, strengthen families, and fight hunger throughout the region.
         </p>
         <a href="{{ route('donate') }}?campaign=gensan" class="btn btn-lg farmers-cta wwa-donate-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 8C8 10 5.9 16.17 3.82 19.07L5.71 21c2-2.25 4-6.25 7.29-7 2.09 9.75 11 10 11 10S17 20.25 17 8z"/></svg>
+          <img src="{{ asset('images/planting-support.png') }}" width="45" height="45" alt="" aria-hidden="true" style="object-fit:contain;vertical-align:middle;" />
           Support Gensan Farmers
         </a>
       </div>
