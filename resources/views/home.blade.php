@@ -259,6 +259,93 @@
 
 
 <!-- ============================================================
+     EARTHQUAKE RELIEF CAMPAIGN
+============================================================ -->
+<section id="earthquake-relief" aria-labelledby="eq-relief-title">
+  <div class="container">
+    <div class="eq-relief-inner">
+
+      {{-- Left: Image --}}
+      <div class="eq-relief-img-col reveal-left">
+        <div class="eq-relief-img-wrap">
+          <img src="{{ asset('images/philippine-earthquake-relief.jpeg') }}"
+               alt="Earthquake relief efforts for General Santos City and Sarangani Province, Philippines"
+               loading="eager"
+               id="eqReliefImg"
+               class="eq-relief-img-clickable"
+               role="button"
+               tabindex="0"
+               aria-label="View full image" />
+          <div class="eq-relief-flag-overlay" aria-hidden="true">
+            <span class="eq-relief-flag-icon">🇵🇭</span>
+          </div>
+          <div class="eq-relief-img-badge">
+            <span class="eq-relief-img-dot" aria-hidden="true"></span>
+            Urgent Response
+          </div>
+        </div>
+      </div>
+
+      {{-- Right: Content --}}
+      <div class="eq-relief-content reveal-right">
+        <div class="eq-relief-kicker">
+          <span class="eq-relief-dot" aria-hidden="true"></span>
+          The Next 48 Hours Are Critical
+        </div>
+
+        <h2 class="eq-relief-title" id="eq-relief-title">
+          Donate Now!<br/>
+          <em class="eq-relief-title-em">Be The Miracle</em>
+        </h2>
+
+        <p class="eq-relief-subtitle">
+          🇵🇭 URGENT EARTHQUAKE RELIEF FOR<br/>
+          <strong>GENERAL SANTOS &amp; SARANGANI</strong>
+        </p>
+
+        <p class="eq-relief-body">
+          Our ministry partners on the ground are reporting severe damage from the recent
+          <strong>7.8 magnitude earthquake</strong> that struck near General Santos City and
+          Sarangani Province, Philippines. Families have lost homes. Churches have collapsed.
+          Many communities are still without adequate food, clean water, and emergency supplies.
+          Some areas continue to experience aftershocks, making recovery even more difficult.
+        </p>
+
+        <div class="eq-relief-tiers" role="list" aria-label="Donation impact tiers">
+          <div class="eq-tier-card" role="listitem">
+            <span class="eq-tier-heart" aria-hidden="true">❤️</span>
+            <span class="eq-tier-amount">$25</span>
+            <span class="eq-tier-desc">Emergency food assistance for a family</span>
+          </div>
+          <div class="eq-tier-card" role="listitem">
+            <span class="eq-tier-heart" aria-hidden="true">❤️</span>
+            <span class="eq-tier-amount">$50</span>
+            <span class="eq-tier-desc">Food and clean water assistance</span>
+          </div>
+          <div class="eq-tier-card" role="listitem">
+            <span class="eq-tier-heart" aria-hidden="true">❤️</span>
+            <span class="eq-tier-amount">$100</span>
+            <span class="eq-tier-desc">Help support multiple families with emergency relief supplies</span>
+          </div>
+        </div>
+
+        <div class="eq-relief-ctas">
+          <a href="{{ route('donate') }}?campaign=earthquake-relief"
+             class="btn btn-primary btn-lg eq-relief-btn wwa-donate-btn"
+             aria-label="Donate now for earthquake relief">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            Donate Now — Be The Miracle
+          </a>
+          <p class="eq-relief-url">JohnnyDavisGlobalMissions.org</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
      FARMERS PARTNERSHIP MISSION SECTION
 ============================================================ -->
 <section id="farmers-mission" aria-labelledby="farmers-title">
@@ -1176,6 +1263,51 @@
   });
 })();
 </script>
+{{-- Earthquake Relief — Full Image Lightbox --}}
+<div id="eqReliefLightbox" class="eq-lightbox" hidden role="dialog" aria-modal="true" aria-label="Full earthquake relief image">
+  <div class="eq-lightbox-backdrop"></div>
+  <div class="eq-lightbox-box">
+    <button class="eq-lightbox-close" id="eqLightboxClose" aria-label="Close image">&times;</button>
+    <img src="{{ asset('images/philippine-earthquake-relief.jpeg') }}"
+         alt="Earthquake relief efforts for General Santos City and Sarangani Province, Philippines"
+         class="eq-lightbox-img" />
+  </div>
+</div>
+
+<script>
+(function () {
+  var lightbox  = document.getElementById('eqReliefLightbox');
+  var trigger   = document.getElementById('eqReliefImg');
+  var closeBtn  = document.getElementById('eqLightboxClose');
+  var backdrop  = lightbox ? lightbox.querySelector('.eq-lightbox-backdrop') : null;
+
+  if (!lightbox || !trigger) return;
+
+  function openLightbox() {
+    lightbox.hidden = false;
+    requestAnimationFrame(function () { lightbox.classList.add('open'); });
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(function () { lightbox.hidden = true; }, 380);
+    trigger.focus();
+  }
+
+  trigger.addEventListener('click', openLightbox);
+  trigger.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(); }
+  });
+  closeBtn.addEventListener('click', closeLightbox);
+  backdrop.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !lightbox.hidden) closeLightbox();
+  });
+}());
+</script>
+
 @include('partials.chatbot')
 
 {{-- Prayer Alert — Full Image Lightbox --}}

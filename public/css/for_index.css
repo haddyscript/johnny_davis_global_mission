@@ -3383,3 +3383,337 @@ ul { list-style: none; }
   .pillar-tag { transition: none; }
   .pillar-tag.pillar-active { transform: none; }
 }
+
+/* ============================================================
+   EARTHQUAKE RELIEF CAMPAIGN
+============================================================ */
+#earthquake-relief {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #060f1e 0%, #0d1f3c 100%);
+  position: relative;
+  overflow: hidden;
+}
+/* Subtle texture overlay */
+#earthquake-relief::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(192,57,43,.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 20% 80%, rgba(240,124,30,.06) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.eq-relief-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+/* ── Image column ── */
+.eq-relief-img-col { position: relative; }
+
+.eq-relief-img-wrap {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,.6),
+              0 0 0 1px rgba(192,57,43,.3),
+              0 0 100px -10px rgba(192,57,43,.25);
+}
+/* Animated red top-edge glow */
+.eq-relief-img-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #c0392b, #e74c3c, #ff6b6b, #e74c3c, #c0392b);
+  background-size: 200% 100%;
+  animation: alertGlow 2.5s linear infinite;
+  z-index: 3;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.eq-relief-img-wrap img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+  transition: transform .9s cubic-bezier(.4,0,.2,1);
+}
+.eq-relief-img-wrap:hover img { transform: scale(1.04); }
+
+/* Bottom-left flag overlay */
+.eq-relief-flag-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 48px 20px 20px;
+  background: linear-gradient(to top, rgba(6,15,30,.8) 0%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+.eq-relief-flag-icon {
+  font-size: 2.2rem;
+  filter: drop-shadow(0 3px 10px rgba(0,0,0,.6));
+}
+
+/* Top badge */
+.eq-relief-img-badge {
+  position: absolute;
+  top: 20px; left: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(192,57,43,.88);
+  border: 1px solid rgba(231,76,60,.6);
+  backdrop-filter: blur(8px);
+  border-radius: 50px;
+  padding: 6px 14px;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #fff;
+  z-index: 3;
+}
+.eq-relief-img-dot {
+  width: 7px; height: 7px;
+  background: #ff6b6b;
+  border-radius: 50%;
+  animation: alertDotPulse 1.2s ease-in-out infinite;
+  box-shadow: 0 0 6px #ff4444;
+}
+
+/* ── Content column ── */
+.eq-relief-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(192,57,43,.18);
+  border: 1px solid rgba(231,76,60,.38);
+  border-radius: 50px;
+  padding: 6px 16px 6px 12px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #ff8a7a;
+  margin-bottom: 20px;
+}
+.eq-relief-dot {
+  width: 8px; height: 8px;
+  background: #ff4444;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: alertDotPulse 1.2s ease-in-out infinite;
+  box-shadow: 0 0 6px #ff4444;
+}
+
+.eq-relief-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+.eq-relief-title-em {
+  font-style: italic;
+  color: var(--orange-light);
+  display: block;
+}
+
+.eq-relief-subtitle {
+  font-size: .9rem;
+  font-weight: 700;
+  color: rgba(255,255,255,.65);
+  line-height: 1.6;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.eq-relief-subtitle strong {
+  color: #ff8a7a;
+  font-weight: 800;
+}
+
+.eq-relief-body {
+  font-size: .97rem;
+  color: rgba(255,255,255,.7);
+  line-height: 1.82;
+  margin-bottom: 28px;
+}
+.eq-relief-body strong {
+  color: var(--orange-light);
+  font-weight: 700;
+}
+
+/* ── Donation tier cards ── */
+.eq-relief-tiers {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+.eq-tier-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(231,76,60,.22);
+  border-left: 3px solid #e74c3c;
+  border-radius: var(--radius-sm);
+  padding: 14px 20px;
+  transition: background .25s ease, border-color .25s ease, transform .25s ease;
+  cursor: default;
+}
+.eq-tier-card:hover {
+  background: rgba(231,76,60,.1);
+  border-color: rgba(231,76,60,.45);
+  border-left-color: var(--orange);
+  transform: translateX(4px);
+}
+.eq-tier-heart { font-size: 1rem; flex-shrink: 0; }
+.eq-tier-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: var(--orange-light);
+  line-height: 1;
+  min-width: 68px;
+  flex-shrink: 0;
+}
+.eq-tier-desc {
+  font-size: .88rem;
+  color: rgba(255,255,255,.76);
+  line-height: 1.4;
+}
+
+/* ── CTA row ── */
+.eq-relief-ctas {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.eq-relief-btn {
+  box-shadow: 0 6px 28px rgba(240,124,30,.45);
+  font-size: 1.05rem;
+  padding: 18px 40px;
+}
+.eq-relief-url {
+  font-size: .82rem;
+  color: rgba(255,255,255,.4);
+  font-style: italic;
+  letter-spacing: .02em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .eq-relief-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .eq-relief-img-wrap img { height: 380px; }
+}
+@media (max-width: 768px) {
+  #earthquake-relief { padding: 60px 0; }
+  .eq-relief-img-wrap img { height: 260px; }
+  .eq-relief-title { font-size: clamp(1.9rem, 7vw, 2.8rem); }
+  .eq-relief-tiers { gap: 8px; }
+  .eq-relief-ctas { flex-direction: column; align-items: stretch; }
+  .eq-relief-btn { width: 100%; justify-content: center; border-radius: 16px; }
+  .eq-relief-url { text-align: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eq-relief-img-wrap::before,
+  .eq-relief-dot,
+  .eq-relief-img-dot { animation: none; }
+}
+
+/* ── Clickable image cursor ── */
+.eq-relief-img-clickable {
+  cursor: zoom-in;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.eq-relief-img-clickable:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 36px rgba(0,0,0,.4);
+}
+
+/* ── Earthquake Relief Lightbox ── */
+.eq-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+.eq-lightbox.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.eq-lightbox[hidden] { display: none; }
+.eq-lightbox.open    { display: flex; }
+
+.eq-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6,15,30,.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+}
+.eq-lightbox-box {
+  position: relative;
+  z-index: 1;
+  max-width: min(70vw, 560px);
+  transform: scale(.88) translateY(28px);
+  opacity: 0;
+  transition: transform .5s cubic-bezier(.34,1.2,.64,1),
+              opacity .38s ease;
+}
+.eq-lightbox.open .eq-lightbox-box {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+.eq-lightbox-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  box-shadow: 0 32px 80px rgba(0,0,0,.7),
+              0 0 0 1px rgba(192,57,43,.3);
+}
+.eq-lightbox-close {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--orange);
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(240,124,30,.5);
+  transition: background .2s ease, transform .2s ease;
+  z-index: 2;
+}
+.eq-lightbox-close:hover {
+  background: var(--orange-dark);
+  transform: rotate(90deg) scale(1.1);
+}
+@media (max-width: 600px) {
+  .eq-lightbox-close { top: -12px; right: -8px; width: 34px; height: 34px; font-size: 1.1rem; }
+}
