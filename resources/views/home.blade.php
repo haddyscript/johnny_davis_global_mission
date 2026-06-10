@@ -191,8 +191,8 @@
           <span class="prayer-alert-dot" aria-hidden="true"></span>
           Latest Update
         </div>
-        <img src="{{ asset('images/relevant-events/earthquake-fb-post.jpg') }}"
-             alt="Johnny Davis Global Missions prayer message for Philippines earthquake victims"
+        <img src="{{ asset('images/philippine-earthquake-relief.jpeg') }}"
+             alt="Philippines Earthquake Relief — Johnny Davis Global Missions"
              loading="eager"
              id="prayerAlertImg" />
         <div class="prayer-alert-img-overlay" aria-hidden="true"></div>
@@ -252,6 +252,64 @@
             Read Full Message
           </a>
         </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     PRAYER RESPONSE STORY
+============================================================ -->
+<section id="prayer-story" aria-labelledby="prayer-story-title">
+  <div class="container">
+    <div class="prayer-story-label">
+      <span class="prayer-story-label-dot" aria-hidden="true"></span>
+      Our Initial Response
+    </div>
+    <div class="prayer-story-card reveal">
+
+      {{-- Left: Original prayer poster --}}
+      <div class="prayer-story-img-col">
+        <img src="{{ asset('images/relevant-events/earthquake-fb-post.jpg') }}"
+             alt="Johnny Davis Global Missions — Our prayer message for Philippines earthquake victims"
+             class="prayer-story-img"
+             loading="lazy" />
+      </div>
+
+      {{-- Right: Story content --}}
+      <div class="prayer-story-content">
+        <div class="prayer-story-eyebrow">
+          <span class="prayer-story-tag">Prayer Response</span>
+          <span class="prayer-story-date">Philippines Earthquake</span>
+        </div>
+        <h3 class="prayer-story-title" id="prayer-story-title">
+          Prayers For Our Leaders, Volunteers &amp; Families in the Philippines
+        </h3>
+        <p class="prayer-story-body">
+          Our hearts are with everyone affected by the recent earthquake in the Philippines.
+          To our leaders, volunteers, and families in General Santos City, Sarangani Province,
+          Leyte, Cebu, and throughout the Philippines, please know that you are in our prayers
+          during this time.
+        </p>
+        <p class="prayer-story-body">
+          Current reports indicate that much of the damage has occurred in the General Santos and
+          Sarangani region. We are praying for every family affected, for emergency responders, and
+          for God's protection, comfort, and peace over your communities.
+        </p>
+        <blockquote class="prayer-story-quote">
+          "God is our refuge and strength, a very present help in trouble."
+          <cite>— Psalm 46:1 (KJV)</cite>
+        </blockquote>
+        <a href="https://www.facebook.com/share/p/1CwoD23GpD/?mibextid=wwXIfr"
+           target="_blank" rel="noopener noreferrer"
+           class="prayer-story-fb-link"
+           aria-label="Read full prayer message on Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          Read Full Message on Facebook
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
 
     </div>
   </div>
@@ -1315,8 +1373,8 @@
   <div class="prayer-lightbox-backdrop"></div>
   <div class="prayer-lightbox-box">
     <button class="prayer-lightbox-close" id="prayerLightboxClose" aria-label="Close image">&times;</button>
-    <img src="{{ asset('images/relevant-events/earthquake-fb-post.jpg') }}"
-         alt="Johnny Davis Global Missions — Prayers for Philippines earthquake victims"
+    <img src="{{ asset('images/philippine-earthquake-relief.jpeg') }}"
+         alt="Philippines Earthquake Relief — Johnny Davis Global Missions"
          class="prayer-lightbox-img" />
     <a href="https://www.facebook.com/share/p/1CwoD23GpD/?mibextid=wwXIfr"
        target="_blank" rel="noopener noreferrer"

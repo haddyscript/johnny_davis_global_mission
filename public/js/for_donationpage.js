@@ -52,9 +52,9 @@
       story: 'Hot meal support plus school supplies for 100+ vulnerable children in Cebu. Regular sponsorship removes hunger and increases school attendance.',
       goalText: 'Goal: $45,000 to feed and educate 100+ children for 12 months',
     },
-    'Cebu Earthquake Relief': {
-      story: 'Rapid relief for families displaced by the recent quake: shelters, clean water, emergency kits, and safe rebuilding support.',
-      goalText: 'Goal: $30,000 for emergency shelter & community recovery',
+    'Disaster Relief Fund': {
+      story: 'When disaster strikes, families often lose access to food, clean water, shelter, and other basic necessities. Your gift helps provide emergency relief, recovery assistance, and hope to families affected by natural disasters through our trusted ministry partners and relief efforts.',
+      goalText: 'Goal: $40,000 — Emergency relief for families affected by natural disasters',
     },
     'Uganda Clean Water Initiative': {
       story: 'Help provide clean and safe drinking water to communities in Uganda through sustainable water projects that improve health, reduce waterborne illness, and strengthen local communities.',

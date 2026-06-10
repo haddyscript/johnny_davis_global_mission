@@ -36,14 +36,14 @@
       </div>
     </div>
 
-    {{-- Cebu Earthquake Relief --}}
+    {{-- Disaster Relief Fund --}}
     <div class="campaign-page-card reveal"
-         data-campaign="Cebu Earthquake Relief"
+         data-campaign="Disaster Relief Fund"
          role="button" tabindex="0"
-         aria-label="Support Cebu Earthquake Relief campaign">
+         aria-label="Support Disaster Relief Fund campaign">
       <div class="card-body-inner">
         <p class="card-meta">Disaster Relief</p>
-        <h3>🏚️ Cebu Earthquake Relief</h3>
+        <h3>🏚️ Disaster Relief Fund</h3>
 
         <div class="card-raised-row">
           <span><strong>$6,850</strong> raised</span>
@@ -53,11 +53,11 @@
           <div class="progress-fill" style="width:17%;background:linear-gradient(90deg,#ef4444,#f87171);"></div>
         </div>
 
-        <p class="story-snippet">The earthquake left hundreds of families without shelter, food, or clean water. Every dollar goes directly to emergency supplies and rebuilding homes.</p>
+        <p class="story-snippet">When disaster strikes, families often lose access to food, clean water, shelter, and other basic necessities. Your gift helps provide emergency relief, recovery assistance, and hope to families affected by natural disasters.</p>
 
         <div class="card-story-block">
           <span class="card-story-arrow">→</span>
-          <p class="card-story-text">A family of five is sleeping under a tarp tonight. Help us give them four walls and a roof again.</p>
+          <p class="card-story-text">Through our trusted ministry partners and relief efforts, your donation reaches families in crisis when they need it most.</p>
         </div>
 
         <span class="card-cta-link">Support this campaign ›</span>

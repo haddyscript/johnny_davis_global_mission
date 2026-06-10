@@ -58,19 +58,19 @@
           <div class="camp-radio on" aria-hidden="true"></div>
         </div>
 
-        <!-- Cebu Earthquake Relief -->
+        <!-- Disaster Relief Fund -->
         <div class="campaign-opt"
-             data-campaign-opt="Cebu Earthquake Relief"
-             data-story="The 6.9 magnitude earthquake left hundreds of families without shelter, food, or clean water. Your gift brings immediate relief to those affected."
-             data-goal="Goal: $40,000 — Emergency relief for 500+ displaced families"
+             data-campaign-opt="Disaster Relief Fund"
+             data-story="When disaster strikes, families often lose access to food, clean water, shelter, and other basic necessities. Your gift helps provide emergency relief, recovery assistance, and hope to families affected by natural disasters through our trusted ministry partners and relief efforts."
+             data-goal="Goal: $40,000 — Emergency relief for families affected by natural disasters"
              role="radio"
              aria-checked="false"
              tabindex="0">
           <div class="camp-icon" aria-hidden="true">
-            <img src="{{ asset('images/house.png') }}" alt="Feed Filipino Children" style="width: 58px;height: 58px;object-fit:contain;"/>
+            <img src="{{ asset('images/house.png') }}" alt="Disaster Relief Fund" style="width: 58px;height: 58px;object-fit:contain;"/>
           </div>
           <div style="flex:1;">
-            <div class="camp-title">Cebu Earthquake Relief</div>
+            <div class="camp-title">Disaster Relief Fund</div>
             <div class="camp-sub" style="display:flex;justify-content:space-between;align-items:center;">
               <span style="color:var(--orange);font-weight:600;">$6,850 raised</span>
               <span style="color:#888;font-size:.82rem;">Goal $40,000 &middot; 17%</span>
@@ -80,7 +80,7 @@
                 <div class="progress-fill" style="width:17%;background:var(--orange);"></div>
               </div>
             </div>
-            <div class="camp-meta">The earthquake left hundreds of families without shelter, food, or clean water.</div>
+            <div class="camp-meta">Earthquakes, typhoons, floods, landslides — your gift provides immediate relief when families need it most.</div>
           </div>
           <div class="camp-radio" aria-hidden="true"></div>
         </div>
