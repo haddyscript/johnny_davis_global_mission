@@ -150,6 +150,87 @@
 
 
 <!-- ============================================================
+     PRAYER ALERT — Philippines Earthquake
+============================================================ -->
+<section id="prayer-alert" aria-labelledby="prayer-alert-title">
+  <div class="container">
+    <div class="prayer-alert-card reveal">
+
+      {{-- Left: Image with hover interactions --}}
+      <div class="prayer-alert-img-col" id="prayerAlertImgCol">
+        <div class="prayer-alert-badge">
+          <span class="prayer-alert-dot" aria-hidden="true"></span>
+          Latest Update
+        </div>
+        <img src="{{ asset('images/philippine-earthquake-relief.jpeg') }}"
+             alt="Philippines Earthquake Relief — Johnny Davis Global Missions"
+             loading="eager"
+             id="prayerAlertImg" />
+        <div class="prayer-alert-img-overlay" aria-hidden="true"></div>
+
+        {{-- Hover overlay --}}
+        <div class="prayer-alert-hover-overlay" aria-hidden="true">
+          <button class="prayer-alert-view-btn" id="prayerAlertViewBtn" aria-label="View full image">
+            <span class="prayer-alert-view-ring" aria-hidden="true"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            View Full Image
+          </button>
+        </div>
+
+        {{-- Facebook link --}}
+        <a href="https://www.facebook.com/share/p/1CwoD23GpD/?mibextid=wwXIfr"
+           target="_blank" rel="noopener noreferrer"
+           class="prayer-alert-fb-tag"
+           aria-label="View full post on Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          <span>View on Facebook</span>
+          <svg class="prayer-fb-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      {{-- Right: Content --}}
+      <div class="prayer-alert-content">
+        <div class="prayer-alert-eyebrow">
+          <span class="prayer-alert-flag" aria-hidden="true">🇵🇭</span>
+          <span>Emergency Prayer Request</span>
+        </div>
+        <h2 class="prayer-alert-title" id="prayer-alert-title">
+          Prayers For Our Leaders, Volunteers &amp; Families in the Philippines
+        </h2>
+        <p class="prayer-alert-sub">
+          A Message to Our Johnny Davis Global Missions Family in the Philippines
+        </p>
+        <p class="prayer-alert-body">
+          Our hearts are with everyone affected by the recent earthquake in the Philippines.
+          To our leaders, volunteers, and families in General Santos City, Sarangani Province,
+          Leyte, Cebu, and throughout the Philippines, please know that you are in our prayers
+          during this time.
+        </p>
+        <p class="prayer-alert-body">
+          Current reports indicate that much of the damage has occurred in the General Santos and
+          Sarangani region. We are praying for every family affected, for emergency responders, and
+          for God's protection, comfort, and peace over your communities.
+        </p>
+        <blockquote class="prayer-alert-quote">
+          "God is our refuge and strength, a very present help in trouble."
+          <cite>— Psalm 46:1 (KJV)</cite>
+        </blockquote>
+        <div class="prayer-alert-actions">
+          <a href="https://www.facebook.com/share/p/1CwoD23GpD/?mibextid=wwXIfr"
+             target="_blank" rel="noopener noreferrer"
+             class="btn prayer-alert-fb-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            Read Full Message
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
      BREADCRUMB
 ============================================================ -->
 <div id="breadcrumb-bar">
@@ -773,6 +854,23 @@
   </div><!-- /story-modal-box -->
 </div><!-- /storyModal -->
 
+
+<!-- Prayer Alert Lightbox -->
+<div class="prayer-lightbox" id="prayerLightbox" hidden role="dialog" aria-modal="true" aria-label="Philippines Earthquake Relief image">
+  <div class="prayer-lightbox-backdrop" id="prayerLightboxBackdrop"></div>
+  <div class="prayer-lightbox-box">
+    <button class="prayer-lightbox-close" id="prayerLightboxClose" aria-label="Close image">&times;</button>
+    <img class="prayer-lightbox-img"
+         src="{{ asset('images/philippine-earthquake-relief.jpeg') }}"
+         alt="Philippines Earthquake Relief — Johnny Davis Global Missions" />
+    <a href="https://www.facebook.com/share/p/1CwoD23GpD/?mibextid=wwXIfr"
+       target="_blank" rel="noopener noreferrer"
+       class="prayer-lightbox-fb-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      View Full Post on Facebook
+    </a>
+  </div>
+</div>
 
 <script src="{{ asset('js/for_news.js') }}?v={{ filemtime(public_path('js/for_news.js')) }}"></script>
 
