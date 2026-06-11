@@ -167,7 +167,7 @@
           <span class="prayer-alert-dot" aria-hidden="true"></span>
           Latest Update
         </div>
-        <img src="{{ asset('images/philippine-earthquake-relief.jpeg') }}"
+        <img src="{{ asset('images/relevant-events/earthquake-fb-post.jpg') }}"
              alt="Philippines Earthquake Relief — Johnny Davis Global Missions"
              loading="eager"
              id="prayerAlertImg" />
@@ -884,7 +884,7 @@
   <div class="prayer-lightbox-box">
     <button class="prayer-lightbox-close" id="prayerLightboxClose" aria-label="Close image">&times;</button>
     <img class="prayer-lightbox-img"
-         src="{{ asset('images/philippine-earthquake-relief.jpeg') }}"
+         src="{{ asset('images/relevant-events/earthquake-fb-post.jpg') }}"
          alt="Philippines Earthquake Relief — Johnny Davis Global Missions" />
     <a href="https://www.facebook.com/share/p/1CwoD23GpD/?mibextid=wwXIfr"
        target="_blank" rel="noopener noreferrer"
