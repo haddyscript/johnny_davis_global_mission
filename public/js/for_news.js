@@ -564,31 +564,3 @@
     if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
   });
 }());
-
-/* ─── PRAYER ALERT LIGHTBOX ─────────────────────────────────── */
-(function () {
-  const lightbox = document.getElementById('prayerLightbox');
-  const closeBtn = document.getElementById('prayerLightboxClose');
-  const backdrop = document.getElementById('prayerLightboxBackdrop');
-  const viewBtn  = document.getElementById('prayerAlertViewBtn');
-  if (!lightbox || !viewBtn) return;
-
-  function openLightbox() {
-    lightbox.removeAttribute('hidden');
-    requestAnimationFrame(() => lightbox.classList.add('open'));
-    document.body.style.overflow = 'hidden';
-    closeBtn.focus();
-  }
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.body.style.overflow = '';
-    setTimeout(() => lightbox.setAttribute('hidden', ''), 380);
-  }
-
-  viewBtn.addEventListener('click', openLightbox);
-  closeBtn.addEventListener('click', closeLightbox);
-  backdrop.addEventListener('click', closeLightbox);
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
-  });
-}());
