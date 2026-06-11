@@ -400,13 +400,14 @@
     document.querySelectorAll('.post-story-cta').forEach(cta => {
       cta.addEventListener('click', e => {
         e.preventDefault();
-        const title    = cta.dataset.title    || '';
-        const image    = cta.dataset.image    || '';
-        const imgalt   = cta.dataset.imgalt   || '';
-        const category = cta.dataset.category || '';
-        const excerpt  = cta.dataset.excerpt  || '';
-        const flag     = cta.dataset.flag     || '';
-        const country  = cta.dataset.country  || '';
+        const title       = cta.dataset.title       || '';
+        const image       = cta.dataset.image       || '';
+        const imgalt      = cta.dataset.imgalt      || '';
+        const category    = cta.dataset.category    || '';
+        const excerpt     = cta.dataset.excerpt     || '';
+        const fullContent = cta.dataset.fullContent || '';
+        const flag        = cta.dataset.flag        || '';
+        const country     = cta.dataset.country     || '';
 
         const modalImg = storyModal.querySelector('.story-modal-img');
         if (modalImg) { modalImg.src = image; modalImg.alt = imgalt; }
@@ -421,7 +422,7 @@
         if (modalTitle) modalTitle.textContent = title;
 
         const modalContent = storyModal.querySelector('.story-modal-content');
-        if (modalContent) modalContent.innerHTML = '<p>' + excerpt + '</p>';
+        if (modalContent) modalContent.innerHTML = fullContent || '<p>' + excerpt + '</p>';
 
         openStoryModal();
       });

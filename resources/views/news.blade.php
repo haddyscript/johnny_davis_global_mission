@@ -250,6 +250,7 @@
              data-imgalt="{{ $post['img_alt'] }}"
              data-category="{{ $post['category'] }}"
              data-excerpt="{{ strip_tags($post['excerpt']) }}"
+             data-full-content="{{ $post['full_content'] ?? '' }}"
              data-flag="{{ $post['flag'] }}"
              data-country="{{ $post['country'] }}"
              style="margin-top:8px; align-self:flex-start;">
@@ -291,6 +292,7 @@
              data-imgalt="{{ $post['img_alt'] }}"
              data-category="{{ $post['category'] }}"
              data-excerpt="{{ strip_tags($post['excerpt']) }}"
+             data-full-content="{{ $post['full_content'] ?? '' }}"
              data-flag="{{ $post['flag'] }}"
              data-country="{{ $post['country'] }}">
             {{ $post['cta_label'] }}

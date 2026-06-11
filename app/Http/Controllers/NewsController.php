@@ -58,6 +58,16 @@ class NewsController extends Controller
                 'read_time'  => '2 min read',
                 'title'      => 'Prayers For Our Leaders, Volunteers & Families in the Philippines',
                 'excerpt'    => 'Our hearts are with everyone affected by the recent earthquake in the Philippines. To our leaders, volunteers, and families in General Santos City, Sarangani Province, Leyte, Cebu, and throughout the Philippines — you are in our prayers during this time.',
+                'full_content' =>
+                    '<p>Our hearts are with everyone affected by the recent earthquake in the Philippines.</p>'
+                    . '<p>To our leaders, volunteers, and families in General Santos City, Sarangani Province, Leyte, Cebu, and throughout the Philippines, please know that you are in our prayers during this time.</p>'
+                    . '<p>Current reports indicate that much of the damage has occurred in the General Santos and Sarangani region. We are praying for every family affected, for emergency responders, and for God\'s protection, comfort, and peace over your communities.</p>'
+                    . '<p>As a ministry family, we stand together in faith. Although many miles separate us, we are united in Christ and committed to supporting one another through prayer, encouragement, and compassion.</p>'
+                    . '<p>We are grateful for each of our volunteers who faithfully serve through the Feed Filipino Children Program and our outreach efforts across the Philippines. Your love for others continues to reflect the heart of Jesus, especially during challenging times.</p>'
+                    . '<p>Please continue to pray for those affected by this disaster and check on family members, friends, neighbors, and fellow volunteers who may need encouragement and support.</p>'
+                    . '<blockquote class="story-modal-quote">&ldquo;God is our refuge and strength, a very present help in trouble.&rdquo;<cite>&mdash; Psalm 46:1 (KJV)</cite></blockquote>'
+                    . '<p>With love and prayers,</p>'
+                    . '<p><strong>Johnny Davis</strong><br>President &amp; Founder</p>',
                 'cta_label'  => 'Read Full Message',
                 'cta_href'   => '#prayer-alert',
                 'delay'      => 'delay-1',
