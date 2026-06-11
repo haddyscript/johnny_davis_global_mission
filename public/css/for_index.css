@@ -3409,16 +3409,17 @@ ul { list-style: none; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 64px;
-  align-items: center;
+  align-items: stretch;
 }
 
 /* ── Image column ── */
-.eq-relief-img-col { position: relative; }
+.eq-relief-img-col { position: relative; display: flex; flex-direction: column; }
 
 .eq-relief-img-wrap {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
+  flex: 1;
   box-shadow: 0 24px 64px rgba(0,0,0,.6),
               0 0 0 1px rgba(192,57,43,.3),
               0 0 100px -10px rgba(192,57,43,.25);
@@ -3437,7 +3438,7 @@ ul { list-style: none; }
 }
 .eq-relief-img-wrap img {
   width: 100%;
-  height: 500px;
+  height: 100%;
   object-fit: cover;
   display: block;
   transition: transform .9s cubic-bezier(.4,0,.2,1);
@@ -3718,148 +3719,3 @@ ul { list-style: none; }
   .eq-lightbox-close { top: -12px; right: -8px; width: 34px; height: 34px; font-size: 1.1rem; }
 }
 
-/* ============================================================
-   PRAYER RESPONSE STORY SECTION
-============================================================ */
-#prayer-story {
-  background: #0e0e14;
-  padding: 36px 0 48px;
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-.prayer-story-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #888;
-  margin-bottom: 16px;
-}
-
-.prayer-story-label-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--orange);
-  display: inline-block;
-  flex-shrink: 0;
-}
-
-.prayer-story-card {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 32px;
-  align-items: start;
-  background: rgba(255,255,255,0.025);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 16px;
-  padding: 24px;
-}
-
-.prayer-story-img-col {
-  border-radius: 10px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.prayer-story-img {
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
-  display: block;
-  border-radius: 10px;
-}
-
-.prayer-story-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-}
-
-.prayer-story-tag {
-  background: rgba(239,68,68,0.12);
-  color: #f87171;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  padding: 3px 9px;
-  border-radius: 99px;
-  border: 1px solid rgba(239,68,68,0.25);
-}
-
-.prayer-story-date {
-  color: #666;
-  font-size: 0.76rem;
-}
-
-.prayer-story-title {
-  font-size: clamp(0.95rem, 2vw, 1.15rem);
-  color: #ddd8d0;
-  font-weight: 700;
-  line-height: 1.4;
-  margin-bottom: 10px;
-}
-
-.prayer-story-body {
-  color: #888;
-  font-size: 0.85rem;
-  line-height: 1.75;
-  margin-bottom: 10px;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.prayer-story-quote {
-  border-left: 2px solid var(--orange);
-  padding: 6px 0 6px 12px;
-  color: #aaa;
-  font-style: italic;
-  font-size: 0.83rem;
-  line-height: 1.6;
-  margin: 12px 0 16px;
-}
-
-.prayer-story-quote cite {
-  display: block;
-  margin-top: 4px;
-  font-style: normal;
-  color: #666;
-  font-size: 0.76rem;
-}
-
-.prayer-story-fb-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: #6b9cf5;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: color 0.2s, gap 0.2s;
-}
-
-.prayer-story-fb-link:hover {
-  color: #93b4f8;
-  gap: 9px;
-}
-
-@media (max-width: 768px) {
-  .prayer-story-card {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .prayer-story-img {
-    height: 200px;
-  }
-  .prayer-story-body {
-    -webkit-line-clamp: 4;
-  }
-}

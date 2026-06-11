@@ -382,18 +382,8 @@
   const storyModal         = document.getElementById('storyModal');
   const storyModalClose    = document.getElementById('storyModalClose');
   const storyModalCloseBtn = document.getElementById('storyModalCloseBtn');
-  const featuredCta        = document.querySelector('.featured-cta');
 
   if (storyModal) {
-    // Snapshot the hardcoded Marco's-story content so the featured-section CTA can restore it
-    const _mImg     = storyModal.querySelector('.story-modal-img');
-    const _origSrc  = _mImg ? _mImg.src : '';
-    const _origAlt  = _mImg ? _mImg.alt : '';
-    const _origCat  = (storyModal.querySelector('.story-modal-cat')      || {}).innerHTML || '';
-    const _origLoc  = (storyModal.querySelector('.story-modal-location') || {}).innerHTML || '';
-    const _origTtl  = (document.getElementById('storyModalTitle')        || {}).textContent || '';
-    const _origBody = (storyModal.querySelector('.story-modal-content')  || {}).innerHTML || '';
-
     const openStoryModal = () => {
       storyModal.removeAttribute('hidden');
       requestAnimationFrame(() => storyModal.classList.add('open'));
@@ -405,19 +395,6 @@
       document.body.style.overflow = '';
       setTimeout(() => storyModal.setAttribute('hidden', ''), 380);
     };
-
-    // Featured story section CTA → always restores full hardcoded Marco's story
-    if (featuredCta) {
-      featuredCta.addEventListener('click', e => {
-        e.preventDefault();
-        if (_mImg) { _mImg.src = _origSrc; _mImg.alt = _origAlt; }
-        const c = storyModal.querySelector('.story-modal-cat');      if (c) c.innerHTML = _origCat;
-        const l = storyModal.querySelector('.story-modal-location'); if (l) l.innerHTML = _origLoc;
-        const t = document.getElementById('storyModalTitle');        if (t) t.textContent = _origTtl;
-        const b = storyModal.querySelector('.story-modal-content');  if (b) b.innerHTML = _origBody;
-        openStoryModal();
-      });
-    }
 
     // Post card CTAs → populate modal dynamically from the card's data attributes
     document.querySelectorAll('.post-story-cta').forEach(cta => {
@@ -556,6 +533,35 @@
     btn.addEventListener('click', function() {
       this.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }, { passive: true });
+  });
+}());
+
+/* ─── FEATURED IMAGE LIGHTBOX ───────────────────────────────── */
+(function () {
+  const lightbox = document.getElementById('featuredImgLightbox');
+  const closeBtn = document.getElementById('featuredImgLightboxClose');
+  const backdrop = document.getElementById('featuredImgLightboxBackdrop');
+  const trigger  = document.getElementById('featuredStoryImgCol');
+  if (!lightbox || !trigger) return;
+
+  function openLightbox() {
+    lightbox.removeAttribute('hidden');
+    requestAnimationFrame(() => lightbox.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => lightbox.setAttribute('hidden', ''), 380);
+  }
+
+  trigger.addEventListener('click', openLightbox);
+  trigger.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(); } });
+  closeBtn.addEventListener('click', closeLightbox);
+  backdrop.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
   });
 }());
 

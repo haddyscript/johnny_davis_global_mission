@@ -119,29 +119,34 @@
 <section id="featured-story" aria-labelledby="featured-title">
   <div class="container">
     <div class="featured-story-card reveal-flip">
-      <div class="featured-story-image">
-        <img src="{{ asset('images/landingpage/community_outreach.png') }}"
-             alt="Marco's transformation from malnourished to thriving child"
-             loading="lazy"/>
+      <div class="featured-story-image" id="featuredStoryImgCol" style="cursor:pointer" role="button" tabindex="0" aria-label="View full image">
+        <img src="{{ asset('images/relevant-events/earthquake-fb-post.jpg') }}"
+             alt="Philippines Earthquake Relief — Johnny Davis Global Missions"
+             loading="eager"/>
         <div class="featured-story-overlay"></div>
+        <div class="featured-img-hover-indicator" aria-hidden="true">
+          <span class="featured-img-hover-ring"></span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          Click to View
+        </div>
         <div class="featured-story-badge">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          Featured Impact Story
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 21L12 2l11 19H1zm11-3v-2h-2v2h2zm0-4V10h-2v4h2z"/></svg>
+          Latest Update
         </div>
       </div>
       <div class="featured-story-content">
         <div class="featured-story-meta">
-          <span class="featured-category">Impact Story</span>
+          <span class="featured-category" style="background:#fde8e8;color:#b91c1c;">Emergency Prayer Request</span>
           <span class="featured-location">
             <span class="flag">🇵🇭</span> Philippines
           </span>
         </div>
-        <h2 class="featured-story-title" id="featured-title">Marco's Story: From Malnourished to Thriving</h2>
+        <h2 class="featured-story-title" id="featured-title">Prayers For Our Leaders, Volunteers &amp; Families in the Philippines</h2>
         <p class="featured-story-excerpt">
-          When Marco first came to our feeding program, he hadn't eaten a full meal in two days. Six months later, he attends school every day and his health has completely transformed. This is why we do what we do.
+          Our hearts are with everyone affected by the recent earthquake in the Philippines. To our leaders, volunteers, and families in General Santos City, Sarangani Province, Leyte, Cebu, and throughout the Philippines — you are in our prayers during this time.
         </p>
-        <a href="#" class="btn btn-primary featured-cta wwa-donate-btn news-read-btn">
-          Read Full Story →
+        <a href="#prayer-alert" class="btn btn-primary featured-cta wwa-donate-btn news-read-btn">
+          Read Full Message →
         </a>
       </div>
     </div>
@@ -853,6 +858,24 @@
     </div><!-- /story-modal-body -->
   </div><!-- /story-modal-box -->
 </div><!-- /storyModal -->
+
+
+<!-- Featured Image Lightbox -->
+<div class="prayer-lightbox" id="featuredImgLightbox" hidden role="dialog" aria-modal="true" aria-label="Pray for the Philippines">
+  <div class="prayer-lightbox-backdrop" id="featuredImgLightboxBackdrop"></div>
+  <div class="prayer-lightbox-box">
+    <button class="prayer-lightbox-close" id="featuredImgLightboxClose" aria-label="Close image">&times;</button>
+    <img class="prayer-lightbox-img"
+         src="{{ asset('images/relevant-events/earthquake-fb-post.jpg') }}"
+         alt="Pray for the Philippines — Johnny Davis Global Missions" />
+    <a href="https://www.facebook.com/share/p/1CwoD23GpD/?mibextid=wwXIfr"
+       target="_blank" rel="noopener noreferrer"
+       class="prayer-lightbox-fb-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      View Full Post on Facebook
+    </a>
+  </div>
+</div>
 
 
 <!-- Prayer Alert Lightbox -->

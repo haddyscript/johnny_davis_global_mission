@@ -461,6 +461,42 @@ button { font-family:inherit; cursor:pointer; }
   margin-top:8px; align-self:flex-start;
 }
 
+/* Hover click indicator on featured image */
+.featured-img-hover-indicator {
+  position:absolute; inset:0; z-index:3;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:10px;
+  background:rgba(6,15,30,.45);
+  color:var(--white);
+  font-size:.82rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  opacity:0;
+  transition:opacity .3s ease;
+  pointer-events:none;
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+}
+#featuredStoryImgCol:hover .featured-img-hover-indicator { opacity:1; }
+#featuredStoryImgCol:focus-visible .featured-img-hover-indicator { opacity:1; }
+
+.featured-img-hover-ring {
+  position:absolute;
+  width:72px; height:72px; border-radius:50%;
+  border:2px solid rgba(255,255,255,.35);
+  animation:featuredRingPulse 2s ease-in-out infinite;
+  pointer-events:none;
+}
+.featured-img-hover-indicator svg {
+  position:relative; z-index:1;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));
+}
+.featured-img-hover-indicator span + svg {
+  position:relative; z-index:1;
+}
+@keyframes featuredRingPulse {
+  0%,100% { transform:scale(1);   opacity:.5; }
+  50%      { transform:scale(1.3); opacity:.15; }
+}
+
 /* ============================================================
    MISSION STATISTICS SECTION
 ============================================================ */
