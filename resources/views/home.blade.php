@@ -180,6 +180,85 @@
 
 
 <!-- ============================================================
+     EARTHQUAKE RELIEF VIDEO UPDATE
+============================================================ -->
+<section id="earthquake-relief-video" aria-labelledby="eq-video-title">
+  <div class="container">
+    <div class="eq-video-header reveal">
+      <div class="eq-video-kicker">
+        <span class="eq-relief-dot" aria-hidden="true"></span>
+        Earthquake Relief Update
+      </div>
+
+      <h2 class="eq-video-title" id="eq-video-title">
+        🚨 Earthquake Relief Update — General Santos &amp; Sarangani 🚨
+      </h2>
+    </div>
+
+    <div class="eq-video-grid">
+
+      {{-- Left: Video --}}
+      <div class="eq-video-frame-wrap eq-video-tilt reveal-left">
+        <div class="eq-video-badge" aria-hidden="true">
+          <span class="eq-video-badge-dot" aria-hidden="true"></span>
+          Live From The Ground
+        </div>
+
+        <iframe src="https://drive.google.com/file/d/15TyKCPZppNDbvoI3d8iFN2H5XkL-sCAG/preview"
+                title="Earthquake Relief Update — General Santos and Sarangani"
+                allow="autoplay; fullscreen"
+                allowfullscreen
+                loading="lazy">
+        </iframe>
+      </div>
+
+      {{-- Right: Content --}}
+      <div class="eq-video-content reveal-right">
+        <p class="eq-video-intro">A devastating earthquake has left many families without safe shelter, food, clean water, and emergency supplies. Churches have collapsed, homes have been damaged, and families continue to face aftershocks throughout the region.</p>
+
+        <p class="eq-video-intro">Watch this special update from our ministry partners on the ground and learn how you can help bring hope to families affected by this disaster.</p>
+
+        <div class="eq-relief-tiers" role="list" aria-label="Donation impact tiers">
+          <div class="eq-tier-card" role="listitem">
+            <span class="eq-tier-heart" aria-hidden="true">❤️</span>
+            <span class="eq-tier-amount">$25</span>
+            <span class="eq-tier-desc">Provides emergency food assistance</span>
+          </div>
+          <div class="eq-tier-card" role="listitem">
+            <span class="eq-tier-heart" aria-hidden="true">❤️</span>
+            <span class="eq-tier-amount">$50</span>
+            <span class="eq-tier-desc">Helps provide food and clean water</span>
+          </div>
+          <div class="eq-tier-card" role="listitem">
+            <span class="eq-tier-heart" aria-hidden="true">❤️</span>
+            <span class="eq-tier-amount">$100</span>
+            <span class="eq-tier-desc">Helps support multiple families with emergency relief supplies</span>
+          </div>
+        </div>
+
+        <p class="eq-video-scan">📱 Scan the QR Code in the video or click the Donate Now button to help today.</p>
+
+        <div class="eq-video-urgent-card">
+          <p><strong>The next 48 hours are critical.</strong><br/>Together, we can be the miracle they're praying for.</p>
+        </div>
+
+        <div class="eq-relief-ctas">
+          <a href="{{ route('donate') }}?campaign=earthquake-relief"
+             class="btn btn-primary btn-lg eq-relief-btn wwa-donate-btn"
+             aria-label="Donate now for earthquake relief">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            Donate Now — Be The Miracle
+          </a>
+          <p class="eq-relief-url">JohnnyDavisGlobalMissions.org · 📞 404-426-2856</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
      EARTHQUAKE RELIEF CAMPAIGN
 ============================================================ -->
 <section id="earthquake-relief" aria-labelledby="eq-relief-title">
@@ -264,6 +343,171 @@
     </div>
   </div>
 </section>
+
+
+<!-- ============================================================
+     EARTHQUAKE RELIEF PHOTO COLLAGE
+============================================================ -->
+<section id="earthquake-relief-collage" aria-labelledby="eq-collage-title">
+  <div class="container">
+    <div class="eq-collage-inner">
+
+      <h2 class="eq-collage-title reveal" id="eq-collage-title">
+        📸 Images From Our Ministry Partners On The Ground
+      </h2>
+
+      <div class="eq-collage-img-wrap eq-collage-tilt reveal">
+        <div class="eq-collage-badge">
+          <span class="eq-collage-badge-dot" aria-hidden="true"></span>
+          Ground Report
+        </div>
+
+        <img src="{{ asset('images/relevant-events/earthquake_relief_photo_collage.jpeg') }}"
+             alt="Photo collage from earthquake relief efforts in General Santos City and Sarangani Province, Philippines"
+             loading="lazy"
+             id="eqCollageImg"
+             class="eq-collage-img-clickable"
+             role="button"
+             tabindex="0"
+             aria-label="View full image" />
+
+        <div class="eq-collage-hover-overlay" aria-hidden="true">
+          <button type="button" class="eq-collage-view-btn" id="eqCollageViewBtn" aria-label="View full photo collage">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="21" y1="21" x2="15.5" y2="15.5"/></svg>
+            View Full Photos
+            <span class="eq-collage-view-ring" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <div class="eq-collage-tap-hint" aria-hidden="true">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="21" y1="21" x2="15.5" y2="15.5"/></svg>
+          Tap to enlarge
+        </div>
+      </div>
+
+      <div class="eq-collage-caption reveal">
+        <p>These photos were provided by our ministry partners in General Santos City and Sarangani Province following the recent earthquake. Families are sleeping under temporary shelters, living without adequate food, clean water, and safe housing as they recover from this disaster.</p>
+
+        <p>Please continue to pray and consider supporting our earthquake relief efforts.</p>
+
+        <ul class="eq-video-tiers" role="list" aria-label="Donation impact tiers">
+          <li>❤️ $25 Emergency Food Assistance</li>
+          <li>❤️ $50 Food &amp; Clean Water</li>
+          <li>❤️ $100 Emergency Relief Support</li>
+        </ul>
+
+        <p>🌐 JohnnyDavisGlobalMissions.org<br/>
+        📞 404-426-2856</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{{-- Earthquake Relief Collage — Full Image Lightbox --}}
+<div id="eqCollageLightbox" class="eq-lightbox" hidden role="dialog" aria-modal="true" aria-label="Full earthquake relief photo collage">
+  <div class="eq-lightbox-backdrop"></div>
+  <div class="eq-lightbox-box">
+    <button class="eq-lightbox-close" id="eqCollageLightboxClose" aria-label="Close image">&times;</button>
+    <img src="{{ asset('images/relevant-events/earthquake_relief_photo_collage.jpeg') }}"
+         alt="Photo collage from earthquake relief efforts in General Santos City and Sarangani Province, Philippines"
+         class="eq-lightbox-img" />
+  </div>
+</div>
+
+<script>
+(function () {
+  var lightbox  = document.getElementById('eqCollageLightbox');
+  var trigger   = document.getElementById('eqCollageImg');
+  var viewBtn   = document.getElementById('eqCollageViewBtn');
+  var closeBtn  = document.getElementById('eqCollageLightboxClose');
+  var backdrop  = lightbox ? lightbox.querySelector('.eq-lightbox-backdrop') : null;
+  var tiltWrap  = document.querySelector('.eq-collage-tilt');
+
+  if (!lightbox || !trigger) return;
+
+  function openLightbox() {
+    lightbox.hidden = false;
+    requestAnimationFrame(function () { lightbox.classList.add('open'); });
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(function () { lightbox.hidden = true; }, 380);
+    trigger.focus();
+  }
+
+  trigger.addEventListener('click', openLightbox);
+  trigger.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(); }
+  });
+  if (viewBtn) viewBtn.addEventListener('click', openLightbox);
+  closeBtn.addEventListener('click', closeLightbox);
+  backdrop.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !lightbox.hidden) closeLightbox();
+  });
+
+  /* ── 3D tilt on hover (desktop only) ── */
+  if (tiltWrap && window.innerWidth > 1024 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var STRENGTH_Y = 6, STRENGTH_X = 4;
+    var raf = null, targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+
+    tiltWrap.addEventListener('mousemove', function (e) {
+      var rect = tiltWrap.getBoundingClientRect();
+      targetX = ((e.clientX - rect.left) / rect.width - 0.5) * STRENGTH_Y;
+      targetY = ((e.clientY - rect.top)  / rect.height - 0.5) * -STRENGTH_X;
+      if (!raf) raf = requestAnimationFrame(animateTilt);
+    });
+    tiltWrap.addEventListener('mouseleave', function () {
+      cancelAnimationFrame(raf); raf = null;
+      targetX = 0; targetY = 0;
+      tiltWrap.style.transition = 'transform .6s cubic-bezier(.34,1.2,.64,1)';
+      tiltWrap.style.transform = 'perspective(1200px) rotateY(0deg) rotateX(0deg) scale3d(1,1,1)';
+    });
+
+    function animateTilt() {
+      currentX += (targetX - currentX) * 0.12;
+      currentY += (targetY - currentY) * 0.12;
+      tiltWrap.style.transition = '';
+      tiltWrap.style.transform = 'perspective(1200px) rotateY(' + currentX.toFixed(3) + 'deg) rotateX(' + currentY.toFixed(3) + 'deg) scale3d(1.015,1.015,1.015)';
+      raf = requestAnimationFrame(animateTilt);
+    }
+  }
+}());
+
+/* ── Earthquake Relief Video frame: 3D tilt on hover (desktop only) ── */
+(function () {
+  var tiltWrap = document.querySelector('.eq-video-tilt');
+  if (!tiltWrap || window.innerWidth <= 1024 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var STRENGTH_Y = 5, STRENGTH_X = 3;
+  var raf = null, targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+
+  tiltWrap.addEventListener('mousemove', function (e) {
+    var rect = tiltWrap.getBoundingClientRect();
+    targetX = ((e.clientX - rect.left) / rect.width - 0.5) * STRENGTH_Y;
+    targetY = ((e.clientY - rect.top)  / rect.height - 0.5) * -STRENGTH_X;
+    if (!raf) raf = requestAnimationFrame(animateTilt);
+  });
+  tiltWrap.addEventListener('mouseleave', function () {
+    cancelAnimationFrame(raf); raf = null;
+    targetX = 0; targetY = 0;
+    tiltWrap.style.transition = 'transform .6s cubic-bezier(.34,1.2,.64,1)';
+    tiltWrap.style.transform = 'perspective(1400px) rotateY(0deg) rotateX(0deg) scale3d(1,1,1)';
+  });
+
+  function animateTilt() {
+    currentX += (targetX - currentX) * 0.12;
+    currentY += (targetY - currentY) * 0.12;
+    tiltWrap.style.transition = '';
+    tiltWrap.style.transform = 'perspective(1400px) rotateY(' + currentX.toFixed(3) + 'deg) rotateX(' + currentY.toFixed(3) + 'deg) scale3d(1.01,1.01,1.01)';
+    raf = requestAnimationFrame(animateTilt);
+  }
+}());
+</script>
 
 
 <!-- ============================================================
