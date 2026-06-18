@@ -207,9 +207,7 @@
 
           <iframe src="https://drive.google.com/file/d/15TyKCPZppNDbvoI3d8iFN2H5XkL-sCAG/preview"
                   title="Earthquake Relief Update — General Santos and Sarangani"
-                  allow="autoplay; fullscreen"
-                  allowfullscreen
-                  loading="lazy">
+                  allow="autoplay">
           </iframe>
         </div>
 
