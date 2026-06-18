@@ -197,19 +197,39 @@
 
     <div class="eq-video-grid">
 
-      {{-- Left: Video --}}
-      <div class="eq-video-frame-wrap eq-video-tilt reveal-left">
-        <div class="eq-video-badge" aria-hidden="true">
-          <span class="eq-video-badge-dot" aria-hidden="true"></span>
-          Live From The Ground
+      {{-- Left: Video + Call to Action --}}
+      <div class="eq-video-left reveal-left">
+        <div class="eq-video-frame-wrap eq-video-tilt">
+          <div class="eq-video-badge" aria-hidden="true">
+            <span class="eq-video-badge-dot" aria-hidden="true"></span>
+            Live From The Ground
+          </div>
+
+          <iframe src="https://drive.google.com/file/d/15TyKCPZppNDbvoI3d8iFN2H5XkL-sCAG/preview"
+                  title="Earthquake Relief Update — General Santos and Sarangani"
+                  allow="autoplay; fullscreen"
+                  allowfullscreen
+                  loading="lazy">
+          </iframe>
         </div>
 
-        <iframe src="https://drive.google.com/file/d/15TyKCPZppNDbvoI3d8iFN2H5XkL-sCAG/preview"
-                title="Earthquake Relief Update — General Santos and Sarangani"
-                allow="autoplay; fullscreen"
-                allowfullscreen
-                loading="lazy">
-        </iframe>
+        <div class="eq-video-actions">
+          <p class="eq-video-scan">📱 Scan the QR Code in the video or click the Donate Now button to help today.</p>
+
+          <div class="eq-video-urgent-card">
+            <p><strong>The next 48 hours are critical.</strong><br/>Together, we can be the miracle they're praying for.</p>
+          </div>
+
+          <div class="eq-relief-ctas">
+            <a href="{{ route('donate') }}?campaign=earthquake-relief"
+               class="btn btn-primary btn-lg eq-relief-btn wwa-donate-btn"
+               aria-label="Donate now for earthquake relief">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              Donate Now — Be The Miracle
+            </a>
+            <p class="eq-relief-url">JohnnyDavisGlobalMissions.org · 📞 404-426-2856</p>
+          </div>
+        </div>
       </div>
 
       {{-- Right: Content --}}
@@ -234,22 +254,6 @@
             <span class="eq-tier-amount">$100</span>
             <span class="eq-tier-desc">Helps support multiple families with emergency relief supplies</span>
           </div>
-        </div>
-
-        <p class="eq-video-scan">📱 Scan the QR Code in the video or click the Donate Now button to help today.</p>
-
-        <div class="eq-video-urgent-card">
-          <p><strong>The next 48 hours are critical.</strong><br/>Together, we can be the miracle they're praying for.</p>
-        </div>
-
-        <div class="eq-relief-ctas">
-          <a href="{{ route('donate') }}?campaign=earthquake-relief"
-             class="btn btn-primary btn-lg eq-relief-btn wwa-donate-btn"
-             aria-label="Donate now for earthquake relief">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            Donate Now — Be The Miracle
-          </a>
-          <p class="eq-relief-url">JohnnyDavisGlobalMissions.org · 📞 404-426-2856</p>
         </div>
       </div>
 
