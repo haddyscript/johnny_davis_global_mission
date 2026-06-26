@@ -1,8 +1,8 @@
 {{--
   ELEVATION PRAYER GATHERING — WEEKLY SPOTLIGHT
   ============================================================
-  To publish next week's update, only the values in the @php block
-  below need to change — the layout/markup stays the same:
+  To publish next week's update, only the values in the PHP
+  block below need to change — the layout/markup stays the same:
 
     - $epPoster       path to this week's poster image (public/images/...)
     - $epEpisode      episode number shown in the badge
