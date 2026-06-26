@@ -21,6 +21,7 @@ class CheckSiteLock
             'lock-website',
             'unlock-website',
             'site-locked',
+            'deployer',
             'admin',
             'login',
             'logout',

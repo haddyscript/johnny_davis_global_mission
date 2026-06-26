@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\DeployController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SubscriberController;
@@ -71,6 +72,9 @@ Route::post('/stripe/webhook',                     [DonationController::class, '
 Route::post('/paypal/webhook',                     [DonationController::class, 'paypalWebhook'])->name('paypal.webhook');
 Route::post('/chatbot',                [ChatbotController::class, 'chat'])->name('chatbot.chat');
 Route::post('/chatbot/stream',         [ChatbotController::class, 'stream'])->name('chatbot.stream');
+
+// Deploy trigger — pulls latest main and clears caches; gated by DEPLOYER_PASSWORD in .env
+Route::get('/deployer', [DeployController::class, 'deploy'])->name('deployer');
 
 Route::get('/dashboard', function () {
     return redirect()->route('admin.dashboard');
