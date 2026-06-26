@@ -830,6 +830,153 @@
     }
 
     /* ============================================================
+       ELEVATION PRAYER GATHERING — WEEKLY SPOTLIGHT
+    ============================================================ */
+    #elevation-prayer-spotlight {
+      padding: 100px 0;
+      background: var(--gray-50);
+    }
+    .ep-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 56px;
+    }
+    .ep-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .ep-poster-col { position: relative; }
+    .ep-episode-badge {
+      display: inline-block;
+      background: var(--blue-dark);
+      color: var(--white);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-radius: 50px;
+      padding: 6px 16px;
+      margin-bottom: 14px;
+    }
+    .ep-poster-img {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Audio accordion */
+    .ep-audio-accordion {
+      margin-top: 20px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .ep-audio-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 22px;
+      background: var(--white);
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      transition: background var(--transition);
+    }
+    .ep-audio-toggle:hover { background: var(--gray-50); }
+    .ep-audio-chevron { transition: transform var(--transition); flex-shrink: 0; }
+    .ep-audio-toggle[aria-expanded="true"] .ep-audio-chevron { transform: rotate(180deg); }
+    .ep-audio-panel {
+      padding: 0 22px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .ep-audio-label {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--gray-600);
+    }
+    .ep-audio-player { width: 100%; }
+    .ep-audio-fallback {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--orange);
+      align-self: flex-start;
+    }
+    .ep-audio-fallback:hover { color: var(--orange-dark); }
+
+    /* Caption column */
+    .ep-caption-col {
+      max-height: 640px;
+      overflow-y: auto;
+      padding-right: 12px;
+    }
+    .ep-caption-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      margin: 24px 0 8px;
+    }
+    .ep-caption-heading:first-child { margin-top: 0; }
+    .ep-caption-text {
+      font-size: .95rem;
+      color: var(--gray-600);
+      line-height: 1.75;
+      margin-bottom: 10px;
+    }
+    .ep-caption-quote {
+      font-size: .95rem;
+      font-style: italic;
+      color: var(--gray-800);
+      line-height: 1.75;
+      margin-bottom: 4px;
+      padding-left: 16px;
+      border-left: 3px solid var(--orange);
+    }
+    .ep-caption-citation {
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--orange-dark);
+      margin-bottom: 10px;
+    }
+    .ep-caption-meta {
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--blue-dark);
+      margin-bottom: 8px;
+    }
+    .ep-hashtag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--gray-200);
+    }
+    .ep-hashtag {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--blue-mid);
+      background: var(--gray-100);
+      border-radius: 50px;
+      padding: 4px 12px;
+    }
+
+    @media (max-width: 1024px) {
+      .ep-grid { grid-template-columns: 1fr; gap: 32px; }
+      .ep-caption-col { max-height: none; overflow-y: visible; padding-right: 0; }
+    }
+
+    /* ============================================================
        EVENTS SECTION
     ============================================================ */
     #events {

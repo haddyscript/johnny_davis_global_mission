@@ -95,6 +95,17 @@
     document.body.style.overflow = 'hidden';
   }
 
+  // ─── Elevation Prayer — audio replay accordion ────────────────
+  document.querySelectorAll('.ep-audio-toggle').forEach(function (toggle) {
+    var panel = document.getElementById(toggle.getAttribute('aria-controls'));
+    if (!panel) return;
+    toggle.addEventListener('click', function () {
+      var open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      panel.hidden = open;
+    });
+  });
+
   // ─── Hunger parallax ─────────────────────────────────────────
   const hungerBg = document.querySelector('.hunger-bg');
   const inspireBg = document.querySelector('.inspire-bg');

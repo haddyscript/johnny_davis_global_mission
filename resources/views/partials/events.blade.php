@@ -16,10 +16,10 @@
 
       <!-- Elevation Prayer -->
       <article class="event-card reveal" style="transition-delay:.05s" aria-label="Elevation Prayer — Virtual Prayer Gathering"
-               data-img="{{ asset('images/johnny-davis-ministry/elevation-prayer.webp') }}"
+               data-img="{{ asset('images/johnny-davis-ministry/elevation-new-prayer.jpg') }}"
                data-title="Elevation Prayer"
                role="button" tabindex="0">
-        <div class="event-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/elevation-prayer.webp') }}')"></div>
+        <div class="event-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/elevation-new-prayer.jpg') }}')"></div>
         <div class="event-overlay"></div>
         <div class="event-body">
           <span class="event-type">Virtual &bull; Zoom</span>
@@ -43,6 +43,9 @@
             <span class="event-hashtag">#elevationprayergathering</span>
             <span class="event-hashtag">&nbsp; #hungercantwait</span>
           </div>
+          <a href="#elevation-prayer-spotlight" class="event-detail" style="display:inline-block;margin-top:10px;color:var(--orange-light);font-weight:700;text-decoration:underline;" onclick="event.stopPropagation();">
+            Read full message &amp; listen ↓
+          </a>
         </div>
       </article>
 

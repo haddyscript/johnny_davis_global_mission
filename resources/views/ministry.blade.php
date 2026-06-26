@@ -5,6 +5,7 @@
   @include('partials.about')
   @include('partials.daily-push')
   @include('partials.podcast')
+  @include('partials.elevation-prayer-spotlight')
   @include('partials.events')
   @include('partials.hunger-cta')
   @include('partials.inspire')
