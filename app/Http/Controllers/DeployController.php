@@ -37,6 +37,18 @@ class DeployController extends Controller
             ['php', 'artisan', 'route:clear'],
         ];
 
+        // Some hosts (e.g. Hostinger) serve from a sibling public_html with its
+        // own patched index.php, instead of this app's public/ directly.
+        $publicHtmlPath = env('DEPLOY_PUBLIC_HTML_PATH');
+
+        if ($publicHtmlPath) {
+            $steps[] = [
+                'rsync', '-a', '--delete',
+                '--exclude=index.php',
+                'public/', rtrim($publicHtmlPath, '/') . '/',
+            ];
+        }
+
         $log = [];
 
         foreach ($steps as $command) {
