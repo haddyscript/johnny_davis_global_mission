@@ -12,7 +12,7 @@
     - $epCaption      full caption text, copied as-is from the Facebook post
 --}}
 @php
-    $epPoster     = 'images/johnny-davis-ministry/elevation-new-prayer.jpg';
+    $epPoster     = 'images/johnny-davis-ministry/letting-go-grief.jpeg';
     $epEpisode    = '226';
     $epTitle      = 'From Grief to Joy';
     $epAudioFile  = 'audio/elevation-prayer/episode-226-from-grief-to-joy.m4a';
