@@ -16,10 +16,10 @@
 
       <!-- Elevation Prayer -->
       <article class="event-card reveal" style="transition-delay:.05s" aria-label="Elevation Prayer — Virtual Prayer Gathering"
-               data-img="{{ asset('images/johnny-davis-ministry/letting-go-grief.jpeg') }}"
+               data-img="{{ asset('images/johnny-davis-ministry/breaking-strong-holds.webp') }}"
                data-title="Elevation Prayer"
                role="button" tabindex="0">
-        <div class="event-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/letting-go-grief.jpeg') }}')"></div>
+        <div class="event-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/breaking-strong-holds.webp') }}')"></div>
         <div class="event-overlay"></div>
         <div class="event-body">
           <span class="event-type">Virtual &bull; Zoom</span>

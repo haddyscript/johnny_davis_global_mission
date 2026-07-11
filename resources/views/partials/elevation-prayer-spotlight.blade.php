@@ -1,24 +1,117 @@
 {{--
-  ELEVATION PRAYER GATHERING — WEEKLY SPOTLIGHT
+  ELEVATION PRAYER GATHERING — WEEKLY SPOTLIGHT + ARCHIVE
   ============================================================
-  To publish next week's update, only the values in the PHP
-  block below need to change — the layout/markup stays the same:
+  To publish next week's update:
+    1. Copy the array item at the top of $epEpisodes (the newest
+       week must always be item [0]) and fill in its values.
+    2. Push last week's item down — it will automatically move
+       into the "Elevation Prayer Gathering Archive" accordion.
+  Nothing else on the page needs to change.
 
-    - $epPoster       path to this week's poster image (public/images/...)
-    - $epEpisode      episode number shown in the badge
-    - $epTitle        theme/title shown in the header
-    - $epAudioFile    path to this week's audio file (public/audio/...)
-    - $epAudioLabel   label shown on the audio player
-    - $epCaption      full caption text, copied as-is from the Facebook post
+  Each episode needs:
+    - episode      episode number shown in the badge
+    - title        theme/title shown in the header
+    - poster       path to the poster image (public/images/...)
+    - audioFile    path to the audio file (public/audio/...)
+    - audioLabel   label shown on the audio player
+    - caption      full caption text, copied as-is from the Facebook post
 --}}
 @php
-    $epPoster     = 'images/johnny-davis-ministry/letting-go-grief.jpeg';
-    $epEpisode    = '226';
-    $epTitle      = 'From Grief to Joy';
-    $epAudioFile  = 'audio/elevation-prayer/episode-226-from-grief-to-joy.m4a';
-    $epAudioLabel = 'Episode 226 — From Grief to Joy';
-
-    $epCaption = <<<'TEXT'
+    $epEpisodes = [
+        [
+            'episode'    => '227',
+            'title'      => 'Breaking Strongholds',
+            'poster'     => 'images/johnny-davis-ministry/breaking-strong-holds.webp',
+            'audioFile'  => 'audio/elevation-prayer/episode-227-breaking-strongholds.m4a',
+            'audioLabel' => 'Episode 227 — Breaking Strongholds',
+            'caption'    => <<<'TEXT'
+BREAKING STRONGHOLDS
+Prayer that Breaks Strongholds | Freedom That Lasts
+ELEVATION VIRTUAL PRAYER GATHERING
+Episode 227
+ONE VOICE. ONE PRAYER. ONE ACCORD.
+Inspired by Acts 1:14
+"These all continued with one accord in prayer and supplication…"
+— Acts 1:14 (KJV)
+BREAKING STRONGHOLDS
+A Night of Freedom and Breakthrough
+Are you battling fear, anxiety, addiction, depression, unforgiveness, generational struggles, or spiritual oppression? You don't have to fight alone.
+Join us this Thursday night as we gather online to seek God's Presence, stand together in faith, and experience the life-changing power of prayer that destroys every stronghold.
+"For the weapons of our warfare are not carnal, but mighty through God to the pulling down of strong holds."
+— 2 Corinthians 10:4 (KJV)
+Come Expecting:
+✅ Strongholds to be broken
+✅ Freedom from fear and anxiety
+✅ Victory over addiction and bondage
+✅ Healing from emotional wounds
+✅ Renewed faith and spiritual strength
+✅ God's peace, power, and presence
+📅 Thursday, July 2, 2026
+🕖 7:00 PM EST
+🎵 Worship Music Begins at 6:45 PM EST
+💻 Join Us on Zoom
+Meeting ID: 788 154 3458
+Passcode: dzW3WL
+(Passcode is case-sensitive)
+Invite your family, friends, coworkers, church members, and anyone who is believing God for freedom, healing, breakthrough, and victory. Together, let's pray in faith and watch God pull down every stronghold.
+🌐 Learn More:
+JohnnyDavisMinistries.org
+❤️ Support Our Mission
+For just $7.99 per month, you can help provide meals for children and families in need through Johnny Davis Global Missions.
+🌐 JohnnyDavisGlobalMissions.org
+Hosted by:
+Evangelist Johnny Davis
+⸻
+FOUNDATION SCRIPTURES: BREAKING STRONGHOLDS
+2 Corinthians 10:4–5 (KJV)
+"For the weapons of our warfare are not carnal, but mighty through God to the pulling down of strong holds;) Casting down imaginations, and every high thing that exalteth itself against the knowledge of God, and bringing into captivity every thought to the obedience of Christ."
+Acts 1:14 (KJV)
+"These all continued with one accord in prayer and supplication…"
+⸻
+FREEDOM IN CHRIST
+John 8:36 (KJV)
+"If the Son therefore shall make you free, ye shall be free indeed."
+Galatians 5:1 (KJV)
+"Stand fast therefore in the liberty wherewith Christ hath made us free…"
+⸻
+VICTORY OVER THE ENEMY
+James 4:7 (KJV)
+"Submit yourselves therefore to God. Resist the devil, and he will flee from you."
+Luke 10:19 (KJV)
+"Behold, I give unto you power… over all the power of the enemy: and nothing shall by any means hurt you."
+Romans 8:37 (KJV)
+"Nay, in all these things we are more than conquerors through him that loved us."
+⸻
+BREAKING BONDAGE
+Isaiah 10:27 (KJV)
+"And the yoke shall be destroyed because of the anointing."
+Isaiah 58:6 (KJV)
+"Is not this the fast that I have chosen? to loose the bands of wickedness… and that ye break every yoke?"
+⸻
+RENEWING THE MIND
+Romans 12:2 (KJV)
+"And be not conformed to this world: but be ye transformed by the renewing of your mind…"
+Philippians 4:8 (KJV)
+"Whatsoever things are true… honest… just… pure… lovely… think on these things."
+⸻
+GOD'S STRENGTH FOR THE BATTLE
+Ephesians 6:10–11 (KJV)
+"Be strong in the Lord, and in the power of his might. Put on the whole armour of God, that ye may be able to stand against the wiles of the devil."
+Psalm 18:2 (KJV)
+"The Lord is my rock, and my fortress, and my deliverer…"
+⸻
+Elevation Virtual Prayer Gathering
+ONE VOICE. ONE PRAYER. ONE ACCORD.
+Inspired by Acts 1:14
+TEXT,
+        ],
+        [
+            'episode'    => '226',
+            'title'      => 'From Grief to Joy',
+            'poster'     => 'images/johnny-davis-ministry/letting-go-grief.jpeg',
+            'audioFile'  => 'audio/elevation-prayer/episode-226-from-grief-to-joy.m4a',
+            'audioLabel' => 'Episode 226 — From Grief to Joy',
+            'caption'    => <<<'TEXT'
 FROM GRIEF TO JOY-ELEVATION VIRTUAL PRAYER GATHERING
 Episode 226
 ONE VOICE. ONE PRAYER. ONE ACCORD.
@@ -110,41 +203,55 @@ Inspired by Acts 1:14
 #HopeInChrist
 #JohnnyDavisMinistries
 #JohnnyDavisGlobalMissions
-TEXT;
+TEXT,
+        ],
+    ];
 
-    // Classify each line of the caption so it reads well on the page
+    // Classify each line of every caption so it reads well on the page
     // without altering any of the original words.
-    $epBlocks   = [];
-    $epHashtags = [];
+    foreach ($epEpisodes as &$epEpisode) {
+        $blocks   = [];
+        $hashtags = [];
 
-    foreach (preg_split('/\r\n|\r|\n/', trim($epCaption)) as $line) {
-        $line = trim($line);
-        if ($line === '') {
-            continue;
+        foreach (preg_split('/\r\n|\r|\n/', trim($epEpisode['caption'])) as $line) {
+            $line = trim($line);
+            if ($line === '') {
+                continue;
+            }
+            if (str_starts_with($line, '#')) {
+                $hashtags[] = $line;
+                continue;
+            }
+
+            $lettersOnly = preg_replace('/[^A-Za-z]/', '', $line);
+            $isDivider   = preg_match('/^[⸻\-–—]+$/u', $line) === 1;
+            $isHeading   = $lettersOnly !== '' && $lettersOnly === strtoupper($lettersOnly) && strlen($lettersOnly) > 2;
+            $isQuote     = str_starts_with($line, '"') || str_starts_with($line, '"') || str_starts_with($line, '—');
+            $isCitation  = str_contains($line, '(KJV)');
+
+            $type = 'text';
+            if ($isDivider) {
+                $type = 'divider';
+            } elseif ($isHeading) {
+                $type = 'heading';
+            } elseif ($isCitation) {
+                $type = 'citation';
+            } elseif ($isQuote) {
+                $type = 'quote';
+            } elseif (preg_match('/^[\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}]/u', $line)) {
+                $type = 'meta';
+            }
+
+            $blocks[] = ['type' => $type, 'text' => $line];
         }
-        if (str_starts_with($line, '#')) {
-            $epHashtags[] = $line;
-            continue;
-        }
 
-        $lettersOnly = preg_replace('/[^A-Za-z]/', '', $line);
-        $isHeading   = $lettersOnly !== '' && $lettersOnly === strtoupper($lettersOnly) && strlen($lettersOnly) > 2;
-        $isQuote     = str_starts_with($line, '"') || str_starts_with($line, '—');
-        $isCitation  = str_contains($line, '(KJV)');
-
-        $type = 'text';
-        if ($isHeading) {
-            $type = 'heading';
-        } elseif ($isCitation) {
-            $type = 'citation';
-        } elseif ($isQuote) {
-            $type = 'quote';
-        } elseif (preg_match('/^[\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}]/u', $line)) {
-            $type = 'meta';
-        }
-
-        $epBlocks[] = ['type' => $type, 'text' => $line];
+        $epEpisode['blocks']   = $blocks;
+        $epEpisode['hashtags'] = $hashtags;
     }
+    unset($epEpisode);
+
+    $epCurrent = $epEpisodes[0];
+    $epArchive = array_slice($epEpisodes, 1);
 @endphp
 
 <section id="elevation-prayer-spotlight" aria-labelledby="ep-spotlight-title">
@@ -156,8 +263,8 @@ TEXT;
 
     <div class="ep-grid reveal">
       <div class="ep-poster-col">
-        <span class="ep-episode-badge">Episode {{ $epEpisode }}</span>
-        <img src="{{ asset($epPoster) }}" alt="Elevation Prayer Gathering — {{ $epTitle }}" class="ep-poster-img" />
+        <span class="ep-episode-badge">Episode {{ $epCurrent['episode'] }}</span>
+        <img src="{{ asset($epCurrent['poster']) }}" alt="Elevation Prayer Gathering — {{ $epCurrent['title'] }}" class="ep-poster-img" />
 
         {{-- 🎧 Listen to This Week's Prayer Replay --}}
         <div class="ep-audio-accordion">
@@ -166,42 +273,45 @@ TEXT;
             <svg class="ep-audio-chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="ep-audio-panel" id="ep-audio-panel" hidden>
-            <p class="ep-audio-label">{{ $epAudioLabel }}</p>
-            <audio controls preload="none" class="ep-audio-player">
-              <source src="{{ asset($epAudioFile) }}" type="audio/mp4">
-              Your browser does not support audio playback.
-              <a href="{{ asset($epAudioFile) }}">Download the audio file</a> instead.
-            </audio>
-            <a class="ep-audio-fallback" href="{{ asset($epAudioFile) }}" target="_blank" rel="noopener noreferrer">
-              Open in new tab / Listen Now ↗
-            </a>
+            @include('partials.elevation-prayer-audio-player', ['audioFile' => $epCurrent['audioFile'], 'audioLabel' => $epCurrent['audioLabel']])
           </div>
         </div>
       </div>
 
       <div class="ep-caption-col">
-        @foreach ($epBlocks as $block)
-          @if ($block['type'] === 'heading')
-            <h3 class="ep-caption-heading">{{ $block['text'] }}</h3>
-          @elseif ($block['type'] === 'citation')
-            <p class="ep-caption-citation">{{ $block['text'] }}</p>
-          @elseif ($block['type'] === 'quote')
-            <p class="ep-caption-quote">{{ $block['text'] }}</p>
-          @elseif ($block['type'] === 'meta')
-            <p class="ep-caption-meta">{{ $block['text'] }}</p>
-          @else
-            <p class="ep-caption-text">{{ $block['text'] }}</p>
-          @endif
-        @endforeach
-
-        @if (count($epHashtags))
-          <div class="ep-hashtag-row">
-            @foreach ($epHashtags as $tag)
-              <span class="ep-hashtag">{{ $tag }}</span>
-            @endforeach
-          </div>
-        @endif
+        @include('partials.elevation-prayer-caption', ['blocks' => $epCurrent['blocks'], 'hashtags' => $epCurrent['hashtags']])
       </div>
     </div>
+
+    @if (count($epArchive))
+      <div class="ep-archive reveal">
+        <button type="button" class="ep-audio-toggle ep-archive-toggle" aria-expanded="false" aria-controls="ep-archive-panel">
+          <span>🎧 Elevation Prayer Gathering Archive</span>
+          <svg class="ep-audio-chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="ep-archive-panel" id="ep-archive-panel" hidden>
+          @foreach ($epArchive as $epItem)
+            @php $epItemPanelId = 'ep-archive-item-' . $epItem['episode']; @endphp
+            <div class="ep-archive-item">
+              <button type="button" class="ep-audio-toggle ep-archive-item-toggle" aria-expanded="false" aria-controls="{{ $epItemPanelId }}">
+                <span>Episode {{ $epItem['episode'] }} – {{ $epItem['title'] }}</span>
+                <svg class="ep-audio-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="ep-archive-item-panel" id="{{ $epItemPanelId }}" hidden>
+                <div class="ep-archive-item-grid">
+                  <div class="ep-archive-item-poster-col">
+                    <img src="{{ asset($epItem['poster']) }}" alt="Elevation Prayer Gathering — {{ $epItem['title'] }}" class="ep-archive-item-img" loading="lazy" />
+                    @include('partials.elevation-prayer-audio-player', ['audioFile' => $epItem['audioFile'], 'audioLabel' => $epItem['audioLabel']])
+                  </div>
+                  <div class="ep-archive-item-caption-col">
+                    @include('partials.elevation-prayer-caption', ['blocks' => $epItem['blocks'], 'hashtags' => $epItem['hashtags']])
+                  </div>
+                </div>
+              </div>
+            </div>
+          @endforeach
+        </div>
+      </div>
+    @endif
   </div>
 </section>
