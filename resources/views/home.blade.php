@@ -205,10 +205,27 @@
             Live From The Ground
           </div>
 
-          <iframe src="https://drive.google.com/file/d/15TyKCPZppNDbvoI3d8iFN2H5XkL-sCAG/preview"
-                  title="Earthquake Relief Update — General Santos and Sarangani"
-                  allow="autoplay">
-          </iframe>
+          <video controls preload="metadata" poster="{{ asset('images/landingpage/jdgm-update1.jpeg') }}" class="eq-video-native">
+            <source src="{{ asset('videos/jdgm-earthquake-relief-update-interview.mov') }}">
+            Your browser does not support this video format.
+            <a href="{{ asset('videos/jdgm-earthquake-relief-update-interview.mov') }}">Download the video</a> instead.
+          </video>
+        </div>
+
+        {{-- 📼 Previous update, archived — not deleted, just tucked away --}}
+        <div class="eq-video-archive">
+          <button type="button" class="eq-archive-toggle" aria-expanded="false" aria-controls="eqPrevVideoPanel">
+            <span>📼 Watch Previous Earthquake Relief Update</span>
+            <svg class="eq-archive-chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="eq-archive-panel" id="eqPrevVideoPanel" hidden>
+            <div class="eq-video-frame-wrap-archive">
+              <iframe src="https://drive.google.com/file/d/15TyKCPZppNDbvoI3d8iFN2H5XkL-sCAG/preview"
+                      title="Previous Earthquake Relief Update — General Santos and Sarangani"
+                      allow="autoplay">
+              </iframe>
+            </div>
+          </div>
         </div>
 
         <div class="eq-video-actions">
@@ -232,32 +249,126 @@
 
       {{-- Right: Content --}}
       <div class="eq-video-content reveal-right">
-        <p class="eq-video-intro">A devastating earthquake has left many families without safe shelter, food, clean water, and emergency supplies. Churches have collapsed, homes have been damaged, and families continue to face aftershocks throughout the region.</p>
+        <p class="eq-video-eyebrow">🎥 Watch Before You Give</p>
+        <p class="eq-video-intro"><strong>See how your compassion is changing lives.</strong></p>
 
-        <p class="eq-video-intro">Watch this special update from our ministry partners on the ground and learn how you can help bring hope to families affected by this disaster.</p>
+        <p class="eq-video-intro">Because of your generosity, families in the Sarangani Mountains have already received food, sleeping mats, and other essential relief supplies after the recent earthquake. But many more families are still waiting for help.</p>
+
+        <p class="eq-video-intro">Watch Pastor Edgardo's powerful testimony, see the lives your giving has already impacted, and prayerfully consider partnering with us once again. Together, we can bring hope, relief, and the love of Jesus Christ to those who need it most.</p>
 
         <div class="eq-relief-tiers" role="list" aria-label="Donation impact tiers">
           <div class="eq-tier-card" role="listitem">
-            <span class="eq-tier-heart" aria-hidden="true">❤️</span>
+            <span class="eq-tier-heart" aria-hidden="true">🍚</span>
             <span class="eq-tier-amount">$25</span>
-            <span class="eq-tier-desc">Provides emergency food assistance</span>
+            <span class="eq-tier-desc">Provides food for a family</span>
           </div>
           <div class="eq-tier-card" role="listitem">
-            <span class="eq-tier-heart" aria-hidden="true">❤️</span>
+            <span class="eq-tier-heart" aria-hidden="true">🛏️</span>
             <span class="eq-tier-amount">$50</span>
-            <span class="eq-tier-desc">Helps provide food and clean water</span>
+            <span class="eq-tier-desc">Provides a sleeping mat</span>
           </div>
           <div class="eq-tier-card" role="listitem">
-            <span class="eq-tier-heart" aria-hidden="true">❤️</span>
+            <span class="eq-tier-heart" aria-hidden="true">📦</span>
             <span class="eq-tier-amount">$100</span>
-            <span class="eq-tier-desc">Helps support multiple families with emergency relief supplies</span>
+            <span class="eq-tier-desc">Provides essential relief supplies</span>
+          </div>
+          <div class="eq-tier-card" role="listitem">
+            <span class="eq-tier-heart" aria-hidden="true">👨‍👩‍👧‍👦</span>
+            <span class="eq-tier-amount">$250</span>
+            <span class="eq-tier-desc">Helps support a church community in need</span>
+          </div>
+          <div class="eq-tier-card" role="listitem">
+            <span class="eq-tier-heart" aria-hidden="true">🚚</span>
+            <span class="eq-tier-amount">$500</span>
+            <span class="eq-tier-desc">Helps transport relief supplies to remote mountain villages</span>
           </div>
         </div>
+
+        <p class="eq-video-any-amount">❤️ Any Amount – Makes a difference!</p>
+        <p class="eq-video-scan">📱 Scan the QR code and give today. Every gift changes a life.</p>
       </div>
 
     </div>
   </div>
 </section>
+
+<!-- ============================================================
+     EARTHQUAKE RELIEF — PHOTOS FROM THIS DELIVERY
+============================================================ -->
+<section id="earthquake-relief-gallery" aria-labelledby="eq-gallery-title">
+  <div class="container">
+    <div class="eq-gallery-inner">
+      <h2 class="eq-gallery-title reveal" id="eq-gallery-title">📸 Photos From This Delivery</h2>
+
+      <div class="eq-gallery-grid reveal">
+        <button type="button" class="eq-gallery-item" data-full="{{ asset('images/landingpage/jdgm-update1.jpeg') }}" aria-label="View full photo — relief supplies delivered in the Sarangani Mountains">
+          <img src="{{ asset('images/landingpage/jdgm-update1.jpeg') }}" alt="Relief supplies being delivered to families in the Sarangani Mountains" loading="lazy" />
+        </button>
+        <button type="button" class="eq-gallery-item" data-full="{{ asset('images/landingpage/jdgm-update2.jpeg') }}" aria-label="View full photo — Pastor Edgardo and JDGM team distributing supplies">
+          <img src="{{ asset('images/landingpage/jdgm-update2.jpeg') }}" alt="Pastor Edgardo and the JDGM team distributing sleeping mats and relief supplies to families" loading="lazy" />
+        </button>
+      </div>
+
+      <p class="eq-gallery-caption">Because of your generosity, families in the Sarangani Mountains have already received food, sleeping mats, and other essential relief supplies after the recent earthquake — but many more families are still waiting for help.</p>
+    </div>
+  </div>
+</section>
+
+{{-- Delivery Gallery — Full Image Lightbox --}}
+<div id="eqGalleryLightbox" class="eq-lightbox" hidden role="dialog" aria-modal="true" aria-label="Full delivery photo">
+  <div class="eq-lightbox-backdrop"></div>
+  <div class="eq-lightbox-box">
+    <button class="eq-lightbox-close" id="eqGalleryLightboxClose" aria-label="Close image">&times;</button>
+    <img src="" alt="" class="eq-lightbox-img" id="eqGalleryLightboxImg" />
+  </div>
+</div>
+
+<script>
+(function () {
+  var lightbox  = document.getElementById('eqGalleryLightbox');
+  var items     = document.querySelectorAll('.eq-gallery-item');
+  var closeBtn  = document.getElementById('eqGalleryLightboxClose');
+  var img       = document.getElementById('eqGalleryLightboxImg');
+  var backdrop  = lightbox ? lightbox.querySelector('.eq-lightbox-backdrop') : null;
+
+  if (!lightbox || !items.length) return;
+
+  function openLightbox(item) {
+    img.src = item.getAttribute('data-full');
+    img.alt = item.getAttribute('aria-label') || '';
+    lightbox.hidden = false;
+    requestAnimationFrame(function () { lightbox.classList.add('open'); });
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(function () { lightbox.hidden = true; img.src = ''; }, 380);
+  }
+
+  items.forEach(function (item) {
+    item.addEventListener('click', function () { openLightbox(item); });
+  });
+  closeBtn.addEventListener('click', closeLightbox);
+  backdrop.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !lightbox.hidden) closeLightbox();
+  });
+}());
+
+(function () {
+  document.querySelectorAll('.eq-archive-toggle').forEach(function (toggle) {
+    var panel = document.getElementById(toggle.getAttribute('aria-controls'));
+    if (!panel) return;
+    toggle.addEventListener('click', function () {
+      var open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      panel.hidden = open;
+    });
+  });
+}());
+</script>
 
 
 <!-- ============================================================
