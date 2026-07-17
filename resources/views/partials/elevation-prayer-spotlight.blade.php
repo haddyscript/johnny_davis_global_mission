@@ -19,6 +19,56 @@
 @php
     $epEpisodes = [
         [
+            'episode'    => '228',
+            'title'      => 'Feeling Tired & Overwhelmed',
+            'poster'     => 'images/johnny-davis-ministry/virtual-prayer-gathering.webp',
+            'audioFile'  => 'audio/elevation-prayer/episode-228-feeling-tired-overwhelmed.m4a',
+            'audioLabel' => 'Episode 228 — Feeling Tired & Overwhelmed',
+            'caption'    => <<<'TEXT'
+FEELING TIRED & OVERWHELMED?
+You Don't Have to Carry It Alone.
+ELEVATION VIRTUAL PRAYER GATHERING
+Episode 228
+ONE VOICE. ONE PRAYER. ONE ACCORD.
+Inspired by Acts 1:14
+"These all continued with one accord in prayer and supplication…"
+— Acts 1:14 (KJV)
+⸻
+A Night of Rest, Hope & Encouragement
+Are you carrying burdens that seem too heavy? Has life left you feeling physically exhausted, emotionally drained, spiritually weary, or overwhelmed by the pressures of everyday life?
+You don't have to carry it alone.
+Join us as we gather online to seek God's Presence, receive encouragement from His Word, and experience the peace, strength, and rest that only Jesus Christ can give.
+"Come unto me, all ye that labour and are heavy laden, and I will give you rest."
+— Matthew 11:28 (KJV)
+Come Expecting
+✅ Rest for the weary soul
+✅ Renewed strength and hope
+✅ Peace in the midst of life's storms
+✅ Freedom from anxiety and worry
+✅ Encouragement through God's Word
+✅ God's presence, comfort, and refreshing
+Meeting Information
+📅 Thursday, July 9, 2026
+🕖 Prayer Begins: 7:00 PM EST
+🎵 Worship Music Begins: 6:45 PM EST
+💻 Join Us on Zoom
+Meeting ID: 788 154 3458
+Passcode: dzW3WL (case-sensitive)
+Invite your family, friends, coworkers, church members, and anyone who needs prayer, hope, encouragement, and renewed strength.
+Together, let's lay our burdens at the feet of Jesus and allow Him to refresh our hearts.
+🌐 Learn More:
+JohnnyDavisMinistries.org
+⸻
+❤️ Support Our Mission
+As we minister to people spiritually, we also seek to serve them physically.
+For just $7.99 per month, you can help provide meals for children and families in need through Johnny Davis Global Missions.
+🌐 JohnnyDavisGlobalMissions.org
+Hosted by:
+Evangelist Johnny Davis
+⸻
+TEXT,
+        ],
+        [
             'episode'    => '227',
             'title'      => 'Breaking Strongholds',
             'poster'     => 'images/johnny-davis-ministry/breaking-strong-holds.webp',
