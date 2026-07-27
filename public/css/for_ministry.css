@@ -276,18 +276,19 @@
       background-repeat: no-repeat;
       background-position: center;
       background-color: var(--blue-dark);
-      transform: scale(1.08);
+      filter: blur(9px) saturate(.85);
+      transform: scale(1.15);
       transition: transform 8s ease-out;
     }
-    .slide.active .slide-bg { transform: scale(1); }
+    .slide.active .slide-bg { transform: scale(1.06); }
     .slide-overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(
         110deg,
-        rgba(13,42,78,.90) 0%,
-        rgba(13,42,78,.70) 55%,
-        rgba(13,42,78,.35) 100%
+        rgba(13,42,78,.95) 0%,
+        rgba(13,42,78,.88) 55%,
+        rgba(13,42,78,.75) 100%
       );
     }
 
