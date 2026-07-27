@@ -272,8 +272,10 @@
     .slide.active { opacity: 1; }
     .slide-bg {
       width: 100%; height: 100%;
-      background-size: cover;
+      background-size: contain;
+      background-repeat: no-repeat;
       background-position: center;
+      background-color: var(--blue-dark);
       transform: scale(1.08);
       transition: transform 8s ease-out;
     }
