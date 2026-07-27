@@ -1783,6 +1783,148 @@
     .modal-placeholder p { font-size: 1rem; color: rgba(255,255,255,.7); }
 
     /* ============================================================
+       MINISTERIAL FELLOWSHIP — CONTACT MODAL
+    ============================================================ */
+    .mfc-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .mfc-overlay.open { display: flex; }
+    .mfc-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(6,15,30,.75);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+    }
+    .mfc-box {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+    }
+    .mfc-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      z-index: 2;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: none;
+      background: var(--gray-100);
+      color: var(--gray-600);
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s ease, color .2s ease;
+    }
+    .mfc-close:hover { background: var(--orange); color: var(--white); }
+    .mfc-body { padding: 40px; }
+    .mfc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      margin-bottom: 6px;
+    }
+    .mfc-subtitle {
+      font-size: .92rem;
+      color: var(--gray-600);
+      margin-bottom: 24px;
+    }
+    .mfc-form-errors {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #b91c1c;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: .85rem;
+      margin-bottom: 18px;
+    }
+    .mfc-form-errors ul { margin: 6px 0 0; padding-left: 18px; }
+    .mfc-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .mfc-group { margin-bottom: 16px; }
+    .mfc-label {
+      display: block;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      margin-bottom: 6px;
+    }
+    .mfc-input, .mfc-select, .mfc-textarea {
+      width: 100%;
+      font-family: 'Inter', sans-serif;
+      font-size: .92rem;
+      color: var(--gray-800);
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      padding: 11px 14px;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    .mfc-input:focus, .mfc-select:focus, .mfc-textarea:focus {
+      outline: none;
+      border-color: var(--orange);
+      background: var(--white);
+    }
+    .mfc-input-error { border-color: #ef4444 !important; }
+    .mfc-textarea { min-height: 110px; resize: vertical; }
+    .mfc-char-counter {
+      font-size: .75rem;
+      color: var(--gray-400);
+      text-align: right;
+      margin-top: 4px;
+    }
+    .mfc-submit {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--orange);
+      color: var(--white);
+      font-size: .95rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 28px;
+      cursor: pointer;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .mfc-submit:hover:not(:disabled) { background: var(--orange-dark); transform: translateY(-1px); }
+    .mfc-submit:disabled { opacity: .7; cursor: default; }
+    .mfc-success { text-align: center; padding: 20px 0; }
+    .mfc-success-icon { font-size: 2.4rem; margin-bottom: 10px; }
+    .mfc-success-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--blue-dark);
+      margin-bottom: 8px;
+    }
+    .mfc-success-text { font-size: .92rem; color: var(--gray-600); }
+    @media (max-width: 560px) {
+      .mfc-row { grid-template-columns: 1fr; gap: 0; }
+      .mfc-body { padding: 32px 24px; }
+    }
+
+    /* ============================================================
        FOOTER
     ============================================================ */
     #footer {

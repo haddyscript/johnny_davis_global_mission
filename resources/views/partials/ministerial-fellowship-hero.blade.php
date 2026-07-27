@@ -22,7 +22,7 @@
 
     <div class="hero-ctas">
       <a href="#ministerial-fellowship-meeting" class="btn btn-primary btn-lg">Join This Week's Meeting</a>
-      <a href="{{ route('contact') }}" class="btn btn-outline btn-lg">Contact Us</a>
+      <button type="button" id="mfContactBtn" class="btn btn-outline btn-lg">Contact Us</button>
     </div>
   </div>
 </section>
