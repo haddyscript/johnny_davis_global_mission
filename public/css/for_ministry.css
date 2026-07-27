@@ -272,23 +272,22 @@
     .slide.active { opacity: 1; }
     .slide-bg {
       width: 100%; height: 100%;
-      background-size: contain;
+      background-size: auto 200%;
       background-repeat: no-repeat;
-      background-position: center;
+      background-position: top center;
       background-color: var(--blue-dark);
-      filter: blur(9px) saturate(.85);
-      transform: scale(1.15);
+      transform: scale(1.08);
       transition: transform 8s ease-out;
     }
-    .slide.active .slide-bg { transform: scale(1.06); }
+    .slide.active .slide-bg { transform: scale(1); }
     .slide-overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(
         110deg,
-        rgba(13,42,78,.95) 0%,
-        rgba(13,42,78,.88) 55%,
-        rgba(13,42,78,.75) 100%
+        rgba(13,42,78,.90) 0%,
+        rgba(13,42,78,.70) 55%,
+        rgba(13,42,78,.35) 100%
       );
     }
 
