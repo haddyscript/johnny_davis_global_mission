@@ -10,6 +10,12 @@
     $logoHref       = $isMinistryPage ? url('/ministry') : url('/');
     $logoAlt        = $isMinistryPage ? 'Johnny Davis Ministries' : 'Johnny Davis Global Missions Home';
     $navItems       = NavItem::forNav();
+
+    // The Ministerial Fellowship page belongs to Johnny Davis Ministries only —
+    // hide it from the nav when serving the Global Missions domain.
+    if (str_contains(request()->getHost(), 'johnnydavisglobalmissions.org')) {
+        $navItems = $navItems->reject(fn ($item) => $item->url === '/ministerial-fellowship');
+    }
 @endphp
 
 <style>

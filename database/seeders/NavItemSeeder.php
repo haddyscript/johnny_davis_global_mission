@@ -15,6 +15,7 @@ class NavItemSeeder extends Seeder
             ['label' => 'Blog & News',   'url' => '/news',         'nav_class' => null,              'sort_order' => 30],
             ['label' => 'Who We Are',    'url' => '/who-we-are',   'nav_class' => null,              'sort_order' => 40],
             ['label' => 'Ministry',      'url' => '/ministry',     'nav_class' => null,              'sort_order' => 50],
+            ['label' => 'Ministerial Fellowship', 'url' => '/ministerial-fellowship', 'nav_class' => null, 'sort_order' => 55],
             ['label' => '♥ Donate',      'url' => '/donate',       'nav_class' => 'btn-nav-donate',  'sort_order' => 60],
             ['label' => 'Contact',       'url' => '/contact',      'nav_class' => null,              'sort_order' => 70],
         ];

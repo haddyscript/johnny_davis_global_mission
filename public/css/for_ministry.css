@@ -2412,3 +2412,177 @@
       .event-card { flex: 0 0 90vw; min-width: 250px; }
       .hero-ctas .btn-lg { max-width: 100%; }
     }
+
+/* ============================================================
+   JOHNNY DAVIS MINISTERIAL FELLOWSHIP — DEDICATED PAGE
+============================================================ */
+
+/* ── Hero banner ── */
+#mf-hero {
+  position: relative;
+  padding: 152px 0 90px;
+  background: var(--blue-dark);
+  overflow: hidden;
+}
+#mf-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(240,124,30,.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+#mf-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(37,99,168,.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+.mf-hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  text-align: center;
+  margin: 0 auto;
+}
+.mf-hero-inner .hero-badge { margin-left: auto; margin-right: auto; }
+.mf-hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.12;
+  margin: 20px 0 10px;
+}
+.mf-hero-tagline {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 700;
+  color: var(--orange-light);
+  letter-spacing: .02em;
+  margin-bottom: 20px;
+}
+.mf-hero-sub {
+  max-width: 620px;
+  margin: 0 auto 32px;
+}
+.mf-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+.mf-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 50px;
+  padding: 8px 16px;
+  font-size: .85rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.85);
+}
+.mf-hero-inner .hero-ctas { justify-content: center; }
+
+/* ── About / Purpose ── */
+.mf-about-grid { align-items: start; }
+
+/* ── Weekly meeting: "What You Can Expect" ── */
+.mf-expect-heading {
+  font-size: 1.35rem;
+  margin-top: 48px;
+}
+.mf-expect-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+/* ── Vision banner ── */
+.mf-vision-section {
+  position: relative;
+  padding: 100px 0;
+  background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+}
+.vision-item-dark {
+  background: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.15);
+  color: var(--white);
+}
+.vision-item-dark:hover {
+  background: rgba(255,255,255,.12);
+  border-color: var(--orange);
+  color: var(--white);
+}
+.vision-item-dark .vision-icon { background: rgba(240,124,30,.2); }
+.mf-vision-list {
+  margin: 32px auto 0;
+  max-width: 560px;
+  text-align: left;
+}
+
+/* ── Coming-soon features grid ── */
+#ministerial-fellowship-features { padding: 100px 0; background: var(--white); }
+.mf-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 12px;
+}
+.mf-feature-card {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  padding: 26px 22px;
+  transition: var(--transition);
+  position: relative;
+}
+.mf-feature-card:hover {
+  border-color: var(--orange);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.mf-feature-icon { font-size: 1.8rem; display: block; margin-bottom: 12px; }
+.mf-feature-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--blue-dark);
+  margin-bottom: 8px;
+}
+.mf-feature-desc {
+  font-size: .88rem;
+  color: var(--gray-600);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+.mf-feature-badge {
+  display: inline-block;
+  background: rgba(240,124,30,.12);
+  color: var(--orange-dark);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  border-radius: 50px;
+  padding: 3px 12px;
+}
+
+@media (max-width: 1024px) {
+  .mf-features-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  #mf-hero { padding: 128px 0 64px; }
+  .mf-hero-title { margin-top: 16px; }
+  .mf-meta-row { gap: 8px; }
+  .mf-meta-chip { font-size: .78rem; padding: 7px 13px; }
+  .mf-expect-grid { grid-template-columns: 1fr; }
+  .mf-vision-section { padding: 68px 0; }
+  #ministerial-fellowship-features { padding: 68px 0; }
+  .mf-features-grid { grid-template-columns: 1fr; }
+}

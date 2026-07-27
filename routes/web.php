@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\WhoWeAreController;
 use App\Http\Controllers\MinistryController;
+use App\Http\Controllers\MinisterialFellowshipController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\SiteLockController;
 
@@ -50,6 +51,7 @@ Route::middleware('nav.visibility')->group(function () {
     Route::get('/donate', [DonationController::class, 'index'])->name('donate');
 });
 Route::get('/ministry', [MinistryController::class, 'index'])->name('ministry');
+Route::get('/ministerial-fellowship', [MinisterialFellowshipController::class, 'index'])->name('ministerial-fellowship');
 
 // Apple Pay domain verification (Stripe Payment Request Button)
 Route::get('/.well-known/apple-developer-merchantid-domain-association', function () {
