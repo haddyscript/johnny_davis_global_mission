@@ -40,24 +40,31 @@
   }
   function stopAuto() { clearInterval(autoSlide); }
 
-  document.getElementById('sliderNext').addEventListener('click', () => {
-    stopAuto(); goToSlide(current + 1); startAuto();
-  });
-  document.getElementById('sliderPrev').addEventListener('click', () => {
-    stopAuto(); goToSlide(current - 1); startAuto();
-  });
-  dots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      stopAuto(); goToSlide(Number(dot.dataset.index)); startAuto();
+  const sliderNextBtn = document.getElementById('sliderNext');
+  const sliderPrevBtn = document.getElementById('sliderPrev');
+
+  if (sliderNextBtn && sliderPrevBtn && slides.length) {
+    sliderNextBtn.addEventListener('click', () => {
+      stopAuto(); goToSlide(current + 1); startAuto();
     });
-  });
+    sliderPrevBtn.addEventListener('click', () => {
+      stopAuto(); goToSlide(current - 1); startAuto();
+    });
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        stopAuto(); goToSlide(Number(dot.dataset.index)); startAuto();
+      });
+    });
 
-  startAuto();
+    startAuto();
 
-  // Pause on hover
-  const sliderTrack = document.getElementById('sliderTrack');
-  sliderTrack.addEventListener('mouseenter', stopAuto);
-  sliderTrack.addEventListener('mouseleave', startAuto);
+    // Pause on hover
+    const sliderTrack = document.getElementById('sliderTrack');
+    if (sliderTrack) {
+      sliderTrack.addEventListener('mouseenter', stopAuto);
+      sliderTrack.addEventListener('mouseleave', startAuto);
+    }
+  }
 
   // ─── Scroll reveal ───────────────────────────────────────────
   const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
@@ -73,22 +80,26 @@
 
   // ─── Video modal (Daily Push) ────────────────────────────────
   const videoModal = document.getElementById('videoModal');
-  document.getElementById('modalClose').addEventListener('click', () => {
-    videoModal.classList.remove('open');
-    document.body.style.overflow = '';
-  });
-  videoModal.addEventListener('click', e => {
-    if (e.target === videoModal) {
+  const modalCloseBtn = document.getElementById('modalClose');
+
+  if (videoModal && modalCloseBtn) {
+    modalCloseBtn.addEventListener('click', () => {
       videoModal.classList.remove('open');
       document.body.style.overflow = '';
-    }
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      videoModal.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-  });
+    });
+    videoModal.addEventListener('click', e => {
+      if (e.target === videoModal) {
+        videoModal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        videoModal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  }
 
   function openVideoModal(topic) {
     videoModal.classList.add('open');
