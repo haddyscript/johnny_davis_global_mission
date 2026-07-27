@@ -31,10 +31,31 @@
   }
 
   /* ── Ministry page: centred logo ── */
-  .nav-ministry-only .nav-inner   { justify-content: center; }
+  .nav-ministry-only .nav-inner   { justify-content: center; flex-wrap: wrap; row-gap: 8px; }
   .nav-ministry-only .nav-logo img {
     height: 48px; width: auto; max-width: 220px;
     object-fit: contain; filter: brightness(0) invert(1);
+  }
+
+  /* ── Ministry page: single "Ministerial Fellowship" nav link ── */
+  .nav-ministry-fellowship-link {
+    color: rgba(255,255,255,.85);
+    font-size: .85rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border: 1.5px solid rgba(255,255,255,.35);
+    border-radius: 50px;
+    white-space: nowrap;
+    transition: color .2s ease, background .2s ease, border-color .2s ease;
+  }
+  .nav-ministry-fellowship-link:hover,
+  .nav-ministry-fellowship-link.active {
+    color: #fff;
+    border-color: #f07c1e;
+    background: rgba(240,124,30,.15);
+  }
+  @media (max-width: 480px) {
+    .nav-ministry-fellowship-link { font-size: .78rem; padding: 7px 13px; }
   }
 
   /* ── Desktop nav link hover transitions ── */
@@ -299,6 +320,13 @@
       <a href="{{ $logoHref }}" class="nav-logo" aria-label="{{ $logoAlt }}">
         <img src="{{ $logoSrc }}" alt="{{ $logoAlt }}" />
       </a>
+
+      @if($isMinistryPage)
+        <a href="{{ route('ministerial-fellowship') }}"
+           class="nav-ministry-fellowship-link{{ rtrim($currentPath, '/') === '/ministerial-fellowship' ? ' active' : '' }}">
+          Ministerial Fellowship
+        </a>
+      @endif
 
       @if(!$isMinistryPage)
         <ul class="nav-links" role="list">
