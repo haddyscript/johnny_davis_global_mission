@@ -111,6 +111,38 @@
     .btn-blue:hover { background: var(--blue-mid); transform: translateY(-2px); }
     .btn-lg { padding: 18px 44px; font-size: 1.05rem; }
 
+    /* ── "Join This Week's Meeting" — click ripple ── */
+    #mfJoinMeetingBtn { position: relative; overflow: hidden; }
+    .btn-ripple {
+      position: absolute;
+      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      margin-left: -5px;
+      margin-top: -5px;
+      background: rgba(255,255,255,.55);
+      transform: scale(0);
+      animation: btnRipple .65s linear;
+      pointer-events: none;
+      z-index: 2;
+    }
+    @keyframes btnRipple {
+      to { transform: scale(32); opacity: 0; }
+    }
+
+    /* ── Spotlight pulse when the meeting poster scrolls into view ── */
+    .mf-spotlight {
+      animation: mfSpotlightPulse 1.4s ease-out 2;
+    }
+    @keyframes mfSpotlightPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(240,124,30,.65), var(--shadow-lg); }
+      70%  { box-shadow: 0 0 0 24px rgba(240,124,30,0), var(--shadow-lg); }
+      100% { box-shadow: 0 0 0 0 rgba(240,124,30,0), var(--shadow-lg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .mf-spotlight { animation: none; }
+    }
+
     /* ============================================================
        SCROLL REVEAL
     ============================================================ */

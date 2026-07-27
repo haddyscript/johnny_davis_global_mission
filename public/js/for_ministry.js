@@ -280,3 +280,39 @@
     window.addEventListener('scroll', updateActionBar, { passive: true });
     updateActionBar();
   })();
+
+  // ─── "Join This Week's Meeting" — ripple + smooth scroll + spotlight ──
+  (function () {
+    var joinBtn = document.getElementById('mfJoinMeetingBtn');
+    if (!joinBtn) return;
+
+    joinBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      var rect   = joinBtn.getBoundingClientRect();
+      var ripple = document.createElement('span');
+      ripple.className  = 'btn-ripple';
+      ripple.style.left = (e.clientX - rect.left) + 'px';
+      ripple.style.top  = (e.clientY - rect.top)  + 'px';
+      joinBtn.appendChild(ripple);
+      setTimeout(function () { ripple.remove(); }, 680);
+
+      var target = document.querySelector(joinBtn.getAttribute('href'));
+      if (!target) return;
+
+      var offset = 80;
+      var top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+
+      var poster = target.querySelector('.ep-poster-img');
+      if (poster) {
+        setTimeout(function () {
+          poster.classList.add('mf-spotlight');
+          poster.addEventListener('animationend', function handler() {
+            poster.classList.remove('mf-spotlight');
+            poster.removeEventListener('animationend', handler);
+          });
+        }, 550);
+      }
+    });
+  })();

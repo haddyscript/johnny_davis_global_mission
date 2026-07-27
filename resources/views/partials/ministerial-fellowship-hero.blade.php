@@ -21,7 +21,7 @@
     </div>
 
     <div class="hero-ctas">
-      <a href="#ministerial-fellowship-meeting" class="btn btn-primary btn-lg">Join This Week's Meeting</a>
+      <a href="#ministerial-fellowship-meeting" id="mfJoinMeetingBtn" class="btn btn-primary btn-lg">Join This Week's Meeting</a>
       <button type="button" id="mfContactBtn" class="btn btn-outline btn-lg">Contact Us</button>
     </div>
   </div>
