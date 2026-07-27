@@ -63,6 +63,9 @@
           <li><a href="#events">Wake Up To Prayer</a></li>
           <li><a href="#vision">Vision &amp; Mission</a></li>
           <li><a href="#hunger">Hunger Can't Wait</a></li>
+          @if($isMinistryPage)
+            <li><a href="{{ route('ministerial-fellowship') }}">Ministerial Fellowship</a></li>
+          @endif
         </ul>
       </nav>
 
