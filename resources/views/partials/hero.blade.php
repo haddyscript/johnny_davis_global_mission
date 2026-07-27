@@ -6,22 +6,22 @@
   <div class="slider-track" id="sliderTrack">
 
     <div class="slide active" id="slide-0">
-      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/hero-image1.webp') }}')"></div>
+      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/ministerial-fellowship.jpg') }}')"></div>
       <div class="slide-overlay"></div>
     </div>
 
     <div class="slide" id="slide-1">
-      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/hero-image2.webp') }}')"></div>
+      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/ministerial-fellowship.jpg') }}')"></div>
       <div class="slide-overlay"></div>
     </div>
 
     <div class="slide" id="slide-2">
-      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/hero-image3.webp') }}')"></div>
+      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/ministerial-fellowship.jpg') }}')"></div>
       <div class="slide-overlay"></div>
     </div>
 
     <div class="slide" id="slide-3">
-      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/hero-image4.webp') }}')"></div>
+      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/ministerial-fellowship.jpg') }}')"></div>
       <div class="slide-overlay"></div>
     </div>
 
