@@ -39,14 +39,30 @@
 
   /* ── Ministry page: single "Ministerial Fellowship" nav link ── */
   .nav-ministry-fellowship-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     color: rgba(255,255,255,.85);
     font-size: .85rem;
     font-weight: 600;
-    padding: 8px 16px;
+    padding: 6px 16px 6px 6px;
     border: 1.5px solid rgba(255,255,255,.35);
     border-radius: 50px;
     white-space: nowrap;
     transition: color .2s ease, background .2s ease, border-color .2s ease;
+  }
+  .nav-mf-logo-wrap {
+    display: inline-flex;
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .nav-mf-logo-wrap img {
+    height: 100%;
+    width: auto;
+    max-width: none;
   }
   .nav-ministry-fellowship-link:hover,
   .nav-ministry-fellowship-link.active {
@@ -324,7 +340,10 @@
       @if($isMinistryPage)
         <a href="{{ route('ministerial-fellowship') }}"
            class="nav-ministry-fellowship-link{{ rtrim($currentPath, '/') === '/ministerial-fellowship' ? ' active' : '' }}">
-          Ministerial Fellowship
+          <span class="nav-mf-logo-wrap">
+            <img src="{{ asset('images/johnny-davis-ministry/ministerial-fellowship-logo.png') }}" alt="" />
+          </span>
+          Learn More
         </a>
       @endif
 
