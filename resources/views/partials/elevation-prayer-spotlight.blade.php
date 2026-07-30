@@ -19,6 +19,56 @@
 @php
     $epEpisodes = [
         [
+            'episode'    => '229',
+            'title'      => 'Feeling Discouraged',
+            'poster'     => 'images/johnny-davis-ministry/elevation-virtual-prayer-gathering-thumbnail.jfif',
+            'audioFile'  => 'audio/elevation-prayer/episode-229-feeling-discouraged.m4a', // TODO: replace once the correct audio file is provided
+            'audioLabel' => 'Episode 229 — Feeling Discouraged',
+            'caption'    => <<<'TEXT'
+FEELING DISCOURAGED?
+You Don't Have to Face It Alone.
+Have you been carrying disappointment, unanswered prayers, setbacks, or burdens that have left you feeling discouraged?
+Perhaps you're wondering if God still hears your prayers or if your situation will ever change.
+Take heart—God has not forgotten you.
+Join us this Thursday evening as believers from around the world come together in one accord to seek God's presence through worship, prayer, and the encouragement of His Word.
+Together we'll pray, believe, and stand in faith that discouragement will give way to renewed hope, renewed strength, and renewed confidence in God.
+"Why art thou cast down, O my soul? and why art thou disquieted within me? hope thou in God: for I shall yet praise him, who is the health of my countenance, and my God."
+— Psalm 42:11 (KJV)
+COME EXPECTING
+✅ Renewed hope for tomorrow
+✅ Strength for today's battles
+✅ Encouragement through God's Word
+✅ Peace in the middle of life's challenges
+✅ God's presence to lift your spirit
+✅ A community of believers praying together in faith
+⸻
+📅 Thursday, July 16, 2026
+🕖 Prayer Begins: 7:00 PM EST
+🎵 Worship Begins: 6:45 PM EST
+💻 Join Us on Zoom
+Meeting ID: 788 154 3458
+Passcode: dzW3WL (case-sensitive)
+⸻
+No matter what you're facing, don't fight alone.
+Invite your family, friends, coworkers, church members, and anyone who needs hope, encouragement, and prayer.
+Together, let's lift our eyes back to Jesus—the One who restores hope and strengthens weary hearts.
+⸻
+🌐 Learn More
+JohnnyDavisMinistries.org
+❤️ Support Our Mission
+As we minister to people spiritually, we also seek to serve them physically.
+For just $7.99 per month, you can help provide meals for children and families in need through Johnny Davis Global Missions.
+🌐 JohnnyDavisGlobalMissions.org
+⸻
+Hosted by
+Evangelist Johnny Davis
+⸻
+ELEVATION VIRTUAL PRAYER GATHERING
+ONE VOICE. ONE PRAYER. ONE ACCORD.
+Inspired by Acts 1:14
+TEXT,
+        ],
+        [
             'episode'    => '228',
             'title'      => 'Feeling Tired & Overwhelmed',
             'poster'     => 'images/johnny-davis-ministry/virtual-prayer-gathering.webp',
