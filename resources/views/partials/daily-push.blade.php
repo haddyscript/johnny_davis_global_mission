@@ -279,6 +279,27 @@
 
     </div>
 
+    <div class="dp-feature reveal">
+      <div class="dp-feature-media">
+        <img src="{{ asset('images/johnny-davis-ministry/ministerial-fellowship.jpg') }}"
+             alt="Johnny Davis Ministerial Fellowship — Uganda Leadership Meeting flyer" loading="lazy" />
+      </div>
+      <div class="dp-feature-body">
+        <span class="dp-tag">Johnny Davis Ministerial Fellowship</span>
+        <h3 class="dp-feature-title">Uganda Leadership Meeting</h3>
+        <p class="dp-feature-desc">
+          Join pastors, ministers, missionaries, and Christian leaders every Monday evening for biblical teaching,
+          leadership development, prayer, fellowship, and practical ministry training.
+        </p>
+        <div class="dp-feature-meta">
+          <span>📅 Every Monday</span>
+          <span>🕖 7:00 PM Uganda Time</span>
+          <span>💬 Meets via WhatsApp</span>
+        </div>
+        <a href="{{ route('ministerial-fellowship') }}" class="btn btn-primary btn-lg">Learn More</a>
+      </div>
+    </div>
+
     <div class="dp-footer reveal">
       <a href="https://www.youtube.com/@johnnydavisministries" target="_blank" rel="noopener noreferrer"
          class="btn btn-primary btn-lg glow-cta">

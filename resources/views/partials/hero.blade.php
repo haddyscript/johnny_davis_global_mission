@@ -64,11 +64,7 @@
     <div class="hero-content">
       <div class="hero-badge">Ministry &bull; Outreach &bull; Missions</div>
 
-      @if($cms->has('hero', 'headline'))
-        <h1 class="hero-headline">{{ $cms->text('hero', 'headline', '') }}</h1>
-      @else
-        <h1 class="hero-headline">Johnny Davis<br/>Ministries</h1>
-      @endif
+      <h1 class="hero-headline">Johnny Davis Ministries — Transforming Lives. Empowering Communities.</h1>
 
       <p class="hero-sub">
         {!! nl2br(e($cms->text('hero', 'subtitle', "Transforming Lives. Empowering Communities.\nExpanding the Kingdom of God."))) !!}
