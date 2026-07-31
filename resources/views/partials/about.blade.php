@@ -30,25 +30,6 @@
         <p class="about-para">
           Evangelist Johnny Davis is an evangelist, Bible teacher, conference speaker, prayer leader, and President of Johnny Davis Global Missions — a visionary committed to turning compassion into action.
         </p>
-
-        <div class="mission-points" role="list" aria-label="Mission points">
-          <div class="mp-item" role="listitem">
-            <span class="mp-icon" aria-hidden="true">🍽️</span>
-            Provide nutritious meals to children
-          </div>
-          <div class="mp-item" role="listitem">
-            <span class="mp-icon" aria-hidden="true">⛪</span>
-            Support local pastors and churches
-          </div>
-          <div class="mp-item" role="listitem">
-            <span class="mp-icon" aria-hidden="true">✝️</span>
-            Extend the Gospel through practical love
-          </div>
-          <div class="mp-item" role="listitem">
-            <span class="mp-icon" aria-hidden="true">🤝</span>
-            Build long-term relationships in communities
-          </div>
-        </div>
       </div>
 
     </div>
