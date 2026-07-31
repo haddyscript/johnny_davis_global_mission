@@ -565,54 +565,170 @@
     }
     .mp-item:hover .mp-icon { transform: scale(1.2) rotate(-8deg); }
 
-    /* Biography — scripture quote, section headers, taglines, link */
-    .about-quote {
-      font-size: 1.05rem;
-      font-style: italic;
-      color: var(--gray-800);
-      line-height: 1.8;
-      margin: 24px 0 8px;
-      padding-left: 18px;
-      border-left: 3px solid var(--orange);
-    }
-    .about-quote-citation {
-      font-size: .85rem;
-      font-weight: 700;
-      color: var(--orange-dark);
-      padding-left: 18px;
-    }
-    .about-divider {
-      border: none;
-      border-top: 1px solid var(--gray-200);
-      margin: 32px 0 28px;
-    }
-    .about-subheading {
+    /* ── Biography — timeline, pull-quote, program cards ── */
+    .about-block-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
+      font-size: clamp(1.5rem, 2.6vw, 2rem);
       font-weight: 800;
       color: var(--blue-dark);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    /* Timeline */
+    .about-timeline-wrap { margin-top: 88px; max-width: 800px; }
+    .about-timeline {
+      position: relative;
+      list-style: none;
+      margin-top: 36px;
+      padding-left: 8px;
+    }
+    .about-timeline::before {
+      content: '';
+      position: absolute;
+      left: 13px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--gray-200);
+    }
+    .timeline-item {
+      position: relative;
+      padding-left: 40px;
+      padding-bottom: 30px;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot {
+      position: absolute;
+      left: 6px;
+      top: 5px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--orange);
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 2px rgba(240,124,30,.35);
+    }
+    .timeline-year {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      margin-bottom: 4px;
+    }
+    .timeline-text {
+      font-size: .96rem;
+      color: var(--gray-600);
+      line-height: 1.75;
+    }
+
+    /* Scripture pull-quote */
+    .about-pullquote {
+      position: relative;
+      margin: 64px 0 40px;
+      padding: 40px 44px 32px;
+      background: var(--gray-50);
+      border-left: 4px solid var(--orange);
+      border-radius: var(--radius-md);
+      max-width: 880px;
+    }
+    .about-pullquote::before {
+      content: '\201C';
+      position: absolute;
+      top: -6px; left: 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 4.5rem;
+      line-height: 1;
+      color: rgba(240,124,30,.28);
+    }
+    .about-pullquote p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--gray-800);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .about-pullquote cite {
+      display: block;
+      font-size: .82rem;
+      font-weight: 700;
+      font-style: normal;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--orange-dark);
+    }
+
+    .about-teaching-note {
+      max-width: 760px;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--gray-600);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    /* Program cards — podcast / fellowship / booking */
+    .about-programs { margin-top: 56px; }
+    .about-programs-header { margin-bottom: 32px; max-width: 640px; }
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .program-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 30px 26px;
+      box-shadow: var(--shadow-sm);
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .program-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--orange);
+    }
+    .program-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: rgba(240,124,30,.12);
+      font-size: 1.5rem;
+      margin-bottom: 18px;
+    }
+    .program-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      line-height: 1.3;
       margin-bottom: 6px;
     }
-    .about-subheading + .about-tagline { margin-top: 0; }
-    .about-tagline {
-      font-size: .92rem;
+    .program-tagline {
+      font-size: .82rem;
       font-weight: 700;
       font-style: italic;
       color: var(--orange-dark);
       margin-bottom: 12px;
     }
-    .about-link {
-      color: var(--orange-dark);
-      font-weight: 700;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      transition: color var(--transition);
-    }
-    .about-link:hover { color: var(--orange); }
-    .about-note {
-      font-style: italic;
+    .program-desc {
+      font-size: .9rem;
       color: var(--gray-600);
+      line-height: 1.7;
+      margin-bottom: 18px;
     }
+    .program-link {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--blue-mid);
+      transition: color .2s ease;
+    }
+    .program-link:hover { color: var(--orange-dark); }
 
     /* ============================================================
        DAILY PUSH VIDEOS
@@ -2160,6 +2276,8 @@
     @media (max-width: 1024px) {
       .about-grid   { grid-template-columns: 1fr; gap: 48px; }
       .about-img-wrap img { height: 400px; }
+      .about-timeline-wrap { margin-top: 64px; }
+      .programs-grid { grid-template-columns: 1fr 1fr; }
       .podcast-grid { grid-template-columns: 1fr; }
       .vision-grid  { grid-template-columns: 1fr; gap: 48px; }
       .vision-img-wrap img { height: 360px; }
@@ -2175,6 +2293,8 @@
       .nav-toggle { display: flex; }
       .dp-grid      { grid-template-columns: 1fr; }
       .events-grid  { grid-template-columns: 1fr; }
+      .programs-grid { grid-template-columns: 1fr; }
+      .about-pullquote { padding: 32px 24px 26px; }
       .footer-grid  { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; text-align: center; }
       .hero-ctas { flex-direction: column; align-items: flex-start; }
