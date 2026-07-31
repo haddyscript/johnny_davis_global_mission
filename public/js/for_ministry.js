@@ -78,6 +78,7 @@
   }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
   revealEls.forEach(el => {
     if (el.classList.contains('timeline-item')) return; // handled by its own directional observer below
+    if (el.classList.contains('program-card')) return; // handled by its own directional observer below
     revealObs.observe(el);
   });
 
@@ -367,4 +368,35 @@
       }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
       items.forEach(function (el) { itemObs.observe(el); });
     }
+  })();
+
+  // ─── Podcast, Fellowship & Booking cards — directional reveal
+  //     (ease in on scroll down, ease out on scroll up) ──────────
+  (function () {
+    var cards = document.querySelectorAll('.about-programs .program-card');
+    if (!cards.length) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      cards.forEach(function (el) { el.classList.add('visible'); });
+      return;
+    }
+
+    var lastY = window.scrollY;
+    var direction = 'down';
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY;
+      direction = y > lastY ? 'down' : (y < lastY ? 'up' : direction);
+      lastY = y;
+    }, { passive: true });
+
+    var cardObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && direction === 'down') {
+          entry.target.classList.add('visible');
+        } else if (!entry.isIntersecting && direction === 'up') {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(function (el) { cardObs.observe(el); });
   })();
