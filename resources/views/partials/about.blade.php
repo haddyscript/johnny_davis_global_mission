@@ -59,42 +59,42 @@
       <h3 class="about-block-title">Three Decades of Ministry</h3>
 
       <ol class="about-timeline">
-        <li class="timeline-item">
+        <li class="timeline-item reveal-left">
           <span class="timeline-dot" aria-hidden="true"></span>
           <span class="timeline-year">1991</span>
           <p class="timeline-text">He received Jesus Christ as his Lord and Savior at the age of 24. He began his spiritual journey at World Changers Church International in College Park, Georgia, under the leadership of Dr. Creflo A. Dollar Jr., serving in pastoral personal assistance, the intercessory prayer team, the prayer counseling team, and men's ministry leadership.</p>
         </li>
-        <li class="timeline-item">
+        <li class="timeline-item reveal-left" style="transition-delay:.08s">
           <span class="timeline-dot" aria-hidden="true"></span>
           <span class="timeline-year">1992</span>
           <p class="timeline-text">He received the call to fivefold ministry and continued his ministerial education, graduating from the School of Ministry at World Changers Church International in 1994 under the leadership of Dr. Creflo A. Dollar Jr.</p>
         </li>
-        <li class="timeline-item">
+        <li class="timeline-item reveal-left" style="transition-delay:.08s">
           <span class="timeline-dot" aria-hidden="true"></span>
           <span class="timeline-year">2000</span>
           <p class="timeline-text">He founded Johnny Davis Ministries, an outreach ministry that opened doors for him to evangelize and minister in churches throughout Georgia and other states.</p>
         </li>
-        <li class="timeline-item">
+        <li class="timeline-item reveal-left" style="transition-delay:.08s">
           <span class="timeline-dot" aria-hidden="true"></span>
           <span class="timeline-year">2002</span>
           <p class="timeline-text">He received the call to pastor, and Life Changing Christian Ministries was birthed in his hometown of Loxley, Alabama.</p>
         </li>
-        <li class="timeline-item">
+        <li class="timeline-item reveal-left" style="transition-delay:.08s">
           <span class="timeline-dot" aria-hidden="true"></span>
           <span class="timeline-year">2004</span>
           <p class="timeline-text">The Lord placed a desire in his heart to begin a ministry for incarcerated men — teaching, equipping, and empowering men incarcerated at the city's local correctional facility.</p>
         </li>
-        <li class="timeline-item">
+        <li class="timeline-item reveal-left" style="transition-delay:.08s">
           <span class="timeline-dot" aria-hidden="true"></span>
           <span class="timeline-year">2007</span>
           <p class="timeline-text">He relocated to Atlanta, Georgia, to continue the vision of Life Changing Christian Ministries.</p>
         </li>
-        <li class="timeline-item">
+        <li class="timeline-item reveal-left" style="transition-delay:.08s">
           <span class="timeline-dot" aria-hidden="true"></span>
           <span class="timeline-year">2016</span>
           <p class="timeline-text">He relaunched Johnny Davis Ministries Outreach to extend the hand and love of Jesus Christ to a hungry, hurting, and lost world — partnering with local and global ministries to transform lives through God's Word and empower communities through education and resources.</p>
         </li>
-        <li class="timeline-item">
+        <li class="timeline-item reveal-left" style="transition-delay:.08s">
           <span class="timeline-dot" aria-hidden="true"></span>
           <span class="timeline-year">2022</span>
           <p class="timeline-text">Johnny Davis Global Missions launched a feeding program in the Philippines called Feed Filipino Children: "Hunger Can't Wait," partnering with pastors and marketplace leaders to provide children and families with access to healthy food — both globally and locally.</p>
