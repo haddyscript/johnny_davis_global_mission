@@ -577,20 +577,36 @@
 
     /* Timeline */
     .about-timeline-wrap { margin-top: 88px; max-width: 800px; }
-    .about-timeline {
+    .about-timeline-track {
       position: relative;
-      list-style: none;
       margin-top: 36px;
+    }
+    .about-timeline {
+      list-style: none;
       padding-left: 8px;
     }
-    .about-timeline::before {
+    .about-timeline-track::before {
       content: '';
       position: absolute;
-      left: 13px;
+      left: 21px;
       top: 8px;
       bottom: 8px;
       width: 2px;
       background: var(--gray-200);
+    }
+    .about-timeline-progress {
+      position: absolute;
+      left: 21px;
+      top: 8px;
+      width: 2px;
+      height: 0;
+      background: linear-gradient(to bottom, var(--orange-dark), var(--orange), var(--orange-light));
+      border-radius: 2px;
+      box-shadow: 0 0 8px rgba(240,124,30,.5);
+      transition: height .15s linear;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .about-timeline-progress { transition: none; }
     }
     .timeline-item {
       position: relative;

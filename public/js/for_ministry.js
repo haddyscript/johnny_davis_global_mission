@@ -316,3 +316,28 @@
       }
     });
   })();
+
+  // ─── About timeline — scroll-linked progress line ──────────────
+  (function () {
+    var track    = document.querySelector('.about-timeline-track');
+    var progress = document.querySelector('.about-timeline-progress');
+    if (!track || !progress) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      progress.style.height = '100%';
+      return;
+    }
+
+    function updateProgress() {
+      var rect      = track.getBoundingClientRect();
+      var triggerY  = window.innerHeight * 0.8;
+      var scrolled  = triggerY - rect.top;
+      var ratio     = rect.height ? scrolled / rect.height : 0;
+      ratio = Math.max(0, Math.min(1, ratio));
+      progress.style.height = (ratio * rect.height) + 'px';
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+  })();

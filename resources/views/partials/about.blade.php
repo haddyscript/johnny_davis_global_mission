@@ -58,6 +58,8 @@
       <span class="section-label">The Journey</span>
       <h3 class="about-block-title">Three Decades of Ministry</h3>
 
+      <div class="about-timeline-track">
+      <span class="about-timeline-progress" aria-hidden="true"></span>
       <ol class="about-timeline">
         <li class="timeline-item reveal-left">
           <span class="timeline-dot" aria-hidden="true"></span>
@@ -100,6 +102,7 @@
           <p class="timeline-text">Johnny Davis Global Missions launched a feeding program in the Philippines called Feed Filipino Children: "Hunger Can't Wait," partnering with pastors and marketplace leaders to provide children and families with access to healthy food — both globally and locally.</p>
         </li>
       </ol>
+      </div>
     </div>
 
     <!-- Scripture pull-quote -->
