@@ -5,20 +5,56 @@
   <div class="container">
     <div class="about-grid">
 
-      <!-- Image -->
-      <div class="about-img-wrap reveal-left">
-        <img
-          src="{{ $cms->image('about', 'image', asset('images/johnny-davis-ministry/hero-image1.webp')) }}"
-          alt="Evangelist Johnny Davis"
-          loading="lazy"
-          class="about-img-clickable"
-          role="button"
-          tabindex="0"
-          aria-label="View full image of Evangelist Johnny Davis"
-        />
-        <div class="about-accent">
-          <strong>{{ $cms->text('about', 'accent_number', '30+') }}</strong>
-          <span>{{ $cms->text('about', 'accent_label', 'Years in Ministry') }}</span>
+      <!-- Image + Beyond the Pulpit -->
+      <div class="about-left-col reveal-left">
+        <div class="about-img-wrap">
+          <img
+            src="{{ $cms->image('about', 'image', asset('images/johnny-davis-ministry/hero-image1.webp')) }}"
+            alt="Evangelist Johnny Davis"
+            loading="lazy"
+            class="about-img-clickable"
+            role="button"
+            tabindex="0"
+            aria-label="View full image of Evangelist Johnny Davis"
+          />
+          <div class="about-accent">
+            <strong>{{ $cms->text('about', 'accent_number', '30+') }}</strong>
+            <span>{{ $cms->text('about', 'accent_label', 'Years in Ministry') }}</span>
+          </div>
+        </div>
+
+        <!-- Beyond the pulpit — podcast / fellowship / booking -->
+        <div class="about-programs">
+          <header class="about-programs-header reveal">
+            <span class="section-label">Beyond the Pulpit</span>
+            <h3 class="about-block-title">Podcast, Fellowship &amp; Booking</h3>
+          </header>
+
+          <div class="programs-grid">
+            <article class="program-card reveal" style="transition-delay:.05s">
+              <span class="program-icon" aria-hidden="true">🎙️</span>
+              <h4 class="program-title">Grace to Elevate Leadership Podcast</h4>
+              <p class="program-tagline">&ldquo;Expand Your Mission. Elevate Your Influence.&rdquo;</p>
+              <p class="program-desc">Evangelist Davis is the founder and host of the Grace to Elevate Leadership Podcast, created to equip, encourage, and empower ministry and marketplace leaders through biblical principles and practical leadership strategies.</p>
+              <a href="#podcast" class="program-link">Listen to the podcast &rarr;</a>
+            </article>
+
+            <article class="program-card reveal" style="transition-delay:.15s">
+              <span class="program-icon" aria-hidden="true">🤝</span>
+              <h4 class="program-title">Johnny Davis Ministerial Fellowship</h4>
+              <p class="program-tagline">&ldquo;Empowering to Lead | Maximizing Vision&rdquo;</p>
+              <p class="program-desc">A global, non-denominational outreach ministry and fellowship that partners with other ministries to connect, encourage, equip, and strengthen pastors, evangelists, and emerging leaders as they fulfill their God-given assignments.</p>
+              <a href="{{ route('ministerial-fellowship') }}" class="program-link">Explore the fellowship &rarr;</a>
+            </article>
+
+            <article class="program-card reveal" style="transition-delay:.25s">
+              <span class="program-icon" aria-hidden="true">📅</span>
+              <h4 class="program-title">Book Evangelist Johnny Davis</h4>
+              <p class="program-tagline">For Your Next Event</p>
+              <p class="program-desc">Invite Evangelist Johnny Davis to speak at your church, conference, social media platform, workshop, or special event, or learn more about his global mission projects, leadership podcast, and ministerial fellowship.</p>
+              <a href="https://www.johnnydavisministries.org" target="_blank" rel="noopener" class="program-link">www.johnnydavisministries.org &rarr;</a>
+            </article>
+          </div>
         </div>
       </div>
 
@@ -95,40 +131,6 @@
     <p class="about-teaching-note reveal">
       Evangelist Johnny Davis' teaching style is practical, relevant, thought-provoking, and humorous. He is known for &ldquo;keeping it real&rdquo; in the pulpit.
     </p>
-
-    <!-- Beyond the pulpit — podcast / fellowship / booking -->
-    <div class="about-programs">
-      <header class="about-programs-header reveal">
-        <span class="section-label">Beyond the Pulpit</span>
-        <h3 class="about-block-title">Podcast, Fellowship &amp; Booking</h3>
-      </header>
-
-      <div class="programs-grid">
-        <article class="program-card reveal" style="transition-delay:.05s">
-          <span class="program-icon" aria-hidden="true">🎙️</span>
-          <h4 class="program-title">Grace to Elevate Leadership Podcast</h4>
-          <p class="program-tagline">&ldquo;Expand Your Mission. Elevate Your Influence.&rdquo;</p>
-          <p class="program-desc">Evangelist Davis is the founder and host of the Grace to Elevate Leadership Podcast, created to equip, encourage, and empower ministry and marketplace leaders through biblical principles and practical leadership strategies.</p>
-          <a href="#podcast" class="program-link">Listen to the podcast &rarr;</a>
-        </article>
-
-        <article class="program-card reveal" style="transition-delay:.15s">
-          <span class="program-icon" aria-hidden="true">🤝</span>
-          <h4 class="program-title">Johnny Davis Ministerial Fellowship</h4>
-          <p class="program-tagline">&ldquo;Empowering to Lead | Maximizing Vision&rdquo;</p>
-          <p class="program-desc">A global, non-denominational outreach ministry and fellowship that partners with other ministries to connect, encourage, equip, and strengthen pastors, evangelists, and emerging leaders as they fulfill their God-given assignments.</p>
-          <a href="{{ route('ministerial-fellowship') }}" class="program-link">Explore the fellowship &rarr;</a>
-        </article>
-
-        <article class="program-card reveal" style="transition-delay:.25s">
-          <span class="program-icon" aria-hidden="true">📅</span>
-          <h4 class="program-title">Book Evangelist Johnny Davis</h4>
-          <p class="program-tagline">For Your Next Event</p>
-          <p class="program-desc">Invite Evangelist Johnny Davis to speak at your church, conference, social media platform, workshop, or special event, or learn more about his global mission projects, leadership podcast, and ministerial fellowship.</p>
-          <a href="https://www.johnnydavisministries.org" target="_blank" rel="noopener" class="program-link">www.johnnydavisministries.org &rarr;</a>
-        </article>
-      </div>
-    </div>
 
   </div>
 </section>
