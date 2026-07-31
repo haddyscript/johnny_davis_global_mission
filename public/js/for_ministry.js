@@ -76,7 +76,10 @@
       }
     });
   }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
-  revealEls.forEach(el => revealObs.observe(el));
+  revealEls.forEach(el => {
+    if (el.classList.contains('timeline-item')) return; // handled by its own directional observer below
+    revealObs.observe(el);
+  });
 
   // ─── Video modal (Daily Push) ────────────────────────────────
   const videoModal = document.getElementById('videoModal');
@@ -317,14 +320,16 @@
     });
   })();
 
-  // ─── About timeline — scroll-linked progress line ──────────────
+  // ─── About timeline — scroll-linked progress line + directional reveal ──
   (function () {
     var track    = document.querySelector('.about-timeline-track');
     var progress = document.querySelector('.about-timeline-progress');
+    var items    = document.querySelectorAll('.timeline-item');
     if (!track || !progress) return;
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       progress.style.height = '100%';
+      items.forEach(function (el) { el.classList.add('visible'); });
       return;
     }
 
@@ -337,7 +342,29 @@
       progress.style.height = (ratio * rect.height) + 'px';
     }
 
-    window.addEventListener('scroll', updateProgress, { passive: true });
+    // Track scroll direction so timeline items fade in going down
+    // and fade back out going up, instead of a permanent one-time reveal.
+    var lastY = window.scrollY;
+    var direction = 'down';
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY;
+      direction = y > lastY ? 'down' : (y < lastY ? 'up' : direction);
+      lastY = y;
+      updateProgress();
+    }, { passive: true });
     window.addEventListener('resize', updateProgress);
     updateProgress();
+
+    if (items.length) {
+      var itemObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && direction === 'down') {
+            entry.target.classList.add('visible');
+          } else if (!entry.isIntersecting && direction === 'up') {
+            entry.target.classList.remove('visible');
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      items.forEach(function (el) { itemObs.observe(el); });
+    }
   })();
