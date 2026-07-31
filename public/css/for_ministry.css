@@ -576,7 +576,7 @@
     }
 
     /* Timeline */
-    .about-timeline-wrap { margin-top: 88px; max-width: 800px; }
+    .about-timeline-wrap { margin-top: 40px; max-width: 800px; }
     .about-timeline-track {
       position: relative;
       margin-top: 36px;
