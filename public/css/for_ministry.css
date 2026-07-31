@@ -2313,6 +2313,12 @@
     ============================================================ */
     @media (max-width: 1024px) {
       .about-grid   { grid-template-columns: 1fr; gap: 48px; }
+      /* Stacked single-column layout: show the About Johnny biography
+         before the Podcast/Fellowship/Booking cards, since source order
+         (image+programs col first, then bio col) is only correct
+         side-by-side on the 2-column desktop grid. */
+      .about-grid > .about-left-col { order: 2; }
+      .about-grid > .reveal-right   { order: 1; }
       .about-img-wrap img { height: 400px; }
       .about-timeline-wrap { margin-top: 64px; }
       .programs-grid { grid-template-columns: 1fr 1fr; }
