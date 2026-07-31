@@ -565,6 +565,55 @@
     }
     .mp-item:hover .mp-icon { transform: scale(1.2) rotate(-8deg); }
 
+    /* Biography — scripture quote, section headers, taglines, link */
+    .about-quote {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--gray-800);
+      line-height: 1.8;
+      margin: 24px 0 8px;
+      padding-left: 18px;
+      border-left: 3px solid var(--orange);
+    }
+    .about-quote-citation {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--orange-dark);
+      padding-left: 18px;
+    }
+    .about-divider {
+      border: none;
+      border-top: 1px solid var(--gray-200);
+      margin: 32px 0 28px;
+    }
+    .about-subheading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      margin-bottom: 6px;
+    }
+    .about-subheading + .about-tagline { margin-top: 0; }
+    .about-tagline {
+      font-size: .92rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--orange-dark);
+      margin-bottom: 12px;
+    }
+    .about-link {
+      color: var(--orange-dark);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color var(--transition);
+    }
+    .about-link:hover { color: var(--orange); }
+    .about-note {
+      font-style: italic;
+      color: var(--gray-600);
+    }
+
     /* ============================================================
        DAILY PUSH VIDEOS
     ============================================================ */
