@@ -9,18 +9,14 @@
       <div class="about-left-col reveal-left">
         <div class="about-img-wrap">
           <img
-            src="{{ $cms->image('about', 'image', asset('images/johnny-davis-ministry/hero-image1.webp')) }}"
-            alt="Evangelist Johnny Davis"
+            src="{{ $cms->image('about', 'image', asset('images/johnny-davis-ministry/about-johnny.jpeg')) }}"
+            alt="About Johnny — Evangelist Johnny Davis poster"
             loading="lazy"
             class="about-img-clickable"
             role="button"
             tabindex="0"
-            aria-label="View full image of Evangelist Johnny Davis"
+            aria-label="View full image of the About Johnny poster"
           />
-          <div class="about-accent">
-            <strong>{{ $cms->text('about', 'accent_number', '30+') }}</strong>
-            <span>{{ $cms->text('about', 'accent_label', 'Years in Ministry') }}</span>
-          </div>
         </div>
       </div>
 
@@ -81,8 +77,22 @@
               <span class="timeline-year">2022</span>
               <p class="timeline-text">Johnny Davis Global Missions launched a feeding program in the Philippines called Feed Filipino Children: "Hunger Can't Wait," partnering with pastors and marketplace leaders to provide children and families with access to healthy food — both globally and locally.</p>
             </li>
+            <li class="timeline-item reveal-left" style="transition-delay:.08s">
+              <span class="timeline-dot" aria-hidden="true"></span>
+              <span class="timeline-year">2025</span>
+              <p class="timeline-text">Evangelist Davis founded and launched the Grace to Elevate Leadership Podcast, created to equip, encourage, and empower ministry and marketplace leaders through biblical principles and practical leadership strategies.</p>
+            </li>
+            <li class="timeline-item reveal-left" style="transition-delay:.08s">
+              <span class="timeline-dot" aria-hidden="true"></span>
+              <span class="timeline-year">2026</span>
+              <p class="timeline-text">He launched the Johnny Davis Ministerial Fellowship, a global, non-denominational outreach ministry that partners with other ministries to connect, encourage, equip, and strengthen pastors, evangelists, and emerging leaders as they fulfill their God-given assignments.</p>
+            </li>
           </ol>
           </div>
+
+          <p class="about-teaching-note reveal">
+            Evangelist Johnny Davis' teaching style is practical, relevant, thought-provoking, and humorous. He is known for &ldquo;keeping it real&rdquo; in the pulpit.
+          </p>
         </div>
       </div>
 
@@ -121,16 +131,6 @@
         </article>
       </div>
     </div>
-
-    <!-- Scripture pull-quote -->
-    <blockquote class="about-pullquote reveal">
-      <p>&ldquo;But whoever has this world's goods and sees his brother and fellow believer in need, yet closes his heart of compassion against him, how can the love of God live and remain in him?&rdquo;</p>
-      <cite>— 1 John 3:17 (AMPC)</cite>
-    </blockquote>
-
-    <p class="about-teaching-note reveal">
-      Evangelist Johnny Davis' teaching style is practical, relevant, thought-provoking, and humorous. He is known for &ldquo;keeping it real&rdquo; in the pulpit.
-    </p>
 
   </div>
 </section>
