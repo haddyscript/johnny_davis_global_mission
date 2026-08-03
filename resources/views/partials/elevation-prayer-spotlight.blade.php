@@ -19,6 +19,59 @@
 @php
     $epEpisodes = [
         [
+            'episode'    => '230',
+            'title'      => 'Feeling Rejected & Abandoned',
+            'poster'     => 'images/johnny-davis-ministry/feeling-rejected-abandon.jfif',
+            'audioFile'  => 'audio/elevation-prayer/episode-230-feeling-rejected-abandoned.m4a', // TODO: replace once the actual audio file is provided (only a Dropbox filename was received, no working link/file)
+            'audioLabel' => 'Episode 230 — Feeling Rejected & Abandoned',
+            'caption'    => <<<'TEXT'
+FEELING REJECTED & ABANDONED?
+Finding God's Love When Others Walk Away
+Have you ever felt rejected, abandoned, forgotten, or left behind by someone you trusted?
+Perhaps you've experienced the pain of broken relationships, disappointment, betrayal, or loneliness, and you're wondering if anyone truly cares.
+Take heart—God has not forgotten you.
+Join us this Thursday evening as believers from around the world gather in one accord to experience God's unfailing love through worship, prayer, and the encouragement of His Word.
+Together, we'll pray, stand in faith, and believe that rejection will be replaced with acceptance, abandonment with God's presence, and brokenness with His healing love.
+"When my father and my mother forsake me, then the LORD will take me up."
+— Psalm 27:10 (KJV)
+⸻
+COME EXPECTING
+✅ Healing for your heart
+✅ Strength for your soul
+✅ Peace for your mind
+✅ Hope for your future
+✅ Restoration of relationships
+✅ God's presence and comfort
+⸻
+📅 Thursday, July 30, 2026
+🕖 Prayer Begins: 7:00 PM EST
+🎵 Worship Begins: 6:45 PM EST
+💻 Join Us on Zoom
+Meeting ID: 788 154 3458
+Passcode: dzW3WL (case-sensitive)
+⸻
+No matter what you've been through…
+No matter who walked away…
+God will never leave you nor forsake you.
+Invite your family, friends, coworkers, church members, and anyone who needs hope, healing, encouragement, and prayer.
+Together, let's discover the unfailing love of God—the One who receives us, restores us, and walks with us through every season of life.
+⸻
+🌐 Learn More
+JohnnyDavisMinistries.org
+❤️ Support Our Mission
+As we minister to people spiritually, we also seek to serve them physically.
+For just $7.99 per month, you can help provide meals for children and families in need through Johnny Davis Global Missions.
+🌐 JohnnyDavisGlobalMissions.org
+⸻
+Hosted by
+Evangelist Johnny Davis
+⸻
+ELEVATION VIRTUAL PRAYER GATHERING
+ONE VOICE. ONE PRAYER. ONE ACCORD.-
+Inspired by Acts 1:14
+TEXT,
+        ],
+        [
             'episode'    => '229',
             'title'      => 'Feeling Discouraged',
             'poster'     => 'images/johnny-davis-ministry/elevation-virtual-prayer-gathering-thumbnail.jfif',
