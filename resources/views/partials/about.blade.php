@@ -127,7 +127,7 @@
           <h4 class="program-title">Book Evangelist Johnny Davis</h4>
           <p class="program-tagline">For Your Next Event</p>
           <p class="program-desc">Invite Evangelist Johnny Davis to speak at your church, conference, social media platform, workshop, or special event, or learn more about his global mission projects, leadership podcast, and ministerial fellowship.</p>
-          <a href="https://www.johnnydavisministries.org" target="_blank" rel="noopener" class="program-link">www.johnnydavisministries.org &rarr;</a>
+          <a href="mailto:info@johnnydavisministries.org" class="program-link">info@johnnydavisministries.org &rarr;</a>
         </article>
       </div>
     </div>
