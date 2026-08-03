@@ -648,7 +648,7 @@
     .about-programs-header { margin-bottom: 24px; max-width: 640px; }
     .programs-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 24px;
     }
     .program-card {
@@ -702,6 +702,66 @@
       transition: color .2s ease;
     }
     .program-link:hover { color: var(--orange-dark); }
+
+    /* Booking card — standalone, matches "Book Evangelist Johnny Davis" reference design */
+    .booking-card {
+      margin-top: 24px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 48px 56px;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+    }
+    .booking-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: rgba(240,124,30,.12);
+      font-size: 1.9rem;
+      margin-bottom: 20px;
+    }
+    .booking-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      line-height: 1.3;
+    }
+    .booking-tagline {
+      font-size: 1.05rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--orange-dark);
+      margin-top: 8px;
+    }
+    .booking-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      max-width: 320px;
+      margin: 28px auto;
+    }
+    .booking-divider span { flex: 1; height: 1px; background: var(--gray-200); }
+    .booking-divider i { width: 5px; height: 5px; border-radius: 50%; background: var(--gray-300, var(--gray-200)); }
+    .booking-desc {
+      font-size: .98rem;
+      color: var(--gray-600);
+      line-height: 1.8;
+      max-width: 640px;
+      margin: 0 auto 36px;
+    }
+    .booking-banner-img {
+      display: block;
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+    }
 
     /* ============================================================
        DAILY PUSH VIDEOS
@@ -2266,6 +2326,9 @@
       .dp-grid      { grid-template-columns: 1fr; }
       .events-grid  { grid-template-columns: 1fr; }
       .programs-grid { grid-template-columns: 1fr; }
+      .booking-card { padding: 36px 24px; }
+      .booking-title { font-size: 1.4rem; }
+      .booking-banner-img { max-width: 100%; }
       .footer-grid  { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; text-align: center; }
       .hero-ctas { flex-direction: column; align-items: flex-start; }
@@ -2279,6 +2342,8 @@
       .events-grid  { grid-template-columns: 1fr; }
       .slider-prev, .slider-next { display: none; }
       #stickyDonate { right: 8px; bottom: 10px; padding: 12px 14px; font-size: .82rem; }
+      .booking-card { padding: 28px 18px; }
+      .booking-desc { font-size: .9rem; }
     }
 
     /* ============================================================

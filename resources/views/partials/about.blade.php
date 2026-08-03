@@ -121,15 +121,22 @@
           <p class="program-desc">A global, non-denominational outreach ministry and fellowship that partners with other ministries to connect, encourage, equip, and strengthen pastors, evangelists, and emerging leaders as they fulfill their God-given assignments.</p>
           <a href="{{ route('ministerial-fellowship') }}" class="program-link">Explore the fellowship &rarr;</a>
         </article>
-
-        <article class="program-card reveal" style="transition-delay:.25s">
-          <span class="program-icon" aria-hidden="true">📅</span>
-          <h4 class="program-title">Book Evangelist Johnny Davis</h4>
-          <p class="program-tagline">For Your Next Event</p>
-          <p class="program-desc">Invite Evangelist Johnny Davis to speak at your church, conference, social media platform, workshop, or special event, or learn more about his global mission projects, leadership podcast, and ministerial fellowship.</p>
-          <a href="mailto:info@johnnydavisministries.org" class="program-link">info@johnnydavisministries.org &rarr;</a>
-        </article>
       </div>
+
+      <!-- Book Evangelist Johnny Davis — standalone booking card -->
+      <article class="booking-card reveal" style="transition-delay:.25s" aria-labelledby="booking-title">
+        <span class="booking-icon" aria-hidden="true">📅</span>
+        <h4 class="booking-title" id="booking-title">Book Evangelist Johnny Davis</h4>
+        <p class="booking-tagline">For Your Next Event</p>
+        <div class="booking-divider" aria-hidden="true"><span></span><i></i><span></span></div>
+        <p class="booking-desc">Invite Evangelist Johnny Davis to speak at your church, conference, social media platform, workshop, or special event, or learn more about his global mission projects, leadership podcast, and ministerial fellowship.</p>
+        <img
+          src="{{ asset('images/johnny-davis-ministry/book-me-now.jpeg') }}"
+          alt="Book Me Now — Speaking Engagements, Conferences, Ministry Events. Email: info@johnnydavisministries.org"
+          loading="lazy"
+          class="booking-banner-img"
+        >
+      </article>
     </div>
 
   </div>

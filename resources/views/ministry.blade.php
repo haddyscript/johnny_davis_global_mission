@@ -10,6 +10,5 @@
   @include('partials.hunger-cta')
   @include('partials.inspire')
   @include('partials.upcoming-events')
-  @include('partials.book-banner')
   @include('partials.video-modal')
 @endsection
