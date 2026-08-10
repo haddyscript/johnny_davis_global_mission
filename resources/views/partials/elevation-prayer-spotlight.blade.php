@@ -19,6 +19,59 @@
 @php
     $epEpisodes = [
         [
+            'episode'    => '231',
+            'title'      => 'Feeling Anxious & Afraid',
+            'poster'     => 'images/johnny-davis-ministry/Anxious&Afraid.jfif',
+            'audioFile'  => 'audio/elevation-prayer/episode-231-feeling-anxious-afraid.m4a', // TODO: replace once the actual audio file is provided (only a Dropbox filename was received, no working link/file)
+            'audioLabel' => 'Episode 231 — Feeling Anxious & Afraid',
+            'caption'    => <<<'TEXT'
+FEELING ANXIOUS & AFRAID?
+Finding God's Peace in the Midst of a Storm
+Have you been carrying anxiety, fear, uncertainty, or worry that seems to overwhelm your heart and mind?
+Perhaps you're facing challenges that have left you feeling restless, discouraged, or unsure of what tomorrow holds.
+Take heart—God is with you, and His peace is greater than your storm.
+Join us this Thursday evening as believers from around the world gather in one accord to experience God's peace through worship, prayer, and the encouragement of His Word.
+Together, we'll pray, stand in faith, and believe that anxiety will give way to peace, fear will be replaced with faith, and every troubled heart will find rest in the presence of God.
+"Fear thou not; for I am with thee…"
+— Isaiah 41:10 (KJV)
+⸻
+COME EXPECTING
+✅ Peace that surpasses understanding
+✅ Strength for your mind and heart
+✅ Hope for your future
+✅ Freedom from worry and fear
+✅ Renewed faith in God's promises
+✅ A community of believers standing with you in prayer
+⸻
+📅 Thursday, August 6, 2026
+🕖 Prayer Begins: 7:00 PM EST
+🎵 Worship Begins: 6:45 PM EST
+💻 Join Us on Zoom
+Meeting ID: 788 154 3458
+Passcode: dzW3WL (case-sensitive)
+⸻
+No matter what you're facing…
+No matter how fierce the storm may seem…
+God is bigger than your fear, and His peace is greater than your storm.
+Invite your family, friends, coworkers, church members, and anyone who needs hope, encouragement, peace, and prayer.
+Together, let's place our trust in Jesus—the Prince of Peace—who calms every storm and strengthens every heart.
+⸻
+🌐 Learn More
+JohnnyDavisMinistries.org
+❤️ Support Our Mission
+As we minister to people spiritually, we also seek to serve them physically.
+For just $7.99 per month, you can help provide meals for children and families in need through Johnny Davis Global Missions.
+🌐 JohnnyDavisGlobalMissions.org
+⸻
+Hosted by
+Evangelist Johnny Davis
+⸻
+ELEVATION VIRTUAL PRAYER GATHERING
+ONE VOICE. ONE PRAYER. ONE ACCORD.
+Inspired by Acts 1:14
+TEXT,
+        ],
+        [
             'episode'    => '230',
             'title'      => 'Feeling Rejected & Abandoned',
             'poster'     => 'images/johnny-davis-ministry/feeling-rejected-abandon.jfif',
