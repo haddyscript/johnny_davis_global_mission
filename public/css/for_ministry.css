@@ -377,8 +377,8 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding-top: 72px;
-      padding-bottom: 72px;
+      padding-top: 40px;
+      padding-bottom: 100px;
       max-width: 760px;
     }
     .hero-badge {
@@ -394,7 +394,7 @@
       letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--orange-light);
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       animation: fadeDown .8s ease both;
     }
     .hero-badge::before {
@@ -416,7 +416,7 @@
       color: rgba(255,255,255,.85);
       font-style: italic;
       line-height: 1.6;
-      margin-bottom: 36px;
+      margin-bottom: 20px;
       max-width: 560px;
       animation: fadeUp .9s .5s ease both;
     }
@@ -434,21 +434,21 @@
       font-family: 'Playfair Display', serif;
       font-weight: 800;
       line-height: 1.08;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
       animation: fadeUp .9s .2s ease both;
     }
     .hero-headline-line {
-      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      font-size: clamp(2.6rem, 5vw, 4.4rem);
     }
     .hero-headline-white { color: var(--white); }
     .hero-headline-gold  { color: var(--orange-light); }
     .hero-script {
       font-family: 'Alex Brush', cursive;
       font-weight: 400;
-      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-size: clamp(1.4rem, 2.6vw, 1.9rem);
       line-height: 1.35;
       color: var(--orange-light);
-      margin-bottom: 40px;
+      margin-bottom: 22px;
       max-width: 580px;
       animation: fadeUp .9s .4s ease both;
     }
