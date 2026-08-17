@@ -95,11 +95,9 @@
 ============================================================ -->
 <div id="ministry-focus-bar">
   <div class="mf-shine" aria-hidden="true"></div>
-  <div class="container">
-    <div class="mf-image-wrap">
-      <img class="mf-image"
-           src="{{ asset('images/johnny-davis-ministry/4textsword.png') }}"
-           alt="Ministry focus areas: Teaching, Prophetic Word, Prayer, Healing" />
-    </div>
+  <div class="mf-image-wrap">
+    <img class="mf-image"
+         src="{{ asset('images/johnny-davis-ministry/4textsword.png') }}"
+         alt="Ministry focus areas: Teaching, Prophetic Word, Prayer, Healing" />
   </div>
 </div>
