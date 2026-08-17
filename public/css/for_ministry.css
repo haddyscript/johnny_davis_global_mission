@@ -547,7 +547,19 @@
       gap: 56px;
       align-items: center;
     }
-    .mission-text .section-label { color: var(--orange-light); }
+    .mission-text .section-label { color: var(--orange-light); margin-bottom: 0; }
+    .mission-label-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+    .mission-label-line {
+      flex: 1;
+      height: 1px;
+      max-width: 120px;
+      background: linear-gradient(90deg, rgba(240,124,30,.6), transparent);
+    }
     .mission-text .btn-outline { margin-top: 28px; }
     .mission-cards {
       display: grid;

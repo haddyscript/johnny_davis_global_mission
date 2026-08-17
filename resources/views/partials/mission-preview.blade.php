@@ -7,7 +7,10 @@
     <div class="mission-grid">
 
       <div class="mission-text reveal-left">
-        <span class="section-label">{{ $cms->text('mission', 'label', 'Our Mission') }}</span>
+        <div class="mission-label-row">
+          <span class="section-label">{{ $cms->text('mission', 'label', 'Our Mission') }}</span>
+          <span class="mission-label-line" aria-hidden="true"></span>
+        </div>
         <h2 class="section-title white" id="mission-preview-title">
           {{ $cms->text('mission', 'title', 'Empowering People to Lead and Fulfill Their God-Given Purpose.') }}
         </h2>
