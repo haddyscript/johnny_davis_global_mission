@@ -21,51 +21,6 @@
     });
   }
 
-  // ─── Hero Slider ─────────────────────────────────────────────
-  const slides = document.querySelectorAll('.slide');
-  const dots   = document.querySelectorAll('.slider-dot');
-  let current  = 0;
-  let autoSlide;
-
-  function goToSlide(index) {
-    slides[current].classList.remove('active');
-    if (dots[current]) dots[current].classList.remove('active');
-    current = (index + slides.length) % slides.length;
-    slides[current].classList.add('active');
-    if (dots[current]) dots[current].classList.add('active');
-  }
-
-  function startAuto() {
-    autoSlide = setInterval(() => goToSlide(current + 1), 5500);
-  }
-  function stopAuto() { clearInterval(autoSlide); }
-
-  const sliderNextBtn = document.getElementById('sliderNext');
-  const sliderPrevBtn = document.getElementById('sliderPrev');
-
-  if (sliderNextBtn && sliderPrevBtn && slides.length) {
-    sliderNextBtn.addEventListener('click', () => {
-      stopAuto(); goToSlide(current + 1); startAuto();
-    });
-    sliderPrevBtn.addEventListener('click', () => {
-      stopAuto(); goToSlide(current - 1); startAuto();
-    });
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        stopAuto(); goToSlide(Number(dot.dataset.index)); startAuto();
-      });
-    });
-
-    startAuto();
-
-    // Pause on hover
-    const sliderTrack = document.getElementById('sliderTrack');
-    if (sliderTrack) {
-      sliderTrack.addEventListener('mouseenter', stopAuto);
-      sliderTrack.addEventListener('mouseleave', startAuto);
-    }
-  }
-
   // ─── Scroll reveal ───────────────────────────────────────────
   const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
   const revealObs = new IntersectionObserver((entries) => {

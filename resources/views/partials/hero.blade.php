@@ -1,46 +1,9 @@
 <!-- ============================================================
-     HERO SLIDER
+     HERO
 ============================================================ -->
 <section id="hero" aria-label="Johnny Davis Ministries Hero">
 
-  <div class="slider-track" id="sliderTrack">
-
-    <div class="slide active" id="slide-0">
-      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero.png') }}')"></div>
-      <div class="slide-overlay"></div>
-    </div>
-
-    <div class="slide" id="slide-1">
-      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero.png') }}')"></div>
-      <div class="slide-overlay"></div>
-    </div>
-
-    <div class="slide" id="slide-2">
-      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero.png') }}')"></div>
-      <div class="slide-overlay"></div>
-    </div>
-
-    <div class="slide" id="slide-3">
-      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero.png') }}')"></div>
-      <div class="slide-overlay"></div>
-    </div>
-
-  </div>
-
-  <!-- Prev / Next -->
-  <button class="slider-prev" id="sliderPrev" aria-label="Previous slide">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
-  </button>
-  <button class="slider-next" id="sliderNext" aria-label="Next slide">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-  </button>
-
-  <style>
-    /* The focus-bar text is now baked into the bottom of the hero image itself,
-       so the dots/scroll cue no longer have a safe empty spot to sit in without
-       overlapping it — hide them for this merged layout. */
-    .slider-dots, .hero-scroll { display: none; }
-  </style>
+  <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero.png') }}')"></div>
 
   <!-- Content -->
   <div class="container" style="height:100%; position:relative; z-index:3;">
