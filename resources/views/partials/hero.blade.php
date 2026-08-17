@@ -64,21 +64,14 @@
     <div class="hero-content">
       <div class="hero-badge">Ministry &bull; Outreach &bull; Missions</div>
 
-      <h1 class="hero-headline">Johnny Davis Ministries — Transforming Lives. Empowering Communities.</h1>
+      <h1 class="hero-headline">
+        <span class="hero-headline-line hero-headline-white">Johnny Davis</span>
+        <span class="hero-headline-line hero-headline-gold">Ministries <span aria-hidden="true">&mdash;</span></span>
+      </h1>
 
-      <p class="hero-sub">
+      <p class="hero-script">
         {!! nl2br(e($cms->text('hero', 'subtitle', "Transforming Lives. Empowering Communities.\nExpanding the Kingdom of God."))) !!}
       </p>
-
-      <div class="hero-focus-areas" aria-label="Ministry focus areas">
-        <span class="hero-focus-item">Teaching</span>
-        <span class="hero-focus-sep" aria-hidden="true">&bull;</span>
-        <span class="hero-focus-item">Prophetic Word</span>
-        <span class="hero-focus-sep" aria-hidden="true">&bull;</span>
-        <span class="hero-focus-item">Prayer</span>
-        <span class="hero-focus-sep" aria-hidden="true">&bull;</span>
-        <span class="hero-focus-item">Healing</span>
-      </div>
 
       <div class="hero-ctas">
         <a href="#daily-push" class="btn btn-primary btn-lg">
@@ -98,3 +91,20 @@
   </div>
 
 </section>
+
+<!-- ============================================================
+     MINISTRY FOCUS AREAS — smooth transition strip below hero
+============================================================ -->
+<div id="ministry-focus-bar">
+  <div class="container">
+    <div class="mf-row" role="list" aria-label="Ministry focus areas">
+      <span class="mf-item" role="listitem">Teaching</span>
+      <span class="mf-divider" aria-hidden="true"></span>
+      <span class="mf-item" role="listitem">Prophetic Word</span>
+      <span class="mf-divider" aria-hidden="true"></span>
+      <span class="mf-item" role="listitem">Prayer</span>
+      <span class="mf-divider" aria-hidden="true"></span>
+      <span class="mf-item" role="listitem">Healing</span>
+    </div>
+  </div>
+</div>

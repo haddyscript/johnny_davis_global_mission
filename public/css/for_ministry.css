@@ -417,42 +417,28 @@
       to   { opacity: 1; transform: translateY(0); }
     }
     .hero-headline {
+      display: flex;
+      flex-direction: column;
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2.8rem, 5.5vw, 5rem);
       font-weight: 800;
-      color: var(--white);
       line-height: 1.08;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       animation: fadeUp .9s .2s ease both;
     }
-    .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.2rem);
-      color: rgba(255,255,255,.85);
-      line-height: 1.7;
+    .hero-headline-line {
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+    }
+    .hero-headline-white { color: var(--white); }
+    .hero-headline-gold  { color: var(--orange-light); }
+    .hero-script {
+      font-family: 'Alex Brush', cursive;
+      font-weight: 400;
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      line-height: 1.35;
+      color: var(--orange-light);
       margin-bottom: 40px;
       max-width: 580px;
-      font-style: italic;
       animation: fadeUp .9s .4s ease both;
-    }
-    .hero-focus-areas {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      row-gap: 10px;
-      column-gap: 14px;
-      margin-bottom: 36px;
-      animation: fadeUp .9s .5s ease both;
-    }
-    .hero-focus-item {
-      font-size: .95rem;
-      font-weight: 700;
-      letter-spacing: .02em;
-      color: rgba(255,255,255,.92);
-    }
-    .hero-focus-sep {
-      color: var(--orange);
-      font-weight: 700;
-      font-size: .9rem;
     }
 
     .hero-ctas {
@@ -487,6 +473,64 @@
     @keyframes scrollBob {
       0%, 100% { transform: scaleY(1); opacity: 1; }
       50%       { transform: scaleY(.6); opacity: .4; }
+    }
+
+    /* ============================================================
+       MINISTRY FOCUS BAR — bridges hero into the page below
+    ============================================================ */
+    #ministry-focus-bar {
+      position: relative;
+      background: var(--blue-dark);
+      padding: 34px 0;
+      overflow: hidden;
+    }
+    #ministry-focus-bar::before,
+    #ministry-focus-bar::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(240,124,30,.55) 50%, transparent);
+    }
+    #ministry-focus-bar::before { top: 0; }
+    #ministry-focus-bar::after  { bottom: 0; }
+    .mf-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      row-gap: 18px;
+    }
+    .mf-item {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-variant: small-caps;
+      letter-spacing: .04em;
+      font-size: clamp(1.15rem, 2.4vw, 1.75rem);
+      color: var(--orange-light);
+      padding: 0 clamp(16px, 3vw, 40px);
+      white-space: nowrap;
+    }
+    .mf-divider {
+      width: 1px;
+      height: 30px;
+      flex-shrink: 0;
+      background: linear-gradient(to bottom, transparent, rgba(240,124,30,.6), transparent);
+    }
+    @media (max-width: 720px) {
+      .mf-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        row-gap: 22px;
+        column-gap: 8px;
+      }
+      .mf-divider { display: none; }
+      .mf-item {
+        padding: 0;
+        white-space: normal;
+        text-align: center;
+        font-size: 1.15rem;
+      }
     }
 
     /* ============================================================
