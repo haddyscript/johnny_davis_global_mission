@@ -582,7 +582,7 @@
       box-shadow: 0 20px 50px rgba(0,0,0,.32);
       border-color: var(--orange);
     }
-    .mission-card .dp-thumb { height: 210px; }
+    .mission-card .dp-thumb { height: 280px; }
     .mission-card-title {
       font-family: 'Playfair Display', serif;
       font-size: 1rem;
