@@ -70,6 +70,16 @@
         {!! nl2br(e($cms->text('hero', 'subtitle', "Transforming Lives. Empowering Communities.\nExpanding the Kingdom of God."))) !!}
       </p>
 
+      <div class="hero-focus-areas" aria-label="Ministry focus areas">
+        <span class="hero-focus-item">Teaching</span>
+        <span class="hero-focus-sep" aria-hidden="true">&bull;</span>
+        <span class="hero-focus-item">Prophetic Word</span>
+        <span class="hero-focus-sep" aria-hidden="true">&bull;</span>
+        <span class="hero-focus-item">Prayer</span>
+        <span class="hero-focus-sep" aria-hidden="true">&bull;</span>
+        <span class="hero-focus-item">Healing</span>
+      </div>
+
       <div class="hero-ctas">
         <a href="#daily-push" class="btn btn-primary btn-lg">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>

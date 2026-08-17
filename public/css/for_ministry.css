@@ -434,6 +434,27 @@
       font-style: italic;
       animation: fadeUp .9s .4s ease both;
     }
+    .hero-focus-areas {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      row-gap: 10px;
+      column-gap: 14px;
+      margin-bottom: 36px;
+      animation: fadeUp .9s .5s ease both;
+    }
+    .hero-focus-item {
+      font-size: .95rem;
+      font-weight: 700;
+      letter-spacing: .02em;
+      color: rgba(255,255,255,.92);
+    }
+    .hero-focus-sep {
+      color: var(--orange);
+      font-weight: 700;
+      font-size: .9rem;
+    }
+
     .hero-ctas {
       display: flex;
       flex-wrap: wrap;
