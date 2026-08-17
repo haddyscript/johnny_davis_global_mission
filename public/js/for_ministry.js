@@ -79,8 +79,28 @@
   revealEls.forEach(el => {
     if (el.classList.contains('timeline-item')) return; // handled by its own directional observer below
     if (el.classList.contains('program-card')) return; // handled by its own directional observer below
+    if (el.classList.contains('about-retrigger')) return; // handled by its own retriggering observer below
     revealObs.observe(el);
   });
+
+  // ─── About "His Story" intro (image + text) — retriggers every time
+  //     it scrolls into or out of view ──────────────────────────────
+  (function () {
+    var els = document.querySelectorAll('.about-retrigger');
+    if (!els.length) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      els.forEach(function (el) { el.classList.add('visible'); });
+      return;
+    }
+
+    var aboutRetriggerObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        entry.target.classList.toggle('visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function (el) { aboutRetriggerObs.observe(el); });
+  })();
 
   // ─── Video modal (Daily Push) ────────────────────────────────
   const videoModal = document.getElementById('videoModal');
@@ -413,10 +433,7 @@
 
     var barObs = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          bar.classList.add('mf-visible');
-          barObs.unobserve(bar);
-        }
+        bar.classList.toggle('mf-visible', entry.isIntersecting);
       });
     }, { threshold: 0.4, rootMargin: '0px 0px -60px 0px' });
     barObs.observe(bar);

@@ -6,7 +6,7 @@
     <div class="about-grid">
 
       <!-- Image + Beyond the Pulpit -->
-      <div class="about-left-col reveal-left">
+      <div class="about-left-col reveal-left about-retrigger">
         <div class="about-img-wrap">
           <img
             src="{{ $cms->image('about', 'image', asset('images/johnny-davis-ministry/about-johnny.jpeg')) }}"
@@ -21,7 +21,7 @@
       </div>
 
       <!-- Text -->
-      <div class="reveal-right">
+      <div class="reveal-right about-retrigger">
         <span class="section-label">{{ $cms->text('about', 'label', 'His Story') }}</span>
         <h2 class="section-title" id="about-title">{{ $cms->text('about', 'title', 'About Johnny Davis') }}</h2>
 
