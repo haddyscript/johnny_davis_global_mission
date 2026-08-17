@@ -538,7 +538,7 @@
        (continues the dark navy straight out of the focus bar above)
     ============================================================ */
     #mission-preview {
-      padding: 52px 0 100px;
+      padding: 20px 0 100px;
       background: var(--blue-dark);
     }
     .mission-grid {

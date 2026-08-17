@@ -35,6 +35,11 @@
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
   </button>
 
+  <style>
+    /* Drop the scroll cue below the slide dots so the two don't overlap */
+    .hero-scroll { bottom: 14px; }
+  </style>
+
   <!-- Dots -->
   <div class="slider-dots" role="list" aria-label="Slide indicators">
     <button class="slider-dot active" data-index="0" aria-label="Slide 1"></button>
