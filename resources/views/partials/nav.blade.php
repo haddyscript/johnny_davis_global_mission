@@ -16,6 +16,16 @@
     if (str_contains(request()->getHost(), 'johnnydavisglobalmissions.org')) {
         $navItems = $navItems->reject(fn ($item) => $item->url === '/ministerial-fellowship');
     }
+
+    // Ministry domain: standard nav bar (Home / About / Media / Events / Ministerial Fellowship / Give / Contact)
+    // instead of the shared donation-site NavItem list, since the ministry homepage is a single
+    // long page and most of these are anchor links into its own sections.
+    $donateUrl = str_contains(request()->getHost(), 'johnnydavisministries.org')
+        ? route('donate') . '?campaign=Feed+Filipino+Children'
+        : route('donate');
+    $ministryHome = route('ministry');
+    $isMinisterialFellowshipPage = rtrim($currentPath, '/') === '/ministerial-fellowship';
+    $isContactPage = rtrim($currentPath, '/') === '/contact';
 @endphp
 
 <style>
@@ -30,49 +40,62 @@
     transition: filter .2s ease;
   }
 
-  /* ── Ministry page: centred logo ── */
-  .nav-ministry-only .nav-inner   { justify-content: center; flex-wrap: wrap; row-gap: 8px; }
-  .nav-ministry-only .nav-logo img {
-    height: 48px; width: auto; max-width: 220px;
-    object-fit: contain; filter: brightness(0) invert(1);
-  }
+  /* ── Ministry page: "Give" nav link stays gold, matching Donate accents ── */
+  .nav-give { color: #f2a24a !important; }
+  .nav-give:hover { color: #fff !important; }
 
-  /* ── Ministry page: single "Ministerial Fellowship" nav link ── */
-  .nav-ministry-fellowship-link {
+  /* ── Ministry page: "Media" dropdown ── */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-toggle {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    color: rgba(255,255,255,.85);
-    font-size: .85rem;
-    font-weight: 600;
-    padding: 6px 16px 6px 6px;
-    border: 1.5px solid rgba(255,255,255,.35);
-    border-radius: 50px;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    color: rgba(255,255,255,.82);
+    font-size: .9rem;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: color .2s ease, background .2s ease;
+  }
+  .nav-dropdown-toggle:hover,
+  .nav-dropdown.open .nav-dropdown-toggle { color: #fff; background: rgba(255,255,255,.08); }
+  .nav-dropdown-chevron { transition: transform .2s ease; }
+  .nav-dropdown.open .nav-dropdown-chevron { transform: rotate(180deg); }
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 200px;
+    background: #0d2a4e;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity .2s ease, transform .2s ease, visibility .2s;
+    z-index: 20;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown.open .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: .88rem;
+    color: rgba(255,255,255,.8);
     white-space: nowrap;
-    transition: color .2s ease, background .2s ease, border-color .2s ease;
   }
-  .nav-mf-logo-wrap {
-    display: inline-flex;
-    flex-shrink: 0;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  .nav-mf-logo-wrap img {
-    height: 100%;
-    width: auto;
-    max-width: none;
-  }
-  .nav-ministry-fellowship-link:hover,
-  .nav-ministry-fellowship-link.active {
-    color: #fff;
-    border-color: #f07c1e;
-    background: rgba(240,124,30,.15);
-  }
-  @media (max-width: 480px) {
-    .nav-ministry-fellowship-link { font-size: .78rem; padding: 7px 13px; }
-  }
+  .nav-dropdown-menu a:hover { color: #fff; background: rgba(240,124,30,.15); }
 
   /* ── Desktop nav link hover transitions ── */
   .nav-links a { transition: color .2s ease, background .2s ease, box-shadow .2s ease; }
@@ -330,7 +353,7 @@
   }
 </style>
 
-<header id="navbar" role="banner"{{ $isMinistryPage ? ' class="nav-ministry-only"' : '' }}>
+<header id="navbar" role="banner">
   <div class="container">
     <nav class="nav-inner" aria-label="Main navigation">
       <a href="{{ $logoHref }}" class="nav-logo" aria-label="{{ $logoAlt }}">
@@ -338,16 +361,32 @@
       </a>
 
       @if($isMinistryPage)
-        <a href="{{ route('ministerial-fellowship') }}"
-           class="nav-ministry-fellowship-link{{ rtrim($currentPath, '/') === '/ministerial-fellowship' ? ' active' : '' }}">
-          <span class="nav-mf-logo-wrap">
-            <img src="{{ asset('images/johnny-davis-ministry/ministerial-fellowship-logo.png') }}" alt="" />
-          </span>
-          Learn More
-        </a>
-      @endif
-
-      @if(!$isMinistryPage)
+        <ul class="nav-links" role="list">
+          <li><a href="{{ $ministryHome }}">Home</a></li>
+          <li><a href="{{ $ministryHome }}#about">About</a></li>
+          <li class="nav-dropdown">
+            <button type="button" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+              Media
+              <svg class="nav-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <ul class="nav-dropdown-menu" role="list">
+              <li><a href="{{ $ministryHome }}#daily-push">Daily Push</a></li>
+              <li><a href="{{ $ministryHome }}#podcast">Podcast</a></li>
+              <li><a href="{{ $ministryHome }}#elevation-prayer-spotlight">Elevation Prayer</a></li>
+            </ul>
+          </li>
+          <li><a href="{{ $ministryHome }}#events">Events</a></li>
+          <li><a href="{{ route('ministerial-fellowship') }}"{{ $isMinisterialFellowshipPage ? ' class="active nav-active"' : '' }}>Ministerial Fellowship</a></li>
+          <li><a href="{{ $donateUrl }}" class="nav-give">Give</a></li>
+          <li><a href="{{ route('contact') }}"{{ $isContactPage ? ' class="active nav-active"' : '' }}>Contact</a></li>
+          <li>
+            <a href="{{ $donateUrl }}" class="btn-nav-donate">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              Donate Now
+            </a>
+          </li>
+        </ul>
+      @else
         <ul class="nav-links" role="list">
           @foreach($navItems as $item)
             @php
@@ -371,14 +410,14 @@
             </li>
           @endforeach
         </ul>
-
-        <button class="nav-toggle" id="navToggle"
-                aria-label="Open navigation menu"
-                aria-expanded="false"
-                aria-controls="mNavOverlay">
-          <span></span><span></span><span></span>
-        </button>
       @endif
+
+      <button class="nav-toggle" id="navToggle"
+              aria-label="Open navigation menu"
+              aria-expanded="false"
+              aria-controls="mNavOverlay">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
   </div>
 
@@ -407,7 +446,6 @@
   @endif
 </header>
 
-@if(!$isMinistryPage)
 {{-- ── Mobile drawer overlay ──────────────────────────────────────── --}}
 <div class="m-nav-overlay"
      id="mNavOverlay"
@@ -433,29 +471,40 @@
 
     {{-- Navigation links --}}
     <nav class="m-nav-links" aria-label="Primary navigation">
-      @foreach($navItems as $item)
-        @php
-          $itemPath  = parse_url($item->url, PHP_URL_PATH) ?? '';
-          $isActive  = $itemPath && !in_array($itemPath, ['/#', '#'])
-              ? rtrim($itemPath, '/') === rtrim($currentPath, '/')
-              : false;
-          $baseClass = trim($item->nav_class ?? '');
-          $classes   = trim($baseClass . ($isActive ? ' active nav-active' : ''));
-          $attrs     = $item->is_external ? ' target="_blank" rel="noopener noreferrer"' : '';
-          $href      = str_starts_with($item->url, '/') ? url($item->url) : $item->url;
-        @endphp
-        <a href="{{ $href }}"{{ $classes ? ' class="' . e($classes) . '"' : '' }}{!! $attrs !!}>
-          @if(strtolower(strip_tags($item->label)) === 'ministry')
-            <img src="{{ asset('images/ministry-logo.png') }}" alt="" class="nav-ministry-logo" aria-hidden="true" />
-          @endif
-          {!! $item->label !!}
-        </a>
-      @endforeach
+      @if($isMinistryPage)
+        <a href="{{ $ministryHome }}">Home</a>
+        <a href="{{ $ministryHome }}#about">About</a>
+        <a href="{{ $ministryHome }}#daily-push">Daily Push</a>
+        <a href="{{ $ministryHome }}#podcast">Podcast</a>
+        <a href="{{ $ministryHome }}#events">Events</a>
+        <a href="{{ route('ministerial-fellowship') }}"{{ $isMinisterialFellowshipPage ? ' class="nav-active"' : '' }}>Ministerial Fellowship</a>
+        <a href="{{ $donateUrl }}" class="nav-give">Give</a>
+        <a href="{{ route('contact') }}"{{ $isContactPage ? ' class="nav-active"' : '' }}>Contact</a>
+      @else
+        @foreach($navItems as $item)
+          @php
+            $itemPath  = parse_url($item->url, PHP_URL_PATH) ?? '';
+            $isActive  = $itemPath && !in_array($itemPath, ['/#', '#'])
+                ? rtrim($itemPath, '/') === rtrim($currentPath, '/')
+                : false;
+            $baseClass = trim($item->nav_class ?? '');
+            $classes   = trim($baseClass . ($isActive ? ' active nav-active' : ''));
+            $attrs     = $item->is_external ? ' target="_blank" rel="noopener noreferrer"' : '';
+            $href      = str_starts_with($item->url, '/') ? url($item->url) : $item->url;
+          @endphp
+          <a href="{{ $href }}"{{ $classes ? ' class="' . e($classes) . '"' : '' }}{!! $attrs !!}>
+            @if(strtolower(strip_tags($item->label)) === 'ministry')
+              <img src="{{ asset('images/ministry-logo.png') }}" alt="" class="nav-ministry-logo" aria-hidden="true" />
+            @endif
+            {!! $item->label !!}
+          </a>
+        @endforeach
+      @endif
     </nav>
 
     {{-- Footer: Donate CTA + social icons --}}
     <div class="m-nav-footer">
-      <a href="{{ route('donate') }}" class="m-nav-donate">
+      <a href="{{ $donateUrl }}" class="m-nav-donate">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
              viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3
@@ -587,5 +636,31 @@
     } catch (e) {}
   });
 }());
+
+/* ── Ministry page: "Media" dropdown (click-to-toggle, closes on outside click / Escape) ── */
+(function () {
+  var dropdown = document.querySelector('.nav-dropdown');
+  if (!dropdown) return;
+
+  var toggleBtn = dropdown.querySelector('.nav-dropdown-toggle');
+
+  function closeDropdown() {
+    dropdown.classList.remove('open');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  toggleBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var open = dropdown.classList.toggle('open');
+    toggleBtn.setAttribute('aria-expanded', String(open));
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!dropdown.contains(e.target)) closeDropdown();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeDropdown();
+  });
+}());
 </script>
-@endif
