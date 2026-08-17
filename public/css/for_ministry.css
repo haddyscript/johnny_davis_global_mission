@@ -306,7 +306,7 @@
       width: 100%; height: 100%;
       background-size: cover;
       background-repeat: no-repeat;
-      background-position: center 30%;
+      background-position: center center;
       background-color: var(--blue-dark);
     }
     .slide-overlay {
@@ -373,10 +373,19 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-end;
       padding-top: 40px;
-      padding-bottom: 100px;
+      padding-bottom: 140px;
       max-width: 760px;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
     }
     .hero-badge {
       display: inline-flex;
