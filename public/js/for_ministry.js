@@ -400,3 +400,24 @@
     }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
     cards.forEach(function (el) { cardObs.observe(el); });
   })();
+
+  // ─── Ministry Focus Bar — staggered reveal + shimmer sweep ────────
+  (function () {
+    var bar = document.getElementById('ministry-focus-bar');
+    if (!bar) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      bar.classList.add('mf-visible');
+      return;
+    }
+
+    var barObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          bar.classList.add('mf-visible');
+          barObs.unobserve(bar);
+        }
+      });
+    }, { threshold: 0.4, rootMargin: '0px 0px -60px 0px' });
+    barObs.observe(bar);
+  })();

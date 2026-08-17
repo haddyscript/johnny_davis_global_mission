@@ -494,7 +494,23 @@
     }
     #ministry-focus-bar::before { top: 0; }
     #ministry-focus-bar::after  { bottom: 0; }
+    .mf-shine {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,.10) 50%, transparent 65%);
+      transform: translateX(-130%);
+      z-index: 1;
+    }
+    #ministry-focus-bar.mf-visible .mf-shine {
+      animation: mfShineSweep 1.3s ease .9s 1 both;
+    }
+    @keyframes mfShineSweep {
+      to { transform: translateX(130%); }
+    }
     .mf-row {
+      position: relative;
+      z-index: 2;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -510,12 +526,37 @@
       color: var(--orange-light);
       padding: 0 clamp(16px, 3vw, 40px);
       white-space: nowrap;
+      opacity: 0;
+      transform: translateY(26px) scale(.9);
+      text-shadow: 0 0 0 rgba(240,124,30,0);
+      transition: opacity .75s cubic-bezier(.22,1,.36,1),
+                  transform .75s cubic-bezier(.22,1,.36,1),
+                  text-shadow 1s ease .2s;
+    }
+    #ministry-focus-bar.mf-visible .mf-item {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      text-shadow: 0 0 24px rgba(240,124,30,.4);
     }
     .mf-divider {
       width: 1px;
       height: 30px;
       flex-shrink: 0;
       background: linear-gradient(to bottom, transparent, rgba(240,124,30,.6), transparent);
+      transform: scaleY(0);
+      transform-origin: center;
+      transition: transform .6s ease .5s;
+    }
+    #ministry-focus-bar.mf-visible .mf-divider {
+      transform: scaleY(1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .mf-item, .mf-divider, .mf-shine {
+        transition: none !important;
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
     }
     @media (max-width: 720px) {
       .mf-row {

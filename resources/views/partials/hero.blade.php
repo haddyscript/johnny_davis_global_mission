@@ -85,15 +85,16 @@
      MINISTRY FOCUS AREAS — smooth transition strip below hero
 ============================================================ -->
 <div id="ministry-focus-bar">
+  <div class="mf-shine" aria-hidden="true"></div>
   <div class="container">
     <div class="mf-row" role="list" aria-label="Ministry focus areas">
-      <span class="mf-item" role="listitem">Teaching</span>
+      <span class="mf-item" role="listitem" style="transition-delay:.05s">Teaching</span>
       <span class="mf-divider" aria-hidden="true"></span>
-      <span class="mf-item" role="listitem">Prophetic Word</span>
+      <span class="mf-item" role="listitem" style="transition-delay:.18s">Prophetic Word</span>
       <span class="mf-divider" aria-hidden="true"></span>
-      <span class="mf-item" role="listitem">Prayer</span>
+      <span class="mf-item" role="listitem" style="transition-delay:.31s">Prayer</span>
       <span class="mf-divider" aria-hidden="true"></span>
-      <span class="mf-item" role="listitem">Healing</span>
+      <span class="mf-item" role="listitem" style="transition-delay:.44s">Healing</span>
     </div>
   </div>
 </div>
