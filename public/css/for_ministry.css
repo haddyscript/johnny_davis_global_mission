@@ -287,7 +287,9 @@
     ============================================================ */
     #hero {
       position: relative;
-      aspect-ratio: 1750 / 899;
+      /* slightly taller than the image's true ratio (1750/899) so the extra
+         room shows as a small navy gap above it once the image is bottom-anchored */
+      aspect-ratio: 1750 / 935;
       height: auto;
       max-height: 100vh;
       min-height: 480px;
@@ -308,7 +310,7 @@
       width: 100%; height: 100%;
       background-size: contain;
       background-repeat: no-repeat;
-      background-position: center center;
+      background-position: center bottom;
       background-color: var(--blue-dark);
     }
     .slide-overlay {
