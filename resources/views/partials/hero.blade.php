@@ -96,14 +96,10 @@
 <div id="ministry-focus-bar">
   <div class="mf-shine" aria-hidden="true"></div>
   <div class="container">
-    <div class="mf-row" role="list" aria-label="Ministry focus areas">
-      <span class="mf-item" role="listitem" style="transition-delay:.05s">Teaching</span>
-      <span class="mf-divider" aria-hidden="true"></span>
-      <span class="mf-item" role="listitem" style="transition-delay:.18s">Prophetic Word</span>
-      <span class="mf-divider" aria-hidden="true"></span>
-      <span class="mf-item" role="listitem" style="transition-delay:.31s">Prayer</span>
-      <span class="mf-divider" aria-hidden="true"></span>
-      <span class="mf-item" role="listitem" style="transition-delay:.44s">Healing</span>
+    <div class="mf-image-wrap">
+      <img class="mf-image"
+           src="{{ asset('images/johnny-davis-ministry/4textsword.png') }}"
+           alt="Ministry focus areas: Teaching, Prophetic Word, Prayer, Healing" />
     </div>
   </div>
 </div>
