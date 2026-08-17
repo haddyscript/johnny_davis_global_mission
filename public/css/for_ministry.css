@@ -312,12 +312,7 @@
     .slide-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        110deg,
-        rgba(13,42,78,.90) 0%,
-        rgba(13,42,78,.70) 55%,
-        rgba(13,42,78,.35) 100%
-      );
+      background: none;
     }
 
     /* Slider controls */
