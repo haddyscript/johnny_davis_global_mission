@@ -29,10 +29,10 @@
 
   function goToSlide(index) {
     slides[current].classList.remove('active');
-    dots[current].classList.remove('active');
+    if (dots[current]) dots[current].classList.remove('active');
     current = (index + slides.length) % slides.length;
     slides[current].classList.add('active');
-    dots[current].classList.add('active');
+    if (dots[current]) dots[current].classList.add('active');
   }
 
   function startAuto() {
@@ -419,22 +419,4 @@
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
     cards.forEach(function (el) { cardObs.observe(el); });
-  })();
-
-  // ─── Ministry Focus Bar — staggered reveal + shimmer sweep ────────
-  (function () {
-    var bar = document.getElementById('ministry-focus-bar');
-    if (!bar) return;
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      bar.classList.add('mf-visible');
-      return;
-    }
-
-    var barObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        bar.classList.toggle('mf-visible', entry.isIntersecting);
-      });
-    }, { threshold: 0.4, rootMargin: '0px 0px -60px 0px' });
-    barObs.observe(bar);
   })();

@@ -6,22 +6,22 @@
   <div class="slider-track" id="sliderTrack">
 
     <div class="slide active" id="slide-0">
-      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero-section.png') }}')"></div>
+      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero.png') }}')"></div>
       <div class="slide-overlay"></div>
     </div>
 
     <div class="slide" id="slide-1">
-      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero-section.png') }}')"></div>
+      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero.png') }}')"></div>
       <div class="slide-overlay"></div>
     </div>
 
     <div class="slide" id="slide-2">
-      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero-section.png') }}')"></div>
+      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero.png') }}')"></div>
       <div class="slide-overlay"></div>
     </div>
 
     <div class="slide" id="slide-3">
-      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero-section.png') }}')"></div>
+      <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero.png') }}')"></div>
       <div class="slide-overlay"></div>
     </div>
 
@@ -36,17 +36,11 @@
   </button>
 
   <style>
-    /* Drop the scroll cue below the slide dots so the two don't overlap */
-    .hero-scroll { bottom: 14px; }
+    /* The focus-bar text is now baked into the bottom of the hero image itself,
+       so the dots/scroll cue no longer have a safe empty spot to sit in without
+       overlapping it — hide them for this merged layout. */
+    .slider-dots, .hero-scroll { display: none; }
   </style>
-
-  <!-- Dots -->
-  <div class="slider-dots" role="list" aria-label="Slide indicators">
-    <button class="slider-dot active" data-index="0" aria-label="Slide 1"></button>
-    <button class="slider-dot"        data-index="1" aria-label="Slide 2"></button>
-    <button class="slider-dot"        data-index="2" aria-label="Slide 3"></button>
-    <button class="slider-dot"        data-index="3" aria-label="Slide 4"></button>
-  </div>
 
   <!-- Content -->
   <div class="container" style="height:100%; position:relative; z-index:3;">
@@ -71,6 +65,13 @@
         {{ $cms->text('hero', 'explore_line', 'Explore ministry updates, videos, podcast, and upcoming events.') }}
       </p>
 
+      <ul class="sr-only" aria-label="Ministry focus areas">
+        <li>Teaching</li>
+        <li>Prophetic Word</li>
+        <li>Prayer</li>
+        <li>Healing</li>
+      </ul>
+
       <div class="hero-ctas">
         <a href="#daily-push" class="btn btn-primary btn-lg">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
@@ -83,21 +84,4 @@
     </div>
   </div>
 
-  <div class="hero-scroll" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})" aria-label="Scroll down">
-    <span>Scroll</span>
-    <div class="hero-scroll-line"></div>
-  </div>
-
 </section>
-
-<!-- ============================================================
-     MINISTRY FOCUS AREAS — smooth transition strip below hero
-============================================================ -->
-<div id="ministry-focus-bar">
-  <div class="mf-shine" aria-hidden="true"></div>
-  <div class="mf-image-wrap">
-    <img class="mf-image"
-         src="{{ asset('images/johnny-davis-ministry/4textsword.png') }}"
-         alt="Ministry focus areas: Teaching, Prophetic Word, Prayer, Healing" />
-  </div>
-</div>

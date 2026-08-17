@@ -287,10 +287,10 @@
     ============================================================ */
     #hero {
       position: relative;
-      aspect-ratio: 2105 / 747;
+      aspect-ratio: 1750 / 899;
       height: auto;
-      max-height: calc(100vh - 128px);
-      min-height: 420px;
+      max-height: 100vh;
+      min-height: 480px;
       overflow: hidden;
     }
     .slider-track {
@@ -375,8 +375,10 @@
       /* percentage here resolves against the container's WIDTH (a CSS quirk for
          vertical padding) — since #hero's height is aspect-ratio-locked to its
          width, this keeps the CTAs scaling in step with the baked-in image text
-         instead of drifting out of place at different viewport widths. */
-      padding-bottom: 7%;
+         instead of drifting out of place at different viewport widths. The image
+         now also has the focus-bar strip baked into its bottom edge, so this sits
+         the buttons in the empty gap just above that strip. */
+      padding-bottom: 9.5%;
       max-width: 760px;
     }
     .sr-only {
@@ -492,66 +494,6 @@
     @keyframes scrollBob {
       0%, 100% { transform: scaleY(1); opacity: 1; }
       50%       { transform: scaleY(.6); opacity: .4; }
-    }
-
-    /* ============================================================
-       MINISTRY FOCUS BAR — bridges hero into the page below
-    ============================================================ */
-    #ministry-focus-bar {
-      position: relative;
-      background: var(--blue-dark);
-      padding: 0;
-      overflow: hidden;
-    }
-    #ministry-focus-bar::after {
-      content: '';
-      position: absolute;
-      left: 0; right: 0;
-      bottom: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(240,124,30,.55) 50%, transparent);
-    }
-    .mf-shine {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,.10) 50%, transparent 65%);
-      transform: translateX(-130%);
-      z-index: 1;
-    }
-    #ministry-focus-bar.mf-visible .mf-shine {
-      animation: mfShineSweep 1.3s ease .9s 1 both;
-    }
-    @keyframes mfShineSweep {
-      to { transform: translateX(130%); }
-    }
-    .mf-image-wrap {
-      position: relative;
-      z-index: 2;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .mf-image {
-      display: block;
-      width: 100%;
-      min-width: 640px;
-      height: auto;
-      margin: 0 auto;
-      opacity: 0;
-      transform: translateY(24px) scale(.97);
-      transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
-    }
-    #ministry-focus-bar.mf-visible .mf-image {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .mf-image, .mf-shine {
-        transition: none !important;
-        animation: none !important;
-        opacity: 1 !important;
-        transform: none !important;
-      }
     }
 
     /* ============================================================
