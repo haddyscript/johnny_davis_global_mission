@@ -556,9 +556,9 @@
     }
     .mission-label-line {
       flex: 1;
-      height: 1px;
+      height: 3px;
       max-width: 120px;
-      background: linear-gradient(90deg, rgba(240,124,30,.6), transparent);
+      background: linear-gradient(90deg, rgba(240,124,30,.8), transparent);
     }
     .mission-text .btn-outline { margin-top: 28px; }
     .mission-cards {
