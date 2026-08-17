@@ -372,7 +372,11 @@
       flex-direction: column;
       justify-content: flex-end;
       padding-top: 40px;
-      padding-bottom: 140px;
+      /* percentage here resolves against the container's WIDTH (a CSS quirk for
+         vertical padding) — since #hero's height is aspect-ratio-locked to its
+         width, this keeps the CTAs scaling in step with the baked-in image text
+         instead of drifting out of place at different viewport widths. */
+      padding-bottom: 7%;
       max-width: 760px;
     }
     .sr-only {
