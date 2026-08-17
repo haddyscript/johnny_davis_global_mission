@@ -287,8 +287,10 @@
     ============================================================ */
     #hero {
       position: relative;
-      height: calc(100vh - 128px);
-      min-height: 520px;
+      aspect-ratio: 2105 / 747;
+      height: auto;
+      max-height: calc(100vh - 128px);
+      min-height: 420px;
       overflow: hidden;
     }
     .slider-track {
