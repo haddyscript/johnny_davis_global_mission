@@ -534,6 +534,62 @@
     }
 
     /* ============================================================
+       MISSION PREVIEW — quick overview + video previews
+       (continues the dark navy straight out of the focus bar above)
+    ============================================================ */
+    #mission-preview {
+      padding: 90px 0 100px;
+      background: var(--blue-dark);
+    }
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .mission-text .section-label { color: var(--orange-light); }
+    .mission-text .btn-outline { margin-top: 28px; }
+    .mission-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .mission-card {
+      display: block;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+    }
+    .mission-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.32);
+      border-color: var(--orange);
+    }
+    .mission-card .dp-thumb { height: 150px; }
+    .mission-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      padding: 16px 18px 4px;
+    }
+    .mission-card-desc {
+      font-size: .82rem;
+      color: rgba(255,255,255,.6);
+      line-height: 1.6;
+      padding: 0 18px 18px;
+    }
+    @media (max-width: 1024px) {
+      .mission-grid { grid-template-columns: 1fr; gap: 44px; }
+    }
+    @media (max-width: 640px) {
+      .mission-cards { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
        ABOUT SECTION
     ============================================================ */
     #about {

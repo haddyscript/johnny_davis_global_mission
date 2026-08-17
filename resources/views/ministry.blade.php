@@ -2,6 +2,7 @@
 
 @section('content')
   @include('partials.hero')
+  @include('partials.mission-preview')
   @include('partials.about')
   @include('partials.daily-push')
   @include('partials.podcast')
