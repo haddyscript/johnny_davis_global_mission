@@ -553,6 +553,8 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
+      align-self: start;
+      margin-top: -24px;
     }
     .mission-card {
       display: block;
