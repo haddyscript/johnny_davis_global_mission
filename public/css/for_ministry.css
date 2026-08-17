@@ -287,8 +287,8 @@
     ============================================================ */
     #hero {
       position: relative;
-      height: 100vh;
-      min-height: 600px;
+      height: calc(100vh - 128px);
+      min-height: 520px;
       overflow: hidden;
     }
     .slider-track {
@@ -2508,7 +2508,7 @@
       }
 
       /* ── Hero ── */
-      #hero { height: 90vh; min-height: 540px; }
+      #hero { height: calc(90vh - 170px); min-height: 420px; }
       .hero-content { padding-top: 84px; padding-bottom: 96px; }
       .hero-headline { font-size: clamp(2rem, 8.5vw, 3rem); margin-bottom: 12px; }
       .hero-sub { font-size: .98rem; margin-bottom: 28px; }
