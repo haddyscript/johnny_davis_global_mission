@@ -2353,16 +2353,14 @@
         max-height: none;
       }
       .slide-bg {
-        background-size: cover;
-        background-position: 75% bottom;
-      }
-      #hero::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        z-index: 2;
-        background: linear-gradient(180deg, rgba(13,42,78,.82) 0%, rgba(13,42,78,.78) 30%, rgba(13,42,78,.95) 100%);
-        pointer-events: none;
+        /* The baked-in old face/text in half-hero.png kept showing through
+           as a faint "ghost" no matter how dark the overlay got (bright
+           pixels like a white smile or gold text still glow through a
+           translucent tint). Simplest, guaranteed-clean fix: don't show
+           that image at all here — the corner photo below is the real
+           portrait now, so this just needs to be a plain brand backdrop. */
+        background-image: none !important;
+        background: linear-gradient(160deg, var(--blue-dark) 0%, #112f5a 55%, #0d2244 100%);
       }
       .hero-photo {
         z-index: 3;
