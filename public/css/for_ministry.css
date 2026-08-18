@@ -306,15 +306,15 @@
     .hero-photo {
       position: absolute;
       z-index: 1;
-      top: 0;
       right: 0;
-      height: 76%;
+      bottom: 11%;
+      height: 84%;
       width: auto;
-      max-width: 28%;
+      max-width: 42%;
       object-fit: cover;
       object-position: top center;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%);
-              mask-image: linear-gradient(to right, transparent 0%, #000 6%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 10%);
+              mask-image: linear-gradient(to right, transparent 0%, #000 10%);
       pointer-events: none;
     }
 
