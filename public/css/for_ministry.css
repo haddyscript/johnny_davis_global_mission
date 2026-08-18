@@ -2367,14 +2367,14 @@
       .hero-photo {
         display: block;
         z-index: 2;
-        top: 42%;
+        top: 36%;
         right: auto;
         bottom: auto;
         left: 50%;
         transform: translateX(-50%);
-        height: 44%;
+        height: 34%;
         width: auto;
-        max-width: 78%;
+        max-width: 75%;
         object-fit: cover;
         object-position: top center;
         border-radius: 20px;
