@@ -2359,8 +2359,7 @@
            translucent tint). Simplest, guaranteed-clean fix: don't show
            that image at all here — the corner photo below is the real
            portrait now, so this just needs to be a plain brand backdrop. */
-        background-image: none !important;
-        background: linear-gradient(160deg, var(--blue-dark) 0%, #112f5a 55%, #0d2244 100%);
+        background-image: linear-gradient(160deg, var(--blue-dark) 0%, #112f5a 55%, #0d2244 100%) !important;
       }
       .hero-photo {
         z-index: 3;
