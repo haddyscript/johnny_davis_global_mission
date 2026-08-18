@@ -303,6 +303,21 @@
       background-position: center bottom;
       background-color: var(--blue-dark);
     }
+    .hero-photo {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      height: 100%;
+      width: auto;
+      max-width: 44%;
+      object-fit: cover;
+      object-position: top center;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.5) 20%, #000 38%);
+              mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.5) 20%, #000 38%);
+      pointer-events: none;
+    }
 
     /* Hero content */
     .hero-content {
