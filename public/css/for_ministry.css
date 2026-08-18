@@ -2401,19 +2401,7 @@
         background: linear-gradient(180deg, rgba(13,42,78,.82) 0%, rgba(13,42,78,.78) 30%, rgba(13,42,78,.95) 100%);
         pointer-events: none;
       }
-      .hero-photo {
-        z-index: 3;
-        top: 14px;
-        bottom: auto;
-        right: 14px;
-        height: 150px;
-        max-width: 46%;
-        border-radius: 18px;
-        border: 2px solid rgba(255,255,255,.22);
-        box-shadow: 0 10px 30px rgba(0,0,0,.4);
-        -webkit-mask-image: none;
-                mask-image: none;
-      }
+      .hero-photo { display: none; }
 
       /* Un-hide the accessible copy — it's the visible hero text on mobile.
          hero-script is left out on purpose: its CMS content currently
