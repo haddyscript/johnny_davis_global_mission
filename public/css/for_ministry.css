@@ -2333,6 +2333,108 @@
     }
 
     /* ============================================================
+       HERO — PHONES & TABLETS — max-width: 1024px
+       The headline/tagline/focus-bar text is baked into the desktop
+       background image (half-hero.png), which only reads well at the
+       wide desktop ratio the image was built for, and the portrait
+       photo's percentage-based crop (tuned for desktop) was cutting off
+       the top of the head on iPad-width viewports. Below 1024px we
+       restore the sr-only accessible copy as real, visible HTML (it
+       reflows correctly at any width), mute the busy background behind
+       it, and show the portrait as a small framed corner photo — sized
+       with vw so it scales between phone and tablet — instead of the
+       desktop full-bleed crop. Desktop (> 1024px) is untouched.
+    ============================================================ */
+    @media (max-width: 1024px) {
+      #hero {
+        aspect-ratio: auto;
+        height: auto;
+        min-height: 620px;
+        max-height: none;
+      }
+      .slide-bg {
+        background-size: cover;
+        background-position: 75% bottom;
+      }
+      #hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: linear-gradient(180deg, rgba(13,42,78,.82) 0%, rgba(13,42,78,.78) 30%, rgba(13,42,78,.95) 100%);
+        pointer-events: none;
+      }
+      .hero-photo {
+        z-index: 3;
+        top: 14px;
+        bottom: auto;
+        right: 14px;
+        height: clamp(150px, 20vw, 260px);
+        max-width: 46%;
+        border-radius: 18px;
+        border: 2px solid rgba(255,255,255,.22);
+        box-shadow: 0 10px 30px rgba(0,0,0,.4);
+        -webkit-mask-image: none;
+                mask-image: none;
+      }
+
+      /* Un-hide the accessible copy — it's the visible hero text below
+         desktop. hero-script is left out on purpose: its CMS content
+         currently duplicates the explore line below, so showing both
+         reads as a repeated sentence. Update the "hero subtitle" CMS
+         field with distinct copy (e.g. "Transforming Lives, Empowering
+         Communities") if you'd like the script line back here too. */
+      #hero .hero-badge.sr-only,
+      #hero .hero-headline.sr-only,
+      #hero .hero-explore.sr-only,
+      #hero ul.sr-only {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0;
+        padding: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+        border: 0;
+      }
+      .hero-content { padding-top: clamp(190px, 22vw, 260px); padding-bottom: 40px; max-width: 100%; }
+      .hero-badge { font-size: .68rem; padding: 5px 14px; margin-bottom: 18px; }
+      .hero-headline { margin-bottom: 14px; }
+      .hero-headline-line { font-size: clamp(1.9rem, 6.5vw, 3.2rem); }
+      .hero-explore { font-size: .98rem; margin-bottom: 26px; max-width: 100%; }
+      #hero ul[aria-label="Ministry focus areas"] {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 16px;
+        margin-bottom: 22px;
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: .8rem;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        color: var(--orange-light);
+      }
+      #hero ul[aria-label="Ministry focus areas"] li {
+        position: relative;
+        padding-right: 16px;
+      }
+      #hero ul[aria-label="Ministry focus areas"] li:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 2px;
+        bottom: 2px;
+        width: 1px;
+        background: rgba(240,124,30,.5);
+      }
+
+      .hero-ctas { gap: 12px; }
+      .hero-ctas .btn-lg { min-height: 52px; justify-content: center; width: 100%; max-width: 320px; }
+      .hero-scroll { display: none; }
+    }
+
+    /* ============================================================
        MOBILE ENHANCEMENTS — max-width: 768px
        Desktop (> 768px) is untouched by every rule below
     ============================================================ */
@@ -2374,89 +2476,6 @@
         from { opacity: 0; transform: translateX(-18px); }
         to   { opacity: 1; transform: translateX(0); }
       }
-
-      /* ── Hero ──
-         The headline/tagline/focus-bar text is baked into the desktop
-         background image (half-hero.png), which only reads well at the
-         wide desktop ratio the image was built for. On narrow screens we
-         restore the sr-only accessible copy as real, visible HTML instead
-         (it reflows correctly at any width), mute the busy background
-         behind it, and shrink the layered portrait to a small corner
-         photo so it doesn't compete with the live text. */
-      #hero {
-        aspect-ratio: auto;
-        height: auto;
-        min-height: 620px;
-        max-height: none;
-      }
-      .slide-bg {
-        background-size: cover;
-        background-position: 75% bottom;
-      }
-      #hero::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        z-index: 2;
-        background: linear-gradient(180deg, rgba(13,42,78,.82) 0%, rgba(13,42,78,.78) 30%, rgba(13,42,78,.95) 100%);
-        pointer-events: none;
-      }
-      .hero-photo { display: none; }
-
-      /* Un-hide the accessible copy — it's the visible hero text on mobile.
-         hero-script is left out on purpose: its CMS content currently
-         duplicates the explore line below, so showing both reads as a
-         repeated sentence. Update the "hero subtitle" CMS field with
-         distinct copy (e.g. "Transforming Lives, Empowering Communities")
-         if you'd like the script line back on mobile too. */
-      #hero .hero-badge.sr-only,
-      #hero .hero-headline.sr-only,
-      #hero .hero-explore.sr-only,
-      #hero ul.sr-only {
-        position: static;
-        width: auto;
-        height: auto;
-        margin: 0;
-        padding: revert;
-        overflow: visible;
-        clip: auto;
-        white-space: normal;
-        border: 0;
-      }
-      .hero-content { padding-top: 170px; padding-bottom: 40px; max-width: 100%; }
-      .hero-badge { font-size: .68rem; padding: 5px 14px; margin-bottom: 18px; }
-      .hero-headline { margin-bottom: 14px; }
-      .hero-headline-line { font-size: clamp(1.9rem, 8.5vw, 2.6rem); }
-      .hero-explore { font-size: .98rem; margin-bottom: 26px; max-width: 100%; }
-      #hero ul[aria-label="Ministry focus areas"] {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px 16px;
-        margin-bottom: 22px;
-        font-family: 'Playfair Display', serif;
-        font-weight: 700;
-        font-size: .8rem;
-        letter-spacing: .04em;
-        text-transform: uppercase;
-        color: var(--orange-light);
-      }
-      #hero ul[aria-label="Ministry focus areas"] li {
-        position: relative;
-        padding-right: 16px;
-      }
-      #hero ul[aria-label="Ministry focus areas"] li:not(:last-child)::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 2px;
-        bottom: 2px;
-        width: 1px;
-        background: rgba(240,124,30,.5);
-      }
-
-      .hero-ctas { gap: 12px; }
-      .hero-ctas .btn-lg { min-height: 52px; justify-content: center; width: 100%; max-width: 320px; }
-      .hero-scroll { display: none; }
 
       /* ── About ── */
       #about { padding: 68px 0 56px; }
