@@ -2375,14 +2375,95 @@
         to   { opacity: 1; transform: translateX(0); }
       }
 
-      /* ── Hero ── */
-      #hero { height: calc(90vh - 170px); min-height: 420px; }
-      .hero-content { padding-top: 84px; padding-bottom: 96px; }
-      .hero-headline { font-size: clamp(2rem, 8.5vw, 3rem); margin-bottom: 12px; }
-      .hero-sub { font-size: .98rem; margin-bottom: 28px; }
+      /* ── Hero ──
+         The headline/tagline/focus-bar text is baked into the desktop
+         background image (half-hero.png), which only reads well at the
+         wide desktop ratio the image was built for. On narrow screens we
+         restore the sr-only accessible copy as real, visible HTML instead
+         (it reflows correctly at any width), mute the busy background
+         behind it, and shrink the layered portrait to a small corner
+         photo so it doesn't compete with the live text. */
+      #hero {
+        aspect-ratio: auto;
+        height: auto;
+        min-height: 620px;
+        max-height: none;
+      }
+      .slide-bg {
+        background-size: cover;
+        background-position: 75% bottom;
+      }
+      #hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: linear-gradient(180deg, rgba(13,42,78,.5) 0%, rgba(13,42,78,.3) 38%, rgba(13,42,78,.88) 100%);
+        pointer-events: none;
+      }
+      .hero-photo {
+        z-index: 3;
+        top: 14px;
+        bottom: auto;
+        right: 14px;
+        height: 150px;
+        max-width: 46%;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.35);
+        -webkit-mask-image: none;
+                mask-image: none;
+      }
+
+      /* Un-hide the accessible copy — it's the visible hero text on mobile */
+      #hero .hero-badge.sr-only,
+      #hero .hero-headline.sr-only,
+      #hero .hero-script.sr-only,
+      #hero .hero-explore.sr-only,
+      #hero ul.sr-only {
+        position: static;
+        width: auto;
+        height: auto;
+        margin: 0;
+        padding: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+        border: 0;
+      }
+      .hero-content { padding-top: 190px; padding-bottom: 40px; max-width: 100%; }
+      .hero-badge { font-size: .68rem; padding: 5px 14px; margin-bottom: 14px; }
+      .hero-headline { margin-bottom: 10px; }
+      .hero-headline-line { font-size: clamp(1.9rem, 8.5vw, 2.6rem); }
+      .hero-script { font-size: clamp(1.1rem, 5vw, 1.35rem); margin-bottom: 16px; }
+      .hero-explore { font-size: .95rem; margin-bottom: 20px; max-width: 100%; }
+      #hero ul[aria-label="Ministry focus areas"] {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 16px;
+        margin-bottom: 22px;
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: .8rem;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        color: var(--orange-light);
+      }
+      #hero ul[aria-label="Ministry focus areas"] li {
+        position: relative;
+        padding-right: 16px;
+      }
+      #hero ul[aria-label="Ministry focus areas"] li:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 2px;
+        bottom: 2px;
+        width: 1px;
+        background: rgba(240,124,30,.5);
+      }
+
       .hero-ctas { gap: 12px; }
       .hero-ctas .btn-lg { min-height: 52px; justify-content: center; width: 100%; max-width: 320px; }
-      .hero-badge { font-size: .68rem; padding: 5px 14px; }
       .hero-scroll { display: none; }
 
       /* ── About ── */
