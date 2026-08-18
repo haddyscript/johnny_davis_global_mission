@@ -2334,98 +2334,45 @@
 
     /* ============================================================
        HERO — PHONES & TABLETS — max-width: 1024px
-       The headline/tagline/focus-bar text is baked into the desktop
-       background image (half-hero.png), which only reads well at the
-       wide desktop ratio the image was built for, and the portrait
-       photo's percentage-based crop (tuned for desktop) was cutting off
-       the top of the head on iPad-width viewports. Below 1024px we
-       restore the sr-only accessible copy as real, visible HTML (it
-       reflows correctly at any width), mute the busy background behind
-       it, and show the portrait as a small framed corner photo — sized
-       with vw so it scales between phone and tablet — instead of the
-       desktop full-bleed crop. Desktop (> 1024px) is untouched.
+       Desktop uses half-hero.png (landscape, text+photo baked in).
+       Below 1024px we swap in a dedicated portrait graphic
+       (half-hero-mobile.png, 864×1821 — badge/headline/tagline/photo/
+       focus-bar all pre-composited for a tall screen) instead of trying
+       to crop or reflow the desktop asset. The accessible sr-only copy
+       and the separately-layered .hero-photo stay hidden here since
+       this image already contains that content. Only the live CTA
+       buttons are real HTML, positioned in the reserved gap right below
+       the image via a width-relative padding-top (same technique the
+       desktop layout already uses to keep buttons in sync with a
+       fixed-ratio background image). Desktop (> 1024px) is untouched.
     ============================================================ */
     @media (max-width: 1024px) {
       #hero {
         aspect-ratio: auto;
         height: auto;
-        min-height: 620px;
+        min-height: 0;
         max-height: none;
+        background: var(--blue-dark);
       }
       .slide-bg {
-        /* The baked-in old face/text in half-hero.png kept showing through
-           as a faint "ghost" no matter how dark the overlay got (bright
-           pixels like a white smile or gold text still glow through a
-           translucent tint). Simplest, guaranteed-clean fix: don't show
-           that image at all here — the corner photo below is the real
-           portrait now, so this just needs to be a plain brand backdrop. */
-        background-image: linear-gradient(160deg, var(--blue-dark) 0%, #112f5a 55%, #0d2244 100%) !important;
+        background-image: url('../images/johnny-davis-ministry/half-hero-mobile.png') !important;
+        background-size: contain;
+        background-position: top center;
+        background-repeat: no-repeat;
       }
-      .hero-photo {
-        z-index: 3;
-        top: 14px;
-        bottom: auto;
-        right: 14px;
-        height: clamp(150px, 20vw, 260px);
-        max-width: 46%;
-        border-radius: 18px;
-        border: 2px solid rgba(255,255,255,.22);
-        box-shadow: 0 10px 30px rgba(0,0,0,.4);
-        -webkit-mask-image: none;
-                mask-image: none;
+      .hero-photo { display: none; }
+      /* .container's own side padding would otherwise make the percentage
+         basis below narrower than #hero's full width (which is what the
+         background image scales against), throwing the math off — move
+         the inset onto .hero-content instead so both use the same basis. */
+      #hero .container { padding-left: 0; padding-right: 0; }
+      .hero-content {
+        padding-top: 210.8%;
+        padding-bottom: 32px;
+        padding-left: 20px;
+        padding-right: 20px;
+        max-width: 100%;
       }
-
-      /* Un-hide the accessible copy — it's the visible hero text below
-         desktop. hero-script is left out on purpose: its CMS content
-         currently duplicates the explore line below, so showing both
-         reads as a repeated sentence. Update the "hero subtitle" CMS
-         field with distinct copy (e.g. "Transforming Lives, Empowering
-         Communities") if you'd like the script line back here too. */
-      #hero .hero-badge.sr-only,
-      #hero .hero-headline.sr-only,
-      #hero .hero-explore.sr-only,
-      #hero ul.sr-only {
-        position: static;
-        width: auto;
-        height: auto;
-        margin: 0;
-        padding: revert;
-        overflow: visible;
-        clip: auto;
-        white-space: normal;
-        border: 0;
-      }
-      .hero-content { padding-top: clamp(190px, 22vw, 260px); padding-bottom: 40px; max-width: 100%; }
-      .hero-badge { font-size: .68rem; padding: 5px 14px; margin-bottom: 18px; }
-      .hero-headline { margin-bottom: 14px; }
-      .hero-headline-line { font-size: clamp(1.9rem, 6.5vw, 3.2rem); }
-      .hero-explore { font-size: .98rem; margin-bottom: 26px; max-width: 100%; }
-      #hero ul[aria-label="Ministry focus areas"] {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px 16px;
-        margin-bottom: 22px;
-        font-family: 'Playfair Display', serif;
-        font-weight: 700;
-        font-size: .8rem;
-        letter-spacing: .04em;
-        text-transform: uppercase;
-        color: var(--orange-light);
-      }
-      #hero ul[aria-label="Ministry focus areas"] li {
-        position: relative;
-        padding-right: 16px;
-      }
-      #hero ul[aria-label="Ministry focus areas"] li:not(:last-child)::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 2px;
-        bottom: 2px;
-        width: 1px;
-        background: rgba(240,124,30,.5);
-      }
-
       .hero-ctas { gap: 12px; }
       .hero-ctas .btn-lg { min-height: 52px; justify-content: center; width: 100%; max-width: 320px; }
       .hero-scroll { display: none; }
