@@ -135,6 +135,7 @@
           alt="Book Me Now — Speaking Engagements, Conferences, Ministry Events. Email: info@johnnydavisministries.org"
           loading="lazy"
           class="booking-banner-img"
+          draggable="false"
         >
       </article>
     </div>

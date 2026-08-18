@@ -744,6 +744,9 @@
       margin: 0 auto;
       border-radius: var(--radius-md);
       box-shadow: var(--shadow-md);
+      -webkit-user-drag: none;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     /* ============================================================
