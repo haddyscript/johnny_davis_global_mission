@@ -2360,7 +2360,29 @@
         background-position: top center;
         background-repeat: no-repeat;
       }
-      .hero-photo { display: none; }
+      /* Overlay the real portrait on top of the illustrated man baked into
+         half-hero-mobile.png, roughly matching where he sits in that
+         image (starts right below the tagline, ends just above the
+         focus-bar strip). */
+      .hero-photo {
+        display: block;
+        z-index: 2;
+        top: 42%;
+        right: auto;
+        bottom: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 44%;
+        width: auto;
+        max-width: 78%;
+        object-fit: cover;
+        object-position: top center;
+        border-radius: 20px;
+        border: 3px solid rgba(255,255,255,.25);
+        box-shadow: 0 14px 40px rgba(0,0,0,.45);
+        -webkit-mask-image: none;
+                mask-image: none;
+      }
       /* .container's own side padding would otherwise make the percentage
          basis below narrower than #hero's full width (which is what the
          background image scales against), throwing the math off — move
