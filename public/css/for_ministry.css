@@ -313,8 +313,8 @@
       max-width: 28%;
       object-fit: cover;
       object-position: top center;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.5) 20%, #000 38%);
-              mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.5) 20%, #000 38%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%);
+              mask-image: linear-gradient(to right, transparent 0%, #000 6%);
       pointer-events: none;
     }
 
