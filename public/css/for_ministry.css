@@ -2398,7 +2398,7 @@
         position: absolute;
         inset: 0;
         z-index: 2;
-        background: linear-gradient(180deg, rgba(13,42,78,.5) 0%, rgba(13,42,78,.3) 38%, rgba(13,42,78,.88) 100%);
+        background: linear-gradient(180deg, rgba(13,42,78,.82) 0%, rgba(13,42,78,.78) 30%, rgba(13,42,78,.95) 100%);
         pointer-events: none;
       }
       .hero-photo {
@@ -2408,16 +2408,21 @@
         right: 14px;
         height: 150px;
         max-width: 46%;
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0,0,0,.35);
+        border-radius: 18px;
+        border: 2px solid rgba(255,255,255,.22);
+        box-shadow: 0 10px 30px rgba(0,0,0,.4);
         -webkit-mask-image: none;
                 mask-image: none;
       }
 
-      /* Un-hide the accessible copy — it's the visible hero text on mobile */
+      /* Un-hide the accessible copy — it's the visible hero text on mobile.
+         hero-script is left out on purpose: its CMS content currently
+         duplicates the explore line below, so showing both reads as a
+         repeated sentence. Update the "hero subtitle" CMS field with
+         distinct copy (e.g. "Transforming Lives, Empowering Communities")
+         if you'd like the script line back on mobile too. */
       #hero .hero-badge.sr-only,
       #hero .hero-headline.sr-only,
-      #hero .hero-script.sr-only,
       #hero .hero-explore.sr-only,
       #hero ul.sr-only {
         position: static;
@@ -2430,12 +2435,11 @@
         white-space: normal;
         border: 0;
       }
-      .hero-content { padding-top: 190px; padding-bottom: 40px; max-width: 100%; }
-      .hero-badge { font-size: .68rem; padding: 5px 14px; margin-bottom: 14px; }
-      .hero-headline { margin-bottom: 10px; }
+      .hero-content { padding-top: 170px; padding-bottom: 40px; max-width: 100%; }
+      .hero-badge { font-size: .68rem; padding: 5px 14px; margin-bottom: 18px; }
+      .hero-headline { margin-bottom: 14px; }
       .hero-headline-line { font-size: clamp(1.9rem, 8.5vw, 2.6rem); }
-      .hero-script { font-size: clamp(1.1rem, 5vw, 1.35rem); margin-bottom: 16px; }
-      .hero-explore { font-size: .95rem; margin-bottom: 20px; max-width: 100%; }
+      .hero-explore { font-size: .98rem; margin-bottom: 26px; max-width: 100%; }
       #hero ul[aria-label="Ministry focus areas"] {
         display: flex;
         flex-wrap: wrap;
