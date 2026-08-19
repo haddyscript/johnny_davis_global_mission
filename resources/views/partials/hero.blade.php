@@ -3,7 +3,7 @@
 ============================================================ -->
 <section id="hero" aria-label="Johnny Davis Ministries Hero">
 
-  <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero-section-white.png') }}')"></div>
+  <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/hero-remove-2-buttons.png') }}')"></div>
 
   <img class="hero-photo" src="{{ asset('images/johnny-davis-ministry/background-pic-behind.jpeg') }}" alt="Johnny Davis">
 
@@ -37,7 +37,7 @@
         <li>Healing</li>
       </ul>
 
-      <div class="hero-ctas sr-only">
+      <div class="hero-ctas">
         <a href="#daily-push" class="btn btn-primary btn-lg">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
           Watch Daily Push

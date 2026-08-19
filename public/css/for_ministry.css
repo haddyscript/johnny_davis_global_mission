@@ -328,10 +328,12 @@
       /* percentage here resolves against the container's WIDTH (a CSS quirk for
          vertical padding) — since #hero's height is aspect-ratio-locked to its
          width, this keeps the CTAs scaling in step with the baked-in image text
-         instead of drifting out of place at different viewport widths. The image
-         now also has the focus-bar strip baked into its bottom edge, so this sits
-         the buttons in the empty gap just above that strip. */
-      padding-bottom: 9.5%;
+         instead of drifting out of place at different viewport widths.
+         hero-remove-2-buttons.png leaves a blank gap roughly 30% up from its
+         bottom edge where the old baked-in buttons used to be; 20% converts
+         that to a width-relative percentage (30% * image's height/width ratio
+         of ~0.666) so the live buttons land back in that gap. */
+      padding-bottom: 20%;
       max-width: 760px;
     }
     .sr-only {
