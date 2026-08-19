@@ -319,11 +319,11 @@
     .hero-dome-veil {
       position: absolute;
       z-index: 2;
-      left: 68%;
+      left: 84%;
       top: 0;
-      width: 32%;
-      height: 44%;
-      background: radial-gradient(ellipse 68% 70% at 55% 38%, rgba(255,255,255,1) 0%, rgba(255,255,255,.98) 60%, rgba(255,255,255,0) 100%);
+      width: 16%;
+      height: 33%;
+      background: radial-gradient(ellipse 70% 72% at 50% 40%, rgba(255,255,255,1) 0%, rgba(255,255,255,.98) 65%, rgba(255,255,255,0) 100%);
       pointer-events: none;
     }
     /* Hidden on desktop — the portrait is already baked into
