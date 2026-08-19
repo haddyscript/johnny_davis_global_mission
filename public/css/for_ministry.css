@@ -304,6 +304,12 @@
       background-repeat: no-repeat;
       background-position: center bottom;
       background-color: var(--white);
+      /* Lightens/cools the whole baked-in image a touch (requested to soften
+         the warm skin tone) — this is a blanket filter, so it affects the
+         buildings, watch, sweater, and text baked into the image too, not
+         just the skin, since there's no way to target just the skin from
+         CSS alone. */
+      filter: brightness(1.07) saturate(0.85);
     }
     /* Hidden on desktop — the portrait is already baked into
        hero-remove-2-buttons.png, and overlaying the real photo on top of it
