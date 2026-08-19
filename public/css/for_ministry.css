@@ -305,15 +305,27 @@
       background-position: center bottom;
       background-color: var(--white);
     }
-    /* Hidden on desktop — the portrait is baked into half-hero-section-white.png.
-       The mobile media query below switches this back on as an overlay on
-       half-hero-mobile.png, which needs it since that image only has an
-       illustrated silhouette. */
+    /* Overlays the real portrait photo on top of the same man already
+       composited into hero-remove-2-buttons.png, roughly matching his size
+       and position there, so the figure reads sharp instead of like a
+       pasted-in cutout. Faded at the edges (rather than a hard box) so it
+       blends into the skyline/capitol behind him. The mobile media query
+       below overrides all of this with its own positioning for
+       half-hero-mobile.png. */
     .hero-photo {
-      display: none;
+      display: block;
       position: absolute;
       z-index: 1;
+      right: 2%;
+      bottom: 0;
+      height: 100%;
+      width: auto;
+      max-width: 46%;
+      object-fit: cover;
+      object-position: top center;
       pointer-events: none;
+      -webkit-mask-image: radial-gradient(ellipse 62% 60% at 50% 40%, #000 55%, transparent 100%);
+              mask-image: radial-gradient(ellipse 62% 60% at 50% 40%, #000 55%, transparent 100%);
     }
 
     /* Hero content */
