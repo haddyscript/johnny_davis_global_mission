@@ -5,6 +5,8 @@
 
   <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/hero-remove-2-buttons.png') }}')"></div>
 
+  <div class="hero-dome-veil" aria-hidden="true"></div>
+
   <img class="hero-photo" src="{{ asset('images/johnny-davis-ministry/background-pic-behind.jpeg') }}" alt="Johnny Davis">
 
   <!-- Content -->

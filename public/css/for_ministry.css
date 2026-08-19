@@ -311,6 +311,21 @@
          CSS alone. */
       filter: brightness(1.07) saturate(0.85);
     }
+    /* Soft feathered white patch over the capitol's gold dome, baked into
+       hero-remove-2-buttons.png at roughly this spot — sized generously and
+       radial so it fades into the sky rather than showing a hard edge.
+       Hidden on mobile (media query below) since half-hero-mobile.png
+       doesn't have this dome in the same place. */
+    .hero-dome-veil {
+      position: absolute;
+      z-index: 2;
+      left: 76%;
+      top: 0;
+      width: 22%;
+      height: 36%;
+      background: radial-gradient(ellipse 60% 62% at 52% 40%, rgba(255,255,255,.96) 0%, rgba(255,255,255,.8) 45%, rgba(255,255,255,0) 100%);
+      pointer-events: none;
+    }
     /* Hidden on desktop — the portrait is already baked into
        hero-remove-2-buttons.png, and overlaying the real photo on top of it
        kept producing visible ghosting/seams no matter how the mask was
@@ -2382,7 +2397,9 @@
         background-size: contain;
         background-position: top center;
         background-repeat: no-repeat;
+        filter: none;
       }
+      .hero-dome-veil { display: none; }
       /* Overlay the real portrait on top of the illustrated man baked into
          half-hero-mobile.png, roughly matching where he sits in that
          image (starts right below the tagline, ends just above the
