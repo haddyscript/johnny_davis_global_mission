@@ -287,10 +287,13 @@
     ============================================================ */
     #hero {
       position: relative;
-      /* matches half-hero-section-white.png's true ratio (1537/1023) */
+      /* matches half-hero-section-white.png's true ratio (1537/1023).
+         No max-height cap here on purpose — capping it forces
+         background-size:contain to shrink the image to fit, which leaves
+         blank letterbox space beside it on wide/short viewports. Letting
+         the section grow to the image's natural height keeps it gapless. */
       aspect-ratio: 1537 / 1023;
       height: auto;
-      max-height: 100vh;
       min-height: 480px;
       overflow: hidden;
     }
@@ -301,6 +304,16 @@
       background-repeat: no-repeat;
       background-position: center bottom;
       background-color: var(--white);
+    }
+    /* Hidden on desktop — the portrait is baked into half-hero-section-white.png.
+       The mobile media query below switches this back on as an overlay on
+       half-hero-mobile.png, which needs it since that image only has an
+       illustrated silhouette. */
+    .hero-photo {
+      display: none;
+      position: absolute;
+      z-index: 1;
+      pointer-events: none;
     }
 
     /* Hero content */

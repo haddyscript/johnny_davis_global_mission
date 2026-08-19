@@ -5,6 +5,8 @@
 
   <div class="slide-bg" style="background-image:url('{{ asset('images/johnny-davis-ministry/half-hero-section-white.png') }}')"></div>
 
+  <img class="hero-photo" src="{{ asset('images/johnny-davis-ministry/background-pic-behind.jpeg') }}" alt="Johnny Davis">
+
   <!-- Content -->
   <div class="container" style="height:100%; position:relative; z-index:3;">
     <div class="hero-content">
