@@ -324,8 +324,8 @@
       object-fit: cover;
       object-position: top center;
       pointer-events: none;
-      -webkit-mask-image: radial-gradient(ellipse 62% 64% at 50% 40%, #000 80%, transparent 100%);
-              mask-image: radial-gradient(ellipse 62% 64% at 50% 40%, #000 80%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 45% 48% at 50% 45%, #000 80%, transparent 100%);
+              mask-image: radial-gradient(ellipse 45% 48% at 50% 45%, #000 80%, transparent 100%);
     }
 
     /* Hero content */
