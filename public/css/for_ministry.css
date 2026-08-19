@@ -287,9 +287,8 @@
     ============================================================ */
     #hero {
       position: relative;
-      /* slightly taller than the image's true ratio (1750/899) so the extra
-         room shows as a small navy gap above it once the image is bottom-anchored */
-      aspect-ratio: 1750 / 935;
+      /* matches half-hero-section-white.png's true ratio (1537/1023) */
+      aspect-ratio: 1537 / 1023;
       height: auto;
       max-height: 100vh;
       min-height: 480px;
@@ -301,21 +300,7 @@
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center bottom;
-      background-color: var(--blue-dark);
-    }
-    .hero-photo {
-      position: absolute;
-      z-index: 1;
-      right: 0;
-      bottom: 11%;
-      height: 84%;
-      width: auto;
-      max-width: 42%;
-      object-fit: cover;
-      object-position: top center;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 10%);
-              mask-image: linear-gradient(to right, transparent 0%, #000 10%);
-      pointer-events: none;
+      background-color: var(--white);
     }
 
     /* Hero content */
@@ -435,7 +420,7 @@
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      color: rgba(255,255,255,.5);
+      color: rgba(13,42,78,.5);
       font-size: .7rem;
       letter-spacing: .1em;
       text-transform: uppercase;
@@ -443,7 +428,7 @@
     }
     .hero-scroll-line {
       width: 1px; height: 40px;
-      background: linear-gradient(to bottom, rgba(255,255,255,.5), transparent);
+      background: linear-gradient(to bottom, rgba(13,42,78,.5), transparent);
       animation: scrollBob 2s ease-in-out infinite;
     }
     @keyframes scrollBob {
