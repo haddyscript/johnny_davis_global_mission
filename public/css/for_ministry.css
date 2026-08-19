@@ -316,16 +316,16 @@
       display: block;
       position: absolute;
       z-index: 1;
-      right: 6%;
-      bottom: 12%;
-      height: 74%;
+      right: 4%;
+      bottom: 8%;
+      height: 88%;
       width: auto;
-      max-width: 32%;
+      max-width: 36%;
       object-fit: cover;
       object-position: top center;
       pointer-events: none;
-      -webkit-mask-image: radial-gradient(ellipse 58% 60% at 50% 40%, #000 30%, transparent 90%);
-              mask-image: radial-gradient(ellipse 58% 60% at 50% 40%, #000 30%, transparent 90%);
+      -webkit-mask-image: radial-gradient(ellipse 62% 64% at 50% 40%, #000 80%, transparent 100%);
+              mask-image: radial-gradient(ellipse 62% 64% at 50% 40%, #000 80%, transparent 100%);
     }
 
     /* Hero content */
