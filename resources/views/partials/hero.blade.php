@@ -38,12 +38,12 @@
       </ul>
 
       <div class="hero-ctas">
-        <a href="#daily-push" class="btn btn-primary btn-lg">
+        <a href="#daily-push" class="btn btn-blue btn-lg">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
           Watch Daily Push
         </a>
         <a href="{{ str_contains(request()->getHost(), 'johnnydavisministries.org') ? route('donate').'?campaign=Feed+Filipino+Children' : route('donate') }}" class="btn btn-outline btn-lg">
-          &#9829; Support the Mission
+          <span class="hero-cta-heart" aria-hidden="true">&#9829;</span> Support the Mission
         </a>
       </div>
     </div>

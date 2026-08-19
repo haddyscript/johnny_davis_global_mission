@@ -423,6 +423,21 @@
       gap: 16px;
       animation: fadeUp .9s .6s ease both;
     }
+    /* .btn-outline defaults to white-on-transparent for dark hero backgrounds
+       elsewhere on the site; this hero's background is now light, so it
+       needs its own navy-on-white treatment to stay readable. */
+    .hero-ctas .btn-outline {
+      background: var(--white);
+      color: var(--blue-dark);
+      border: 2px solid var(--orange);
+    }
+    .hero-ctas .btn-outline:hover {
+      background: rgba(240,124,30,.08);
+      border-color: var(--orange-dark);
+      color: var(--blue-dark);
+      transform: translateY(-2px);
+    }
+    .hero-cta-heart { color: var(--orange); }
 
     /* Scroll indicator */
     .hero-scroll {
