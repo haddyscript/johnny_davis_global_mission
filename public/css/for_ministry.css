@@ -305,27 +305,17 @@
       background-position: center bottom;
       background-color: var(--white);
     }
-    /* Overlays the real portrait photo on top of the same man already
-       composited into hero-remove-2-buttons.png, roughly matching his size
-       and position there, so the figure reads sharp instead of like a
-       pasted-in cutout. Faded at the edges (rather than a hard box) so it
-       blends into the skyline/capitol behind him. The mobile media query
-       below overrides all of this with its own positioning for
-       half-hero-mobile.png. */
+    /* Hidden on desktop — the portrait is already baked into
+       hero-remove-2-buttons.png, and overlaying the real photo on top of it
+       kept producing visible ghosting/seams no matter how the mask was
+       tuned, so it's not worth it there. The mobile media query below
+       switches this back on as an overlay on half-hero-mobile.png, which
+       needs it since that image only has an illustrated silhouette. */
     .hero-photo {
-      display: block;
+      display: none;
       position: absolute;
       z-index: 1;
-      right: 4%;
-      bottom: 8%;
-      height: 88%;
-      width: auto;
-      max-width: 36%;
-      object-fit: cover;
-      object-position: top center;
       pointer-events: none;
-      -webkit-mask-image: radial-gradient(ellipse 45% 48% at 50% 45%, #000 80%, transparent 100%);
-              mask-image: radial-gradient(ellipse 45% 48% at 50% 45%, #000 80%, transparent 100%);
     }
 
     /* Hero content */
