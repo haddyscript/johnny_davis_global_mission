@@ -2397,7 +2397,10 @@
         background-size: contain;
         background-position: top center;
         background-repeat: no-repeat;
-        filter: none;
+        /* Same softening filter as desktop (brightens and cools the warm
+           tone a touch) — applies to the whole baked-in image, not just
+           skin, since CSS can't target just the skin. */
+        filter: brightness(1.07) saturate(0.85);
         /* Nudges the baked-in mobile graphic up slightly within #hero
            (which clips via overflow:hidden), since background-position:
            top already pins it flush and leaves no other room to move it. */
