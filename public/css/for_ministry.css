@@ -444,17 +444,22 @@
       display: flex;
       flex-wrap: wrap;
       gap: 16px;
-      /* Starts hidden and fades/slides up whenever it scrolls into view —
-         see the IntersectionObserver in for_ministry.js that toggles
-         .visible, both scrolling down into it and back up into it. */
+    }
+    /* Each button starts hidden and fades/slides up whenever .hero-ctas
+       scrolls into view — see the IntersectionObserver in for_ministry.js
+       that toggles .visible, both scrolling down into it and back up into
+       it. Animated per-button (rather than on the .hero-ctas container)
+       so the two buttons can be staggered into two distinct beats. */
+    .hero-ctas .btn {
       opacity: 0;
-      transform: translateY(24px);
-      transition: opacity .7s ease, transform .7s ease;
+      transform: translateY(48px) scale(.92);
+      transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1);
     }
-    .hero-ctas.visible {
+    .hero-ctas.visible .btn {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
+    .hero-ctas .btn:nth-child(2) { transition-delay: .12s; }
     /* .btn-outline defaults to white-on-transparent for dark hero backgrounds
        elsewhere on the site; this hero's background is now light, so it
        needs its own navy-on-white treatment to stay readable. */
