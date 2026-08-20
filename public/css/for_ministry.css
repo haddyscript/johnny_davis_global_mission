@@ -2398,6 +2398,10 @@
         background-position: top center;
         background-repeat: no-repeat;
         filter: none;
+        /* Nudges the baked-in mobile graphic up slightly within #hero
+           (which clips via overflow:hidden), since background-position:
+           top already pins it flush and leaves no other room to move it. */
+        transform: translateY(-14px);
       }
       .hero-dome-veil { display: none; }
       /* Overlay the real portrait on top of the illustrated man baked into
