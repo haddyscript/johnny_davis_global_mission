@@ -57,6 +57,25 @@
     els.forEach(function (el) { aboutRetriggerObs.observe(el); });
   })();
 
+  // ─── Hero CTA buttons — retriggers every time they scroll into or out
+  //     of view (both scrolling down into them and back up into them) ──
+  (function () {
+    var ctaEls = document.querySelectorAll('.hero-ctas');
+    if (!ctaEls.length) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      ctaEls.forEach(function (el) { el.classList.add('visible'); });
+      return;
+    }
+
+    var heroCtaObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        entry.target.classList.toggle('visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    ctaEls.forEach(function (el) { heroCtaObs.observe(el); });
+  })();
+
   // ─── Video modal (Daily Push) ────────────────────────────────
   const videoModal = document.getElementById('videoModal');
   const modalCloseBtn = document.getElementById('modalClose');

@@ -444,7 +444,16 @@
       display: flex;
       flex-wrap: wrap;
       gap: 16px;
-      animation: fadeUp .9s .6s ease both;
+      /* Starts hidden and fades/slides up whenever it scrolls into view —
+         see the IntersectionObserver in for_ministry.js that toggles
+         .visible, both scrolling down into it and back up into it. */
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .hero-ctas.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
     /* .btn-outline defaults to white-on-transparent for dark hero backgrounds
        elsewhere on the site; this hero's background is now light, so it
