@@ -2404,29 +2404,11 @@
         transform: translateY(-14px);
       }
       .hero-dome-veil { display: none; }
-      /* Overlay the real portrait on top of the illustrated man baked into
-         half-hero-mobile.png, roughly matching where he sits in that
-         image (starts right below the tagline, ends just above the
-         focus-bar strip). */
-      .hero-photo {
-        display: block;
-        z-index: 2;
-        top: 34%;
-        right: auto;
-        bottom: auto;
-        left: 50%;
-        transform: translateX(-50%);
-        height: 38%;
-        width: auto;
-        max-width: 82%;
-        object-fit: cover;
-        object-position: top center;
-        border-radius: 0;
-        border: none;
-        box-shadow: none;
-        -webkit-mask-image: radial-gradient(ellipse 58% 62% at 50% 40%, #000 50%, transparent 100%);
-                mask-image: radial-gradient(ellipse 58% 62% at 50% 40%, #000 50%, transparent 100%);
-      }
+      /* hero-section-mobile-view.png already has Johnny's photo baked in,
+         so the separate .hero-photo overlay just duplicates it on top —
+         producing a visible ghosting halo around his head. Keep it hidden
+         here (same as desktop) rather than displaying it. */
+      .hero-photo { display: none; }
       /* .container's own side padding would otherwise make the percentage
          basis below narrower than #hero's full width (which is what the
          background image scales against), throwing the math off — move
