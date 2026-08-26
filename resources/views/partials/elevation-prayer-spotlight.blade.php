@@ -19,6 +19,97 @@
 @php
     $epEpisodes = [
         [
+            'episode'    => '232',
+            'title'      => 'Feeling Broken & Wounded',
+            'poster'     => 'images/johnny-davis-ministry/feeling-broken-wounded.png',
+            'audioFile'  => 'audio/elevation-prayer/episode-232-feeling-broken-wounded.m4a',
+            'audioLabel' => 'Episode 232 — Feeling Broken & Wounded',
+            'caption'    => <<<'TEXT'
+FEELING BROKEN & WOUNDED?
+Allowing God to Heal the Hurt You Cannot Fix Yourself
+Have you been carrying wounds that no one can see?
+Perhaps you have experienced heartbreak, rejection, disappointment, betrayal, grief, broken relationships, or painful memories that continue to affect your heart.
+Some wounds cannot be healed by time alone.
+But there is hope—God sees your pain, and He can heal your heart.
+Join us this Thursday evening as believers from around the world gather in one accord for a powerful time of worship, prayer, encouragement, and the healing presence of God.
+Together, we will pray and believe that broken hearts will be restored, wounded souls will receive strength, painful memories will no longer control the future, and God's comfort will reach every hurting place.
+"He healeth the broken in heart, and bindeth up their wounds."
+— Psalm 147:3 (KJV)
+"The Lord is nigh unto them that are of a broken heart; and saveth such as be of a contrite spirit."
+— Psalm 34:18 (KJV)
+⸻
+COME EXPECTING
+✅ Healing for your heart
+✅ Strength for your soul
+✅ Peace for your mind
+✅ Hope for your future
+✅ Restoration of relationships
+✅ God's presence and comfort
+⸻
+📅 Thursday, August 20, 2026
+🕖 Prayer Begins: 7:00 PM EST
+🎵 Worship Begins: 6:45 PM EST
+💻 Join Us on Zoom
+Meeting ID: 788 154 3458
+Passcode: dzW3WL (case-sensitive)
+⸻
+No matter how deep the wound…
+No matter how long you have carried the pain…
+No matter who caused the hurt…
+God has not forgotten you.
+He knows where it hurts.
+He knows what happened.
+He knows what you have carried silently.
+And the same God who sees your pain is able to bring healing, restoration, peace, and hope.
+Invite your family, friends, coworkers, church members, and anyone who needs prayer, healing, encouragement, or restoration.
+Together, let's place every broken place into the hands of the One who can heal what we cannot fix ourselves.
+⸻
+FOUNDATION SCRIPTURES
+📖 Psalm 147:3 (KJV)
+📖 Psalm 34:18 (KJV)
+📖 Jeremiah 30:17 (KJV)
+📖 Isaiah 61:1 (KJV)
+📖 2 Corinthians 1:3–4 (KJV)
+📖 Matthew 11:28 (KJV)
+⸻
+🌐 Learn More
+JohnnyDavisMinistries.org
+🎧 Missed the live gathering?
+Listen to the replay at JohnnyDavisMinistries.org
+⸻
+❤️ Support Our Mission
+As we minister to people spiritually, we also seek to serve them physically.
+For just $7.99 per month, you can help provide meals for children and families in need through Johnny Davis Global Missions.
+🌐 JohnnyDavisGlobalMissions.org
+⸻
+Hosted by
+Evangelist Johnny Davis
+⸻
+ELEVATION VIRTUAL PRAYER GATHERING
+ONE VOICE. ONE PRAYER. ONE ACCORD.
+Inspired by Acts 1:14
+⸻
+#ElevationPrayerGathering
+#FeelingBrokenAndWounded
+#GodHealsBrokenHearts
+#HealingForTheHeart
+#Psalm1473
+#Psalm3418
+#GodSeesYourPain
+#HealingAndRestoration
+#HopeForTheHurting
+#PrayerChangesThings
+#PrayerWorks
+#GodIsNear
+#FaithOverPain
+#Acts114
+#JohnnyDavisMinistries
+#JohnnyDavisGlobalMissions
+#EvangelistJohnnyDavis
+#KingdomPrayer
+TEXT,
+        ],
+        [
             'episode'    => '231',
             'title'      => 'Feeling Anxious & Afraid',
             'poster'     => 'images/johnny-davis-ministry/Anxious&Afraid.jfif',
