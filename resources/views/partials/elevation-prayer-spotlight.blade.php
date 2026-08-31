@@ -19,6 +19,44 @@
 @php
     $epEpisodes = [
         [
+            'episode'    => '233',
+            'title'      => 'The Spirit of Procrastination & Delay',
+            'poster'     => 'images/johnny-davis-ministry/spirit-of-procrastination-delay.jfif',
+            'audioFile'  => 'audio/elevation-prayer/episode-233-spirit-of-procrastination-delay.m4a',
+            'audioLabel' => 'Episode 233 — The Spirit of Procrastination & Delay',
+            'caption'    => <<<'TEXT'
+THE SPIRIT OF PROCRASTINATION & DELAY
+"Stop Delaying What God Is Calling You to Do."
+Have you been putting off something you know God has placed in your heart?
+Have fear, distractions, hesitation, uncertainty, or waiting for the "perfect time" kept you from moving forward?
+This Thursday, join us for the Elevation Virtual Prayer Gathering as we come together to confront the spirit of procrastination and delay and receive prayer for the strength, courage, discipline, and faith to move forward in what God is calling us to do.
+🙏 This gathering is for you to RECEIVE PRAYER.
+Come expecting prayer, encouragement, breakthrough, healing, hope, and the Presence of God.
+📅 THURSDAY, AUGUST 27, 2026
+⏰ 7:00 PM Eastern Time
+🎶 Worship begins at 6:45 PM
+💻 LIVE ON ZOOM
+🔗 Zoom: https://zoom.us/j/7881543458
+Meeting ID: 788 154 3458
+Passcode: dzW3WL
+COME FOR PRAYER. STAY FOR HIS PRESENCE.
+ELEVATION VIRTUAL PRAYER GATHERING
+ONE VOICE. ONE PRAYER. ONE ACCORD.
+Inspired by Acts 1:14
+📱 JOIN US IMMEDIATELY AFTER THE PRAYER GATHERING!
+We continue at 8:00 PM ET on TikTok LIVE for more prayer and encouragement.
+☀️ EVERY MONDAY — 8:00 AM ET
+Join us on Facebook Live for Wake Up to Prayer.
+🇵🇭 EVERY FRIDAY — 8:00 AM PHILIPPINES TIME
+Join us on TikTok LIVE.
+❤️ HELP FEED THE CHILDREN — DONATE TODAY
+Help us bring food, hope, and assistance to children and families in the Philippines and Africa through Johnny Davis Global Missions.
+🌍 JohnnyDavisGlobalMissions.org
+🎙️ To learn more about Johnny Davis and listen to more encouraging video messages:
+🌐 JohnnyDavisMinistries.org
+TEXT,
+        ],
+        [
             'episode'    => '232',
             'title'      => 'Feeling Broken & Wounded',
             'poster'     => 'images/johnny-davis-ministry/feeling-broken-wounded.png',
