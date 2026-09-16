@@ -19,6 +19,58 @@
 @php
     $epEpisodes = [
         [
+            'episode'    => '234',
+            'title'      => 'Combating the Spirit of Distraction',
+            'poster'     => 'images/johnny-davis-ministry/combating-spirit-of-distraction.jfif',
+            'audioFile'  => 'audio/elevation-prayer/episode-234-combating-spirit-of-distraction.m4a',
+            'audioLabel' => 'Episode 234 — Combating the Spirit of Distraction',
+            'caption'    => <<<'TEXT'
+COMBATING THE SPIRIT OF DISTRACTION
+Becoming Intentional About What God Has Called You to Do
+Every day, there are so many things competing for our time, our attention, our energy, and our mental space.
+Some things may be important. Some may even be good. But everything competing for our attention is not connected to the assignment God has placed in our hands.
+We cannot allow what is competing for our attention to distract us from what God has called us to do.
+This is a season to regain our focus, become more intentional, protect our priorities, and give our attention to what God has entrusted to us.
+Proverbs 4:25–27 (KJV)
+“Let thine eyes look right on, and let thine eyelids look straight before thee. Ponder the path of thy feet, and let all thy ways be established. Turn not to the right hand nor to the left…”
+Join us Thursday, September 10, 2026 at 7:00 PM ET as we come together in prayer, encouragement, and faith to:
+💻 JOIN US ON ZOOM
+🔗 https://zoom.us/j/7881543458
+🆔 Meeting ID: 788 154 3458
+🔐 Passcode: dzW3WL
+━━━━━━━━━━━━━━
+🌅 WAKE UP TO PRAYER — FACEBOOK LIVE
+📅 Every Monday Morning
+⏰ 8:00 AM ET
+Come for encouragement. Stay for prayer.
+━━━━━━━━━━━━━━
+🔥 WAKE UP TO PRAYER — TIKTOK LIVE
+🇺🇸 Thursday Nights — 8:00 PM ET
+🇵🇭 Friday Mornings — 8:00 AM Philippines Time
+━━━━━━━━━━━━━━
+SUPPORT OUR GLOBAL MISSION
+Help us continue reaching communities, feeding children, supporting families, and sharing hope around the world.
+🌍 Johnny Davis Global Missions
+🔗 JohnnyDavisGlobalMissions.org
+━━━━━━━━━━━━━━
+STAY CONNECTED WITH JOHNNY DAVIS MINISTRIES
+🌐 JohnnyDavisMinistries.org
+Stay focused. Become intentional. Protect the assignment. Keep moving in what God has called you to do.
+#ElevationVirtualPrayerGathering
+#CombatingTheSpiritOfDistraction
+#BecomingIntentional
+#StayFocused
+#ProtectTheAssignment
+#Prayer
+#Faith
+#Purpose
+#WakeUpToPrayer
+#OneVoiceOnePrayerOneAccord
+#JohnnyDavisMinistries
+#JohnnyDavisGlobalMissions
+TEXT,
+        ],
+        [
             'episode'    => '233',
             'title'      => 'The Spirit of Procrastination & Delay',
             'poster'     => 'images/johnny-davis-ministry/spirit-of-procrastination-delay.jfif',
@@ -559,9 +611,9 @@ TEXT,
             }
 
             $lettersOnly = preg_replace('/[^A-Za-z]/', '', $line);
-            $isDivider   = preg_match('/^[⸻\-–—]+$/u', $line) === 1;
+            $isDivider   = preg_match('/^[⸻━\-–—]+$/u', $line) === 1;
             $isHeading   = $lettersOnly !== '' && $lettersOnly === strtoupper($lettersOnly) && strlen($lettersOnly) > 2;
-            $isQuote     = str_starts_with($line, '"') || str_starts_with($line, '"') || str_starts_with($line, '—');
+            $isQuote     = str_starts_with($line, '"') || str_starts_with($line, '“') || str_starts_with($line, '—');
             $isCitation  = str_contains($line, '(KJV)');
 
             $type = 'text';
