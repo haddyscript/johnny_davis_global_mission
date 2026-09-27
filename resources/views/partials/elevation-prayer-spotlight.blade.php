@@ -19,6 +19,64 @@
 @php
     $epEpisodes = [
         [
+            'episode'    => '235',
+            'title'      => 'Combating the Spirit of Doubt',
+            'poster'     => 'images/johnny-davis-ministry/combating-spirit-of-doubt.jpg',
+            'audioFile'  => 'audio/elevation-prayer/episode-235-combating-spirit-of-doubt.m4a',
+            'audioLabel' => 'Episode 235 — Combating the Spirit of Doubt',
+            'caption'    => <<<'TEXT'
+COMBATING THE SPIRIT OF DOUBT
+When You Cannot See It, Keep Believing God.
+There are seasons when you know what God has spoken, but what you see around you seems to contradict what you believe.
+You’ve prayed.
+You’ve trusted.
+You’ve waited.
+You’ve believed.
+But when circumstances don’t change, answers don’t come, and promises seem delayed, doubt can begin to challenge your faith.
+Doubt will make you question what you once believed.
+But just because you cannot see God working does not mean God has stopped working.
+This is not the time to allow doubt to control what you believe.
+This is a season to strengthen your faith, stand on God’s Word, remember His faithfulness, and keep believing—even when you cannot see the answer yet.
+📖 Mark 9:24 (KJV)
+“…Lord, I believe; help thou mine unbelief.”
+━━━━━━━━━━━
+ELEVATION VIRTUAL PRAYER GATHERING
+Join us for prayer, encouragement, and faith as we stand together against doubt and believe God for stronger faith, renewed confidence, and the courage to trust Him even when we cannot see what He is doing.
+📅 Thursday, September 24, 2026
+⏰ 7:00 PM ET
+💻 JOIN US ON ZOOM
+🔗 https://zoom.us/j/7881543458
+🆔 Meeting ID: 788 154 3458
+🔐 Passcode: dzW3WL
+ONE VOICE. ONE PRAYER. ONE ACCORD.
+Inspired by Acts 1:14
+━━━━━━━━━━━━━━
+WAKE UP TO PRAYER — FACEBOOK LIVE
+📅 Every Monday Morning
+⏰ 8:00 AM ET
+Come for encouragement. Stay for prayer.
+━━━━━━━━━━━━━━
+WAKE UP TO PRAYER — TIKTOK LIVE
+🇺🇸 Thursday Nights — 8:00 PM ET
+🇵🇭 Friday Mornings — 8:00 AM Philippines Time
+Join us for an encouraging Word and prayer!
+━━━━━━━━━━━━━━
+SUPPORT OUR GLOBAL MISSION
+Help us continue feeding children, supporting families, strengthening communities, and sharing hope around the world.
+Johnny Davis Global Missions
+🌐 JohnnyDavisGlobalMissions.org
+Your support helps us make a difference.
+━━━━━━━━━━━━━━
+🎙️ LISTEN • LEARN • GROW
+Stay connected with Johnny Davis Ministries and listen to our latest messages, teachings, podcasts, and encouraging words designed to strengthen your faith and help you grow in your walk with God.
+🌐 JohnnyDavisMinistries.org
+━━━━━━━━━━━━━━
+Don’t allow what you cannot see to make you doubt what God has spoken.
+Keep praying. Keep trusting. Keep believing.
+When You Cannot See It, Keep Believing God.
+TEXT,
+        ],
+        [
             'episode'    => '234',
             'title'      => 'Combating the Spirit of Distraction',
             'poster'     => 'images/johnny-davis-ministry/combating-spirit-of-distraction.jfif',
