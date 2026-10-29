@@ -10,10 +10,11 @@
     $logoHref       = $isMinistryPage ? url('/ministry') : url('/');
     $logoAlt        = $isMinistryPage ? 'Johnny Davis Ministries' : 'Johnny Davis Global Missions Home';
     $navItems       = NavItem::forNav();
+    $isMinistriesDomain = str_contains(request()->getHost(), 'johnnydavisministries.org');
 
     // The Ministerial Fellowship page belongs to Johnny Davis Ministries only —
-    // hide it from the nav when serving the Global Missions domain.
-    if (str_contains(request()->getHost(), 'johnnydavisglobalmissions.org')) {
+    // show it in the nav solely on the johnnydavisministries.org domain.
+    if (! $isMinistriesDomain) {
         $navItems = $navItems->reject(fn ($item) => $item->url === '/ministerial-fellowship');
     }
 
@@ -377,7 +378,9 @@
             </ul>
           </li>
           <li><a href="{{ $ministryHome }}#events">Events</a></li>
+          @if($isMinistriesDomain)
           <li><a href="{{ route('ministerial-fellowship') }}"{{ $isMinisterialFellowshipPage ? ' class="active nav-active"' : '' }}>Ministerial Fellowship</a></li>
+          @endif
           <li><a href="{{ $donateUrl }}" class="nav-give">Give</a></li>
           <li><a href="{{ route('contact') }}"{{ $isContactPage ? ' class="active nav-active"' : '' }}>Contact</a></li>
           <li>
@@ -478,7 +481,9 @@
         <a href="{{ $ministryHome }}#daily-push">Daily Push</a>
         <a href="{{ $ministryHome }}#podcast">Podcast</a>
         <a href="{{ $ministryHome }}#events">Events</a>
+        @if($isMinistriesDomain)
         <a href="{{ route('ministerial-fellowship') }}"{{ $isMinisterialFellowshipPage ? ' class="nav-active"' : '' }}>Ministerial Fellowship</a>
+        @endif
         <a href="{{ $donateUrl }}" class="nav-give">Give</a>
         <a href="{{ route('contact') }}"{{ $isContactPage ? ' class="nav-active"' : '' }}>Contact</a>
       @else

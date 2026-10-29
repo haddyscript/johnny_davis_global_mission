@@ -64,7 +64,9 @@
           <li><a href="#vision">Vision &amp; Mission</a></li>
           <li><a href="#hunger">Hunger Can't Wait</a></li>
           @if($isMinistryPage)
+            @if(str_contains(request()->getHost(), 'johnnydavisministries.org'))
             <li><a href="{{ route('ministerial-fellowship') }}">Ministerial Fellowship</a></li>
+            @endif
           @endif
         </ul>
       </nav>
