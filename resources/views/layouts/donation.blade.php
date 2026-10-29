@@ -27,6 +27,7 @@
       </text>
     </svg>">
   <link rel="stylesheet" href="{{ asset('css/for_donationpage.css') }}?v={{ filemtime(public_path('css/for_donationpage.css')) }}" />
+  <link rel="stylesheet" href="{{ asset('css/hunger-campaign.css') }}?v={{ filemtime(public_path('css/hunger-campaign.css')) }}" />
 </head>
 <body>
 

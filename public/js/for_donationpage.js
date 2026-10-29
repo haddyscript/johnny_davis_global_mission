@@ -38,9 +38,11 @@
   const panelGivelify     = document.getElementById('pay-panel-givelify');
   const panelPaypal       = document.getElementById('pay-panel-paypal');
   const paymentErrorEl    = document.getElementById('payment-error-msg');
+  const campaignSection   = document.getElementById('hunger-campaign');
+  const frequencyNote     = document.getElementById('giftFrequencyNote');
 
   /* ── State ─────────────────────────────────────────────── */
-  let selectedAmt       = 29.99;
+  let selectedAmt       = 7.99;
   let isMonthly         = true;
   let selectedCampaign  = 'Feed Filipino Children';
   let currentPayMethod  = 'card';
@@ -76,6 +78,9 @@
     donateScreen.style.display   = 'none';
     thankScreen.style.display    = 'none';
     screen.style.display = 'block';
+    if (campaignSection) {
+      campaignSection.style.display = screen === thankScreen ? 'none' : '';
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -191,6 +196,13 @@
     orderAmount.textContent   = amtStr;
     totalLabel.textContent    = typeStr + ' total';
     orderTotal.textContent    = amtStr;
+
+    if (frequencyNote) {
+      frequencyNote.classList.toggle('is-monthly', isMonthly);
+      frequencyNote.innerHTML = isMonthly
+        ? '<strong>Recurring monthly gift: ' + amtStr + ' a month.</strong> Your first gift is charged today and then every month. You can change the amount or choose One-time above.'
+        : '<strong>One-time gift: ' + amtStr + '.</strong> You will be charged once. Choose Monthly giving above to give every month.';
+    }
 
     if (paymentRequest) {
       paymentRequest.update({
@@ -953,17 +965,28 @@
     revealEls.forEach(el => el.classList.add('visible'));
   }
 
-  /* ── Initial state ──────────────────────────────────────── */
-  overviewScreen.style.display = 'block';
-  donateScreen.style.display   = 'none';
+  /* ── Initial state ──────────────────────────────────────
+     The HUNGER CAN'T WAIT! campaign leads the page, so the form
+     opens straight away with Feed Filipino Children, $7.99 and
+     Monthly giving preselected. Other campaigns stay one click
+     away via "Back to all campaigns" and Step 1.
+  ──────────────────────────────────────────────────────── */
+  overviewScreen.style.display = 'none';
+  donateScreen.style.display   = 'block';
   thankScreen.style.display    = 'none';
-  backBtn.style.display        = 'none';
   setCampaign('Feed Filipino Children');
+
+  if (window.location.hash === '#give') {
+    const giveTarget = document.getElementById('give');
+    if (giveTarget) {
+      requestAnimationFrame(() => giveTarget.scrollIntoView({ block: 'start' }));
+    }
+  }
 
   /* ── URL param pre-selection ─────────────────────────────
      Allows links like /donate?campaign=where&amount=29.99
-     to skip the overview and land directly on the form with
-     the correct campaign and amount pre-selected.
+     to land on the form with the correct campaign and amount
+     pre-selected.
   ──────────────────────────────────────────────────────── */
   (function applyUrlParams() {
     const params   = new URLSearchParams(window.location.search);
@@ -1008,13 +1031,6 @@
 
       sync();
     }
-
-    showLoadingScreen();
-    setTimeout(() => {
-      hideLoadingScreen();
-      showScreen(donateScreen);
-      backBtn.style.display = 'inline-flex';
-    }, 1500);
   })();
 
 })();

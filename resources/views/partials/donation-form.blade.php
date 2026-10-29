@@ -142,7 +142,7 @@
       </div>
 
       <!-- Step 2: Amount -->
-      <div class="donate-step-title" style="margin-top:6px;">
+      <div class="donate-step-title" id="give" style="margin-top:6px;">
         <div class="step-num" aria-hidden="true">2</div>
         <span>Choose an Amount</span>
       </div>
@@ -153,11 +153,11 @@
       </div>
 
       <div class="amounts-grid amounts-3" role="group" aria-label="Preset donation amounts">
-        <button class="amount-btn" aria-label="Donate $7.99 — feeds 1 child">
+        <button class="amount-btn selected" aria-label="Donate $7.99 — feeds 1 child" aria-pressed="true">
           <span class="amount-price">$7.99</span>
           <span class="amount-impact">1 child fed</span>
         </button>
-        <button class="amount-btn selected" aria-label="Donate $29.99 — feeds a family of 4" aria-pressed="true">
+        <button class="amount-btn" aria-label="Donate $29.99 — feeds a family of 4">
           <span class="amount-price">$29.99</span>
           <span class="amount-impact">Family of 4</span>
         </button>
@@ -190,6 +190,11 @@
              placeholder="Or enter a custom amount ($)"
              aria-label="Custom donation amount"
              style="max-width:320px;"/>
+
+      <p class="gift-frequency-note is-monthly" id="giftFrequencyNote" role="status" aria-live="polite">
+        <strong>Recurring monthly gift: $7.99 a month.</strong>
+        Your first gift is charged today and then every month. You can change the amount or choose One-time above.
+      </p>
 
       <!-- Step 3: Your Info -->
       <div class="donor-info-section">
@@ -362,7 +367,7 @@
 
       <!-- Donate CTA -->
       <button class="btn-donate" id="completeDonationBtn" style="margin-top:16px;" aria-label="Complete donation">
-        &#9829; Complete Gift — $29.99 / Month
+        &#9829; Complete Gift — $7.99 / Month
       </button>
       <p class="cancel-note">You can cancel or change your giving amount anytime from your email.</p>
 
@@ -374,7 +379,7 @@
 
       <!-- Impact -->
       <div class="card" style="margin-bottom:18px;">
-        <div class="sidebar-heading" id="donate-impact-heading">Your $29.99/mo Impact</div>
+        <div class="sidebar-heading" id="donate-impact-heading">Your $7.99/mo Impact</div>
         <div class="impact-rows">
           <div class="impact-row">
             <div class="impact-emoji" aria-hidden="true">
@@ -418,7 +423,7 @@
         </div>
         <div class="order-line">
           <span>Donation amount</span>
-          <span style="font-weight:700;" id="donate-order-amount">$29.99</span>
+          <span style="font-weight:700;" id="donate-order-amount">$7.99</span>
         </div>
         <div class="order-line">
           <span>Processing fee (waived)</span>
@@ -426,7 +431,7 @@
         </div>
         <div class="order-total">
           <span id="donate-total-label">Monthly total</span>
-          <span class="order-total-amount" id="donate-order-total">$29.99</span>
+          <span class="order-total-amount" id="donate-order-total">$7.99</span>
         </div>
       </div>
 

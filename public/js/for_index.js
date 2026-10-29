@@ -4,6 +4,18 @@
     navbar.classList.toggle('scrolled', window.scrollY > 20);
   }, { passive: true });
 
+  // ─── Hide sticky donate while the campaign section is on screen ─
+  // Keeps it from covering the "Become a Monthly Partner" button.
+  (function () {
+    const campaignSection = document.getElementById('hunger-campaign');
+    const stickyDonate    = document.getElementById('stickyDonate');
+    if (!campaignSection || !stickyDonate || !('IntersectionObserver' in window)) return;
+
+    new IntersectionObserver(([entry]) => {
+      stickyDonate.classList.toggle('is-hidden', entry.isIntersecting);
+    }).observe(campaignSection);
+  }());
+
   // ─── Hero background ken burns ──────────────────────────────
   window.addEventListener('load', () => {
     document.getElementById('heroBg').classList.add('loaded');

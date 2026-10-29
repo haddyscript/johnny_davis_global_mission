@@ -30,7 +30,7 @@
    RESET & BASE
 ============================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: clip; }
 body {
   font-family: 'Inter', sans-serif;
   color: var(--text);
@@ -177,6 +177,11 @@ ul { list-style: none; }
 #stickyDonate:hover {
   transform: translateY(-2px);
   box-shadow: 0 14px 30px rgba(0,0,0,.35);
+}
+#stickyDonate.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 @keyframes pulseButton {

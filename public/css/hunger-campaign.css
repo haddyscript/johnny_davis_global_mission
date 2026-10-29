@@ -1,0 +1,204 @@
+/* ============================================================
+   HUNGER CAN'T WAIT! — $7.99 monthly partner campaign
+   Shared by the homepage (for_index.css) and donation page
+   (for_donationpage.css). Palette follows the campaign flyer:
+   white, orange, navy and light blue.
+============================================================ */
+.hcw {
+  --hcw-orange:      #f07c1e;
+  --hcw-orange-dark: #d96712;
+  --hcw-navy:        #0d2a4e;
+  --hcw-blue:        #1a6fd1;
+  --hcw-blue-pale:   #e8f2fd;
+  --hcw-text:        #334155;
+
+  position: relative;
+  background: #ffffff;
+  border-bottom: 4px solid var(--hcw-orange);
+  font-family: 'Inter', sans-serif;
+  color: var(--hcw-text);
+  overflow: hidden;
+}
+
+/* Homepage nav is fixed and the body has no top padding */
+.hcw--home { padding: calc(72px + 48px) 0 56px; }
+.hcw--donate { padding: 44px 0 48px; }
+
+.hcw-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  gap: 56px;
+  align-items: center;
+}
+
+.hcw-copy { min-width: 0; }
+
+.hcw-eyebrow {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hcw-blue);
+  background: var(--hcw-blue-pale);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin: 0 0 16px;
+}
+
+.hcw-title {
+  font-family: 'Inter', 'Arial Black', sans-serif;
+  font-size: clamp(2.3rem, 5.2vw, 4rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -.02em;
+  color: var(--hcw-orange);
+  margin: 0 0 14px;
+}
+
+.hcw-goal {
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--hcw-navy);
+  margin: 0 0 14px;
+}
+.hcw-goal strong { color: var(--hcw-orange-dark); }
+
+.hcw-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 0 0 14px;
+  line-height: 1;
+}
+.hcw-price-amount {
+  font-size: clamp(3rem, 6vw, 4.4rem);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  color: var(--hcw-navy);
+}
+.hcw-price-term {
+  font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--hcw-orange);
+}
+
+.hcw-body {
+  font-size: 1.08rem;
+  line-height: 1.65;
+  margin: 0 0 18px;
+  max-width: 560px;
+}
+
+.hcw-programs {
+  list-style: none;
+  margin: 0 0 26px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.hcw-program {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .98rem;
+  line-height: 1.3;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+}
+.hcw-program::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.hcw-program-name { font-weight: 700; color: var(--hcw-navy); }
+.hcw-program--active { background: #fff3e8; border-color: rgba(240,124,30,.35); }
+.hcw-program--active::before { background: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.18); }
+.hcw-program--soon { background: var(--hcw-blue-pale); border-color: rgba(26,111,209,.25); }
+.hcw-program--soon::before { background: var(--hcw-blue); }
+
+.hcw-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 60px;
+  padding: 16px 34px;
+  border-radius: 999px;
+  background: var(--hcw-orange);
+  color: #ffffff;
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(240,124,30,.38);
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.hcw-btn:hover { background: var(--hcw-orange-dark); transform: translateY(-2px); box-shadow: 0 14px 30px rgba(240,124,30,.45); }
+.hcw-btn:focus-visible { outline: 3px solid var(--hcw-navy); outline-offset: 3px; }
+.hcw-btn svg { flex-shrink: 0; }
+
+.hcw-flyer {
+  margin: 0;
+  justify-self: center;
+  width: 100%;
+  max-width: 460px;
+}
+.hcw-flyer img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 18px 48px rgba(13,42,78,.18);
+}
+
+/* Donation page: flyer sits beside the copy and stays compact */
+.hcw--donate .hcw-flyer { max-width: 380px; }
+
+/* ── Tablet ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hcw-inner { gap: 36px; }
+}
+
+/* ── Mobile: invitation and button first, flyer after ── */
+@media (max-width: 768px) {
+  .hcw--home { padding: calc(72px + 24px) 0 36px; }
+  .hcw--donate { padding: 24px 0 28px; }
+
+  .hcw-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding: 0 16px;
+    text-align: center;
+  }
+  .hcw-eyebrow { margin-bottom: 12px; }
+  .hcw-title { margin-bottom: 10px; }
+  .hcw-goal { margin-bottom: 10px; }
+  .hcw-price { justify-content: center; margin-bottom: 10px; }
+  .hcw-body { font-size: 1rem; margin: 0 auto 14px; }
+  .hcw-programs { justify-content: center; margin-bottom: 20px; gap: 8px; }
+  .hcw-program { font-size: .92rem; padding: 8px 14px; }
+  .hcw-btn { display: flex; width: 100%; font-size: 1.05rem; padding: 16px 20px; }
+
+  .hcw-flyer { max-width: 420px; }
+  /* Keep the flyer short so the donation form follows closely */
+  .hcw--donate .hcw-flyer { max-width: 240px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hcw-btn { transition: none; }
+  .hcw-btn:hover { transform: none; }
+}

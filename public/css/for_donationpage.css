@@ -642,7 +642,24 @@ body { padding-top: 72px; }
 /* =============================================
    DONATE BODY SCREEN — Hero Banner
    =============================================*/
-#donate-body-screen { display:none; }
+/* Form is shown first; the overview opens via "Back to all campaigns" */
+#campaign-overview-screen { display:none; }
+#donate-body-screen { display:block; }
+#give { scroll-margin-top: 92px; }
+
+.gift-frequency-note {
+  margin: 14px 0 4px;
+  padding: 12px 16px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--border-md);
+  background: var(--bg-page);
+  color: var(--text-body);
+  font-size: .9rem;
+  line-height: 1.55;
+}
+.gift-frequency-note strong { display:block; color: var(--blue-dark); font-size: .98rem; margin-bottom: 2px; }
+.gift-frequency-note.is-monthly { background: var(--orange-pale); border-color: rgba(240,124,30,.4); }
+.gift-frequency-note.is-monthly strong { color: var(--orange-dark); }
 
 .donate-hero {
   background:

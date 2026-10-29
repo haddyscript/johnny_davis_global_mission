@@ -25,10 +25,14 @@
       </text>
     </svg>">
   <link rel="stylesheet" href="{{ asset('css/for_index.css') }}?v={{ filemtime(public_path('css/for_index.css')) }}" />
+  <link rel="stylesheet" href="{{ asset('css/hunger-campaign.css') }}?v={{ filemtime(public_path('css/hunger-campaign.css')) }}" />
+  <link rel="preload" as="image" href="{{ asset('images/hunger-cant-wait/hunger-cant-wait-flyer.jpg') }}" />
 </head>
 <body>
 
 @include('partials.nav')
+
+@include('partials.hunger-campaign', ['hcwVariant' => 'home', 'hcwButtonHref' => route('donate').'#give'])
 
 <a id="stickyDonate" class="btn btn-primary wwa-donate-btn" href="{{ route('donate') }}" aria-label="Donate Now"><span class="wwa-heart" aria-hidden="true">&#9829;</span> Donate Now</a>
 

@@ -125,6 +125,7 @@
       position: fixed;
       inset: 0;
       z-index: 1998;
+      overflow: hidden;
       pointer-events: none;
       visibility: hidden;
       transition: visibility 0s linear .46s;
