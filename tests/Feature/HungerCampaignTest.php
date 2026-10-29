@@ -74,4 +74,12 @@ class HungerCampaignTest extends TestCase
             $this->assertStringNotContainsStringIgnoringCase($otherProgram, $matches[0]);
         }
     }
+
+    public function test_donation_page_uses_local_pastor_photo(): void
+    {
+        $response = $this->get('/donate');
+
+        $response->assertSee('src="'.asset('images/who-we-are/Johnny-Davis.webp').'" alt="Pastor Johnny Davis"', false);
+        $response->assertDontSee('cloudfront.net', false);
+    }
 }
