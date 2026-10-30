@@ -47,7 +47,7 @@ class StripeSubscriptionSync
      * created in the Stripe dashboard or a payment link, so partner counts and reporting match Stripe.
      *
      * A checkout started on the website (metadata.donation_id) is linked to its existing row instead.
-     * Imported rows are written silently: no receipt or newsletter email is sent to the donor.
+     * Imported rows are written silently: no receipt, newsletter email or admin notification.
      * Expects the subscription to be retrieved with its customer expanded.
      */
     public function import(StripeObject $subscription): ?Donation
@@ -68,7 +68,7 @@ class StripeSubscriptionSync
 
         if ($websiteDonation) {
             // Linked late, so mark it silently rather than emailing a receipt weeks afterwards
-            $websiteDonation->update([
+            $websiteDonation->updateQuietly([
                 'subscription_id' => $subscription->id,
                 'status' => $subscription->status === 'active' ? 'completed' : $websiteDonation->status,
             ]);
@@ -98,10 +98,11 @@ class StripeSubscriptionSync
         ]);
 
         // Date the partnership from when it began in Stripe, not from today's import
+        // saveQuietly: an old subscription must not raise a "New Donation Received" admin alert
         $donation->forceFill([
             'created_at' => Carbon::createFromTimestamp($subscription->created),
             'updated_at' => now(),
-        ])->save();
+        ])->saveQuietly();
 
         HungerCampaignTracker::forget();
 

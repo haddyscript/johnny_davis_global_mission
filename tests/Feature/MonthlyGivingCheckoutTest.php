@@ -406,8 +406,10 @@ class MonthlyGivingCheckoutTest extends TestCase
         $this->assertDatabaseMissing('donations', ['subscription_id' => 'sub_yearly']);
         $this->assertSame(1, app(HungerCampaignTracker::class)->countActivePartners());
 
-        // Imported silently: donors are not emailed or added to the newsletter
+        // Imported silently: donors are not emailed or added to the newsletter, and no
+        // "New Donation Received" admin alert is raised for an old subscription
         $this->assertDatabaseCount('newsletter_subscribers', 0);
+        $this->assertDatabaseCount('admin_notifications', 0);
     }
 
     public function test_sync_import_is_not_repeated_on_the_next_run(): void
@@ -442,5 +444,6 @@ class MonthlyGivingCheckoutTest extends TestCase
         $this->assertSame('completed', $donation->status);
         $this->assertSame(1, Donation::count());
         $this->assertDatabaseCount('newsletter_subscribers', 0);
+        $this->assertDatabaseMissing('admin_notifications', ['type' => 'new_donation']);
     }
 }
