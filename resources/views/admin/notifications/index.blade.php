@@ -10,7 +10,7 @@
     <div class="stat-card" style="--accent:#22c55e;">
         <div class="stat-icon" style="background:rgba(34,197,94,0.1);color:#16a34a;">🔔</div>
         <div>
-            <div class="stat-value" data-target="{{ $notifications->total() }}">0</div>
+            <div class="stat-value" data-target="{{ $totalCount }}">0</div>
             <div class="stat-label">Total</div>
         </div>
     </div>
@@ -24,7 +24,7 @@
     <div class="stat-card" style="--accent:#94a3b8;">
         <div class="stat-icon" style="background:rgba(148,163,184,0.1);color:#64748b;">✅</div>
         <div>
-            <div class="stat-value" data-target="{{ $notifications->total() - $unreadCount }}">0</div>
+            <div class="stat-value" data-target="{{ $totalCount - $unreadCount }}">0</div>
             <div class="stat-label">Read</div>
         </div>
     </div>
@@ -52,7 +52,7 @@
                         <option value="1" {{ request('unread') === '1' ? 'selected' : '' }}>Unread only</option>
                     </select>
                 </div>
-                @if(request()->hasAny(['type','unread']))
+                @if(request()->filled('type') || request()->boolean('unread'))
                     <a href="{{ route('admin.notifications.index') }}" class="filter-clear-link">Clear</a>
                 @endif
             </div>
@@ -72,7 +72,7 @@
             <div class="empty-icon">🔕</div>
             <div class="empty-title">No notifications found</div>
             <div class="empty-sub">
-                @if(request()->hasAny(['type','unread']))
+                @if(request()->filled('type') || request()->boolean('unread'))
                     <a href="{{ route('admin.notifications.index') }}" style="color:var(--brand-dark);">Clear filters</a>
                 @else
                     Notifications will appear here when activity occurs.
