@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Donation;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 use Stripe\StripeObject;
 
 /**
@@ -39,6 +40,72 @@ class StripeSubscriptionSync
         }
 
         return $donations;
+    }
+
+    /**
+     * Bring a Stripe subscription the site has no record of into the donations table, e.g. one
+     * created in the Stripe dashboard or a payment link, so partner counts and reporting match Stripe.
+     *
+     * A checkout started on the website (metadata.donation_id) is linked to its existing row instead.
+     * Imported rows are written silently: no receipt or newsletter email is sent to the donor.
+     * Expects the subscription to be retrieved with its customer expanded.
+     */
+    public function import(StripeObject $subscription): ?Donation
+    {
+        $interval = $subscription->items->data[0]->price->recurring->interval ?? null;
+
+        if ($interval !== 'month') {
+            return null;
+        }
+
+        $customer = $subscription->customer;
+        $customerId = is_string($customer) ? $customer : $customer->id;
+
+        $websiteDonation = Donation::whereKey($subscription->metadata->donation_id ?? 0)
+            ->where('stripe_customer_id', $customerId)
+            ->whereNull('subscription_id')
+            ->first();
+
+        if ($websiteDonation) {
+            // Linked late, so mark it silently rather than emailing a receipt weeks afterwards
+            $websiteDonation->update([
+                'subscription_id' => $subscription->id,
+                'status' => $subscription->status === 'active' ? 'completed' : $websiteDonation->status,
+            ]);
+
+            return $this->apply($subscription)->first();
+        }
+
+        $name = trim((string) (is_string($customer) ? '' : ($customer->name ?? '')));
+        $email = is_string($customer) ? null : ($customer->email ?? null);
+
+        $amountInCents = collect($subscription->items->data)
+            ->sum(fn ($item): int => (int) ($item->price->unit_amount ?? 0) * (int) ($item->quantity ?? 1));
+
+        $donation = new Donation([
+            'campaign_name' => $subscription->metadata->campaign_name ?? 'Monthly Partner (Stripe)',
+            'first_name' => $name !== '' ? Str::before($name, ' ') : 'Stripe',
+            'last_name' => $name !== '' && str_contains($name, ' ') ? Str::after($name, ' ') : 'Donor',
+            // One placeholder per customer keeps donors without an email counted separately
+            'email' => $email ?: $customerId.'@no-email.invalid',
+            'amount' => number_format($amountInCents / 100, 2, '.', ''),
+            'frequency' => 'monthly',
+            'payment_method' => 'card',
+            'stripe_customer_id' => $customerId,
+            'status' => in_array($subscription->status, ['incomplete', 'incomplete_expired'], true) ? 'failed' : 'completed',
+            'source' => $subscription->metadata->source ?? 'stripe-direct',
+            ...$this->attributesFor($subscription),
+        ]);
+
+        // Date the partnership from when it began in Stripe, not from today's import
+        $donation->forceFill([
+            'created_at' => Carbon::createFromTimestamp($subscription->created),
+            'updated_at' => now(),
+        ])->save();
+
+        HungerCampaignTracker::forget();
+
+        return $donation;
     }
 
     /**

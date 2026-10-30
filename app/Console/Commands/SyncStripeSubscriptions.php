@@ -20,7 +20,7 @@ class SyncStripeSubscriptions extends Command
     /**
      * @var string
      */
-    protected $description = 'Reconcile monthly donation statuses with Stripe (catches any missed webhooks)';
+    protected $description = 'Reconcile monthly donation statuses with Stripe and import subscriptions created outside the website';
 
     public function handle(StripeSubscriptionSync $sync): int
     {
@@ -32,25 +32,34 @@ class SyncStripeSubscriptions extends Command
 
         Stripe::setApiKey(config('services.stripe.secret'));
 
-        $known = Donation::where('payment_method', 'card')
-            ->whereNotNull('subscription_id')
+        $known = Donation::whereNotNull('subscription_id')
             ->pluck('subscription_id')
             ->flip();
 
         $checked = 0;
         $updated = 0;
+        $imported = 0;
 
         try {
-            $subscriptions = Subscription::all(['status' => 'all', 'limit' => 100]);
+            $subscriptions = Subscription::all([
+                'status' => 'all',
+                'limit' => 100,
+                'expand' => ['data.customer'],
+            ]);
 
             foreach ($subscriptions->autoPagingIterator() as $subscription) {
                 $checked++;
 
-                if (! $known->has($subscription->id)) {
+                if ($known->has($subscription->id)) {
+                    $updated += $sync->apply($subscription)->count();
+
                     continue;
                 }
 
-                $updated += $sync->apply($subscription)->count();
+                // Created outside the website checkout (Stripe dashboard, payment link, ...)
+                if ($sync->import($subscription)) {
+                    $imported++;
+                }
             }
         } catch (ApiErrorException $e) {
             $this->error('Stripe sync failed: '.$e->getMessage());
@@ -60,7 +69,7 @@ class SyncStripeSubscriptions extends Command
 
         HungerCampaignTracker::forget();
 
-        $this->info("Checked {$checked} Stripe subscriptions, updated {$updated} donation records.");
+        $this->info("Checked {$checked} Stripe subscriptions, updated {$updated} donation records, imported {$imported} new.");
 
         return self::SUCCESS;
     }

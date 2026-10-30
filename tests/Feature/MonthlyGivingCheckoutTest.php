@@ -322,12 +322,125 @@ class MonthlyGivingCheckoutTest extends TestCase
         ]);
 
         $this->artisan('donations:sync-stripe-subscriptions')
-            ->expectsOutputToContain('Checked 3 Stripe subscriptions, updated 2 donation records.')
+            ->expectsOutputToContain('Checked 3 Stripe subscriptions, updated 2 donation records, imported 0 new.')
             ->assertSuccessful();
 
         $this->assertFalse($stillActive->fresh()->livemode);
         $this->assertSame('active', $stillActive->fresh()->subscription_status);
         $this->assertSame('past_due', $nowPastDue->fresh()->subscription_status);
         $this->assertSame(1, app(HungerCampaignTracker::class)->countActivePartners());
+    }
+
+    /**
+     * A subscription as returned by the list call with `data.customer` expanded.
+     *
+     * @return array<string, mixed>
+     */
+    private function dashboardSubscription(string $id, string $status, array $customer, string $interval = 'month', array $metadata = []): array
+    {
+        return $this->stripeSubscriptionPayload($id, $status, [
+            'created' => now()->subMonths(6)->startOfSecond()->timestamp,
+            'customer' => ['object' => 'customer'] + $customer,
+            'metadata' => $metadata,
+            'items' => [
+                'object' => 'list',
+                'data' => [[
+                    'id' => 'si_'.$id,
+                    'object' => 'subscription_item',
+                    'quantity' => 1,
+                    'current_period_end' => now()->addWeek()->timestamp,
+                    'price' => [
+                        'id' => 'price_799',
+                        'object' => 'price',
+                        'unit_amount' => 799,
+                        'recurring' => ['interval' => $interval],
+                    ],
+                ]],
+            ],
+        ]);
+    }
+
+    /**
+     * @param  array<int, array<string, mixed>>  $subscriptions
+     */
+    private function fakeSubscriptionList(array $subscriptions): void
+    {
+        $this->stripeRoute('GET', '/v1/subscriptions', [
+            'object' => 'list',
+            'has_more' => false,
+            'url' => '/v1/subscriptions',
+            'data' => $subscriptions,
+        ]);
+    }
+
+    public function test_sync_imports_monthly_partners_created_in_the_stripe_dashboard(): void
+    {
+        $this->fakeSubscriptionList([
+            $this->dashboardSubscription('sub_dash', 'active', ['id' => 'cus_dash', 'name' => 'Grace Ann Lee', 'email' => 'grace@example.com']),
+            $this->dashboardSubscription('sub_old', 'canceled', ['id' => 'cus_old', 'name' => null, 'email' => null]),
+            $this->dashboardSubscription('sub_yearly', 'active', ['id' => 'cus_year', 'name' => 'Yearly Giver', 'email' => 'y@example.com'], 'year'),
+        ]);
+
+        $this->artisan('donations:sync-stripe-subscriptions')
+            ->expectsOutputToContain('Checked 3 Stripe subscriptions, updated 0 donation records, imported 2 new.')
+            ->assertSuccessful();
+
+        $imported = Donation::where('subscription_id', 'sub_dash')->sole();
+        $this->assertSame('Grace', $imported->first_name);
+        $this->assertSame('Ann Lee', $imported->last_name);
+        $this->assertSame('grace@example.com', $imported->email);
+        $this->assertSame('7.99', $imported->amount);
+        $this->assertSame('monthly', $imported->frequency);
+        $this->assertSame('completed', $imported->status);
+        $this->assertSame('active', $imported->subscription_status);
+        $this->assertSame('stripe-direct', $imported->source);
+        $this->assertSame('cus_dash', $imported->stripe_customer_id);
+        $this->assertTrue($imported->created_at->isSameDay(now()->subMonths(6)));
+
+        $canceled = Donation::where('subscription_id', 'sub_old')->sole();
+        $this->assertSame('cus_old@no-email.invalid', $canceled->email);
+        $this->assertSame('Stripe', $canceled->first_name);
+        $this->assertSame('canceled', $canceled->subscription_status);
+        $this->assertNotNull($canceled->subscription_canceled_at);
+
+        $this->assertDatabaseMissing('donations', ['subscription_id' => 'sub_yearly']);
+        $this->assertSame(1, app(HungerCampaignTracker::class)->countActivePartners());
+
+        // Imported silently: donors are not emailed or added to the newsletter
+        $this->assertDatabaseCount('newsletter_subscribers', 0);
+    }
+
+    public function test_sync_import_is_not_repeated_on_the_next_run(): void
+    {
+        $this->fakeSubscriptionList([
+            $this->dashboardSubscription('sub_dash', 'active', ['id' => 'cus_dash', 'name' => 'Grace Lee', 'email' => 'grace@example.com']),
+        ]);
+
+        $this->artisan('donations:sync-stripe-subscriptions')->assertSuccessful();
+        $this->artisan('donations:sync-stripe-subscriptions')
+            ->expectsOutputToContain('updated 1 donation records, imported 0 new.')
+            ->assertSuccessful();
+
+        $this->assertSame(1, Donation::where('subscription_id', 'sub_dash')->count());
+    }
+
+    public function test_sync_links_a_website_checkout_whose_subscription_id_was_never_saved(): void
+    {
+        $donation = $this->pendingCheckout();
+
+        $this->fakeSubscriptionList([
+            $this->dashboardSubscription('sub_orphan', 'active', ['id' => 'cus_donor', 'name' => 'Maria Santos', 'email' => $donation->email], 'month', [
+                'donation_id' => (string) $donation->id,
+            ]),
+        ]);
+
+        $this->artisan('donations:sync-stripe-subscriptions')->assertSuccessful();
+
+        $donation->refresh();
+        $this->assertSame('sub_orphan', $donation->subscription_id);
+        $this->assertSame('active', $donation->subscription_status);
+        $this->assertSame('completed', $donation->status);
+        $this->assertSame(1, Donation::count());
+        $this->assertDatabaseCount('newsletter_subscribers', 0);
     }
 }
