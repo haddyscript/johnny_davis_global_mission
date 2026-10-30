@@ -26,7 +26,9 @@
     </svg>">
   <link rel="stylesheet" href="{{ asset('css/for_index.css') }}?v={{ filemtime(public_path('css/for_index.css')) }}" />
   <link rel="stylesheet" href="{{ asset('css/hunger-campaign.css') }}?v={{ filemtime(public_path('css/hunger-campaign.css')) }}" />
-  <link rel="preload" as="image" href="{{ asset('images/hunger-cant-wait/hunger-cant-wait-flyer.jpg') }}" />
+  <link rel="preload" as="image" type="image/webp"
+        imagesrcset="{{ asset('images/hunger-cant-wait/hunger-cant-wait-banner-768.webp') }} 768w, {{ asset('images/hunger-cant-wait/hunger-cant-wait-banner-1280.webp') }} 1280w, {{ asset('images/hunger-cant-wait/hunger-cant-wait-banner-2048.webp') }} 2048w"
+        imagesizes="(min-width: 1320px) 1280px, 100vw" />
 </head>
 <body>
 

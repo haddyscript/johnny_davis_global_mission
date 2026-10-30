@@ -71,6 +71,11 @@
                     <div class="admin-nav-badge">{{ $pendingDonations }}</div>
                 @endif
             </a>
+            <a href="{{ route('admin.monthly-partners.index') }}"
+               class="admin-nav-item {{ request()->routeIs('admin.monthly-partners.*') ? 'active' : '' }}">
+                <div class="admin-nav-icon">🤝</div>
+                <div class="admin-nav-label">Monthly Partners</div>
+            </a>
             <a href="{{ route('admin.campaigns.index') }}"
                class="admin-nav-item {{ request()->routeIs('admin.campaigns.*') ? 'active' : '' }}">
                 <div class="admin-nav-icon">🎯</div>

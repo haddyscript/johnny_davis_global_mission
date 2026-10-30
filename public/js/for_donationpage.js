@@ -173,6 +173,8 @@
   function showThankYou() {
     thankCampaign.textContent = selectedCampaign;
     thankAmt.textContent      = fmt(selectedAmt) + (isMonthly ? ' / month' : ' one-time');
+    const monthlyNote = document.getElementById('thank-monthly-note');
+    if (monthlyNote) monthlyNote.hidden = !isMonthly;
 
     const message = `I just donated to ${selectedCampaign} via JDGM — join me!`;
     const pageUrl = encodeURIComponent(window.location.href);
@@ -182,6 +184,23 @@
     document.getElementById('share-whatsapp').href  = `https://wa.me/?text=${text}%20${pageUrl}`;
 
     showScreen(thankScreen);
+  }
+
+  /* ── Monthly gift: ask the server to start (or re-check) the Stripe subscription.
+        Safe to call more than once — the server never creates a second subscription. ── */
+  async function finalizeMonthlyGift(setupIntentId, donationId) {
+    const res = await fetch('/donate/confirm', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+      body: JSON.stringify({ setup_intent_id: setupIntentId, donation_id: donationId }),
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || data.error || 'Your monthly gift could not be started. You were not charged.');
+    }
+
+    return data;
   }
 
   /* ── Sync UI with state ─────────────────────────────────── */
@@ -502,20 +521,32 @@
 
         ev.complete('success');
 
-        await fetch('/donate/confirm', {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
-          body: JSON.stringify(
-            flow === 'payment'
-              ? { payment_intent_id: confirmResult.paymentIntent.id, donation_id }
-              : { setup_intent_id:   confirmResult.setupIntent.id,   donation_id }
-          ),
-        });
+        if (flow === 'payment') {
+          // Card needs 3-D Secure: let Stripe show the bank's verification step
+          if (confirmResult.paymentIntent.status === 'requires_action') {
+            const actionResult = await stripe.confirmCardPayment(client_secret);
+            if (actionResult.error) throw new Error(actionResult.error.message);
+          }
+
+          await fetch('/donate/confirm', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+            body: JSON.stringify({ payment_intent_id: confirmResult.paymentIntent.id, donation_id }),
+          });
+        } else {
+          const confirmData = await finalizeMonthlyGift(confirmResult.setupIntent.id, donation_id);
+
+          if (confirmData.requires_action && confirmData.client_secret) {
+            const actionResult = await stripe.confirmCardPayment(confirmData.client_secret);
+            if (actionResult.error) throw new Error(actionResult.error.message);
+            await finalizeMonthlyGift(confirmResult.setupIntent.id, donation_id);
+          }
+        }
 
         showThankYou();
 
       } catch (err) {
-        ev.complete('fail');
+        try { ev.complete('fail'); } catch (e) { /* wallet sheet already closed */ }
         showPaymentError(err.message || 'An unexpected error occurred.');
       }
     });
@@ -912,6 +943,10 @@
           const actionResult = await stripe.confirmCardPayment(confirmData.client_secret);
 
           if (actionResult.error) throw new Error(actionResult.error.message);
+
+          // Card verified and first month paid — let the server activate the gift and send the receipt
+          ctaBtn.textContent = '✅ Activating subscription…';
+          await finalizeMonthlyGift(setupResult.setupIntent.id, donation_id);
         }
 
         showThankYou();

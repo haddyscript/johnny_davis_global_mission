@@ -49,6 +49,15 @@
       Donation: <strong id="thank-amount">$29.99 / month</strong>
     </p>
 
+    <p class="thank-monthly-note" id="thank-monthly-note" hidden>
+      Your monthly gift renews automatically each month on the same date, and a receipt is emailed to you.
+      @if(! empty($manageGiftUrl))
+        You can <a href="{{ $manageGiftUrl }}" target="_blank" rel="noopener">update your card or cancel anytime</a> — sign in securely with Stripe using your email address.
+      @else
+        To update your card or cancel, please <a href="{{ route('contact') }}">contact our team</a>.
+      @endif
+    </p>
+
     <button id="back-to-campaigns-from-thank" class="back-btn">← Return to Campaigns</button>
   </div>
 </div>

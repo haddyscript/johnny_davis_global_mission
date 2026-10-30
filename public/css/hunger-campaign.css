@@ -1,7 +1,8 @@
 /* ============================================================
    HUNGER CAN'T WAIT! — $7.99 monthly partner campaign
+   Approved premium banner + live partner tracker.
    Shared by the homepage (for_index.css) and donation page
-   (for_donationpage.css). Palette follows the campaign flyer:
+   (for_donationpage.css). Palette follows the campaign artwork:
    white, orange, navy and light blue.
 ============================================================ */
 .hcw {
@@ -10,10 +11,11 @@
   --hcw-navy:        #0d2a4e;
   --hcw-blue:        #1a6fd1;
   --hcw-blue-pale:   #e8f2fd;
+  --hcw-green:       #16a34a;
   --hcw-text:        #334155;
 
   position: relative;
-  background: #ffffff;
+  background: linear-gradient(180deg, #ffffff 0%, #f6f9fd 100%);
   border-bottom: 4px solid var(--hcw-orange);
   font-family: 'Inter', sans-serif;
   color: var(--hcw-text);
@@ -21,24 +23,68 @@
 }
 
 /* Homepage nav is fixed and the body has no top padding */
-.hcw--home { padding: calc(72px + 48px) 0 56px; }
-.hcw--donate { padding: 44px 0 48px; }
+.hcw--home   { padding: calc(72px + 28px) 0 44px; }
+.hcw--donate { padding: 32px 0 40px; }
 
-.hcw-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
-  gap: 56px;
-  align-items: center;
+.hcw-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.hcw-copy { min-width: 0; }
+/* ── Banner artwork ─────────────────────────────────── */
+.hcw-banner-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.hcw-banner {
+  display: block;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 18px 48px rgba(13,42,78,.16);
+  transition: transform .25s ease, box-shadow .25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.hcw-banner:hover { transform: translateY(-2px); box-shadow: 0 22px 56px rgba(13,42,78,.22); }
+.hcw-banner:focus-visible { outline: 3px solid var(--hcw-navy); outline-offset: 4px; }
+.hcw-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2048 / 768;
+}
+
+/* ── Tracker card ───────────────────────────────────── */
+.hcw-tracker {
+  position: relative;
+  max-width: 1120px;
+  margin: 24px auto 0;
+  padding: 28px 36px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  gap: 36px;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid rgba(13,42,78,.08);
+  border-radius: 20px;
+  box-shadow: 0 14px 40px rgba(13,42,78,.12);
+}
+.hcw-tracker[hidden] { display: none; }
+.hcw-tracker--fallback { grid-template-columns: minmax(0, 1fr) auto; }
+
+.hcw-tracker-stats,
+.hcw-tracker-cta { min-width: 0; }
 
 .hcw-eyebrow {
   display: inline-block;
-  font-size: .78rem;
+  font-size: .76rem;
   font-weight: 700;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -46,72 +92,114 @@
   background: var(--hcw-blue-pale);
   padding: 6px 14px;
   border-radius: 999px;
-  margin: 0 0 16px;
+  margin: 0 0 12px;
 }
 
-.hcw-title {
-  font-family: 'Inter', 'Arial Black', sans-serif;
-  font-size: clamp(2.3rem, 5.2vw, 4rem);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -.02em;
-  color: var(--hcw-orange);
-  margin: 0 0 14px;
-}
-
-.hcw-goal {
-  font-size: clamp(1.15rem, 2vw, 1.4rem);
-  font-weight: 700;
-  line-height: 1.35;
-  color: var(--hcw-navy);
-  margin: 0 0 14px;
-}
-.hcw-goal strong { color: var(--hcw-orange-dark); }
-
-.hcw-price {
+.hcw-count {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
   gap: 4px 12px;
   margin: 0 0 14px;
-  line-height: 1;
-}
-.hcw-price-amount {
-  font-size: clamp(3rem, 6vw, 4.4rem);
-  font-weight: 700;
-  letter-spacing: -.03em;
+  line-height: 1.05;
   color: var(--hcw-navy);
 }
-.hcw-price-term {
-  font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+.hcw-count[hidden] { display: none; }
+.hcw-count-num {
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+.hcw-count-label {
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-  color: var(--hcw-orange);
+  color: var(--hcw-orange-dark);
+}
+.hcw-count--first {
+  font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -.01em;
 }
 
-.hcw-body {
-  font-size: 1.08rem;
-  line-height: 1.65;
-  margin: 0 0 18px;
-  max-width: 560px;
+.hcw-bar {
+  position: relative;
+  height: 18px;
+  border-radius: 999px;
+  background: #e5eaf1;
+  box-shadow: inset 0 1px 3px rgba(13,42,78,.12);
+  overflow: hidden;
 }
+.hcw-bar-fill {
+  display: block;
+  height: 100%;
+  max-width: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f4511e 0%, var(--hcw-orange) 100%);
+  transition: width .8s cubic-bezier(.2,.8,.2,1);
+}
+/* Keep the first partners visible on the bar; the exact count is printed above */
+.hcw-bar-fill--started { min-width: 10px; }
+
+.hcw-bar-legend {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 10px 0 0;
+  font-size: .9rem;
+  color: var(--hcw-text);
+}
+.hcw-bar-legend strong { color: var(--hcw-navy); }
+
+.hcw-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 60px;
+  padding: 16px 28px;
+  border-radius: 999px;
+  background: var(--hcw-orange);
+  color: #ffffff;
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(240,124,30,.38);
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.hcw-btn:hover { background: var(--hcw-orange-dark); transform: translateY(-2px); box-shadow: 0 14px 30px rgba(240,124,30,.45); }
+.hcw-btn:focus-visible { outline: 3px solid var(--hcw-navy); outline-offset: 3px; }
+.hcw-btn svg { flex-shrink: 0; }
+.hcw-tracker--fallback .hcw-btn { width: auto; }
+
+.hcw-cta-note {
+  margin: 10px 0 14px;
+  font-size: .86rem;
+  text-align: center;
+  color: var(--hcw-text);
+}
+.hcw-cta-note strong { color: var(--hcw-navy); }
 
 .hcw-programs {
   list-style: none;
-  margin: 0 0 26px;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  justify-content: center;
+  gap: 8px;
 }
 .hcw-program {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: .98rem;
+  font-size: .9rem;
   line-height: 1.3;
-  padding: 9px 16px;
+  padding: 7px 14px;
   border-radius: 999px;
   border: 1.5px solid transparent;
 }
@@ -124,81 +212,44 @@
 }
 .hcw-program-name { font-weight: 700; color: var(--hcw-navy); }
 .hcw-program--active { background: #fff3e8; border-color: rgba(240,124,30,.35); }
-.hcw-program--active::before { background: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.18); }
+.hcw-program--active::before { background: var(--hcw-green); box-shadow: 0 0 0 3px rgba(22,163,74,.18); }
 .hcw-program--soon { background: var(--hcw-blue-pale); border-color: rgba(26,111,209,.25); }
 .hcw-program--soon::before { background: var(--hcw-blue); }
 
-.hcw-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 60px;
-  padding: 16px 34px;
-  border-radius: 999px;
-  background: var(--hcw-orange);
-  color: #ffffff;
-  font-size: 1.12rem;
-  font-weight: 700;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  box-shadow: 0 10px 26px rgba(240,124,30,.38);
-  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-.hcw-btn:hover { background: var(--hcw-orange-dark); transform: translateY(-2px); box-shadow: 0 14px 30px rgba(240,124,30,.45); }
-.hcw-btn:focus-visible { outline: 3px solid var(--hcw-navy); outline-offset: 3px; }
-.hcw-btn svg { flex-shrink: 0; }
-
-.hcw-flyer {
-  margin: 0;
-  justify-self: center;
-  width: 100%;
-  max-width: 460px;
-}
-.hcw-flyer img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 18px;
-  box-shadow: 0 18px 48px rgba(13,42,78,.18);
+/* ── Tablet (iPad portrait and smaller laptops) ────── */
+@media (max-width: 1024px) {
+  .hcw-tracker { margin: 20px 24px 0; padding: 24px 28px; gap: 28px; }
 }
 
-/* Donation page: flyer sits beside the copy and stays compact */
-.hcw--donate .hcw-flyer { max-width: 380px; }
-
-/* ── Tablet ─────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .hcw-inner { gap: 36px; }
-}
-
-/* ── Mobile: invitation and button first, flyer after ── */
+/* ── Mobile: banner edge to edge, tracker stacked ───── */
 @media (max-width: 768px) {
-  .hcw--home { padding: calc(72px + 24px) 0 36px; }
-  .hcw--donate { padding: 24px 0 28px; }
+  .hcw--home   { padding: 72px 0 28px; }
+  .hcw--donate { padding: 0 0 28px; }
 
-  .hcw-inner {
+  .hcw-banner-wrap { padding: 0; }
+  .hcw-banner { border-radius: 0; box-shadow: none; }
+  .hcw-banner:hover { transform: none; box-shadow: none; }
+
+  .hcw-tracker,
+  .hcw-tracker--fallback {
     grid-template-columns: minmax(0, 1fr);
-    gap: 28px;
-    padding: 0 16px;
+    margin: 16px 16px 0;
+    padding: 22px 18px;
+    gap: 20px;
     text-align: center;
   }
-  .hcw-eyebrow { margin-bottom: 12px; }
-  .hcw-title { margin-bottom: 10px; }
-  .hcw-goal { margin-bottom: 10px; }
-  .hcw-price { justify-content: center; margin-bottom: 10px; }
-  .hcw-body { font-size: 1rem; margin: 0 auto 14px; }
-  .hcw-programs { justify-content: center; margin-bottom: 20px; gap: 8px; }
-  .hcw-program { font-size: .92rem; padding: 8px 14px; }
-  .hcw-btn { display: flex; width: 100%; font-size: 1.05rem; padding: 16px 20px; }
+  .hcw-eyebrow { font-size: .68rem; letter-spacing: .1em; padding: 6px 12px; }
+  .hcw-count { justify-content: center; }
+  .hcw-btn { font-size: 1rem; letter-spacing: .03em; padding: 16px 20px; }
+  .hcw-tracker--fallback .hcw-btn { width: 100%; }
+}
 
-  .hcw-flyer { max-width: 420px; }
-  /* Keep the flyer short so the donation form follows closely */
-  .hcw--donate .hcw-flyer { max-width: 240px; }
+@media (max-width: 380px) {
+  .hcw-bar-legend { font-size: .8rem; }
+  .hcw-btn { font-size: .94rem; padding: 16px 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hcw-btn { transition: none; }
-  .hcw-btn:hover { transform: none; }
+  .hcw-btn, .hcw-banner, .hcw-bar-fill { transition: none; }
+  .hcw-btn:hover, .hcw-banner:hover { transform: none; }
 }

@@ -17,18 +17,40 @@ class HungerCampaignTest extends TestCase
         $response->assertSeeInOrder([
             'id="hunger-campaign"',
             'HUNGER CAN&rsquo;T WAIT!',
-            'Be one of our first <strong>10,000</strong> monthly partners.',
-            '$7.99',
-            'a month',
+            'hunger-cant-wait-banner-768.webp',
+            'Our journey to 10,000 monthly partners',
+            'Become a Monthly Partner',
+            '$7.99 a month',
             'Philippines:',
             'Feeding children now.',
             'Uganda:',
             'Coming soon.',
-            'Become a Monthly Partner',
             'id="hero"',
         ], false);
         $response->assertSee('href="'.route('donate').'#give"', false);
-        $response->assertSee('images/hunger-cant-wait/hunger-cant-wait-flyer.jpg', false);
+    }
+
+    public function test_approved_banner_artwork_is_served_responsively(): void
+    {
+        $html = $this->get('/')->getContent();
+
+        foreach ([768, 1280, 2048] as $width) {
+            $this->assertStringContainsString("hunger-cant-wait-banner-{$width}.webp {$width}w", $html);
+            $this->assertStringContainsString("hunger-cant-wait-banner-{$width}.jpg {$width}w", $html);
+            $this->assertFileExists(public_path("images/hunger-cant-wait/hunger-cant-wait-banner-{$width}.webp"));
+            $this->assertFileExists(public_path("images/hunger-cant-wait/hunger-cant-wait-banner-{$width}.jpg"));
+        }
+        $this->assertStringContainsString('width="2048" height="768"', $html);
+    }
+
+    public function test_uganda_is_presented_as_coming_soon_not_active(): void
+    {
+        $html = $this->get('/')->getContent();
+
+        preg_match('/<section id="hunger-campaign".*?<\/section>/s', $html, $matches);
+
+        $this->assertStringContainsString('hcw-program--soon">'."\n".'          <span class="hcw-program-name">Uganda:</span> Coming soon.', $matches[0]);
+        $this->assertStringContainsString('Uganda: feeding children, coming soon', $matches[0]);
     }
 
     public function test_campaign_copy_does_not_use_starting_at_wording(): void
@@ -46,6 +68,7 @@ class HungerCampaignTest extends TestCase
             'id="hunger-campaign"',
             'HUNGER CAN&rsquo;T WAIT!',
             'href="#give"',
+            'Our journey to 10,000 monthly partners',
             'id="donate-body-screen"',
             'id="give"',
         ], false);
@@ -81,5 +104,26 @@ class HungerCampaignTest extends TestCase
 
         $response->assertSee('src="'.asset('images/who-we-are/Johnny-Davis.webp').'" alt="Pastor Johnny Davis"', false);
         $response->assertDontSee('cloudfront.net', false);
+    }
+
+    public function test_donors_can_manage_their_monthly_gift_through_stripe(): void
+    {
+        config(['services.stripe.portal_url' => 'https://billing.stripe.com/p/login/test_123']);
+
+        $response = $this->get('/donate');
+
+        $response->assertSee('href="https://billing.stripe.com/p/login/test_123"', false);
+        $response->assertSee('Update your card or cancel your monthly gift', false);
+        $response->assertSee('update your card or cancel anytime', false);
+    }
+
+    public function test_cancel_instructions_fall_back_to_contact_page_without_stripe_portal(): void
+    {
+        config(['services.stripe.portal_url' => null]);
+
+        $response = $this->get('/donate');
+
+        $response->assertDontSee('billing.stripe.com', false);
+        $response->assertSee('href="'.route('contact').'">contact our team</a>', false);
     }
 }

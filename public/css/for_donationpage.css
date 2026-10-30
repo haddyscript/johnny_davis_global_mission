@@ -1345,6 +1345,8 @@ body { padding-top: 72px; }
 }
 .tell-action:hover { background:var(--orange-dark); }
 .tell-hint { margin-top:10px; font-size:.72rem; color:var(--text-hint); }
+.thank-monthly-note { margin:18px auto 0; max-width:560px; font-size:.86rem; line-height:1.6; color:var(--text-body); text-align:center; }
+.thank-monthly-note a, .manage-gift-note a { color:var(--orange-dark); font-weight:600; }
 
 .thank-summary {
   margin-top:20px; font-size:.85rem; color:var(--text-body);

@@ -256,6 +256,9 @@
         <div id="stripe-card-element" class="stripe-card-container"></div>
         <div id="stripe-card-errors" class="stripe-error-msg" role="alert" style="display:none;"></div>
         <p class="stripe-note">🔒 Payments secured by Stripe · PCI-DSS compliant · We never store card data</p>
+        @if(! empty($manageGiftUrl))
+          <p class="stripe-note manage-gift-note">Already a monthly partner? <a href="{{ $manageGiftUrl }}" target="_blank" rel="noopener">Update your card or cancel your monthly gift</a> securely through Stripe.</p>
+        @endif
       </div>
 
       <!-- GCash panel -->

@@ -1,41 +1,40 @@
 <?php
 
-use App\Http\Controllers\ChatbotController;
-use App\Http\Controllers\DeployController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\SubscriberController;
-use App\Http\Controllers\Admin\ContactMessageController;
-use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
-use App\Http\Controllers\NewsController;
-use App\Http\Controllers\WhoWeAreController;
-use App\Http\Controllers\MinistryController;
-use App\Http\Controllers\MinisterialFellowshipController;
-use App\Http\Controllers\DonationController;
-use App\Http\Controllers\SiteLockController;
-
-use App\Http\Controllers\Admin\ContentBlockController;
-use App\Http\Controllers\Admin\DonationController as AdminDonationController;
-use App\Http\Controllers\Admin\EmailTemplateController;
-use App\Http\Controllers\Admin\NavItemController;
-use App\Http\Controllers\Admin\CampaignController;
-use App\Http\Controllers\Admin\EmailLogController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\CampaignController;
+use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\ContentBlockController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DonationController as AdminDonationController;
+use App\Http\Controllers\Admin\EmailLogController;
+use App\Http\Controllers\Admin\EmailTemplateController;
+use App\Http\Controllers\Admin\MonthlyPartnerController;
+use App\Http\Controllers\Admin\NavItemController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PreviewController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SectionController;
+use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
+use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DeployController;
+use App\Http\Controllers\DonationController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MinisterialFellowshipController;
+use App\Http\Controllers\MinistryController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SiteLockController;
+use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\WhoWeAreController;
 use Illuminate\Support\Facades\Route;
 
-
 // Site lock/unlock — password-protected, never blocked by site lock middleware
-Route::get('/lock-website',   [SiteLockController::class, 'showLock'])->name('site-lock.show-lock');
-Route::post('/lock-website',  [SiteLockController::class, 'lock'])->name('site-lock.lock');
+Route::get('/lock-website', [SiteLockController::class, 'showLock'])->name('site-lock.show-lock');
+Route::post('/lock-website', [SiteLockController::class, 'lock'])->name('site-lock.lock');
 Route::get('/unlock-website', [SiteLockController::class, 'showUnlock'])->name('site-lock.show-unlock');
-Route::post('/unlock-website',[SiteLockController::class, 'unlock'])->name('site-lock.unlock');
-Route::get('/site-locked',    [SiteLockController::class, 'locked'])->name('site-locked');
+Route::post('/unlock-website', [SiteLockController::class, 'unlock'])->name('site-lock.unlock');
+Route::get('/site-locked', [SiteLockController::class, 'locked'])->name('site-locked');
 
 // Public page GET routes — blocked by nav.visibility if the matching nav item is hidden
 Route::middleware('nav.visibility')->group(function () {
@@ -43,6 +42,7 @@ Route::middleware('nav.visibility')->group(function () {
         if (str_contains(request()->getHost(), 'johnnydavisministries.org')) {
             return app(MinistryController::class)->index();
         }
+
         return app(HomeController::class)->index();
     })->name('home');
     Route::get('/contact', [ContactController::class, 'index'])->name('contact');
@@ -57,23 +57,25 @@ Route::get('/ministerial-fellowship', [MinisterialFellowshipController::class, '
 Route::get('/.well-known/apple-developer-merchantid-domain-association', function () {
     $file = public_path('.well-known/apple-developer-merchantid-domain-association');
     abort_unless(file_exists($file), 404);
+
     return response()->file($file, ['Content-Type' => 'text/plain']);
 })->withoutMiddleware('*');
 
 // Non-page routes — never blocked by nav visibility
-Route::post('/contact',             [ContactController::class, 'store'])->name('contact.store');
-Route::post('/newsletter/subscribe',      [SubscriberController::class, 'store'])->name('newsletter.subscribe');
-Route::get('/newsletter/unsubscribe',     [SubscriberController::class, 'unsubscribe'])->name('newsletter.unsubscribe')->middleware('signed');
-Route::post('/donate/charge',                      [DonationController::class, 'charge'])->name('donate.charge');
-Route::post('/donate/confirm',                     [DonationController::class, 'confirm'])->name('donate.confirm');
-Route::post('/donate/paypal/order',                [DonationController::class, 'paypalOrder'])->name('donate.paypal.order');
-Route::post('/donate/paypal/capture',              [DonationController::class, 'paypalCapture'])->name('donate.paypal.capture');
-Route::post('/donate/paypal/subscription/create',  [DonationController::class, 'paypalCreateSubscription'])->name('donate.paypal.subscription.create');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/newsletter/subscribe', [SubscriberController::class, 'store'])->name('newsletter.subscribe');
+Route::get('/newsletter/unsubscribe', [SubscriberController::class, 'unsubscribe'])->name('newsletter.unsubscribe')->middleware('signed');
+Route::get('/donate/hunger-cant-wait/progress', [DonationController::class, 'hungerCampaignProgress'])->name('donate.hunger-progress');
+Route::post('/donate/charge', [DonationController::class, 'charge'])->name('donate.charge');
+Route::post('/donate/confirm', [DonationController::class, 'confirm'])->name('donate.confirm');
+Route::post('/donate/paypal/order', [DonationController::class, 'paypalOrder'])->name('donate.paypal.order');
+Route::post('/donate/paypal/capture', [DonationController::class, 'paypalCapture'])->name('donate.paypal.capture');
+Route::post('/donate/paypal/subscription/create', [DonationController::class, 'paypalCreateSubscription'])->name('donate.paypal.subscription.create');
 Route::post('/donate/paypal/subscription/confirm', [DonationController::class, 'paypalConfirmSubscription'])->name('donate.paypal.subscription.confirm');
-Route::post('/stripe/webhook',                     [DonationController::class, 'webhook'])->name('stripe.webhook');
-Route::post('/paypal/webhook',                     [DonationController::class, 'paypalWebhook'])->name('paypal.webhook');
-Route::post('/chatbot',                [ChatbotController::class, 'chat'])->name('chatbot.chat');
-Route::post('/chatbot/stream',         [ChatbotController::class, 'stream'])->name('chatbot.stream');
+Route::post('/stripe/webhook', [DonationController::class, 'webhook'])->name('stripe.webhook');
+Route::post('/paypal/webhook', [DonationController::class, 'paypalWebhook'])->name('paypal.webhook');
+Route::post('/chatbot', [ChatbotController::class, 'chat'])->name('chatbot.chat');
+Route::post('/chatbot/stream', [ChatbotController::class, 'stream'])->name('chatbot.stream');
 
 // Deploy trigger — pulls latest main and clears caches; gated by DEPLOYER_PASSWORD in .env
 Route::get('/deployer', [DeployController::class, 'deploy'])->name('deployer');
@@ -117,6 +119,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('donations/export', [AdminDonationController::class, 'export'])->name('donations.export');
     Route::post('donations/{donation}/followup', [AdminDonationController::class, 'followup'])->name('donations.followup');
     Route::resource('donations', AdminDonationController::class)->only(['index', 'show']);
+    Route::get('monthly-partners', [MonthlyPartnerController::class, 'index'])->name('monthly-partners.index');
     Route::resource('email-templates', EmailTemplateController::class);
     Route::patch('email-templates/{emailTemplate}/toggle', [EmailTemplateController::class, 'toggle'])
         ->name('email-templates.toggle');
@@ -132,12 +135,12 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     // Navigation items
     Route::prefix('nav-items')->name('nav-items.')->group(function () {
-        Route::get('/',                          [NavItemController::class, 'index'])->name('index');
-        Route::post('/',                         [NavItemController::class, 'store'])->name('store');
-        Route::put('/{navItem}',                 [NavItemController::class, 'update'])->name('update');
-        Route::delete('/{navItem}',              [NavItemController::class, 'destroy'])->name('destroy');
-        Route::patch('/{navItem}/toggle',        [NavItemController::class, 'toggle'])->name('toggle');
-        Route::post('/reorder',                  [NavItemController::class, 'reorder'])->name('reorder');
+        Route::get('/', [NavItemController::class, 'index'])->name('index');
+        Route::post('/', [NavItemController::class, 'store'])->name('store');
+        Route::put('/{navItem}', [NavItemController::class, 'update'])->name('update');
+        Route::delete('/{navItem}', [NavItemController::class, 'destroy'])->name('destroy');
+        Route::patch('/{navItem}/toggle', [NavItemController::class, 'toggle'])->name('toggle');
+        Route::post('/reorder', [NavItemController::class, 'reorder'])->name('reorder');
     });
 
     // Admin user management
@@ -145,10 +148,10 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     // Notifications
     Route::prefix('notifications')->name('notifications.')->group(function () {
-        Route::get('/',                       [NotificationController::class, 'index'])->name('index');
-        Route::get('/recent',                 [NotificationController::class, 'recent'])->name('recent');
-        Route::get('/unread-count',           [NotificationController::class, 'unreadCount'])->name('unread-count');
-        Route::patch('/{notification}/read',  [NotificationController::class, 'markRead'])->name('mark-read');
-        Route::post('/mark-all-read',         [NotificationController::class, 'markAllRead'])->name('mark-all-read');
+        Route::get('/', [NotificationController::class, 'index'])->name('index');
+        Route::get('/recent', [NotificationController::class, 'recent'])->name('recent');
+        Route::get('/unread-count', [NotificationController::class, 'unreadCount'])->name('unread-count');
+        Route::patch('/{notification}/read', [NotificationController::class, 'markRead'])->name('mark-read');
+        Route::post('/mark-all-read', [NotificationController::class, 'markAllRead'])->name('mark-all-read');
     });
 });

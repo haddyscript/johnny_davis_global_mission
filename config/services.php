@@ -36,28 +36,30 @@ return [
     ],
 
     'stripe' => [
-        'key'             => env('STRIPE_KEY'),
-        'secret'          => env('STRIPE_SECRET'),
-        'webhook_secret'  => env('STRIPE_WEBHOOK_SECRET'),
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+        // Stripe customer portal login link (Dashboard → Settings → Billing → Customer portal)
+        'portal_url' => env('STRIPE_CUSTOMER_PORTAL_URL'),
     ],
 
     'paypal' => [
         'client_id' => env('PAYPAL_CLIENT_ID'),
-        'secret'    => env('PAYPAL_SECRET'),
-        'mode'      => env('PAYPAL_MODE', 'sandbox'), // 'sandbox' or 'live'
+        'secret' => env('PAYPAL_SECRET'),
+        'mode' => env('PAYPAL_MODE', 'sandbox'), // 'sandbox' or 'live'
     ],
 
     'gemini' => [
-        'api_key'        => env('GEMINI_API_KEY'),
-        'primary_model'  => env('GEMINI_PRIMARY_MODEL',  'gemini-2.5-flash'),
+        'api_key' => env('GEMINI_API_KEY'),
+        'primary_model' => env('GEMINI_PRIMARY_MODEL', 'gemini-2.5-flash'),
         'fallback_model' => env('GEMINI_FALLBACK_MODEL', 'gemini-2.5-flash-lite'),
-        'timeout'        => (int) env('GEMINI_TIMEOUT', 20),
+        'timeout' => (int) env('GEMINI_TIMEOUT', 20),
     ],
 
     'social' => [
-        'facebook'  => env('SOCIAL_FACEBOOK_URL'),
+        'facebook' => env('SOCIAL_FACEBOOK_URL'),
         'instagram' => env('SOCIAL_INSTAGRAM_URL'),
-        'youtube'   => env('SOCIAL_YOUTUBE_URL'),
+        'youtube' => env('SOCIAL_YOUTUBE_URL'),
     ],
 
 ];

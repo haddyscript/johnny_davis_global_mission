@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,18 +33,54 @@ class Donation extends Model
         'subscription_id',
         'subscription_status',
         'next_billing_date',
+        'livemode',
+        'source',
+        'subscription_canceled_at',
         'follow_up_sent_at',
         'follow_up_count',
     ];
 
     protected $casts = [
-        'amount'            => 'decimal:2',
+        'amount' => 'decimal:2',
         'next_billing_date' => 'datetime',
+        'livemode' => 'boolean',
+        'subscription_canceled_at' => 'datetime',
         'follow_up_sent_at' => 'datetime',
-        'follow_up_count'   => 'integer',
-        'created_at'        => 'datetime',
-        'updated_at'        => 'datetime',
+        'follow_up_count' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
+
+    /**
+     * Whether the configured Stripe secret key is a live-mode key.
+     */
+    public static function stripeIsLive(): bool
+    {
+        $secret = (string) config('services.stripe.secret');
+
+        return str_starts_with($secret, 'sk_live_') || str_starts_with($secret, 'rk_live_');
+    }
+
+    /**
+     * Stripe monthly subscriptions created in the same Stripe mode (live/test) the site runs in,
+     * so test gifts never appear in production reporting.
+     */
+    public function scopeStripeSubscriptions(Builder $query): Builder
+    {
+        return $query->where('frequency', 'monthly')
+            ->where('payment_method', 'card')
+            ->whereNotNull('subscription_id')
+            ->where('livemode', self::stripeIsLive());
+    }
+
+    /**
+     * Monthly partners whose Stripe subscription is currently paid up.
+     * Excludes one-time gifts, failed/past-due payments, incomplete checkouts and cancellations.
+     */
+    public function scopeActiveMonthlyPartners(Builder $query): Builder
+    {
+        return $query->stripeSubscriptions()->where('subscription_status', 'active');
+    }
 
     /**
      * Get the donor's full name.

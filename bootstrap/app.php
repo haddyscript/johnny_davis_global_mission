@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Middleware\CaptureDonationSource;
+use App\Http\Middleware\CheckSiteLock;
+use App\Http\Middleware\EnforceNavVisibility;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,9 +20,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'paypal/webhook',
         ]);
         $middleware->alias([
-            'nav.visibility' => \App\Http\Middleware\EnforceNavVisibility::class,
+            'nav.visibility' => EnforceNavVisibility::class,
         ]);
-        $middleware->appendToGroup('web', \App\Http\Middleware\CheckSiteLock::class);
+        $middleware->appendToGroup('web', CheckSiteLock::class);
+        $middleware->appendToGroup('web', CaptureDonationSource::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
