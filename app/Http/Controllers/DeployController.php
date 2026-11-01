@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\RateLimiter;
 
 class DeployController extends Controller
 {
+    /** Dry run of pending migrations; its SQL is checked before anything touches the database. */
+    private const MIGRATE_PREVIEW = ['php', 'artisan', 'migrate', '--pretend', '--force'];
+
+    /** SQL that could remove or overwrite production data. Any match stops the deploy before migrating. */
+    private const DESTRUCTIVE_SQL = '/\b(drop|truncate|delete|rename)\b/i';
+
     public function deploy(Request $request)
     {
         $key = 'deployer:' . $request->ip();
@@ -32,6 +38,8 @@ class DeployController extends Controller
         $steps = [
             'git fetch origin main',
             'git reset --hard origin/main',
+            // Only runs pending migrations (never fresh/refresh/rollback), and only if the preview is additive
+            self::MIGRATE_PREVIEW,
             ['php', 'artisan', 'migrate', '--force'],
             ['php', 'artisan', 'config:clear'],
             ['php', 'artisan', 'view:clear'],
@@ -62,6 +70,15 @@ class DeployController extends Controller
                 Log::error('Deployer: step failed', ['command' => $label]);
 
                 return response(implode("\n\n", $log) . "\n\nDeployment FAILED.", 500)
+                    ->header('Content-Type', 'text/plain');
+            }
+
+            if ($command === self::MIGRATE_PREVIEW && preg_match(self::DESTRUCTIVE_SQL, $result->output())) {
+                Log::error('Deployer: destructive migration blocked');
+
+                return response(implode("\n\n", $log)
+                    . "\n\nDeployment STOPPED: a pending migration would drop, rename or delete data."
+                    . "\nThe code was updated but the database was not touched. Review the migration and run it manually.", 500)
                     ->header('Content-Type', 'text/plain');
             }
         }
