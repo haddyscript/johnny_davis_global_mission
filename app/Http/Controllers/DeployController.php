@@ -32,6 +32,7 @@ class DeployController extends Controller
         $steps = [
             'git fetch origin main',
             'git reset --hard origin/main',
+            ['php', 'artisan', 'migrate', '--force'],
             ['php', 'artisan', 'config:clear'],
             ['php', 'artisan', 'view:clear'],
             ['php', 'artisan', 'route:clear'],

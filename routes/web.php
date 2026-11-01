@@ -77,7 +77,7 @@ Route::post('/paypal/webhook', [DonationController::class, 'paypalWebhook'])->na
 Route::post('/chatbot', [ChatbotController::class, 'chat'])->name('chatbot.chat');
 Route::post('/chatbot/stream', [ChatbotController::class, 'stream'])->name('chatbot.stream');
 
-// Deploy trigger — pulls latest main and clears caches; gated by DEPLOYER_PASSWORD in .env
+// Deploy trigger — pulls latest main, runs migrations and clears caches; gated by DEPLOYER_PASSWORD in .env
 Route::get('/deployer', [DeployController::class, 'deploy'])->name('deployer');
 
 Route::get('/dashboard', function () {
