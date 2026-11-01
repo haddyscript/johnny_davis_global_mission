@@ -378,6 +378,7 @@
 
 - **Name:** Hadrian Evarula
 - **Role:** Fullstack Developer · AI Developer
+- **Current position:** Senior Analyst, LLM Fullstack Engineer at Accenture
 - **Age:** 24 years old
 - **Experience:** 3 years in the corporate industry
 - **Phone:** 09943254337
