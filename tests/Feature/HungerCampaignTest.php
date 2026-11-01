@@ -78,7 +78,7 @@ class HungerCampaignTest extends TestCase
     {
         $response = $this->get('/donate')->assertOk();
 
-        foreach (['Feed Filipino Children', 'Disaster Relief Fund', 'Uganda Clean Water Initiative', 'Where it&#039;s needed most'] as $campaign) {
+        foreach (['Feed Filipino Children', 'Disaster Relief Fund', 'Uganda Clean Water Initiative', "Where it's needed most"] as $campaign) {
             $response->assertSee('data-campaign-opt="'.$campaign.'"', false);
         }
 
