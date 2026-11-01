@@ -1,43 +1,46 @@
 /* ============================================================
-   HUNGER CAN'T WAIT! — live monthly partner tracker
-   Refreshes the Stripe-verified partner count while the page is
-   open. If the count can't be read, the tracker is replaced by a
-   plain call-to-action rather than showing a stale or made-up number.
+   HUNGER CAN'T WAIT! — monthly partner tracker
+   Refreshes the tracker while the page is open. The Stripe-verified
+   partner count is only shown once it reaches the public threshold
+   (100 partners); below it, or if the count can't be read, the
+   "Every Partner Makes a Difference" message is shown instead.
 ============================================================ */
 (function () {
   'use strict';
 
-  const tracker  = document.querySelector('[data-hcw-tracker]');
-  const fallback = document.querySelector('[data-hcw-fallback]');
+  const tracker = document.querySelector('[data-hcw-tracker]');
   if (!tracker || !window.fetch) return;
 
-  const REFRESH_MS   = 2 * 60 * 1000;
-  const countEl      = tracker.querySelector('[data-hcw-count]');
-  const countLabelEl = tracker.querySelector('.hcw-count-label');
-  const hasPartners  = tracker.querySelector('[data-hcw-has-partners]');
-  const noPartners   = tracker.querySelector('[data-hcw-no-partners]');
-  const barEl        = tracker.querySelector('[data-hcw-bar]');
-  const barWrap      = tracker.querySelector('.hcw-bar');
-  const milestoneEl  = tracker.querySelector('[data-hcw-milestone]');
-  const fmt          = n => Number(n).toLocaleString('en-US');
+  const REFRESH_MS     = 2 * 60 * 1000;
+  const messageEl      = tracker.querySelector('[data-hcw-message]');
+  const liveEl         = tracker.querySelector('[data-hcw-live]');
+  const countEl        = tracker.querySelector('[data-hcw-count]');
+  const barEl          = tracker.querySelector('[data-hcw-bar]');
+  const barWrap        = tracker.querySelector('.hcw-bar');
+  const milestoneLabel = tracker.querySelector('[data-hcw-milestone-label]');
+  const milestoneEl    = tracker.querySelector('[data-hcw-milestone]');
+  const fmt            = n => Number(n).toLocaleString('en-US');
 
-  function showTracker(available) {
-    tracker.hidden = !available;
-    if (fallback) fallback.hidden = available;
+  function showCount(visible) {
+    liveEl.hidden    = !visible;
+    messageEl.hidden = visible;
+    milestoneLabel.textContent = visible ? 'Next milestone' : 'First milestone';
   }
 
   function render(data) {
+    milestoneEl.textContent = fmt(data.next_milestone);
+
+    if (!data.show_count) {
+      showCount(false);
+      return;
+    }
+
     const partners = Number(data.active_partners) || 0;
 
-    countEl.textContent      = fmt(partners);
-    countLabelEl.textContent = partners === 1 ? 'active monthly partner' : 'active monthly partners';
-    hasPartners.hidden       = partners < 1;
-    noPartners.hidden        = partners > 0;
-    barEl.style.width        = data.percent + '%';
-    barEl.classList.toggle('hcw-bar-fill--started', partners > 0);
+    countEl.textContent = fmt(partners);
+    barEl.style.width   = data.percent + '%';
     barWrap.setAttribute('aria-valuenow', String(partners));
-    milestoneEl.textContent  = fmt(data.next_milestone);
-    showTracker(true);
+    showCount(true);
   }
 
   async function refresh() {
@@ -50,10 +53,10 @@
       if (res.ok && data.available) {
         render(data);
       } else {
-        showTracker(false);
+        showCount(false);
       }
     } catch (e) {
-      // Network hiccup: keep the last verified figure on screen
+      // Network hiccup: keep what is on screen
     }
   }
 

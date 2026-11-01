@@ -39,6 +39,12 @@ class MonthlyPartnerController extends Controller
             'past_due' => Donation::stripeSubscriptions()
                 ->whereIn('subscription_status', ['past_due', 'unpaid'])
                 ->count(),
+            'payment_failures' => Donation::stripeSubscriptions()
+                ->where('payment_failed_at', '>=', $since)
+                ->count(),
+            'recovered' => Donation::stripeSubscriptions()
+                ->where('subscription_recovered_at', '>=', $since)
+                ->count(),
             'failed_checkouts' => Donation::where('frequency', 'monthly')
                 ->where('payment_method', 'card')
                 ->where('status', 'failed')
@@ -65,7 +71,8 @@ class MonthlyPartnerController extends Controller
 
         $recent = Donation::stripeSubscriptions()
             ->select(['id', 'first_name', 'last_name', 'email', 'campaign_name', 'amount', 'status',
-                'subscription_status', 'source', 'next_billing_date', 'subscription_canceled_at', 'created_at'])
+                'subscription_status', 'source', 'next_billing_date', 'subscription_canceled_at', 'payment_failed_at',
+                'subscription_recovered_at', 'created_at'])
             ->latest()
             ->paginate(25)
             ->withQueryString();
@@ -81,6 +88,7 @@ class MonthlyPartnerController extends Controller
             'stats' => $stats,
             'goal' => HungerCampaignTracker::GOAL,
             'goalPercent' => $goalPercent,
+            'publicThreshold' => HungerCampaignTracker::PUBLIC_COUNT_THRESHOLD,
             'bySource' => $bySource,
             'byPlan' => $byPlan,
             'recent' => $recent,

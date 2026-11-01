@@ -138,7 +138,8 @@ class MonthlyGivingCheckoutTest extends TestCase
         $this->assertNotNull($donation->next_billing_date);
         $this->assertFalse($donation->livemode);
 
-        $this->assertSame(1, app(HungerCampaignTracker::class)->progress()['active_partners']);
+        $this->assertFalse(Cache::has(HungerCampaignTracker::CACHE_KEY));
+        $this->assertSame(1, app(HungerCampaignTracker::class)->countActivePartners());
     }
 
     public function test_subscription_uses_a_reusable_price_and_an_idempotency_key(): void
@@ -254,8 +255,59 @@ class MonthlyGivingCheckoutTest extends TestCase
         $this->postStripeWebhook('customer.subscription.updated', $this->stripeSubscriptionPayload('sub_abc', 'past_due'))
             ->assertOk();
 
-        $this->assertSame('past_due', $donation->fresh()->subscription_status);
-        $this->assertSame(0, app(HungerCampaignTracker::class)->progress()['active_partners']);
+        $donation->refresh();
+        $this->assertSame('past_due', $donation->subscription_status);
+        $this->assertNotNull($donation->payment_failed_at);
+        $this->assertNull($donation->subscription_recovered_at);
+        $this->assertFalse(Cache::has(HungerCampaignTracker::CACHE_KEY));
+        $this->assertSame(0, app(HungerCampaignTracker::class)->countActivePartners());
+    }
+
+    public function test_webhook_records_recovery_when_a_failing_subscription_is_paid_again(): void
+    {
+        $failedAt = now()->subDays(3)->startOfSecond();
+        $donation = Donation::factory()->pastDue()->create([
+            'subscription_id' => 'sub_abc',
+            'payment_failed_at' => $failedAt,
+        ]);
+
+        $this->postStripeWebhook('customer.subscription.updated', $this->stripeSubscriptionPayload('sub_abc', 'active'))
+            ->assertOk();
+
+        $donation->refresh();
+        $this->assertSame('active', $donation->subscription_status);
+        $this->assertNotNull($donation->subscription_recovered_at);
+        $this->assertTrue($donation->payment_failed_at->equalTo($failedAt));
+        $this->assertSame(1, app(HungerCampaignTracker::class)->countActivePartners());
+    }
+
+    public function test_repeat_past_due_events_keep_the_original_failure_date(): void
+    {
+        $failedAt = now()->subDays(3)->startOfSecond();
+        $donation = Donation::factory()->pastDue()->create([
+            'subscription_id' => 'sub_abc',
+            'payment_failed_at' => $failedAt,
+        ]);
+
+        $this->postStripeWebhook('customer.subscription.updated', $this->stripeSubscriptionPayload('sub_abc', 'unpaid'))
+            ->assertOk();
+
+        $donation->refresh();
+        $this->assertSame('unpaid', $donation->subscription_status);
+        $this->assertTrue($donation->payment_failed_at->equalTo($failedAt));
+        $this->assertNull($donation->subscription_recovered_at);
+    }
+
+    public function test_renewal_of_a_healthy_subscription_is_not_counted_as_a_recovery(): void
+    {
+        $donation = Donation::factory()->monthlyPartner()->create(['subscription_id' => 'sub_abc']);
+
+        $this->postStripeWebhook('customer.subscription.updated', $this->stripeSubscriptionPayload('sub_abc', 'active'))
+            ->assertOk();
+
+        $donation->refresh();
+        $this->assertNull($donation->payment_failed_at);
+        $this->assertNull($donation->subscription_recovered_at);
     }
 
     public function test_webhook_records_cancellation(): void

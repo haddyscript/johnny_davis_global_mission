@@ -36,6 +36,8 @@ class Donation extends Model
         'livemode',
         'source',
         'subscription_canceled_at',
+        'payment_failed_at',
+        'subscription_recovered_at',
         'follow_up_sent_at',
         'follow_up_count',
     ];
@@ -45,6 +47,8 @@ class Donation extends Model
         'next_billing_date' => 'datetime',
         'livemode' => 'boolean',
         'subscription_canceled_at' => 'datetime',
+        'payment_failed_at' => 'datetime',
+        'subscription_recovered_at' => 'datetime',
         'follow_up_sent_at' => 'datetime',
         'follow_up_count' => 'integer',
         'created_at' => 'datetime',

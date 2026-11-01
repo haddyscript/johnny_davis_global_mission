@@ -58,23 +58,68 @@ class HungerCampaignTrackerTest extends TestCase
 
         $progress = $this->tracker()->progress();
 
+        $this->assertTrue($progress['show_count']);
         $this->assertSame(120, $progress['active_partners']);
         $this->assertSame(10000, $progress['goal']);
         $this->assertSame(1.2, $progress['percent']);
         $this->assertSame(250, $progress['next_milestone']);
     }
 
-    public function test_progress_endpoint_returns_live_count(): void
+    public function test_progress_hides_the_count_until_100_partners(): void
+    {
+        Donation::factory()->monthlyPartner()->count(99)->create();
+
+        $progress = $this->tracker()->progress();
+
+        $this->assertFalse($progress['show_count']);
+        $this->assertNull($progress['active_partners']);
+        $this->assertNull($progress['percent']);
+        $this->assertSame(10000, $progress['goal']);
+        $this->assertSame(100, $progress['next_milestone']);
+    }
+
+    public function test_progress_shows_the_count_from_100_partners(): void
+    {
+        Donation::factory()->monthlyPartner()->count(100)->create();
+
+        $progress = $this->tracker()->progress();
+
+        $this->assertTrue($progress['show_count']);
+        $this->assertSame(100, $progress['active_partners']);
+        $this->assertSame(1.0, $progress['percent']);
+        $this->assertSame(250, $progress['next_milestone']);
+    }
+
+    public function test_progress_endpoint_does_not_reveal_a_count_below_100(): void
     {
         Donation::factory()->monthlyPartner()->count(4)->create();
+
+        $response = $this->getJson(route('donate.hunger-progress'))
+            ->assertOk()
+            ->assertJson([
+                'available' => true,
+                'show_count' => false,
+                'active_partners' => null,
+                'percent' => null,
+                'goal' => 10000,
+                'next_milestone' => 100,
+            ]);
+
+        $this->assertStringNotContainsString('"active_partners":4', $response->getContent());
+    }
+
+    public function test_progress_endpoint_returns_live_count_from_100_partners(): void
+    {
+        Donation::factory()->monthlyPartner()->count(150)->create();
 
         $this->getJson(route('donate.hunger-progress'))
             ->assertOk()
             ->assertJson([
                 'available' => true,
-                'active_partners' => 4,
+                'show_count' => true,
+                'active_partners' => 150,
                 'goal' => 10000,
-                'next_milestone' => 100,
+                'next_milestone' => 250,
             ]);
     }
 
@@ -107,15 +152,34 @@ class HungerCampaignTrackerTest extends TestCase
         }
     }
 
-    public function test_banner_invites_first_partners_when_none_yet(): void
+    public function test_banner_shows_message_instead_of_a_small_partner_count(): void
     {
-        $html = $this->get('/')->assertOk()->getContent();
+        Donation::factory()->monthlyPartner()->count(2)->create();
 
-        $this->assertMatchesRegularExpression('/<p class="hcw-count" data-hcw-has-partners\s+hidden\s*>/', $html);
-        $this->assertMatchesRegularExpression('/data-hcw-no-partners\s*>\s*Be one of our first monthly partners/', $html);
+        foreach (['/', '/donate'] as $page) {
+            $response = $this->get($page)->assertOk();
+
+            $response->assertSeeInOrder([
+                'Our journey to 10,000 monthly partners',
+                'Every Partner Makes a Difference',
+                'Join our growing community of compassionate monthly supporters.',
+                'First milestone',
+                '100',
+                'Goal: <strong>10,000</strong>',
+                'Become a Monthly Partner',
+            ], false);
+
+            $html = $response->getContent();
+            preg_match('/<section id="hunger-campaign".*?<\/section>/s', $html, $matches);
+
+            $this->assertMatchesRegularExpression('/data-hcw-live\s+hidden\s*>/', $matches[0]);
+            $this->assertMatchesRegularExpression('/data-hcw-count><\/span>/', $matches[0]);
+            $this->assertStringContainsString('aria-valuenow="0"', $matches[0]);
+            $this->assertDoesNotMatchRegularExpression('/data-hcw-message\s+hidden/', $matches[0]);
+        }
     }
 
-    public function test_banner_hides_the_tracker_when_the_count_is_unavailable(): void
+    public function test_banner_shows_message_when_the_count_is_unavailable(): void
     {
         $this->app->instance(HungerCampaignTracker::class, Mockery::mock(HungerCampaignTracker::class, [
             'progress' => null,
@@ -123,9 +187,10 @@ class HungerCampaignTrackerTest extends TestCase
 
         $html = $this->get('/')->assertOk()->getContent();
 
-        $this->assertMatchesRegularExpression('/data-hcw-tracker\s+data-progress-url="[^"]+"\s+hidden\s*>/', $html);
-        $this->assertMatchesRegularExpression('/data-hcw-fallback\s*>/', $html);
-        $this->assertStringContainsString('Join us for $7.99 a month', $html);
+        $this->assertMatchesRegularExpression('/data-hcw-tracker\s+data-progress-url="[^"]+"\s*>/', $html);
+        $this->assertMatchesRegularExpression('/data-hcw-live\s+hidden\s*>/', $html);
+        $this->assertStringContainsString('Every Partner Makes a Difference', $html);
+        $this->assertStringContainsString('Become a Monthly Partner', $html);
     }
 
     public function test_campaign_source_link_is_remembered_for_the_visit(): void
@@ -147,19 +212,26 @@ class HungerCampaignTrackerTest extends TestCase
         Donation::factory()->pastDue()->create();
         Donation::factory()->canceled()->create();
         Donation::factory()->monthlyPartner()->create(['status' => 'failed', 'subscription_status' => 'canceled']);
+        Donation::factory()->pastDue()->create(['payment_failed_at' => now()->subDays(40)]);           // failed outside the period
+        Donation::factory()->monthlyPartner()->create(['payment_failed_at' => now()->subDays(5), 'subscription_recovered_at' => now()->subDay()]);
 
         $response = $this->actingAs(User::factory()->create())
             ->get(route('admin.monthly-partners.index'));
 
         $response->assertOk();
-        $response->assertViewHas('stats', fn (array $stats): bool => $stats['active_partners'] === 4
-            && $stats['active_subscriptions'] === 4
-            && abs($stats['monthly_revenue'] - 48.97) < 0.001
-            && $stats['new_subscriptions'] === 6
+        $response->assertViewHas('stats', fn (array $stats): bool => $stats['active_partners'] === 5
+            && $stats['active_subscriptions'] === 5
+            && abs($stats['monthly_revenue'] - 56.96) < 0.001
+            && $stats['new_subscriptions'] === 8
             && $stats['cancellations'] === 1
-            && $stats['past_due'] === 1
+            && $stats['past_due'] === 2
+            && $stats['payment_failures'] === 1
+            && $stats['recovered'] === 1
             && $stats['failed_checkouts'] === 1);
         $response->assertSee('Stripe test mode.');
+        $response->assertSee('Payment health');
+        $response->assertSee('Recovered (30 days)');
+        $response->assertSee('hidden publicly until 100 partners');
         $response->assertSee('Partners by source');
     }
 }

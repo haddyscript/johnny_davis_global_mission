@@ -24,7 +24,7 @@ class HungerCampaignTest extends TestCase
             'Philippines:',
             'Feeding children now.',
             'Uganda:',
-            'Coming soon.',
+            'Mission work active.',
             'id="hero"',
         ], false);
         $response->assertSee('href="'.route('donate').'#give"', false);
@@ -43,14 +43,17 @@ class HungerCampaignTest extends TestCase
         $this->assertStringContainsString('width="2048" height="768"', $html);
     }
 
-    public function test_uganda_is_presented_as_coming_soon_not_active(): void
+    public function test_philippines_and_uganda_are_both_shown_as_active(): void
     {
         $html = $this->get('/')->getContent();
 
-        preg_match('/<section id="hunger-campaign".*?<\/section>/s', $html, $matches);
+        preg_match('/<ul class="hcw-programs".*?<\/ul>/s', $html, $matches);
 
-        $this->assertStringContainsString('hcw-program--soon">'."\n".'          <span class="hcw-program-name">Uganda:</span> Coming soon.', $matches[0]);
-        $this->assertStringContainsString('Uganda: feeding children, coming soon', $matches[0]);
+        $this->assertNotEmpty($matches);
+        $this->assertMatchesRegularExpression('/hcw-program--active">\s*<span class="hcw-program-name">Philippines:<\/span> Feeding children now\./', $matches[0]);
+        $this->assertMatchesRegularExpression('/hcw-program--active">\s*<span class="hcw-program-name">Uganda:<\/span> Mission work active\./', $matches[0]);
+        $this->assertStringNotContainsString('hcw-program--soon', $matches[0]);
+        $this->assertStringNotContainsStringIgnoringCase('coming soon', $matches[0]);
     }
 
     public function test_campaign_copy_does_not_use_starting_at_wording(): void

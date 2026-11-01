@@ -18,6 +18,9 @@ use Stripe\StripeObject;
  */
 class StripeSubscriptionSync
 {
+    /** Stripe statuses for a subscription whose renewal charge has failed. */
+    private const FAILING_STATUSES = ['past_due', 'unpaid'];
+
     /**
      * Apply the subscription's state and return the matching donations.
      *
@@ -28,7 +31,10 @@ class StripeSubscriptionSync
         $donations = Donation::where('subscription_id', $subscription->id)->get();
 
         foreach ($donations as $donation) {
-            $donation->update($this->attributesFor($subscription, $donation));
+            $donation->update([
+                ...$this->attributesFor($subscription, $donation),
+                ...$this->paymentRecoveryAttributes($subscription, $donation),
+            ]);
 
             if ($subscription->status === 'active') {
                 $this->markCompleted($donation);
@@ -134,6 +140,28 @@ class StripeSubscriptionSync
             'livemode' => (bool) $subscription->livemode,
             'subscription_canceled_at' => $canceledAt,
         ];
+    }
+
+    /**
+     * Track failed renewals (expired or declined cards) and their recovery: stamps payment_failed_at
+     * when the subscription starts failing, and subscription_recovered_at when it is paid again.
+     *
+     * @return array{payment_failed_at?: Carbon, subscription_recovered_at?: Carbon}
+     */
+    private function paymentRecoveryAttributes(StripeObject $subscription, Donation $donation): array
+    {
+        $wasFailing = in_array($donation->subscription_status, self::FAILING_STATUSES, true);
+        $isFailing = in_array($subscription->status, self::FAILING_STATUSES, true);
+
+        if ($isFailing && ! $wasFailing) {
+            return ['payment_failed_at' => now()];
+        }
+
+        if ($wasFailing && $subscription->status === 'active') {
+            return ['subscription_recovered_at' => now()];
+        }
+
+        return [];
     }
 
     /**

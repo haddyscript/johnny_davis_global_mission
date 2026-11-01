@@ -27,6 +27,9 @@ class HungerCampaignTracker
 
     public const CACHE_KEY = 'hunger-campaign:active-partners';
 
+    /** Verified partners needed before the live count is shown publicly; below it the site shows a message instead. */
+    public const PUBLIC_COUNT_THRESHOLD = 100;
+
     /** @var array<int, int> */
     private const MILESTONES = [100, 250, 500, 1000, 2500, 5000, 7500, 10000];
 
@@ -34,7 +37,11 @@ class HungerCampaignTracker
      * Public progress snapshot, or null when the count cannot be read
      * (the banner then hides the number instead of showing a wrong one).
      *
-     * @return array{active_partners: int, goal: int, percent: float, next_milestone: int, updated_at: string}|null
+     * Until PUBLIC_COUNT_THRESHOLD partners are verified, show_count is false and the
+     * count and percent are null, so the number never leaves the server. The admin
+     * report reads countActivePartners() directly and always sees the real figure.
+     *
+     * @return array{show_count: bool, active_partners: int|null, goal: int, percent: float|null, next_milestone: int, updated_at: string}|null
      */
     public function progress(): ?array
     {
@@ -50,11 +57,13 @@ class HungerCampaignTracker
         }
 
         $activePartners = $snapshot['active_partners'];
+        $showCount = $activePartners >= self::PUBLIC_COUNT_THRESHOLD;
 
         return [
-            'active_partners' => $activePartners,
+            'show_count' => $showCount,
+            'active_partners' => $showCount ? $activePartners : null,
             'goal' => self::GOAL,
-            'percent' => round(min(100, $activePartners / self::GOAL * 100), 2),
+            'percent' => $showCount ? round(min(100, $activePartners / self::GOAL * 100), 2) : null,
             'next_milestone' => $this->nextMilestone($activePartners),
             'updated_at' => $snapshot['updated_at'],
         ];

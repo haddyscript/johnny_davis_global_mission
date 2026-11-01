@@ -25,7 +25,7 @@
             <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);">Journey to {{ number_format($goal) }} monthly partners</div>
             <div style="font-size:30px;font-weight:800;color:var(--text-dark);" id="mp-active-partners">{{ number_format($stats['active_partners']) }}</div>
         </div>
-        <div style="font-size:14px;color:var(--text-muted);">{{ $goalPercent }}% of goal · shown live on the homepage and donate page</div>
+        <div style="font-size:14px;color:var(--text-muted);">{{ $goalPercent }}% of goal · {{ $stats['active_partners'] >= $publicThreshold ? 'shown live on the homepage and donate page' : 'hidden publicly until '.number_format($publicThreshold).' partners' }}</div>
     </div>
     <div style="height:14px;border-radius:999px;background:#e5eaf1;overflow:hidden;">
         <div style="height:100%;width:{{ $goalPercent }}%;min-width:{{ $stats['active_partners'] > 0 ? '8px' : '0' }};background:linear-gradient(90deg,#f4511e,#f07c1e);border-radius:inherit;"></div>
@@ -47,7 +47,7 @@
     </div>
 </form>
 
-<div class="pages-stats cols-5">
+<div class="pages-stats cols-4">
     <div class="stat-card" style="--accent:#10b981;">
         <div class="stat-icon" style="background:rgba(16,185,129,0.12);color:#059669;">🤝</div>
         <div>
@@ -76,11 +76,36 @@
             <div class="stat-label">Cancellations ({{ $days }} days)</div>
         </div>
     </div>
+</div>
+
+<div style="margin:4px 0 8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);">Payment health</div>
+<div class="pages-stats cols-4">
     <div class="stat-card" style="--accent:#ef4444;">
         <div class="stat-icon" style="background:rgba(239,68,68,0.12);color:#dc2626;">⚠️</div>
         <div>
-            <div class="stat-value">{{ number_format($stats['past_due']) }} <span style="font-size:13px;color:var(--text-muted);font-weight:600;">/ {{ number_format($stats['failed_checkouts']) }}</span></div>
-            <div class="stat-label">Past due now / declined checkouts ({{ $days }}d)</div>
+            <div class="stat-value">{{ number_format($stats['past_due']) }}</div>
+            <div class="stat-label">Past due now (failed or expired card)</div>
+        </div>
+    </div>
+    <div class="stat-card" style="--accent:#f97316;">
+        <div class="stat-icon" style="background:rgba(249,115,22,0.12);color:#ea580c;">💳</div>
+        <div>
+            <div class="stat-value">{{ number_format($stats['payment_failures']) }}</div>
+            <div class="stat-label">Failed renewals ({{ $days }} days)</div>
+        </div>
+    </div>
+    <div class="stat-card" style="--accent:#22c55e;">
+        <div class="stat-icon" style="background:rgba(34,197,94,0.12);color:#16a34a;">🔄</div>
+        <div>
+            <div class="stat-value">{{ number_format($stats['recovered']) }}</div>
+            <div class="stat-label">Recovered ({{ $days }} days)</div>
+        </div>
+    </div>
+    <div class="stat-card" style="--accent:#94a3b8;">
+        <div class="stat-icon" style="background:rgba(148,163,184,0.14);color:#64748b;">🚫</div>
+        <div>
+            <div class="stat-value">{{ number_format($stats['failed_checkouts']) }}</div>
+            <div class="stat-label">Declined checkouts ({{ $days }} days)</div>
         </div>
     </div>
 </div>
@@ -175,6 +200,10 @@
                                 <span class="db-badge {{ $badge }}">{{ str_replace('_', ' ', $donation->subscription_status ?? 'unknown') }}</span>
                                 @if($donation->subscription_canceled_at)
                                     <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">ended {{ $donation->subscription_canceled_at->format('M j, Y') }}</div>
+                                @elseif(in_array($donation->subscription_status, ['past_due', 'unpaid'], true) && $donation->payment_failed_at)
+                                    <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">failing since {{ $donation->payment_failed_at->format('M j, Y') }}</div>
+                                @elseif($donation->subscription_recovered_at)
+                                    <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">recovered {{ $donation->subscription_recovered_at->format('M j, Y') }}</div>
                                 @endif
                             </td>
                             <td>{{ $donation->source ?? 'website' }}</td>

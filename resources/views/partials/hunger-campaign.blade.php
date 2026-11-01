@@ -1,6 +1,6 @@
 {{--
   HUNGER CAN'T WAIT! — $7.99 monthly partner campaign.
-  Approved premium banner artwork + live partner tracker.
+  Approved premium banner artwork + partner tracker (count shown publicly from 100 partners).
   Shared by the homepage and the donation page.
 
   @param string     $hcwVariant      'home' | 'donate'
@@ -11,7 +11,8 @@
   $hcwBanner = fn (string $ext) => collect([768, 1280, 2048])
       ->map(fn ($w) => asset("images/hunger-cant-wait/hunger-cant-wait-banner-{$w}.{$ext}")." {$w}w")
       ->implode(', ');
-  $hcwPartners = $hungerProgress['active_partners'] ?? 0;
+  $hcwShowCount = (bool) ($hungerProgress['show_count'] ?? false);
+  $hcwPartners = $hcwShowCount ? $hungerProgress['active_partners'] : 0;
 @endphp
 <section id="hunger-campaign" class="hcw hcw--{{ $hcwVariant }}" aria-labelledby="hcw-title">
   <h2 class="hcw-sr-only" id="hcw-title">HUNGER CAN&rsquo;T WAIT! Become one of 10,000 monthly partners for $7.99 a month.</h2>
@@ -31,34 +32,36 @@
     </a>
   </div>
 
-  <div class="hcw-tracker"
-       data-hcw-tracker
-       data-progress-url="{{ route('donate.hunger-progress') }}"
-       @if(! $hungerProgress) hidden @endif>
+  <div class="hcw-tracker" data-hcw-tracker data-progress-url="{{ route('donate.hunger-progress') }}">
     <div class="hcw-tracker-stats">
       <p class="hcw-eyebrow">Our journey to 10,000 monthly partners</p>
 
-      <p class="hcw-count" data-hcw-has-partners @if($hcwPartners < 1) hidden @endif>
-        <span class="hcw-count-num" data-hcw-count>{{ number_format($hcwPartners) }}</span>
-        <span class="hcw-count-label">active monthly {{ $hcwPartners === 1 ? 'partner' : 'partners' }}</span>
-      </p>
-      <p class="hcw-count hcw-count--first" data-hcw-no-partners @if($hcwPartners > 0) hidden @endif>
-        Be one of our first monthly partners
-      </p>
+      {{-- The live count goes public at 100 verified partners; until then (or if it can't be read) this message shows instead --}}
+      <div class="hcw-message" data-hcw-message @if($hcwShowCount) hidden @endif>
+        <p class="hcw-count hcw-count--first">Every Partner Makes a Difference</p>
+        <p class="hcw-message-sub">Join our growing community of compassionate monthly supporters.</p>
+      </div>
 
-      <div class="hcw-bar"
-           role="progressbar"
-           aria-label="Active monthly partners toward the 10,000 goal"
-           aria-valuemin="0"
-           aria-valuemax="{{ $hungerProgress['goal'] ?? 10000 }}"
-           aria-valuenow="{{ $hcwPartners }}">
-        <span class="hcw-bar-fill @if($hcwPartners > 0) hcw-bar-fill--started @endif"
-              data-hcw-bar
-              style="width: {{ $hungerProgress['percent'] ?? 0 }}%"></span>
+      <div class="hcw-live" data-hcw-live @unless($hcwShowCount) hidden @endunless>
+        <p class="hcw-count">
+          <span class="hcw-count-num" data-hcw-count>{{ $hcwShowCount ? number_format($hcwPartners) : '' }}</span>
+          <span class="hcw-count-label">active monthly partners</span>
+        </p>
+
+        <div class="hcw-bar"
+             role="progressbar"
+             aria-label="Active monthly partners toward the 10,000 goal"
+             aria-valuemin="0"
+             aria-valuemax="{{ $hungerProgress['goal'] ?? 10000 }}"
+             aria-valuenow="{{ $hcwPartners }}">
+          <span class="hcw-bar-fill hcw-bar-fill--started"
+                data-hcw-bar
+                style="width: {{ $hcwShowCount ? $hungerProgress['percent'] : 0 }}%"></span>
+        </div>
       </div>
 
       <p class="hcw-bar-legend">
-        <span>Next milestone: <strong data-hcw-milestone>{{ number_format($hungerProgress['next_milestone'] ?? 100) }}</strong></span>
+        <span><span data-hcw-milestone-label>{{ $hcwShowCount ? 'Next milestone' : 'First milestone' }}</span>: <strong data-hcw-milestone>{{ number_format($hungerProgress['next_milestone'] ?? 100) }}</strong></span>
         <span>Goal: <strong>10,000</strong></span>
       </p>
     </div>
@@ -70,25 +73,14 @@
       </a>
       <p class="hcw-cta-note"><strong>$7.99 a month</strong>, billed monthly &middot; Cancel anytime &middot; Secure checkout by Stripe</p>
 
-      <ul class="hcw-programs" aria-label="Feeding programs">
+      <ul class="hcw-programs" aria-label="Mission work">
         <li class="hcw-program hcw-program--active">
           <span class="hcw-program-name">Philippines:</span> Feeding children now.
         </li>
-        <li class="hcw-program hcw-program--soon">
-          <span class="hcw-program-name">Uganda:</span> Coming soon.
+        <li class="hcw-program hcw-program--active">
+          <span class="hcw-program-name">Uganda:</span> Mission work active.
         </li>
       </ul>
-    </div>
-  </div>
-
-  {{-- Shown instead of the tracker when the live count can't be read — never a made-up number --}}
-  <div class="hcw-tracker hcw-tracker--fallback" data-hcw-fallback @if($hungerProgress) hidden @endif>
-    <div class="hcw-tracker-stats">
-      <p class="hcw-eyebrow">Our journey to 10,000 monthly partners</p>
-      <p class="hcw-count hcw-count--first">Join us for $7.99 a month</p>
-    </div>
-    <div class="hcw-tracker-cta">
-      <a href="{{ $hcwButtonHref }}" class="hcw-btn">Become a Monthly Partner</a>
     </div>
   </div>
 </section>
