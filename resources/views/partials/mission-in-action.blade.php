@@ -2,7 +2,7 @@
   OUR MISSION IN ACTION — seven TikTok outreach videos (exact order requested by Johnny Davis),
   the "Meet the Hearts Behind the Mission" team poster and a $7.99 monthly partner call-to-action.
   Sits directly beneath the Hunger Can't Wait banner and tracker on the homepage.
-  Videos play in place (TikTok's embedded player, or a site-hosted MP4), so visitors never leave the site.
+  Videos play in place (TikTok's player, loaded on click, or a site-hosted MP4), so visitors never leave the site.
 
   @param string $miaButtonHref  Where "Become a $7.99 Monthly Partner" goes
 --}}
@@ -10,8 +10,10 @@
   $miaVideos = [
       ['id' => '7702684615672204574', 'title' => 'From Shopping to Serving',
        'summary' => 'Follow our Philippines outreach team as they buy food and supplies, cook, organize the outreach and serve hungry children: every step your monthly gift makes possible.'],
+      // No custom poster: the thumbnail is a frame from the video itself
       ['id' => '7702674176703810846', 'title' => 'Hear From the Children!',
-       'summary' => 'A young girl shares her story in her own words.'],
+       'summary' => 'A young girl shares her story in her own words.',
+       'thumb' => 'frame'],
       ['id' => '7702931280853273886', 'title' => 'Feeding Filipino Children: Sharing God’s Love',
        'summary' => 'Children receive a meal and experience God’s love through our partners’ generosity.'],
       ['id' => '7702920164274113822', 'title' => 'Feeding Outreach: General Santos City',
@@ -22,8 +24,10 @@
        'file' => 'videos/mission-in-action/feeding-children-purok-xi-c-fatima.mp4'],
       ['id' => '7702906737132703006', 'title' => 'Hear Their Stories: Real Voices, Real Impact',
        'summary' => 'Jennifer Buico talks with individuals and families about the impact of the ministry.'],
+      // Its poster sits beside it, so the thumbnail is the team photo with the title over it
       ['id' => '7702969922942405918', 'title' => 'Meet the Hearts Behind the Mission',
-       'summary' => 'Our Philippines leadership and volunteer team, including Pastor Edgardo Buico, Jennifer Buico, Ivy and our dedicated volunteers.'],
+       'summary' => 'Our Philippines leadership and volunteer team, including Pastor Edgardo Buico, Jennifer Buico, Ivy and our dedicated volunteers.',
+       'thumb' => 'titled'],
   ];
   $miaFeatured = $miaVideos[0];
   $miaGrid = array_slice($miaVideos, 1, 5, true);
@@ -95,3 +99,4 @@
 
   </div>
 </section>
+<script src="{{ asset('js/mission-in-action.js') }}?v={{ filemtime(public_path('js/mission-in-action.js')) }}" defer></script>

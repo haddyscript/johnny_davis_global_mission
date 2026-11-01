@@ -60,10 +60,10 @@
   line-height: 1.6;
 }
 
-/* ── TikTok player (9:16) ───────────────────────────── */
+/* ── Video player: 3:4 to fit Johnny's posters (TikTok's player fills any shape) ── */
 .mia-player {
   position: relative;
-  aspect-ratio: 9 / 16;
+  aspect-ratio: 3 / 4;
   border-radius: 16px;
   overflow: hidden;
   background: var(--mia-navy-deep);
@@ -78,9 +78,153 @@
   border: 0;
 }
 .mia-player video {
-  object-fit: cover;
+  object-fit: contain;
   background: #000;
 }
+
+/* Thumbnail + play button shown until the visitor presses play */
+.mia-facade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--mia-navy-deep);
+  cursor: pointer;
+  transition: opacity .3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.mia-facade[hidden] { display: none; }
+.mia-facade.is-revealed { opacity: 0; pointer-events: none; }
+.mia-facade:focus-visible { outline: 3px solid var(--mia-orange); outline-offset: -3px; }
+
+/* Poster shown whole; a blurred copy of it fills any leftover space */
+.mia-facade--poster { overflow: hidden; }
+.mia-facade--poster::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--mia-thumb) center / cover no-repeat;
+  filter: blur(18px) brightness(.85);
+  transform: scale(1.2);
+}
+.mia-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform .4s ease;
+}
+.mia-facade:hover .mia-thumb { transform: scale(1.03); }
+
+/* No thumbnail yet: branded card with the video title */
+.mia-facade--branded {
+  background:
+    radial-gradient(circle at 30% 20%, rgba(240,124,30,.35) 0%, rgba(240,124,30,0) 55%),
+    linear-gradient(160deg, var(--mia-navy) 0%, var(--mia-navy-deep) 100%);
+}
+.mia-facade-brand {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 16px 20px;
+  text-align: left;
+}
+.mia-facade-num {
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #ffb36b;
+}
+.mia-facade-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.mia-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--mia-orange);
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0,0,0,.35), 0 0 0 6px rgba(255,255,255,.22);
+  transform: translate(-50%, -50%);
+  transition: transform .2s ease, background .2s ease;
+}
+.mia-play svg { margin-left: 3px; }
+.mia-facade:hover .mia-play { background: var(--mia-orange-dark); transform: translate(-50%, -50%) scale(1.08); }
+.mia-player--featured .mia-play { width: 80px; height: 80px; }
+.mia-facade--poster .mia-play {
+  top: auto;
+  left: auto;
+  right: 12px;
+  bottom: 12px;
+  width: 48px;
+  height: 48px;
+  transform: none;
+}
+.mia-facade--poster:hover .mia-play { transform: scale(1.08); }
+.mia-player--featured .mia-facade--poster .mia-play { width: 60px; height: 60px; right: 16px; bottom: 16px; }
+
+/* A frame grab (not a designed poster) fills the card and keeps the play button centred */
+.mia-facade--frame .mia-thumb { object-fit: cover; }
+.mia-facade--frame .mia-play {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  width: 64px;
+  height: 64px;
+  transform: translate(-50%, -50%);
+}
+.mia-facade--frame:hover .mia-play { transform: translate(-50%, -50%) scale(1.08); }
+
+/* Photo with the video title over a navy fade */
+.mia-facade--titled::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8,29,56,0) 28%, rgba(8,29,56,.9) 52%, var(--mia-navy-deep) 68%);
+  pointer-events: none;
+}
+.mia-facade--titled .mia-thumb { object-position: top; }
+.mia-facade--titled .mia-facade-brand { z-index: 2; padding: 22px 22px 24px; }
+.mia-facade--titled .mia-facade-title { font-size: clamp(1.2rem, 2.2vw, 1.6rem); }
+
+.mia-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border: 4px solid rgba(255,255,255,.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  opacity: 0;
+  animation: mia-spin .8s linear infinite;
+}
+.mia-facade.is-loading .mia-play { opacity: 0; }
+.mia-facade.is-loading .mia-spinner { opacity: 1; }
+@keyframes mia-spin { to { transform: rotate(360deg); } }
 
 .mia-num {
   display: inline-block;
@@ -103,6 +247,7 @@
   box-shadow: 0 20px 50px rgba(13,42,78,.22);
 }
 .mia-player--featured {
+  aspect-ratio: 1 / 1;
   border: 3px solid var(--mia-orange);
   box-shadow: 0 16px 40px rgba(0,0,0,.35);
 }
@@ -204,10 +349,10 @@
 }
 .mia-team-text { margin: 0; font-size: 1rem; line-height: 1.6; }
 
-/* Columns sized so the 9:16 video and the 1199×1312 poster end up the same height */
+/* Columns sized so the 3:4 video and the 1199×1312 poster end up the same height */
 .mia-team-media {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.625fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.219fr);
   gap: 20px;
   align-items: start;
   max-width: 900px;
@@ -310,6 +455,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mia-btn { transition: none; }
+  .mia-btn, .mia-facade, .mia-thumb, .mia-play { transition: none; }
+  .mia-facade:hover .mia-thumb { transform: none; }
   .mia-btn:hover { transform: none; }
 }

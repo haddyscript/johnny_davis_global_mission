@@ -90,13 +90,13 @@ class MissionInActionTest extends TestCase
         $this->withoutVideoFiveFile(function (): void {
             $section = $this->section();
 
-            $embeds = array_map(
-                fn (string $id): string => 'src="https://www.tiktok.com/player/v1/'.$id.'?',
+            $players = array_map(
+                fn (string $id): string => 'data-src="https://www.tiktok.com/player/v1/'.$id.'?autoplay=1',
                 self::VIDEO_IDS_IN_ORDER
             );
 
-            $this->assertSame(7, substr_count($section, '<iframe'));
-            $this->get('/')->assertSeeInOrder($embeds, false);
+            $this->assertSame(7, substr_count($section, 'data-mia-play'));
+            $this->get('/')->assertSeeInOrder($players, false);
             $this->assertStringNotContainsString('href="https://www.tiktok.com', $section);
         });
     }
@@ -106,11 +106,11 @@ class MissionInActionTest extends TestCase
         $this->withVideoFiveFile(function (): void {
             $section = $this->section();
 
-            $this->assertSame(6, substr_count($section, '<iframe'));
+            $this->assertSame(6, substr_count($section, 'data-mia-play'));
             $this->assertSame(1, substr_count($section, '<video'));
             $this->assertStringNotContainsString('player/v1/7702948137345797406', $section);
             $this->assertMatchesRegularExpression(
-                '/<video src="'.preg_quote(asset(self::VIDEO_FIVE_FILE), '/').'\?v=\d+#t=0\.1"\s+title="Video 5: Feeding Children: Purok XI-C, Fatima"\s+controls\s+playsinline\s+preload="metadata"><\/video>/',
+                '/<video src="'.preg_quote(asset(self::VIDEO_FIVE_FILE), '/').'\?v=\d+#t=0\.1"\s+title="Video 5: Feeding Children: Purok XI-C, Fatima"\s+controls\s+playsinline\s+preload="metadata"\s+poster="[^"]+thumbs\/7702948137345797406\.jpg"\s*><\/video>/',
                 $section
             );
             $this->get('/')->assertSeeInOrder([
@@ -127,7 +127,7 @@ class MissionInActionTest extends TestCase
             $section = $this->section();
 
             $this->assertStringNotContainsString('<video', $section);
-            $this->assertStringContainsString('src="https://www.tiktok.com/player/v1/7702948137345797406?', $section);
+            $this->assertStringContainsString('data-src="https://www.tiktok.com/player/v1/7702948137345797406?', $section);
         });
     }
 
@@ -167,11 +167,45 @@ class MissionInActionTest extends TestCase
         $this->assertFileExists(public_path('images/mission-in-action/meet-the-hearts-poster.jpg'));
     }
 
-    public function test_offscreen_videos_load_lazily(): void
+    public function test_tiktok_players_only_load_when_play_is_pressed(): void
     {
         $this->withoutVideoFiveFile(function (): void {
-            $this->assertSame(8, substr_count($this->section(), 'loading="lazy"'));
+            $section = $this->section();
+
+            $this->assertStringNotContainsString('<iframe', $section);
+            $this->assertStringContainsString('js/mission-in-action.js', $section);
+            $this->assertSame(8, substr_count($section, 'loading="lazy"')); // seven thumbnails + team poster
+            $this->assertFileExists(public_path('js/mission-in-action.js'));
         });
+    }
+
+    public function test_each_video_shows_its_own_poster_as_the_thumbnail(): void
+    {
+        $this->withoutVideoFiveFile(function (): void {
+            $section = $this->section();
+
+            foreach (self::VIDEO_IDS_IN_ORDER as $id) {
+                $this->assertFileExists(public_path("images/mission-in-action/thumbs/{$id}.jpg"));
+                $this->assertMatchesRegularExpression(
+                    '/thumbs\/'.$id.'\.jpg\'\)"\s+data-mia-play\s+data-src="https:\/\/www\.tiktok\.com\/player\/v1\/'.$id.'\?/',
+                    $section
+                );
+            }
+
+            // Video 7's poster already sits beside it, so its thumbnail is the team photo with the title over it
+            $this->assertMatchesRegularExpression(
+                '/class="mia-facade mia-facade--poster\s+mia-facade--frame\s+mia-facade--titled\s*".*?player\/v1\/7702969922942405918\?.*?<span class="mia-facade-title">Meet the Hearts Behind the Mission<\/span>/s',
+                $section
+            );
+        });
+    }
+
+    public function test_video_two_uses_a_frame_from_the_video_as_its_cover(): void
+    {
+        $this->assertMatchesRegularExpression(
+            '/class="mia-facade mia-facade--poster\s+mia-facade--frame\s*"\s+style="--mia-thumb: url\(\'[^\']+thumbs\/7702674176703810846\.jpg\'\)"/',
+            $this->section()
+        );
     }
 
     public function test_monthly_partner_button_follows_the_videos(): void
