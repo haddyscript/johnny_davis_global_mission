@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 class MissionInActionTest extends TestCase
@@ -19,6 +20,48 @@ class MissionInActionTest extends TestCase
         '7702906737132703006', // 6. Hear Their Stories: Real Voices, Real Impact
         '7702969922942405918', // 7. Meet the Hearts Behind the Mission
     ];
+
+    private const VIDEO_FIVE_FILE = 'videos/mission-in-action/feeding-children-purok-xi-c-fatima.mp4';
+
+    /**
+     * Run the callback with a Video 5 MP4 in place, leaving the real file untouched if it exists.
+     */
+    private function withVideoFiveFile(callable $callback): void
+    {
+        $path = public_path(self::VIDEO_FIVE_FILE);
+        $created = ! file_exists($path);
+
+        if ($created) {
+            File::ensureDirectoryExists(dirname($path));
+            File::put($path, 'test');
+        }
+
+        try {
+            $callback();
+        } finally {
+            if ($created) {
+                File::delete($path);
+            }
+        }
+    }
+
+    /**
+     * Run the callback with no Video 5 MP4, restoring the real file afterwards if it exists.
+     */
+    private function withoutVideoFiveFile(callable $callback): void
+    {
+        $path = public_path(self::VIDEO_FIVE_FILE);
+        $backup = $path.'.testing-backup';
+        $moved = file_exists($path) && File::move($path, $backup);
+
+        try {
+            $callback();
+        } finally {
+            if ($moved) {
+                File::move($backup, $path);
+            }
+        }
+    }
 
     private function section(): string
     {
@@ -44,17 +87,48 @@ class MissionInActionTest extends TestCase
 
     public function test_seven_videos_play_on_the_site_in_the_requested_order(): void
     {
-        $section = $this->section();
+        $this->withoutVideoFiveFile(function (): void {
+            $section = $this->section();
 
-        $embeds = array_map(
-            fn (string $id): string => 'src="https://www.tiktok.com/player/v1/'.$id.'?',
-            self::VIDEO_IDS_IN_ORDER
-        );
+            $embeds = array_map(
+                fn (string $id): string => 'src="https://www.tiktok.com/player/v1/'.$id.'?',
+                self::VIDEO_IDS_IN_ORDER
+            );
 
-        $this->assertSame(7, substr_count($section, '<iframe'));
-        $this->assertSame(7, substr_count($section, 'src="https://www.tiktok.com/player/v1/'));
-        $this->get('/')->assertSeeInOrder($embeds, false);
-        $this->assertStringNotContainsString('href="https://www.tiktok.com', $section);
+            $this->assertSame(7, substr_count($section, '<iframe'));
+            $this->get('/')->assertSeeInOrder($embeds, false);
+            $this->assertStringNotContainsString('href="https://www.tiktok.com', $section);
+        });
+    }
+
+    public function test_video_five_plays_from_the_site_once_the_mp4_is_uploaded(): void
+    {
+        $this->withVideoFiveFile(function (): void {
+            $section = $this->section();
+
+            $this->assertSame(6, substr_count($section, '<iframe'));
+            $this->assertSame(1, substr_count($section, '<video'));
+            $this->assertStringNotContainsString('player/v1/7702948137345797406', $section);
+            $this->assertMatchesRegularExpression(
+                '/<video src="'.preg_quote(asset(self::VIDEO_FIVE_FILE), '/').'\?v=\d+#t=0\.1"\s+title="Video 5: Feeding Children: Purok XI-C, Fatima"\s+controls\s+playsinline\s+preload="metadata"><\/video>/',
+                $section
+            );
+            $this->get('/')->assertSeeInOrder([
+                'player/v1/7702920164274113822',
+                '<video src="',
+                'player/v1/7702906737132703006',
+            ], false);
+        });
+    }
+
+    public function test_video_five_falls_back_to_tiktok_until_the_mp4_is_uploaded(): void
+    {
+        $this->withoutVideoFiveFile(function (): void {
+            $section = $this->section();
+
+            $this->assertStringNotContainsString('<video', $section);
+            $this->assertStringContainsString('src="https://www.tiktok.com/player/v1/7702948137345797406?', $section);
+        });
     }
 
     public function test_videos_have_titles_in_the_requested_order(): void
@@ -95,7 +169,9 @@ class MissionInActionTest extends TestCase
 
     public function test_offscreen_videos_load_lazily(): void
     {
-        $this->assertSame(8, substr_count($this->section(), 'loading="lazy"'));
+        $this->withoutVideoFiveFile(function (): void {
+            $this->assertSame(8, substr_count($this->section(), 'loading="lazy"'));
+        });
     }
 
     public function test_monthly_partner_button_follows_the_videos(): void
