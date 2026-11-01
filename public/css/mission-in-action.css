@@ -1,0 +1,310 @@
+/* ============================================================
+   OUR MISSION IN ACTION — outreach video gallery
+   Homepage, directly beneath the Hunger Can't Wait tracker.
+   Palette matches hunger-campaign.css: white, orange, navy, light blue.
+============================================================ */
+.mia {
+  --mia-orange:      #f07c1e;
+  --mia-orange-dark: #d96712;
+  --mia-navy:        #0d2a4e;
+  --mia-navy-deep:   #081d38;
+  --mia-blue:        #1a6fd1;
+  --mia-blue-pale:   #e8f2fd;
+  --mia-text:        #334155;
+  --mia-muted:       #64748b;
+
+  background: #ffffff;
+  padding: 64px 0 72px;
+  font-family: 'Inter', sans-serif;
+  color: var(--mia-text);
+}
+.mia *,
+.mia *::before,
+.mia *::after { box-sizing: border-box; }
+
+.mia-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Heading ────────────────────────────────────────── */
+.mia-head {
+  max-width: 680px;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+.mia-eyebrow {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--mia-blue-pale);
+  color: var(--mia-blue);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.mia-title {
+  margin: 0 0 12px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4.4vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--mia-navy);
+}
+.mia-lede {
+  margin: 0;
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  line-height: 1.6;
+}
+
+/* ── TikTok player (9:16) ───────────────────────────── */
+.mia-player {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--mia-navy-deep);
+  box-shadow: 0 12px 32px rgba(13,42,78,.16);
+}
+.mia-player iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.mia-num {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--mia-orange-dark);
+}
+
+/* ── Video 1: featured ──────────────────────────────── */
+.mia-featured {
+  display: grid;
+  grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+  gap: 44px;
+  align-items: center;
+  padding: 32px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, var(--mia-navy) 0%, var(--mia-navy-deep) 100%);
+  box-shadow: 0 20px 50px rgba(13,42,78,.22);
+}
+.mia-player--featured {
+  border: 3px solid var(--mia-orange);
+  box-shadow: 0 16px 40px rgba(0,0,0,.35);
+}
+.mia-featured .mia-num { color: #ffb36b; }
+.mia-featured-title {
+  margin: 10px 0 14px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.12;
+  color: #ffffff;
+}
+.mia-featured-text {
+  margin: 0 0 24px;
+  max-width: 520px;
+  font-size: 1.06rem;
+  line-height: 1.65;
+  color: rgba(255,255,255,.86);
+}
+.mia-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  counter-reset: mia-step;
+}
+.mia-steps li {
+  counter-increment: mia-step;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 8px 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.16);
+  font-size: .9rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+.mia-steps li::before {
+  content: counter(mia-step);
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--mia-orange);
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+/* ── Videos 2–6 ─────────────────────────────────────── */
+.mia-grid {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+}
+.mia-card { min-width: 0; }
+.mia-card .mia-player { margin-bottom: 14px; }
+.mia-card-title {
+  margin: 6px 0 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--mia-navy);
+}
+.mia-card-text {
+  margin: 0;
+  font-size: .88rem;
+  line-height: 1.5;
+  color: var(--mia-muted);
+}
+
+/* ── Video 7 + team poster ──────────────────────────── */
+.mia-team {
+  margin-top: 48px;
+  padding: 32px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #fff7ef 0%, #ffffff 100%);
+  border: 1px solid rgba(240,124,30,.22);
+}
+.mia-team-copy {
+  max-width: 680px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+.mia-team-title {
+  margin: 8px 0 10px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--mia-navy);
+}
+.mia-team-text { margin: 0; font-size: 1rem; line-height: 1.6; }
+
+/* Columns sized so the 9:16 video and the 1199×1312 poster end up the same height */
+.mia-team-media {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.625fr);
+  gap: 20px;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.mia-poster {
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(13,42,78,.16);
+}
+.mia-poster img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1199 / 1312;
+}
+
+/* ── Call to action ─────────────────────────────────── */
+.mia-cta {
+  margin-top: 44px;
+  text-align: center;
+}
+.mia-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 64px;
+  padding: 18px 40px;
+  border-radius: 999px;
+  background: var(--mia-orange);
+  color: #ffffff;
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(240,124,30,.4);
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.mia-btn:hover { background: var(--mia-orange-dark); transform: translateY(-2px); box-shadow: 0 16px 34px rgba(240,124,30,.48); }
+.mia-btn:focus-visible { outline: 3px solid var(--mia-navy); outline-offset: 3px; }
+.mia-btn svg { flex-shrink: 0; }
+.mia-cta-note {
+  margin: 12px 0 0;
+  font-size: .9rem;
+  color: var(--mia-text);
+}
+.mia-cta-note strong { color: var(--mia-navy); }
+
+/* ── Tablet: videos 2–6 become a swipeable row ──────── */
+@media (max-width: 1024px) {
+  .mia-featured { grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: 32px; padding: 28px; }
+
+  .mia-grid {
+    display: flex;
+    gap: 16px;
+    margin: 36px -24px 0;
+    padding: 0 24px 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 24px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .mia-card {
+    flex: 0 0 240px;
+    scroll-snap-align: start;
+  }
+}
+
+/* ── Mobile: everything stacked ─────────────────────── */
+@media (max-width: 768px) {
+  .mia { padding: 44px 0 52px; }
+  .mia-inner { padding: 0 16px; }
+  .mia-head { margin-bottom: 28px; }
+
+  .mia-featured {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    padding: 20px 16px 24px;
+    border-radius: 20px;
+    text-align: center;
+  }
+  .mia-player--featured { width: 100%; max-width: 340px; margin: 0 auto; }
+  .mia-featured-text { margin-left: auto; margin-right: auto; }
+  .mia-steps { justify-content: center; }
+
+  .mia-grid { margin: 32px -16px 0; padding: 0 16px 8px; scroll-padding: 0 16px; }
+  .mia-card { flex-basis: 72%; max-width: 260px; }
+
+  .mia-team { margin-top: 36px; padding: 22px 16px; border-radius: 20px; }
+  .mia-team-media { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .mia-team-media .mia-player { width: 100%; max-width: 340px; margin: 0 auto; }
+
+  .mia-cta { margin-top: 36px; }
+  .mia-btn { display: flex; width: 100%; padding: 16px 20px; font-size: 1rem; letter-spacing: .03em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mia-btn { transition: none; }
+  .mia-btn:hover { transform: none; }
+}

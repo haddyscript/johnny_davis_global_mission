@@ -26,6 +26,7 @@
     </svg>">
   <link rel="stylesheet" href="{{ asset('css/for_index.css') }}?v={{ filemtime(public_path('css/for_index.css')) }}" />
   <link rel="stylesheet" href="{{ asset('css/hunger-campaign.css') }}?v={{ filemtime(public_path('css/hunger-campaign.css')) }}" />
+  <link rel="stylesheet" href="{{ asset('css/mission-in-action.css') }}?v={{ filemtime(public_path('css/mission-in-action.css')) }}" />
   <link rel="preload" as="image" type="image/webp"
         imagesrcset="{{ asset('images/hunger-cant-wait/hunger-cant-wait-banner-768.webp') }} 768w, {{ asset('images/hunger-cant-wait/hunger-cant-wait-banner-1280.webp') }} 1280w, {{ asset('images/hunger-cant-wait/hunger-cant-wait-banner-2048.webp') }} 2048w"
         imagesizes="(min-width: 1320px) 1280px, 100vw" />
@@ -35,6 +36,8 @@
 @include('partials.nav')
 
 @include('partials.hunger-campaign', ['hcwVariant' => 'home', 'hcwButtonHref' => route('donate').'#give'])
+
+@include('partials.mission-in-action', ['miaButtonHref' => route('donate').'#give'])
 
 <a id="stickyDonate" class="btn btn-primary wwa-donate-btn" href="{{ route('donate') }}" aria-label="Donate Now"><span class="wwa-heart" aria-hidden="true">&#9829;</span> Donate Now</a>
 
