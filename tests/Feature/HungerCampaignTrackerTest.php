@@ -156,9 +156,9 @@ class HungerCampaignTrackerTest extends TestCase
                 ->assertSeeInOrder([
                     'id="hunger-campaign"',
                     'Our journey to 10,000 monthly partners',
+                    'role="progressbar"',
                     '1,234',
                     'active monthly partners',
-                    'aria-valuenow="1234"',
                     'Become a Monthly Partner',
                 ], false);
         }
@@ -175,9 +175,6 @@ class HungerCampaignTrackerTest extends TestCase
                 'Our journey to 10,000 monthly partners',
                 'Every Partner Makes a Difference',
                 'Join our growing community of compassionate monthly supporters.',
-                'First milestone',
-                '100',
-                'Goal: <strong>10,000</strong>',
                 'Become a Monthly Partner',
             ], false);
 
@@ -186,9 +183,34 @@ class HungerCampaignTrackerTest extends TestCase
 
             $this->assertMatchesRegularExpression('/data-hcw-live\s+hidden\s*>/', $matches[0]);
             $this->assertMatchesRegularExpression('/data-hcw-count><\/span>/', $matches[0]);
-            $this->assertStringContainsString('aria-valuenow="0"', $matches[0]);
             $this->assertDoesNotMatchRegularExpression('/data-hcw-message\s+hidden/', $matches[0]);
         }
+    }
+
+    public function test_progress_line_sits_beneath_the_banner_with_its_fill_halfway_to_the_first_milestone(): void
+    {
+        foreach (['/', '/donate'] as $page) {
+            $html = $this->get($page)->assertOk()->getContent();
+            preg_match('/<section id="hunger-campaign".*?<\/section>/s', $html, $matches);
+
+            $this->assertMatchesRegularExpression(
+                '/class="hcw-banner".*?<div class="hcw-progress" style="--hcw-milestone-at: 20%">.*?<div class="hcw-progress-track"\s+role="progressbar".*?<span class="hcw-progress-fill" style="width: 10%"><\/span>.*?<div class="hcw-tracker-stats">/s',
+                $matches[0]
+            );
+            $this->assertMatchesRegularExpression(
+                '/<strong>0<\/strong>.*?<strong>100<\/strong><span>First milestone<\/span>.*?<strong>10,000<\/strong><span>Monthly Partners Goal<\/span>/s',
+                $matches[0]
+            );
+        }
+
+        $this->get('/')->assertSeeInOrder(['class="hcw-progress-track"', 'id="mission-in-action"'], false);
+    }
+
+    public function test_progress_line_fill_does_not_follow_the_stripe_count_yet(): void
+    {
+        Donation::factory()->monthlyPartner()->count(150)->create();
+
+        $this->get('/')->assertOk()->assertSee('<span class="hcw-progress-fill" style="width: 10%"></span>', false);
     }
 
     public function test_banner_shows_message_when_the_count_is_unavailable(): void

@@ -65,7 +65,7 @@ class DonationController extends Controller
             'description' => $cms->text('meta', 'description', 'Donate to Johnny Davis Global Missions — Feed Filipino Children, support disaster relief, and bring hope to communities in need.'),
             'cms' => $cms,
             'campaigns' => $campaigns,
-            'pastorImg' => asset('images/who-we-are/Johnny-Davis.webp'),
+            'pastorImg' => asset('images/who-we-are/Johnny%20Davis.jpeg'),
             'stripeKey' => config('services.stripe.key'),
             'hungerProgress' => app(HungerCampaignTracker::class)->progress(),
             'manageGiftUrl' => config('services.stripe.portal_url'),

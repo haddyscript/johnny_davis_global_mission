@@ -1,6 +1,7 @@
 {{--
   HUNGER CAN'T WAIT! — $7.99 monthly partner campaign.
-  Approved premium banner artwork + partner tracker (count shown publicly from 100 partners).
+  Approved premium banner artwork + partner tracker: a large progress line (0, first milestone 100,
+  goal 10,000) directly beneath the banner, plus the live count (shown publicly from 100 partners).
   Shared by the homepage and the donation page.
 
   @param string     $hcwVariant      'home' | 'donate'
@@ -13,6 +14,17 @@
       ->implode(', ');
   $hcwShowCount = (bool) ($hungerProgress['show_count'] ?? false);
   $hcwPartners = $hcwShowCount ? $hungerProgress['active_partners'] : 0;
+
+  // Progress line: 0 → 100 (first milestone) fills the first 20% so early progress is visible, 100 → 10,000 the rest
+  $hcwMilestone = 100;
+  $hcwGoal = 10000;
+  $hcwMilestoneAt = 20;
+  $hcwPosition = fn (int $partners): float => $partners <= $hcwMilestone
+      ? $partners / $hcwMilestone * $hcwMilestoneAt
+      : $hcwMilestoneAt + min($partners - $hcwMilestone, $hcwGoal - $hcwMilestone) / ($hcwGoal - $hcwMilestone) * (100 - $hcwMilestoneAt);
+
+  // Set by hand for now (halfway to the first milestone); not read from Stripe
+  $hcwFillPartners = 50;
 @endphp
 <section id="hunger-campaign" class="hcw hcw--{{ $hcwVariant }}" aria-labelledby="hcw-title">
   <h2 class="hcw-sr-only" id="hcw-title">HUNGER CAN&rsquo;T WAIT! Become one of 10,000 monthly partners for $7.99 a month.</h2>
@@ -24,18 +36,38 @@
         <img src="{{ asset('images/hunger-cant-wait/hunger-cant-wait-banner-1280.jpg') }}"
              srcset="{{ $hcwBanner('jpg') }}"
              sizes="(min-width: 1320px) 1280px, 100vw"
-             alt="Hunger Can't Wait! 10,000 monthly partners — $7.99 a month. Help feed hungry children in the Philippines and Africa. Philippines: feeding children. Uganda: feeding children, coming soon. johnnydavisglobalmission.org/donate"
+             alt="Hunger Can't Wait! 10,000 monthly partners — $7.99 a month. Help feed hungry children in the Philippines and Africa. Philippines: feeding children. Uganda: feeding children, active. johnnydavisglobalmission.org/donate"
              width="2048" height="768"
              fetchpriority="high"
              decoding="async" />
       </picture>
+      {{-- The artwork still reads "Coming soon" under Uganda; this covers it until an updated banner is exported --}}
+      <span class="hcw-banner-status" aria-hidden="true">Active</span>
     </a>
   </div>
 
   <div class="hcw-tracker" data-hcw-tracker data-progress-url="{{ route('donate.hunger-progress') }}">
-    <div class="hcw-tracker-stats">
+    <div class="hcw-progress" style="--hcw-milestone-at: {{ $hcwMilestoneAt }}%">
       <p class="hcw-eyebrow">Our journey to 10,000 monthly partners</p>
 
+      <div class="hcw-progress-track"
+           role="progressbar"
+           aria-label="Monthly partners toward the 10,000 goal"
+           aria-valuemin="0"
+           aria-valuemax="{{ $hcwGoal }}"
+           aria-valuetext="Working toward our first milestone of 100 monthly partners">
+        <span class="hcw-progress-fill" style="width: {{ $hcwPosition($hcwFillPartners) }}%"></span>
+        <span class="hcw-progress-tick" aria-hidden="true"></span>
+      </div>
+
+      <ol class="hcw-progress-marks" aria-hidden="true">
+        <li class="hcw-progress-mark hcw-progress-mark--start"><strong>0</strong></li>
+        <li class="hcw-progress-mark hcw-progress-mark--milestone"><strong>100</strong><span>First milestone</span></li>
+        <li class="hcw-progress-mark hcw-progress-mark--goal"><strong>10,000</strong><span>Monthly Partners Goal</span></li>
+      </ol>
+    </div>
+
+    <div class="hcw-tracker-stats">
       {{-- The live count goes public at 100 verified partners; until then (or if it can't be read) this message shows instead --}}
       <div class="hcw-message" data-hcw-message @if($hcwShowCount) hidden @endif>
         <p class="hcw-count hcw-count--first">Every Partner Makes a Difference</p>
@@ -47,23 +79,7 @@
           <span class="hcw-count-num" data-hcw-count>{{ $hcwShowCount ? number_format($hcwPartners) : '' }}</span>
           <span class="hcw-count-label">active monthly partners</span>
         </p>
-
-        <div class="hcw-bar"
-             role="progressbar"
-             aria-label="Active monthly partners toward the 10,000 goal"
-             aria-valuemin="0"
-             aria-valuemax="{{ $hungerProgress['goal'] ?? 10000 }}"
-             aria-valuenow="{{ $hcwPartners }}">
-          <span class="hcw-bar-fill hcw-bar-fill--started"
-                data-hcw-bar
-                style="width: {{ $hcwShowCount ? $hungerProgress['percent'] : 0 }}%"></span>
-        </div>
       </div>
-
-      <p class="hcw-bar-legend">
-        <span><span data-hcw-milestone-label>{{ $hcwShowCount ? 'Next milestone' : 'First milestone' }}</span>: <strong data-hcw-milestone>{{ number_format($hungerProgress['next_milestone'] ?? 100) }}</strong></span>
-        <span>Goal: <strong>10,000</strong></span>
-      </p>
     </div>
 
     <div class="hcw-tracker-cta">

@@ -56,6 +56,48 @@ class HungerCampaignTest extends TestCase
         $this->assertStringNotContainsStringIgnoringCase('coming soon', $matches[0]);
     }
 
+    public function test_uganda_is_shown_as_active_on_the_banner_and_donation_page(): void
+    {
+        foreach (['/', '/donate'] as $page) {
+            $html = $this->get($page)->assertOk()->getContent();
+            preg_match('/<section id="hunger-campaign".*?<\/section>/s', $html, $matches);
+
+            $this->assertMatchesRegularExpression('/<\/picture>\s*\{?.*?<span class="hcw-banner-status" aria-hidden="true">Active<\/span>\s*<\/a>/s', $matches[0]);
+            $this->assertStringContainsString('Uganda: feeding children, active.', $matches[0]);
+            $this->assertStringNotContainsStringIgnoringCase('coming soon', $matches[0]);
+        }
+
+        $donatePage = $this->get('/donate')->getContent();
+
+        $this->assertStringNotContainsStringIgnoringCase('launching soon', $donatePage);
+        $this->assertMatchesRegularExpression('/Uganda Clean Water Initiative<\/h3>\s*<div class="card-raised-row">\s*<span><strong>Active<\/strong><\/span>/', $donatePage);
+        $this->assertMatchesRegularExpression('/<div class="camp-title">Uganda Clean Water Initiative<\/div>.*?>Active<\/span>/s', $donatePage);
+    }
+
+    public function test_every_approved_campaign_and_amount_is_still_offered(): void
+    {
+        $response = $this->get('/donate')->assertOk();
+
+        foreach (['Feed Filipino Children', 'Disaster Relief Fund', 'Uganda Clean Water Initiative', 'Where it&#039;s needed most'] as $campaign) {
+            $response->assertSee('data-campaign-opt="'.$campaign.'"', false);
+        }
+
+        preg_match_all('/<span class="amount-price">([^<]+)<\/span>/', $response->getContent(), $amounts);
+        $this->assertSame('$7.99', $amounts[1][0]);
+        $this->assertGreaterThan(1, count($amounts[1]));
+        $response->assertSee('id="customAmountInput"', false);
+    }
+
+    public function test_monthly_partner_buttons_on_the_donation_page_reselect_7_99_monthly(): void
+    {
+        $this->get('/donate')->assertOk()->assertSee('<a href="#give" class="hcw-btn" id="hcwPartnerBtn">', false);
+
+        $script = file_get_contents(public_path('js/for_donationpage.js'));
+
+        $this->assertStringContainsString("document.querySelectorAll('a[href=\"#give\"]')", $script);
+        $this->assertMatchesRegularExpression("/function selectMonthlyPartnerGift\(\).*?setCampaign\('Feed Filipino Children'\).*?includes\('Monthly'\).*?=== '\\$7\.99'/s", $script);
+    }
+
     public function test_campaign_copy_does_not_use_starting_at_wording(): void
     {
         $this->get('/')->assertDontSee('starting at $7.99');
@@ -105,7 +147,7 @@ class HungerCampaignTest extends TestCase
     {
         $response = $this->get('/donate');
 
-        $response->assertSee('src="'.asset('images/who-we-are/Johnny-Davis.webp').'" alt="Pastor Johnny Davis"', false);
+        $response->assertSee('src="'.asset('images/who-we-are/Johnny%20Davis.jpeg').'" alt="Pastor Johnny Davis"', false);
         $response->assertDontSee('cloudfront.net', false);
     }
 

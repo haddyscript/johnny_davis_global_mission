@@ -1018,6 +1018,35 @@
     }
   }
 
+  /* ── "Become a $7.99 Monthly Partner" buttons on this page ──
+     Same-page #give links don't reload, so reselect Feed Filipino
+     Children, $7.99 and Monthly before scrolling to the form.
+     Visitors can still change the amount, purpose or frequency.
+  ──────────────────────────────────────────────────────── */
+  function selectMonthlyPartnerGift() {
+    overviewScreen.style.display = 'none';
+    thankScreen.style.display    = 'none';
+    donateScreen.style.display   = 'block';
+    setCampaign('Feed Filipino Children');
+
+    const monthlyTab = Array.from(dtabs).find(tab => tab.textContent.includes('Monthly'));
+    if (monthlyTab && !monthlyTab.classList.contains('active')) monthlyTab.click();
+
+    const partnerAmountBtn = Array.from(amountBtns).find(btn => btn.querySelector('.amount-price').textContent.trim() === '$7.99');
+    if (partnerAmountBtn) partnerAmountBtn.click();
+  }
+
+  document.querySelectorAll('a[href="#give"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const giveTarget = document.getElementById('give');
+      if (!giveTarget) return;
+      e.preventDefault();
+      selectMonthlyPartnerGift();
+      giveTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', '#give');
+    });
+  });
+
   /* ── URL param pre-selection ─────────────────────────────
      Allows links like /donate?campaign=where&amount=29.99
      to land on the form with the correct campaign and amount

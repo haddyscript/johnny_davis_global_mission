@@ -44,4 +44,37 @@
   }
 
   facades.forEach(facade => facade.addEventListener('click', () => play(facade)));
+
+  /* Videos 1–6: picking one from the row swaps it into the large spot,
+     and the video it replaces goes back into the row. */
+  const stage  = document.querySelector('[data-mia-stage]');
+  const panels = document.querySelectorAll('[data-mia-panel]');
+  const picks  = document.querySelectorAll('[data-mia-pick]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function show(number) {
+    facades.forEach(reset);
+    if (stage) stage.querySelectorAll('video').forEach(video => video.pause());
+
+    panels.forEach(panel => {
+      const isActive = panel.dataset.miaPanel === number;
+      panel.hidden = !isActive;
+      panel.classList.remove('is-entering');
+      if (isActive) {
+        void panel.offsetWidth; // restart the entrance animation
+        panel.classList.add('is-entering');
+      }
+    });
+
+    picks.forEach(pick => { pick.parentElement.hidden = pick.dataset.miaPick === number; });
+
+    if (stage && stage.getBoundingClientRect().top < 80) {
+      stage.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
+    }
+
+    const title = document.getElementById('mia-video-' + number);
+    if (title) title.focus({ preventScroll: true });
+  }
+
+  picks.forEach(pick => pick.addEventListener('click', () => show(pick.dataset.miaPick)));
 })();

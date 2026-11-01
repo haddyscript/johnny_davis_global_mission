@@ -45,6 +45,8 @@
   padding: 0 24px;
 }
 .hcw-banner {
+  position: relative;
+  container-type: inline-size;
   display: block;
   border-radius: 20px;
   overflow: hidden;
@@ -59,6 +61,27 @@
   width: 100%;
   height: auto;
   aspect-ratio: 2048 / 768;
+}
+/* Uganda status: covers "Coming soon" in the artwork (x 1738–1894, y 650–670 of 2048×768), sized to the banner */
+.hcw-banner-status {
+  position: absolute;
+  left: 84.86%;
+  top: 84.64%;
+  width: 7.62%;
+  height: 2.6%;
+  display: flex;
+  align-items: center;
+  padding-left: .34cqw;
+  background: rgb(3,101,54);
+  color: rgb(212,236,211);
+  font-family: 'Montserrat', 'Inter', 'Segoe UI', sans-serif;
+  font-size: .94cqw;
+  font-weight: 700;
+  letter-spacing: .03em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 /* ── Tracker card ───────────────────────────────────── */
@@ -130,34 +153,71 @@
   letter-spacing: -.01em;
 }
 
-.hcw-bar {
+/* ── Progress line: full width across the top of the card ── */
+.hcw-progress { grid-column: 1 / -1; }
+.hcw-progress-track {
   position: relative;
-  height: 18px;
+  height: 30px;
+  margin-top: 6px;
   border-radius: 999px;
   background: #e5eaf1;
-  box-shadow: inset 0 1px 3px rgba(13,42,78,.12);
+  box-shadow: inset 0 2px 4px rgba(13,42,78,.14);
   overflow: hidden;
 }
-.hcw-bar-fill {
-  display: block;
-  height: 100%;
-  max-width: 100%;
+.hcw-progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
   border-radius: inherit;
-  background: linear-gradient(90deg, #f4511e 0%, var(--hcw-orange) 100%);
-  transition: width .8s cubic-bezier(.2,.8,.2,1);
+  background: linear-gradient(90deg, #ff2d2d 0%, #e10600 100%);
+  box-shadow: 0 0 14px rgba(225,6,0,.45);
 }
-/* Keep the first partners visible on the bar; the exact count is printed above */
-.hcw-bar-fill--started { min-width: 10px; }
+/* Notch on the line at the first milestone */
+.hcw-progress-tick {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--hcw-milestone-at);
+  width: 4px;
+  margin-left: -2px;
+  background: #ffffff;
+}
 
-.hcw-bar-legend {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
+.hcw-progress-marks {
+  position: relative;
+  list-style: none;
+  height: 52px;
   margin: 10px 0 0;
-  font-size: .9rem;
+  padding: 0;
+}
+.hcw-progress-mark {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.hcw-progress-mark strong {
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  font-weight: 800;
+  color: var(--hcw-navy);
+  font-variant-numeric: tabular-nums;
+}
+.hcw-progress-mark span {
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
   color: var(--hcw-text);
 }
-.hcw-bar-legend strong { color: var(--hcw-navy); }
+.hcw-progress-mark--start { left: 0; }
+.hcw-progress-mark--milestone {
+  left: var(--hcw-milestone-at);
+  align-items: center;
+  transform: translateX(-50%);
+}
+.hcw-progress-mark--milestone span { color: #e10600; }
+.hcw-progress-mark--goal { right: 0; align-items: flex-end; text-align: right; }
 
 .hcw-btn {
   display: flex;
@@ -247,14 +307,18 @@
   .hcw-eyebrow { font-size: .68rem; letter-spacing: .1em; padding: 6px 12px; }
   .hcw-count { justify-content: center; }
   .hcw-btn { font-size: 1rem; letter-spacing: .03em; padding: 16px 20px; }
+
+  .hcw-progress-track { height: 24px; }
+  .hcw-progress-marks { text-align: left; }
+  .hcw-progress-mark span { font-size: .68rem; letter-spacing: .03em; }
 }
 
 @media (max-width: 380px) {
-  .hcw-bar-legend { font-size: .8rem; }
+  .hcw-progress-mark span { font-size: .62rem; }
   .hcw-btn { font-size: .94rem; padding: 16px 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hcw-btn, .hcw-banner, .hcw-bar-fill { transition: none; }
+  .hcw-btn, .hcw-banner { transition: none; }
   .hcw-btn:hover, .hcw-banner:hover { transform: none; }
 }

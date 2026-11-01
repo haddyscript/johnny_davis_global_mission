@@ -99,7 +99,7 @@
           <div style="flex:1;">
             <div class="camp-title">Uganda Clean Water Initiative</div>
             <div class="camp-sub" style="display:flex;justify-content:space-between;align-items:center;">
-              <span style="color:#22a96e;font-weight:600;">Launching Soon</span>
+              <span style="color:#22a96e;font-weight:600;">Active</span>
               <span style="color:#888;font-size:.82rem;">Goal $40,000</span>
             </div>
             <div class="camp-progress-wrap">

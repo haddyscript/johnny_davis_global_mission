@@ -227,7 +227,7 @@
         <div class="founder-photo-wrap">
           <img
             class="founder-photo"
-            src="{{ asset('images/who-we-are/Johnny-Davis.webp') }}"
+            src="{{ asset('images/who-we-are/Johnny%20Davis.jpeg') }}"
             alt="Johnny Davis — Founder and President of Johnny Davis Global Missions"
             loading="lazy"
           />

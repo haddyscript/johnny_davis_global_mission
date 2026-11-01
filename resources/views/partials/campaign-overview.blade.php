@@ -74,7 +74,7 @@
         <h3>💧 Uganda Clean Water Initiative</h3>
 
         <div class="card-raised-row">
-          <span><strong>Launching Soon</strong></span>
+          <span><strong>Active</strong></span>
           <span>Goal $40,000</span>
         </div>
         <div class="progress">

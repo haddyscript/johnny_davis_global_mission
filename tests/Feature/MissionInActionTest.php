@@ -149,10 +149,83 @@ class MissionInActionTest extends TestCase
         $section = $this->section();
 
         $this->assertMatchesRegularExpression(
-            '/class="mia-featured".*?player\/v1\/7702684615672204574.*?From Shopping to Serving/s',
+            '/<article class="mia-featured" id="mia-panel-1" data-mia-panel="1" aria-labelledby="mia-video-1"\s*>.*?player\/v1\/7702684615672204574.*?From Shopping to Serving/s',
             $section
         );
-        $this->assertStringNotContainsString('7702684615672204574', substr($section, strpos($section, 'class="mia-grid"')));
+
+        foreach (range(2, 6) as $number) {
+            $this->assertMatchesRegularExpression('/id="mia-panel-'.$number.'"[^>]*\shidden\s*>/', $section);
+        }
+    }
+
+    public function test_choosing_a_video_from_the_row_swaps_it_into_the_large_spot(): void
+    {
+        $section = $this->section();
+
+        $this->assertSame(6, substr_count($section, 'data-mia-panel="'));
+        $this->assertStringContainsString('data-mia-stage', $section);
+
+        preg_match_all('/<li class="mia-pick"\s*(hidden)?\s*>\s*<button type="button" class="mia-pick-btn" data-mia-pick="(\d)" aria-controls="mia-panel-(\d)">/', $section, $picks);
+        $this->assertSame(['1', '2', '3', '4', '5', '6'], $picks[2]);
+        $this->assertSame($picks[2], $picks[3]);
+        $this->assertSame(['hidden', '', '', '', '', ''], $picks[1], 'Only the video in the large spot is hidden from the row.');
+
+        $this->assertStringContainsString('data-mia-pick', file_get_contents(public_path('js/mission-in-action.js')));
+    }
+
+    public function test_every_video_in_the_large_spot_shows_its_full_description(): void
+    {
+        $section = $this->section();
+
+        $this->assertMatchesRegularExpression(
+            '/id="mia-panel-2".*?id="mia-video-2">Hear From the Children!<\/h3>\s*<p class="mia-featured-lead">🇵🇭 HEAR THEIR VOICES! ❤️ \| FEED FILIPINO CHILDREN<\/p>\s*<p class="mia-featured-text">Listen as children and families share their stories.*?Brgy\. Fatima, Villaba, Leyte, Philippines\.<\/p>\s*<p class="mia-featured-text">Through the generosity of our partners.*?Gospel of Jesus Christ\.<\/p>.*?id="mia-panel-3"/s',
+            $section
+        );
+        $this->assertMatchesRegularExpression(
+            '/id="mia-panel-3".*?<p class="mia-featured-lead">🇵🇭 ANOTHER DAY OF FEEDING CHILDREN, SHARING GOD’S LOVE! ❤️<\/p>\s*<p class="mia-featured-tagline">HUNGER CAN’T WAIT! \| Bringing Hope to Children in the Philippines! 🌍<\/p>\s*<p class="mia-featured-text">📍 Purok XI-C, Fatima, General Santos City, Philippines<\/p>.*?<details class="mia-more">.*?❤️ WATCH THE STORY UNFOLD!.*?You are helping us put compassion into action!.*?id="mia-panel-4"/s',
+            $section
+        );
+
+        $this->assertMatchesRegularExpression(
+            '/id="mia-panel-4".*?<p class="mia-featured-lead">FEEDING CHILDREN, SHARING GOD’S LOVE! 🇵🇭<\/p>\s*<p class="mia-featured-tagline">HUNGER CAN’T WAIT! \| Real People\. Real Love\. Real Impact\. 🌍<\/p>.*?<details class="mia-more">\s*<summary.*?<\/summary>\s*<div class="mia-more-body">\s*<p class="mia-more-text">As the children begin gathering.*?More than 100 children.*?Every smile reminds us why this mission matters!.*?id="mia-panel-5"/s',
+            $section
+        );
+        $this->assertMatchesRegularExpression(
+            '/id="mia-panel-5".*?<p class="mia-featured-lead">😆 BRINGING SMILES TO FILIPINO CHILDREN! 🇵🇭<\/p>\s*<p class="mia-featured-tagline">HUNGER CAN’T WAIT! \| Feeding Children, Sharing God’s Love! 🌍<\/p>.*?<details class="mia-more">.*?❤️ MORE THAN JUST A MEAL!.*?rice, chicken, and fresh fruit.*?One Child\. One Meal\. One Act of Love at a Time! ❤️.*?id="mia-panel-6"/s',
+            $section
+        );
+        $this->assertMatchesRegularExpression(
+            '/id="mia-panel-6".*?<p class="mia-featured-lead">🎤 HEARING THE VOICES OF THE COMMUNITY!<\/p>\s*<p class="mia-featured-text">Our Assistant Director, Jennifer Buico joined.*?<details class="mia-more">\s*<summary.*?<\/summary>\s*<div class="mia-more-body">\s*<p class="mia-more-text">One young girl even took the microphone.*?❤️ OVER 100 CHILDREN AND THEIR FAMILIES REACHED!.*?even the smallest act of kindness can make a lasting difference!/s',
+            $section
+        );
+
+        $this->assertSame(5, substr_count($section, 'class="mia-more"'), 'Every video but Video 2 has a full story to expand.');
+        $this->assertSame(1, substr_count($section, 'class="mia-steps"'), 'Only Video 1 shows the Shop to Serve steps.');
+    }
+
+    public function test_from_shopping_to_serving_shows_an_intro_with_the_full_story_behind_a_toggle(): void
+    {
+        $section = $this->section();
+
+        $this->assertMatchesRegularExpression(
+            '/id="mia-video-1">From Shopping to Serving<\/h3>\s*<p class="mia-featured-lead">❤️ BEHIND EVERY MEAL IS A STORY OF LOVE, COMPASSION, AND SERVICE!<\/p>.*?It all begins with a mission.*?Watch as our Johnny Davis Global Missions feeding team.*?<details class="mia-more">/s',
+            $section
+        );
+
+        preg_match('/<details class="mia-more">.*?<\/details>/s', $section, $details);
+        $this->assertNotEmpty($details, 'The "Read the full story" toggle is missing.');
+        $this->assertStringContainsString('Read the full story', $details[0]);
+        $this->assertStringNotContainsString('<details class="mia-more" open', $section);
+        $this->get('/')->assertSeeInOrder([
+            '🚗 THE JOURNEY BEGINS!',
+            '🛒 SHOPPING WITH A PURPOSE!',
+            '⛺ PREPARING THE LOCATION!',
+            '🍲 COOKING WITH LOVE!',
+            '🍽️ THE MOMENT THAT MATTERS MOST!',
+            'This is what your generosity makes possible!',
+            'they are not forgotten.',
+        ], false);
+        $this->assertStringContainsString('they are not forgotten.', $details[0]);
     }
 
     public function test_team_poster_is_shown_alongside_video_seven(): void
@@ -174,7 +247,7 @@ class MissionInActionTest extends TestCase
 
             $this->assertStringNotContainsString('<iframe', $section);
             $this->assertStringContainsString('js/mission-in-action.js', $section);
-            $this->assertSame(8, substr_count($section, 'loading="lazy"')); // seven thumbnails + team poster
+            $this->assertSame(14, substr_count($section, 'loading="lazy"')); // seven thumbnails + six in the video row + team poster
             $this->assertFileExists(public_path('js/mission-in-action.js'));
         });
     }

@@ -11,35 +11,25 @@
   const tracker = document.querySelector('[data-hcw-tracker]');
   if (!tracker || !window.fetch) return;
 
-  const REFRESH_MS     = 2 * 60 * 1000;
-  const messageEl      = tracker.querySelector('[data-hcw-message]');
-  const liveEl         = tracker.querySelector('[data-hcw-live]');
-  const countEl        = tracker.querySelector('[data-hcw-count]');
-  const barEl          = tracker.querySelector('[data-hcw-bar]');
-  const barWrap        = tracker.querySelector('.hcw-bar');
-  const milestoneLabel = tracker.querySelector('[data-hcw-milestone-label]');
-  const milestoneEl    = tracker.querySelector('[data-hcw-milestone]');
-  const fmt            = n => Number(n).toLocaleString('en-US');
+  const REFRESH_MS = 2 * 60 * 1000;
+  const messageEl  = tracker.querySelector('[data-hcw-message]');
+  const liveEl     = tracker.querySelector('[data-hcw-live]');
+  const countEl    = tracker.querySelector('[data-hcw-count]');
+  const fmt        = n => Number(n).toLocaleString('en-US');
 
   function showCount(visible) {
     liveEl.hidden    = !visible;
     messageEl.hidden = visible;
-    milestoneLabel.textContent = visible ? 'Next milestone' : 'First milestone';
   }
 
+  // The red progress line is set by hand in the page for now, so only the count text is refreshed
   function render(data) {
-    milestoneEl.textContent = fmt(data.next_milestone);
-
     if (!data.show_count) {
       showCount(false);
       return;
     }
 
-    const partners = Number(data.active_partners) || 0;
-
-    countEl.textContent = fmt(partners);
-    barEl.style.width   = data.percent + '%';
-    barWrap.setAttribute('aria-valuenow', String(partners));
+    countEl.textContent = fmt(Number(data.active_partners) || 0);
     showCount(true);
   }
 
