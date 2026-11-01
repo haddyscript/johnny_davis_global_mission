@@ -31,7 +31,7 @@
         <div style="height:100%;width:{{ $goalPercent }}%;min-width:{{ $stats['active_partners'] > 0 ? '8px' : '0' }};background:linear-gradient(90deg,#f4511e,#f07c1e);border-radius:inherit;"></div>
     </div>
     <p style="margin:10px 0 0;font-size:12px;color:var(--text-muted);">
-        A partner is a unique donor (by email) with an active Stripe monthly subscription. One-time gifts, failed or past-due payments, unfinished checkouts and cancellations are not counted.
+        A partner is a unique donor (by email) with an active <strong>$7.99</strong> Stripe monthly subscription. One-time gifts, other monthly amounts, failed or past-due payments, unfinished checkouts and cancellations are not counted toward the goal. Every active monthly amount is still listed in the stats and the campaign &amp; amount table below.
     </p>
 </div>
 
@@ -52,14 +52,14 @@
         <div class="stat-icon" style="background:rgba(16,185,129,0.12);color:#059669;">🤝</div>
         <div>
             <div class="stat-value">{{ number_format($stats['active_subscriptions']) }}</div>
-            <div class="stat-label">Active subscriptions</div>
+            <div class="stat-label">Active subscriptions (all amounts)</div>
         </div>
     </div>
     <div class="stat-card" style="--accent:#6366f1;">
         <div class="stat-icon" style="background:rgba(99,102,241,0.12);color:#4f46e5;">📈</div>
         <div>
             <div class="stat-value">${{ number_format($stats['monthly_revenue'], 2) }}</div>
-            <div class="stat-label">Est. monthly recurring revenue</div>
+            <div class="stat-label">Est. monthly recurring revenue (all amounts)</div>
         </div>
     </div>
     <div class="stat-card" style="--accent:#14b8a6;">

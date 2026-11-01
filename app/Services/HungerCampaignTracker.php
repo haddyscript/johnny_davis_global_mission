@@ -12,9 +12,9 @@ use Throwable;
  *
  * Data source: the donations table, kept in sync with Stripe by the Stripe webhook
  * (real time) and the hourly `donations:sync-stripe-subscriptions` reconciliation.
- * A partner is one donor (unique email) with at least one active Stripe monthly
- * subscription. One-time gifts, failed or past-due payments, unfinished checkouts,
- * canceled subscriptions and Stripe test-mode gifts are never counted.
+ * A partner is one donor (unique email) with at least one active $7.99 Stripe monthly
+ * subscription. One-time gifts, other monthly amounts, failed or past-due payments,
+ * unfinished checkouts, canceled subscriptions and Stripe test-mode gifts are never counted.
  */
 class HungerCampaignTracker
 {
@@ -70,11 +70,12 @@ class HungerCampaignTracker
     }
 
     /**
-     * Unique donors with an active Stripe monthly subscription.
+     * Unique donors with an active $7.99 Stripe monthly subscription.
      */
     public function countActivePartners(): int
     {
         return Donation::activeMonthlyPartners()
+            ->where('amount', self::MONTHLY_AMOUNT)
             ->distinct()
             ->count('email');
     }

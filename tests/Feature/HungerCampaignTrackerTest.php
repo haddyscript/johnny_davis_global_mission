@@ -30,6 +30,9 @@ class HungerCampaignTrackerTest extends TestCase
         Donation::factory()->monthlyPartner()->create(['payment_method' => 'paypal']); // not Stripe-verified
         Donation::factory()->monthlyPartner()->create(['livemode' => null]);           // not yet verified with Stripe
         Donation::factory()->monthlyPartner()->live()->create();                       // live gift while on test keys
+        Donation::factory()->monthlyPartner()->create(['amount' => '25.00']);         // other monthly amount
+        Donation::factory()->monthlyPartner()->create(['amount' => '7.00']);          // other monthly amount
+        Donation::factory()->create(['amount' => '7.99']);                             // one-time $7.99 gift
 
         $this->assertSame(3, $this->tracker()->countActivePartners());
     }
@@ -40,6 +43,15 @@ class HungerCampaignTrackerTest extends TestCase
         Donation::factory()->monthlyPartner()->create();
 
         $this->assertSame(2, $this->tracker()->countActivePartners());
+    }
+
+    public function test_a_donor_with_a_7_99_and_another_monthly_amount_counts_once(): void
+    {
+        Donation::factory()->monthlyPartner()->create(['email' => 'grace@example.com']);
+        Donation::factory()->monthlyPartner()->create(['email' => 'grace@example.com', 'amount' => '25.00']);
+        Donation::factory()->monthlyPartner()->create(['amount' => '25.00']);
+
+        $this->assertSame(1, $this->tracker()->countActivePartners());
     }
 
     public function test_test_mode_gifts_are_excluded_when_running_on_live_keys(): void
@@ -219,7 +231,7 @@ class HungerCampaignTrackerTest extends TestCase
             ->get(route('admin.monthly-partners.index'));
 
         $response->assertOk();
-        $response->assertViewHas('stats', fn (array $stats): bool => $stats['active_partners'] === 5
+        $response->assertViewHas('stats', fn (array $stats): bool => $stats['active_partners'] === 4
             && $stats['active_subscriptions'] === 5
             && abs($stats['monthly_revenue'] - 56.96) < 0.001
             && $stats['new_subscriptions'] === 8
