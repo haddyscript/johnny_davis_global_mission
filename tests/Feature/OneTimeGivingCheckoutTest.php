@@ -3,8 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\Donation;
+use App\Services\HungerCampaignTracker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class OneTimeGivingCheckoutTest extends TestCase
@@ -74,6 +76,41 @@ class OneTimeGivingCheckoutTest extends TestCase
         $this->assertSame('one-time', $intent[0]['params']['metadata']['frequency']);
         $this->assertSame([], $this->stripeRequestsTo('POST', '/v1/customers'));
         $this->assertSame([], $this->stripeRequestsTo('POST', '/v1/subscriptions'));
+    }
+
+    /**
+     * @return array<string, array{int, int}>
+     */
+    public static function missionBuilderGifts(): array
+    {
+        return [
+            'Hope Builder' => [100, 10000],
+            'Compassion Builder' => [300, 30000],
+            'Impact Builder' => [500, 50000],
+            'Legacy Builder' => [1000, 100000],
+        ];
+    }
+
+    #[DataProvider('missionBuilderGifts')]
+    public function test_mission_builder_gift_is_charged_once_and_not_counted_as_a_monthly_partner(int $amount, int $cents): void
+    {
+        $donationId = $this->startGift(['campaign_name' => 'Feed Filipino Children', 'amount' => $amount])
+            ->assertOk()
+            ->assertJson(['flow' => 'payment'])
+            ->json('donation_id');
+        $this->fakePaymentIntentStatus('succeeded');
+
+        $this->postJson('/donate/confirm', [
+            'payment_intent_id' => 'pi_gift',
+            'donation_id' => $donationId,
+        ])->assertOk()->assertJson(['success' => true]);
+
+        $intent = $this->stripeRequestsTo('POST', '/v1/payment_intents');
+        $this->assertSame($cents, (int) $intent[0]['params']['amount']);
+        $this->assertSame('one-time', $intent[0]['params']['metadata']['frequency']);
+        $this->assertSame([], $this->stripeRequestsTo('POST', '/v1/subscriptions'));
+        $this->assertDatabaseHas('donations', ['id' => $donationId, 'amount' => $amount, 'frequency' => 'one-time', 'status' => 'completed']);
+        $this->assertSame(0, app(HungerCampaignTracker::class)->countActivePartners());
     }
 
     public function test_successful_one_time_payment_completes_the_gift(): void

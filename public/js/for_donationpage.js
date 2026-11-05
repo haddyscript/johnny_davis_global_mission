@@ -70,7 +70,8 @@
 
   /* ── Helpers ────────────────────────────────────────────── */
   function fmt(n) {
-    return '$' + (Number.isInteger(n) ? n : n.toFixed(2));
+    const digits = Number.isInteger(n) ? 0 : 2;
+    return '$' + n.toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits });
   }
 
   function showScreen(screen) {
