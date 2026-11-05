@@ -1,7 +1,7 @@
 {{--
   HUNGER CAN'T WAIT! — $7.99 monthly partner campaign.
   Approved premium banner artwork + partner tracker: a large progress line (0, first milestone 100,
-  goal 10,000) directly beneath the banner, plus the live count (shown publicly from 100 partners).
+  goal 10,000) directly beneath the banner, filled from the verified Stripe count, plus the live count (shown publicly from 100 partners).
   Shared by the homepage and the donation page.
 
   @param string     $hcwVariant      'home' | 'donate'
@@ -15,16 +15,10 @@
   $hcwShowCount = (bool) ($hungerProgress['show_count'] ?? false);
   $hcwPartners = $hcwShowCount ? $hungerProgress['active_partners'] : 0;
 
-  // Progress line: 0 → 100 (first milestone) fills the first 20% so early progress is visible, 100 → 10,000 the rest
-  $hcwMilestone = 100;
-  $hcwGoal = 10000;
-  $hcwMilestoneAt = 20;
-  $hcwPosition = fn (int $partners): float => $partners <= $hcwMilestone
-      ? $partners / $hcwMilestone * $hcwMilestoneAt
-      : $hcwMilestoneAt + min($partners - $hcwMilestone, $hcwGoal - $hcwMilestone) / ($hcwGoal - $hcwMilestone) * (100 - $hcwMilestoneAt);
-
-  // Set by hand for now (halfway to the first milestone); not read from Stripe
-  $hcwFillPartners = 50;
+  // Progress line: verified Stripe partners only (0 when the count can't be read), never a hand-set figure
+  $hcwMilestoneAt = \App\Services\HungerCampaignTracker::FIRST_MILESTONE_BAR_PERCENT;
+  $hcwGoal = \App\Services\HungerCampaignTracker::GOAL;
+  $hcwFillPercent = (float) ($hungerProgress['bar_percent'] ?? 0);
 @endphp
 <section id="hunger-campaign" class="hcw hcw--{{ $hcwVariant }}" aria-labelledby="hcw-title">
   <h2 class="hcw-sr-only" id="hcw-title">HUNGER CAN&rsquo;T WAIT! Become one of 10,000 monthly partners for $7.99 a month.</h2>
@@ -36,13 +30,11 @@
         <img src="{{ asset('images/hunger-cant-wait/hunger-cant-wait-banner-1280.jpg') }}"
              srcset="{{ $hcwBanner('jpg') }}"
              sizes="(min-width: 1320px) 1280px, 100vw"
-             alt="Hunger Can't Wait! 10,000 monthly partners — $7.99 a month. Help feed hungry children in the Philippines and Africa. Philippines: feeding children. Uganda: feeding children, active. johnnydavisglobalmission.org/donate"
+             alt="Hunger Can't Wait! 10,000 monthly partners — $7.99 a month. Help feed hungry children in the Philippines and Africa. Philippines: feeding children. Uganda: feeding children, coming soon. johnnydavisglobalmission.org/donate"
              width="2048" height="768"
              fetchpriority="high"
              decoding="async" />
       </picture>
-      {{-- The artwork still reads "Coming soon" under Uganda; this covers it until an updated banner is exported --}}
-      <span class="hcw-banner-status" aria-hidden="true">Active</span>
     </a>
   </div>
 
@@ -56,7 +48,7 @@
            aria-valuemin="0"
            aria-valuemax="{{ $hcwGoal }}"
            aria-valuetext="Working toward our first milestone of 100 monthly partners">
-        <span class="hcw-progress-fill" style="width: {{ $hcwPosition($hcwFillPartners) }}%"></span>
+        <span class="hcw-progress-fill" data-hcw-fill style="width: {{ $hcwFillPercent }}%"></span>
         <span class="hcw-progress-tick" aria-hidden="true"></span>
       </div>
 
@@ -93,8 +85,8 @@
         <li class="hcw-program hcw-program--active">
           <span class="hcw-program-name">Philippines:</span> Feeding children now.
         </li>
-        <li class="hcw-program hcw-program--active">
-          <span class="hcw-program-name">Uganda:</span> Mission work active.
+        <li class="hcw-program hcw-program--soon">
+          <span class="hcw-program-name">Uganda:</span> Feeding program coming soon.
         </li>
       </ul>
     </div>

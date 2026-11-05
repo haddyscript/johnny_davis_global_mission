@@ -24,7 +24,7 @@ class HungerCampaignTest extends TestCase
             'Philippines:',
             'Feeding children now.',
             'Uganda:',
-            'Mission work active.',
+            'Feeding program coming soon.',
             'id="hero"',
         ], false);
         $response->assertSee('href="'.route('donate').'#give"', false);
@@ -43,7 +43,7 @@ class HungerCampaignTest extends TestCase
         $this->assertStringContainsString('width="2048" height="768"', $html);
     }
 
-    public function test_philippines_and_uganda_are_both_shown_as_active(): void
+    public function test_philippines_is_active_and_uganda_feeding_is_coming_soon(): void
     {
         $html = $this->get('/')->getContent();
 
@@ -51,27 +51,49 @@ class HungerCampaignTest extends TestCase
 
         $this->assertNotEmpty($matches);
         $this->assertMatchesRegularExpression('/hcw-program--active">\s*<span class="hcw-program-name">Philippines:<\/span> Feeding children now\./', $matches[0]);
-        $this->assertMatchesRegularExpression('/hcw-program--active">\s*<span class="hcw-program-name">Uganda:<\/span> Mission work active\./', $matches[0]);
-        $this->assertStringNotContainsString('hcw-program--soon', $matches[0]);
-        $this->assertStringNotContainsStringIgnoringCase('coming soon', $matches[0]);
+        $this->assertMatchesRegularExpression('/hcw-program--soon">\s*<span class="hcw-program-name">Uganda:<\/span> Feeding program coming soon\./', $matches[0]);
+        $this->assertStringNotContainsString('Mission work active', $matches[0]);
     }
 
-    public function test_uganda_is_shown_as_active_on_the_banner_and_donation_page(): void
+    public function test_banner_keeps_the_approved_uganda_coming_soon_artwork(): void
     {
         foreach (['/', '/donate'] as $page) {
             $html = $this->get($page)->assertOk()->getContent();
             preg_match('/<section id="hunger-campaign".*?<\/section>/s', $html, $matches);
 
-            $this->assertMatchesRegularExpression('/<\/picture>\s*\{?.*?<span class="hcw-banner-status" aria-hidden="true">Active<\/span>\s*<\/a>/s', $matches[0]);
-            $this->assertStringContainsString('Uganda: feeding children, active.', $matches[0]);
-            $this->assertStringNotContainsStringIgnoringCase('coming soon', $matches[0]);
+            $this->assertStringNotContainsString('hcw-banner-status', $matches[0]);
+            $this->assertStringContainsString('Uganda: feeding children, coming soon.', $matches[0]);
+            $this->assertStringNotContainsString('feeding children, active', $matches[0]);
         }
+    }
 
-        $donatePage = $this->get('/donate')->getContent();
+    public function test_uganda_clean_water_initiative_stays_active_on_the_donation_page(): void
+    {
+        $donatePage = $this->get('/donate')->assertOk()->getContent();
 
         $this->assertStringNotContainsStringIgnoringCase('launching soon', $donatePage);
         $this->assertMatchesRegularExpression('/Uganda Clean Water Initiative<\/h3>\s*<div class="card-raised-row">\s*<span><strong>Active<\/strong><\/span>/', $donatePage);
         $this->assertMatchesRegularExpression('/<div class="camp-title">Uganda Clean Water Initiative<\/div>.*?>Active<\/span>/s', $donatePage);
+    }
+
+    public function test_mission_builders_offer_the_four_one_time_gift_tiers(): void
+    {
+        $html = $this->get('/donate')->assertOk()->getContent();
+
+        preg_match('/<div class="mission-builders".*?Make a greater impact through a one-time gift\./s', $html, $matches);
+
+        $this->assertNotEmpty($matches);
+        $this->assertStringContainsString('Special one-time gifts', $matches[0]);
+        foreach (['$100' => 'Hope', '$300' => 'Compassion', '$500' => 'Impact', '$1,000' => 'Legacy'] as $amount => $tier) {
+            $this->assertMatchesRegularExpression(
+                '/<button class="amount-btn mission-builder-btn" aria-label="Give '.preg_quote($amount, '/').' one time — '.$tier.' Builder">\s*<span class="amount-price">'.preg_quote($amount, '/').'<\/span>\s*<span class="amount-impact">'.$tier.' Builder<\/span>/',
+                $matches[0]
+            );
+        }
+        $this->assertStringNotContainsStringIgnoringCase('monthly', $matches[0]);
+
+        $this->assertLessThan(strpos($html, 'id="customAmountInput"'), strpos($html, 'class="mission-builders"'));
+        $this->assertGreaterThan(strpos($html, 'aria-label="Preset donation amounts"'), strpos($html, 'class="mission-builders"'));
     }
 
     public function test_every_approved_campaign_and_amount_is_still_offered(): void
@@ -95,7 +117,7 @@ class HungerCampaignTest extends TestCase
         $script = file_get_contents(public_path('js/for_donationpage.js'));
 
         $this->assertStringContainsString("document.querySelectorAll('a[href=\"#give\"]')", $script);
-        $this->assertMatchesRegularExpression("/function selectMonthlyPartnerGift\(\).*?setCampaign\('Feed Filipino Children'\).*?includes\('Monthly'\).*?=== '\\$7\.99'/s", $script);
+        $this->assertMatchesRegularExpression("/function selectMonthlyPartnerGift\(\).*?setCampaign\('Feed Filipino Children'\).*?monthlyTab.click\(\).*?=== '\\$7\.99'/s", $script);
     }
 
     public function test_campaign_copy_does_not_use_starting_at_wording(): void

@@ -308,11 +308,31 @@
       btn.classList.add('selected');
       btn.setAttribute('aria-pressed', 'true');
       if (customInput) customInput.value = '';
-      selectedAmt = parseFloat(btn.querySelector('.amount-price').textContent.replace('$', ''));
+      selectedAmt = parseFloat(btn.querySelector('.amount-price').textContent.replace(/[$,]/g, ''));
       clearPaymentError();
       sync();
     });
   });
+
+  /* ── Mission Builders: these tiers are always one-time gifts ── */
+  const oneTimeTab = Array.from(dtabs).find(tab => !tab.textContent.includes('Monthly'));
+  const monthlyTab = Array.from(dtabs).find(tab => tab.textContent.includes('Monthly'));
+  const isMissionBuilderSelected = () => !!document.querySelector('.mission-builder-btn.selected');
+
+  document.querySelectorAll('.mission-builder-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (oneTimeTab && !oneTimeTab.classList.contains('active')) oneTimeTab.click();
+    });
+  });
+
+  // Switching back to Monthly from a Mission Builder gift returns to the $7.99 partnership
+  if (monthlyTab) {
+    monthlyTab.addEventListener('click', () => {
+      if (!isMissionBuilderSelected()) return;
+      const partnerAmountBtn = Array.from(amountBtns).find(btn => btn.querySelector('.amount-price').textContent.trim() === '$7.99');
+      if (partnerAmountBtn) partnerAmountBtn.click();
+    });
+  }
 
   /* ── Custom amount ──────────────────────────────────────── */
   customInput.addEventListener('input', () => {
@@ -1029,7 +1049,6 @@
     donateScreen.style.display   = 'block';
     setCampaign('Feed Filipino Children');
 
-    const monthlyTab = Array.from(dtabs).find(tab => tab.textContent.includes('Monthly'));
     if (monthlyTab && !monthlyTab.classList.contains('active')) monthlyTab.click();
 
     const partnerAmountBtn = Array.from(amountBtns).find(btn => btn.querySelector('.amount-price').textContent.trim() === '$7.99');
@@ -1076,7 +1095,7 @@
       let matched = false;
 
       amountBtns.forEach(btn => {
-        const btnAmt = parseFloat(btn.querySelector('.amount-price').textContent.replace('$', ''));
+        const btnAmt = parseFloat(btn.querySelector('.amount-price').textContent.replace(/[$,]/g, ''));
         if (Math.abs(btnAmt - targetAmt) < 0.01) {
           amountBtns.forEach(b => { b.classList.remove('selected'); b.removeAttribute('aria-pressed'); });
           btn.classList.add('selected');
@@ -1092,6 +1111,8 @@
         if (customInput) customInput.value = targetAmt;
         selectedAmt = targetAmt;
       }
+
+      if (isMissionBuilderSelected() && oneTimeTab) oneTimeTab.click();
 
       sync();
     }

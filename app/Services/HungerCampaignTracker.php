@@ -30,6 +30,9 @@ class HungerCampaignTracker
     /** Verified partners needed before the live count is shown publicly; below it the site shows a message instead. */
     public const PUBLIC_COUNT_THRESHOLD = 100;
 
+    /** Share of the progress line (percent) taken by 0 → PUBLIC_COUNT_THRESHOLD, so early progress is visible. */
+    public const FIRST_MILESTONE_BAR_PERCENT = 20;
+
     /** @var array<int, int> */
     private const MILESTONES = [100, 250, 500, 1000, 2500, 5000, 7500, 10000];
 
@@ -38,10 +41,11 @@ class HungerCampaignTracker
      * (the banner then hides the number instead of showing a wrong one).
      *
      * Until PUBLIC_COUNT_THRESHOLD partners are verified, show_count is false and the
-     * count and percent are null, so the number never leaves the server. The admin
+     * count and percent are null, so the number never leaves the server. bar_percent is
+     * always the verified position on the progress line (see barPercent()). The admin
      * report reads countActivePartners() directly and always sees the real figure.
      *
-     * @return array{show_count: bool, active_partners: int|null, goal: int, percent: float|null, next_milestone: int, updated_at: string}|null
+     * @return array{show_count: bool, active_partners: int|null, goal: int, percent: float|null, bar_percent: float, next_milestone: int, updated_at: string}|null
      */
     public function progress(): ?array
     {
@@ -64,6 +68,7 @@ class HungerCampaignTracker
             'active_partners' => $showCount ? $activePartners : null,
             'goal' => self::GOAL,
             'percent' => $showCount ? round(min(100, $activePartners / self::GOAL * 100), 2) : null,
+            'bar_percent' => self::barPercent($activePartners),
             'next_milestone' => $this->nextMilestone($activePartners),
             'updated_at' => $snapshot['updated_at'],
         ];
@@ -78,6 +83,22 @@ class HungerCampaignTracker
             ->where('amount', self::MONTHLY_AMOUNT)
             ->distinct()
             ->count('email');
+    }
+
+    /**
+     * Position (percent) of a partner count on the banner progress line: 0 → 100 partners
+     * fills the first FIRST_MILESTONE_BAR_PERCENT, 100 → 10,000 fills the rest.
+     */
+    public static function barPercent(int $activePartners): float
+    {
+        $threshold = self::PUBLIC_COUNT_THRESHOLD;
+        $partners = max(0, min($activePartners, self::GOAL));
+
+        $position = $partners <= $threshold
+            ? $partners / $threshold * self::FIRST_MILESTONE_BAR_PERCENT
+            : self::FIRST_MILESTONE_BAR_PERCENT + ($partners - $threshold) / (self::GOAL - $threshold) * (100 - self::FIRST_MILESTONE_BAR_PERCENT);
+
+        return round($position, 2);
     }
 
     /**

@@ -86,6 +86,7 @@ class HungerCampaignTrackerTest extends TestCase
         $this->assertFalse($progress['show_count']);
         $this->assertNull($progress['active_partners']);
         $this->assertNull($progress['percent']);
+        $this->assertSame(19.8, $progress['bar_percent']);
         $this->assertSame(10000, $progress['goal']);
         $this->assertSame(100, $progress['next_milestone']);
     }
@@ -187,14 +188,14 @@ class HungerCampaignTrackerTest extends TestCase
         }
     }
 
-    public function test_progress_line_sits_beneath_the_banner_with_its_fill_halfway_to_the_first_milestone(): void
+    public function test_progress_line_sits_beneath_the_banner(): void
     {
         foreach (['/', '/donate'] as $page) {
             $html = $this->get($page)->assertOk()->getContent();
             preg_match('/<section id="hunger-campaign".*?<\/section>/s', $html, $matches);
 
             $this->assertMatchesRegularExpression(
-                '/class="hcw-banner".*?<div class="hcw-progress" style="--hcw-milestone-at: 20%">.*?<div class="hcw-progress-track"\s+role="progressbar".*?<span class="hcw-progress-fill" style="width: 10%"><\/span>.*?<div class="hcw-tracker-stats">/s',
+                '/class="hcw-banner".*?<div class="hcw-progress" style="--hcw-milestone-at: 20%">.*?<div class="hcw-progress-track"\s+role="progressbar".*?<span class="hcw-progress-fill" data-hcw-fill style="width: 0%"><\/span>.*?<div class="hcw-tracker-stats">/s',
                 $matches[0]
             );
             $this->assertMatchesRegularExpression(
@@ -206,11 +207,42 @@ class HungerCampaignTrackerTest extends TestCase
         $this->get('/')->assertSeeInOrder(['class="hcw-progress-track"', 'id="mission-in-action"'], false);
     }
 
-    public function test_progress_line_fill_does_not_follow_the_stripe_count_yet(): void
+    public function test_progress_line_fill_follows_verified_partners_below_the_first_milestone(): void
     {
-        Donation::factory()->monthlyPartner()->count(150)->create();
+        Donation::factory()->monthlyPartner()->count(25)->create();
+        Donation::factory()->monthlyPartner()->live()->count(5)->create(['amount' => 29.99]);
 
-        $this->get('/')->assertOk()->assertSee('<span class="hcw-progress-fill" style="width: 10%"></span>', false);
+        $html = $this->get('/')->assertOk()->getContent();
+
+        $this->assertStringContainsString('<span class="hcw-progress-fill" data-hcw-fill style="width: 5%"></span>', $html);
+        $this->assertMatchesRegularExpression('/data-hcw-live\s+hidden\s*>/', $html);
+        $this->assertDoesNotMatchRegularExpression('/data-hcw-count>\d/', $html);
+    }
+
+    public function test_progress_line_fill_follows_verified_partners_past_the_first_milestone(): void
+    {
+        Donation::factory()->monthlyPartner()->count(595)->create();
+
+        $this->get('/')->assertOk()->assertSee('<span class="hcw-progress-fill" data-hcw-fill style="width: 24%"></span>', false);
+    }
+
+    public function test_progress_line_is_empty_when_the_count_is_unavailable(): void
+    {
+        $this->app->instance(HungerCampaignTracker::class, Mockery::mock(HungerCampaignTracker::class, [
+            'progress' => null,
+        ]));
+
+        $this->get('/')->assertOk()->assertSee('<span class="hcw-progress-fill" data-hcw-fill style="width: 0%"></span>', false);
+    }
+
+    public function test_bar_percent_maps_partners_onto_the_progress_line(): void
+    {
+        $this->assertSame(0.0, HungerCampaignTracker::barPercent(0));
+        $this->assertSame(10.0, HungerCampaignTracker::barPercent(50));
+        $this->assertSame(20.0, HungerCampaignTracker::barPercent(100));
+        $this->assertSame(60.0, HungerCampaignTracker::barPercent(5050));
+        $this->assertSame(100.0, HungerCampaignTracker::barPercent(10000));
+        $this->assertSame(100.0, HungerCampaignTracker::barPercent(12000));
     }
 
     public function test_banner_shows_message_when_the_count_is_unavailable(): void

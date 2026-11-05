@@ -1,9 +1,10 @@
 /* ============================================================
    HUNGER CAN'T WAIT! — monthly partner tracker
-   Refreshes the tracker while the page is open. The Stripe-verified
-   partner count is only shown once it reaches the public threshold
-   (100 partners); below it, or if the count can't be read, the
-   "Every Partner Makes a Difference" message is shown instead.
+   Refreshes the tracker while the page is open. The progress line
+   always follows the Stripe-verified partner count; the number itself
+   is only shown once it reaches the public threshold (100 partners).
+   Below it, or if the count can't be read, the "Every Partner Makes
+   a Difference" message is shown instead.
 ============================================================ */
 (function () {
   'use strict';
@@ -15,6 +16,7 @@
   const messageEl  = tracker.querySelector('[data-hcw-message]');
   const liveEl     = tracker.querySelector('[data-hcw-live]');
   const countEl    = tracker.querySelector('[data-hcw-count]');
+  const fillEl     = tracker.querySelector('[data-hcw-fill]');
   const fmt        = n => Number(n).toLocaleString('en-US');
 
   function showCount(visible) {
@@ -22,8 +24,9 @@
     messageEl.hidden = visible;
   }
 
-  // The red progress line is set by hand in the page for now, so only the count text is refreshed
   function render(data) {
+    fillEl.style.width = (Number(data.bar_percent) || 0) + '%';
+
     if (!data.show_count) {
       showCount(false);
       return;

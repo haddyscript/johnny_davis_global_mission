@@ -46,7 +46,6 @@
 }
 .hcw-banner {
   position: relative;
-  container-type: inline-size;
   display: block;
   border-radius: 20px;
   overflow: hidden;
@@ -61,27 +60,6 @@
   width: 100%;
   height: auto;
   aspect-ratio: 2048 / 768;
-}
-/* Uganda status: covers "Coming soon" in the artwork (x 1738–1894, y 650–670 of 2048×768), sized to the banner */
-.hcw-banner-status {
-  position: absolute;
-  left: 84.86%;
-  top: 84.64%;
-  width: 7.62%;
-  height: 2.6%;
-  display: flex;
-  align-items: center;
-  padding-left: .34cqw;
-  background: rgb(3,101,54);
-  color: rgb(212,236,211);
-  font-family: 'Montserrat', 'Inter', 'Segoe UI', sans-serif;
-  font-size: .94cqw;
-  font-weight: 700;
-  letter-spacing: .03em;
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-  pointer-events: none;
 }
 
 /* ── Tracker card ───────────────────────────────────── */

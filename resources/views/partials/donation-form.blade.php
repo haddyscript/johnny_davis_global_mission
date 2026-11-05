@@ -179,6 +179,20 @@
         </button>
       </div>
 
+      {{-- Mission Builders: special one-time gifts from the approved campaign poster. Choosing one switches to One-time. --}}
+      <div class="mission-builders" role="group" aria-labelledby="missionBuildersTitle">
+        <p class="mission-builders-title" id="missionBuildersTitle">Mission Builders <span>Special one-time gifts</span></p>
+        <div class="amounts-grid amounts-4">
+          @foreach ([100 => 'Hope', 300 => 'Compassion', 500 => 'Impact', 1000 => 'Legacy'] as $missionBuilderAmount => $missionBuilderTier)
+            <button class="amount-btn mission-builder-btn" aria-label="Give ${{ number_format($missionBuilderAmount) }} one time — {{ $missionBuilderTier }} Builder">
+              <span class="amount-price">${{ number_format($missionBuilderAmount) }}</span>
+              <span class="amount-impact">{{ $missionBuilderTier }} Builder</span>
+            </button>
+          @endforeach
+        </div>
+        <p class="mission-builders-note">Make a greater impact through a one-time gift.</p>
+      </div>
+
       <!-- Express Checkout — Apple Pay / Google Pay (shown only when available) -->
       <div id="express-checkout-section" style="display:none;margin:20px 0 4px;">
         <div class="express-divider"><span>Express checkout</span></div>
