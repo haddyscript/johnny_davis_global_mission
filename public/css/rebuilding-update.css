@@ -1,0 +1,193 @@
+/* ============================================================
+   MORE THAN MEALS — October 2026 rebuilding project update
+   Homepage, directly above the Earthquake Relief Update section.
+   Flyer on the left (sticky while the caption scrolls) on desktop;
+   stacked flyer then caption on tablets and phones.
+============================================================ */
+.rbu {
+  --rbu-navy:      #0d2a4e;
+  --rbu-navy-deep: #081d38;
+  --rbu-orange:    #f07c1e;
+  --rbu-orange-dk: #d96712;
+  --rbu-gold:      #ffc93c;
+  --rbu-text:      #334155;
+
+  position: relative;
+  padding: 80px 0;
+  background:
+    radial-gradient(ellipse at 90% 0%, rgba(255,201,60,.16) 0%, rgba(255,201,60,0) 55%),
+    linear-gradient(180deg, #fffaf3 0%, #ffffff 100%);
+  font-family: 'Inter', sans-serif;
+  color: var(--rbu-text);
+}
+.rbu *,
+.rbu *::before,
+.rbu *::after { box-sizing: border-box; }
+
+.rbu-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 520px) minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+}
+
+/* ── Flyer (unmodified artwork) ─────────────────────── */
+.rbu-flyer {
+  position: sticky;
+  top: 96px; /* clears the fixed nav */
+  margin: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(13,42,78,.18);
+  border: 4px solid #ffffff;
+  outline: 1px solid rgba(13,42,78,.08);
+}
+.rbu-flyer img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1199 / 1312;
+}
+
+/* ── Caption ────────────────────────────────────────── */
+.rbu-update {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  padding: 12px 22px 12px 16px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, var(--rbu-gold) 0%, #ffe07a 100%);
+  color: var(--rbu-navy);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 24px rgba(255,201,60,.35);
+}
+.rbu-update svg { flex-shrink: 0; color: #dc2626; }
+.rbu-update strong { font-weight: 900; }
+
+.rbu-kicker {
+  margin: 0 0 10px;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--rbu-orange-dk);
+}
+
+.rbu-title {
+  margin: 0 0 14px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  font-weight: 800;
+  line-height: 1.12;
+  color: var(--rbu-navy);
+}
+.rbu-title span { color: var(--rbu-orange); }
+
+.rbu-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--rbu-navy);
+}
+.rbu-location svg { flex-shrink: 0; color: #dc2626; }
+
+.rbu-text p {
+  margin: 0 0 16px;
+  font-size: 1.04rem;
+  line-height: 1.75;
+}
+.rbu-text strong { color: var(--rbu-navy); }
+
+.rbu-highlight {
+  margin: 8px 0 22px;
+  padding-left: 16px;
+  border-left: 4px solid var(--rbu-orange);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+  font-weight: 800;
+  font-style: italic;
+  color: var(--rbu-orange-dk);
+}
+
+.rbu-thanks {
+  margin: 0 0 24px;
+  padding: 24px 26px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--rbu-navy) 0%, var(--rbu-navy-deep) 100%);
+  color: rgba(255,255,255,.88);
+  box-shadow: 0 16px 40px rgba(13,42,78,.2);
+}
+.rbu-thanks p {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.rbu-thanks p:last-child { margin-bottom: 0; }
+.rbu-thanks-title {
+  font-size: 1.1rem !important;
+  font-weight: 700;
+  color: #ffffff;
+}
+.rbu-thanks-title span {
+  display: inline-block;
+  color: var(--rbu-gold);
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+
+.rbu-closing {
+  margin: 0 0 22px;
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--rbu-navy);
+}
+
+.rbu-signature {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(13,42,78,.12);
+  font-size: .95rem;
+}
+.rbu-signature strong { color: var(--rbu-navy); font-size: 1.02rem; }
+.rbu-signature span { font-style: italic; color: var(--rbu-orange-dk); }
+
+/* ── Tablet & mobile: flyer first, caption beneath ──── */
+@media (max-width: 1024px) {
+  .rbu-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+    max-width: 720px;
+  }
+  .rbu-flyer {
+    position: static;
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .rbu { padding: 52px 0 56px; }
+  .rbu-inner { padding: 0 16px; gap: 28px; }
+  .rbu-flyer { border-radius: 16px; border-width: 3px; }
+  .rbu-copy { text-align: left; }
+  .rbu-update { width: 100%; justify-content: center; gap: 8px; padding: 12px 10px; font-size: .9rem; letter-spacing: .02em; white-space: nowrap; }
+  .rbu-update svg { width: 18px; height: 18px; }
+  .rbu-text p { font-size: 1rem; line-height: 1.7; }
+  .rbu-thanks { padding: 20px 18px; border-radius: 16px; }
+}
