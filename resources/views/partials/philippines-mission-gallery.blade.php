@@ -33,6 +33,10 @@
   ];
   $pmgIndex = array_flip(array_keys($pmgPhotos));
   $pmgSrc = fn (string $key): string => asset($pmgDir.$pmgPhotos[$key]['file']);
+  $pmgLightbox = [];
+  foreach ($pmgPhotos as $pmgKey => $pmgPhoto) {
+      $pmgLightbox[] = ['src' => $pmgSrc($pmgKey), 'alt' => $pmgPhoto['alt'], 'caption' => $pmgPhoto['caption']];
+  }
 @endphp
 <section id="philippines-mission-gallery" class="pmg" aria-labelledby="pmg-title">
   <div class="pmg-inner">
@@ -115,10 +119,7 @@
 
   </div>
 
-  <script type="application/json" id="pmgPhotos">@json(array_values(array_map(
-      fn (array $photo): array => ['src' => asset($pmgDir.$photo['file']), 'alt' => $photo['alt'], 'caption' => $photo['caption']],
-      $pmgPhotos
-  )))</script>
+  <script type="application/json" id="pmgPhotos">@json($pmgLightbox)</script>
 
   <div class="pmg-lightbox" id="pmgLightbox" hidden role="dialog" aria-modal="true" aria-label="Philippines mission photo">
     <div class="pmg-lightbox-backdrop" data-pmg-close></div>
