@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="{{ asset('css/hunger-campaign.css') }}?v={{ filemtime(public_path('css/hunger-campaign.css')) }}" />
   <link rel="stylesheet" href="{{ asset('css/mission-in-action.css') }}?v={{ filemtime(public_path('css/mission-in-action.css')) }}" />
   <link rel="stylesheet" href="{{ asset('css/rebuilding-update.css') }}?v={{ filemtime(public_path('css/rebuilding-update.css')) }}" />
+  <link rel="stylesheet" href="{{ asset('css/philippines-mission-gallery.css') }}?v={{ filemtime(public_path('css/philippines-mission-gallery.css')) }}" />
   <link rel="preload" as="image" type="image/webp"
         imagesrcset="{{ asset('images/hunger-cant-wait/hunger-cant-wait-banner-768.webp') }} 768w, {{ asset('images/hunger-cant-wait/hunger-cant-wait-banner-1280.webp') }} 1280w, {{ asset('images/hunger-cant-wait/hunger-cant-wait-banner-2048.webp') }} 2048w"
         imagesizes="(min-width: 1320px) 1280px, 100vw" />
@@ -188,6 +189,8 @@
 </div>
 
 
+
+@include('partials.philippines-mission-gallery')
 
 @include('partials.rebuilding-update')
 
